@@ -4,6 +4,7 @@ import { LoaderComponent } from './loader/loader.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { FooterComponent } from './footer/footer.component';
 import { CvBuilderModalComponent } from './cv-builder-modal/cv-builder-modal.component';
+import { OnboardingComponent } from './onboarding/onboarding';
 
 @Component({
   changeDetection: ChangeDetectionStrategy.OnPush,
@@ -14,7 +15,8 @@ import { CvBuilderModalComponent } from './cv-builder-modal/cv-builder-modal.com
     LoaderComponent,
     NavbarComponent,
     FooterComponent,
-    CvBuilderModalComponent
+    CvBuilderModalComponent,
+    OnboardingComponent
   ],
   templateUrl: './app.html',
   styleUrl: './app.css'

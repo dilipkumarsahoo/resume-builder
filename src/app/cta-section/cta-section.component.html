@@ -1,15 +1,20 @@
 <section class="py-32 bg-text-main relative overflow-hidden" #section>
   <!-- Background glow -->
-  <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-accent/20 rounded-full blur-[100px] pointer-events-none"></div>
-  
+  <div
+    class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[800px] h-[800px] bg-accent/20 rounded-full blur-[100px] pointer-events-none">
+  </div>
+
   <div class="max-w-4xl mx-auto px-6 text-center relative z-10">
-    <h2 class="text-4xl md:text-6xl font-bold tracking-tight text-white mb-8 opacity-0 translate-y-8" #heading>
+    <h2 class="text-4xl md:text-6xl font-bold tracking-tight text-white mb-8" #heading>
       Start building your CV today
     </h2>
-    <div class="opacity-0 translate-y-8" #buttonWrapper>
-      <button (click)="cvService.openModal()" class="bg-accent text-white px-10 py-5 rounded-full text-xl font-medium hover:bg-emerald-400 transition-all shadow-[0_0_40px_rgba(0,200,150,0.4)] hover:shadow-[0_0_60px_rgba(0,200,150,0.6)] hover:scale-105 active:scale-95 relative overflow-hidden group">
+    <div #buttonWrapper>
+      <button (click)="cvService.openOnboarding()"
+        class="bg-accent text-white px-10 py-5 rounded-full text-xl font-medium hover:bg-emerald-400 transition-all shadow-[0_0_40px_rgba(0,200,150,0.4)] hover:shadow-[0_0_60px_rgba(0,200,150,0.6)] hover:scale-105 active:scale-95 relative overflow-hidden group">
         <span class="relative z-10">Create Your CV Now</span>
-        <div class="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out"></div>
+        <div
+          class="absolute inset-0 bg-white/20 translate-y-full group-hover:translate-y-0 transition-transform duration-300 ease-out">
+        </div>
       </button>
     </div>
   </div>

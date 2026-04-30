@@ -41,6 +41,8 @@ export type TemplateType = 'minimal' | 'modern' | 'professional' | 'creative' | 
 @Injectable({ providedIn: 'root' })
 export class CvBuilderService {
   isModalOpen = signal(false);
+  isOnboardingOpen = signal(false);
+  onboardingStep = signal(1);
   selectedTemplate = signal<TemplateType>('modern');
   isImprovingSummary = signal(false);
   
@@ -100,6 +102,17 @@ export class CvBuilderService {
     }
     this.isModalOpen.set(true);
     document.body.style.overflow = 'hidden';
+  }
+
+  openOnboarding() {
+    this.isOnboardingOpen.set(true);
+    this.onboardingStep.set(1);
+    document.body.style.overflow = 'hidden';
+  }
+
+  closeOnboarding() {
+    this.isOnboardingOpen.set(false);
+    document.body.style.overflow = 'auto';
   }
 
   closeModal() {

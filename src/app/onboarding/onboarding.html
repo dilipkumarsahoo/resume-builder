@@ -1,0 +1,112 @@
+@if (cvService.isOnboardingOpen()) {
+<div class="fixed inset-0 z-[60] bg-white flex flex-col font-sans">
+  <!-- Header with Steps -->
+  <div class="h-24 flex items-center justify-between px-8 md:px-20 relative">
+    <div class="flex-1 flex justify-center items-center gap-2 md:gap-3">
+      <!-- Step 1 -->
+      <div [class]="cvService.onboardingStep() >= 1 ? 'w-8 h-8 rounded-full bg-[#10b981] text-white flex items-center justify-center text-sm font-medium shadow-lg' : 'w-8 h-8 rounded-full bg-[#cbd5e1] text-white flex items-center justify-center text-sm font-medium'">1</div>
+      <div class="w-12 md:w-24 h-[2px] bg-[#f1f5f9]"></div>
+      
+      <!-- Step 2 -->
+      <div [class]="cvService.onboardingStep() >= 2 ? 'w-8 h-8 rounded-full bg-[#10b981] text-white flex items-center justify-center text-sm font-medium shadow-lg' : 'w-8 h-8 rounded-full bg-[#94a3b8] opacity-60 text-white flex items-center justify-center text-sm font-medium'">2</div>
+      <div class="w-12 md:w-24 h-[2px] bg-[#f1f5f9]"></div>
+      
+      <!-- Step 3 -->
+      <div [class]="cvService.onboardingStep() >= 3 ? 'w-8 h-8 rounded-full bg-[#10b981] text-white flex items-center justify-center text-sm font-medium shadow-lg' : 'w-8 h-8 rounded-full bg-[#94a3b8] opacity-60 text-white flex items-center justify-center text-sm font-medium'">3</div>
+      <div class="w-12 md:w-24 h-[2px] bg-[#f1f5f9]"></div>
+      
+      <!-- Step 4 -->
+      <div [class]="cvService.onboardingStep() >= 4 ? 'w-8 h-8 rounded-full bg-[#10b981] text-white flex items-center justify-center text-sm font-medium shadow-lg' : 'w-8 h-8 rounded-full bg-[#94a3b8] opacity-60 text-white flex items-center justify-center text-sm font-medium'">4</div>
+    </div>
+    
+    <div class="absolute right-8 md:right-20 flex items-center gap-4">
+      <button class="px-6 py-2 border-2 border-[#6366f1] text-[#6366f1] rounded-lg font-bold text-sm hover:bg-[#6366f1] hover:text-white transition-all">Login</button>
+      <button (click)="cvService.closeOnboarding()" class="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-slate-400 hover:bg-slate-200 transition-colors">
+        <span class="material-icons">close</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Main Content -->
+  <div class="flex-1 flex flex-col items-center justify-center text-center px-6">
+    @if (cvService.onboardingStep() === 1) {
+      <!-- Blob and Image -->
+      <div class="blob-container mb-12">
+        <div class="blob-bg"></div>
+        <div class="blob-shape"></div>
+        <div class="relative w-32 h-32 md:w-40 md:h-40 rounded-full overflow-hidden border-4 border-white shadow-xl z-10">
+          <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=400&auto=format&fit=crop" class="w-full h-full object-cover">
+        </div>
+      </div>
+
+      <h2 class="text-2xl md:text-4xl font-semibold text-[#334155] mb-12 max-w-2xl leading-tight">
+        Do you have an existing resume to use as a starting point?
+      </h2>
+
+      <div class="flex gap-6">
+        <button (click)="nextStep()" class="min-w-[120px] px-8 py-3 bg-[#10b981] text-white rounded-lg font-bold text-lg hover:brightness-110 transition-all active:scale-95 shadow-lg shadow-emerald-200">
+          Yes
+        </button>
+        <button (click)="skipToForm()" class="min-w-[120px] px-8 py-3 bg-[#6366f1] text-white rounded-lg font-bold text-lg hover:brightness-110 transition-all active:scale-95 shadow-lg shadow-indigo-200">
+          No
+        </button>
+      </div>
+    }
+
+    @if (cvService.onboardingStep() === 2) {
+      <div class="max-w-xl w-full bg-slate-50 p-12 rounded-[40px] border border-slate-100 shadow-sm animate-slide-up">
+        <span class="material-icons text-7xl text-[#10b981] mb-6">upload_file</span>
+        <h2 class="text-3xl font-bold text-[#334155] mb-4">Upload your resume</h2>
+        <p class="text-slate-500 mb-10">Save time by importing your current details.</p>
+        
+        <div class="border-2 border-dashed border-slate-200 rounded-3xl p-16 hover:border-[#10b981] hover:bg-white transition-all cursor-pointer group">
+          <span class="material-icons text-5xl text-slate-300 group-hover:text-[#10b981] mb-4">add_circle_outline</span>
+          <p class="text-slate-400 font-medium">Click or drag to upload PDF</p>
+        </div>
+
+        <div class="flex flex-col gap-4 mt-10">
+          <button (click)="nextStep()" class="text-slate-400 font-bold hover:text-[#334155] underline transition-colors">Skip for now</button>
+        </div>
+      </div>
+    }
+
+    @if (cvService.onboardingStep() === 3) {
+      <div class="max-w-3xl w-full animate-slide-up">
+        <h2 class="text-4xl font-bold text-[#334155] mb-4">Choose your goal</h2>
+        <p class="text-slate-500 mb-12">We'll tailor the builder to your needs.</p>
+        
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div (click)="nextStep()" class="p-8 bg-white border-2 border-slate-100 rounded-3xl hover:border-[#10b981] hover:shadow-xl hover:shadow-emerald-50 transition-all cursor-pointer group text-left">
+            <div class="w-12 h-12 bg-slate-50 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-emerald-50 transition-colors">
+              <span class="material-icons text-[#94a3b8] group-hover:text-[#10b981]">trending_up</span>
+            </div>
+            <h3 class="font-bold text-[#334155] text-xl mb-2">Professional Growth</h3>
+            <p class="text-slate-500">I want to advance in my current career path.</p>
+          </div>
+          <div (click)="nextStep()" class="p-8 bg-white border-2 border-slate-100 rounded-3xl hover:border-[#10b981] hover:shadow-xl hover:shadow-emerald-50 transition-all cursor-pointer group text-left">
+            <div class="w-12 h-12 bg-slate-50 rounded-2xl flex items-center justify-center mb-6 group-hover:bg-emerald-50 transition-colors">
+              <span class="material-icons text-[#94a3b8] group-hover:text-[#10b981]">shuffle</span>
+            </div>
+            <h3 class="font-bold text-[#334155] text-xl mb-2">Career Change</h3>
+            <p class="text-slate-500">I'm looking to pivot to a completely new industry.</p>
+          </div>
+        </div>
+      </div>
+    }
+
+    @if (cvService.onboardingStep() === 4) {
+      <div class="text-center animate-slide-up">
+        <div class="w-24 h-24 bg-emerald-50 text-[#10b981] rounded-full flex items-center justify-center mx-auto mb-8">
+          <span class="material-icons text-6xl">check_circle</span>
+        </div>
+        <h2 class="text-4xl font-bold text-[#334155] mb-6">Perfectly Personalized!</h2>
+        <p class="text-slate-500 text-lg mb-12 max-w-lg mx-auto">Your resume builder is now optimized for your goals. Let's start building!</p>
+        
+        <button (click)="skipToForm()" class="px-12 py-5 bg-[#334155] text-white rounded-2xl font-bold text-xl hover:bg-slate-800 transition-all hover:scale-105 shadow-2xl active:scale-95">
+          Open Builder
+        </button>
+      </div>
+    }
+  </div>
+</div>
+}
