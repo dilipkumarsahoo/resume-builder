@@ -45,7 +45,6 @@ export class CvBuilderService {
   onboardingStep = signal(1);
   selectedTemplate = signal<TemplateType>('modern');
   isImprovingSummary = signal(false);
-  
   defaultData: CVData = {
     fullName: 'Alex Johnson',
     jobTitle: 'Senior Frontend Developer',
@@ -131,14 +130,11 @@ export class CvBuilderService {
   async improveSummary() {
     const currentSummary = this.cvData().summary;
     const jobTitle = this.cvData().jobTitle;
-    
     if (!currentSummary || currentSummary.trim().length < 10) return;
 
     this.isImprovingSummary.set(true);
-    
     try {
       const prompt = `You are an expert resume writer. Improve the following professional summary for a ${jobTitle || 'professional'}. Make it impactful, concise, and ATS-friendly. Return ONLY the improved summary text, no quotes or extra formatting.\n\nOriginal: ${currentSummary}`;
-      
       const response = await this.ai.models.generateContent({
         model: "gemini-3-flash-preview",
         contents: prompt,
