@@ -1,0 +1,44 @@
+<section class="relative pt-32 pb-20 md:pt-48 md:pb-32 overflow-hidden">
+  <!-- Subtle background gradient -->
+  <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[600px] opacity-30 pointer-events-none"
+       style="background: radial-gradient(circle, rgba(0,200,150,0.15) 0%, rgba(255,255,255,0) 70%);"></div>
+
+  <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center relative z-10">
+    <div #heroText class="flex flex-col items-start">
+      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-bg-light text-sm font-medium text-gray-600 mb-6 hero-item opacity-0">
+        <span class="w-2 h-2 rounded-full bg-accent"></span>
+        AI-Powered Builder
+      </div>
+      <h1 class="text-5xl md:text-7xl font-bold tracking-tight text-text-main leading-[1.1] mb-6 hero-item opacity-0">
+        Build a CV That <br/>
+        <span class="text-transparent bg-clip-text bg-gradient-to-r from-accent to-accent-secondary">Gets You Hired</span>
+      </h1>
+      <p class="text-lg md:text-xl text-gray-500 mb-8 max-w-lg hero-item opacity-0">
+        Create a professional, ATS-friendly CV in minutes. Stand out from the crowd with expert-designed templates and AI suggestions.
+      </p>
+      <div class="flex flex-col sm:flex-row items-center gap-4 hero-item opacity-0 w-full sm:w-auto">
+        <button (click)="cvService.openModal()" class="w-full sm:w-auto bg-accent text-white px-8 py-4 rounded-full text-lg font-medium hover:bg-emerald-500 transition-all shadow-lg shadow-accent/30 hover:shadow-xl hover:shadow-accent/40 hover:-translate-y-1 active:translate-y-0">
+          Create Your CV
+        </button>
+        <button (click)="cvService.openModal()" class="w-full sm:w-auto bg-white text-text-main border border-gray-200 px-8 py-4 rounded-full text-lg font-medium hover:bg-gray-50 transition-all hover:-translate-y-1 active:translate-y-0">
+          Upgrade CV
+        </button>
+      </div>
+    </div>
+
+    <div #heroImage class="relative opacity-0 translate-y-12 md:translate-y-0 md:translate-x-12">
+      <!-- Floating CV Mockup -->
+      <div class="relative w-full max-w-md mx-auto aspect-[1/1.4] bg-white rounded-2xl shadow-2xl border border-gray-100 overflow-hidden transform rotate-2 hover:rotate-0 transition-transform duration-500">
+        <img src="https://picsum.photos/seed/cv1/800/1120" alt="CV Template Preview" class="w-full h-full object-cover opacity-90" referrerpolicy="no-referrer" />
+        <!-- UI Overlays -->
+        <div class="absolute top-4 right-4 bg-white/90 backdrop-blur-sm px-3 py-1.5 rounded-full shadow-sm border border-gray-100 flex items-center gap-2 animate-bounce" style="animation-duration: 3s;">
+          <span class="material-icons text-accent text-sm">check_circle</span>
+          <span class="text-xs font-semibold">ATS Optimized</span>
+        </div>
+      </div>
+      
+      <!-- Decorative elements -->
+      <div class="absolute -z-10 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-gradient-to-tr from-bg-light to-white rounded-full blur-3xl"></div>
+    </div>
+  </div>
+</section>
