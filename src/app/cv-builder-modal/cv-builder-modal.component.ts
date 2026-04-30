@@ -1,5 +1,5 @@
-import { Component, inject, ElementRef, ViewChild } from '@angular/core';
-import { CommonModule } from '@angular/common';
+import { Component, inject, ElementRef, ViewChild, PLATFORM_ID } from '@angular/core';
+import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { CvBuilderService, TemplateType } from '../cv-builder.service';
 import { CvFormComponent } from '../cv-form/cv-form.component';
 import { CvPreviewComponent } from '../cv-preview/cv-preview.component';
@@ -15,6 +15,7 @@ import jsPDF from 'jspdf';
   styleUrl: './cv-builder-modal.component.css'
 })
 export class CvBuilderModalComponent {
+  private platformId = inject(PLATFORM_ID);
   cvService = inject(CvBuilderService);
   template = this.cvService.selectedTemplate;
   isDownloading = false;
@@ -26,7 +27,7 @@ export class CvBuilderModalComponent {
   }
 
   close() {
-    if (this.modalContent) {
+    if (isPlatformBrowser(this.platformId) && this.modalContent) {
       animate(this.modalContent.nativeElement, { opacity: [1, 0], scale: [1, 0.95] }, { duration: 0.2 }).finished.then(() => {
         this.cvService.closeModal();
       });
@@ -36,6 +37,8 @@ export class CvBuilderModalComponent {
   }
 
   async downloadPDF() {
+    if (!isPlatformBrowser(this.platformId)) return;
+    
     this.isDownloading = true;
     try {
       const element = document.getElementById('cv-preview-content');

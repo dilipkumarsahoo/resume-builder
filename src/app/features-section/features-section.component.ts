@@ -1,4 +1,5 @@
-import { Component, ElementRef, AfterViewInit, ViewChild, signal, inject } from '@angular/core';
+import { Component, ElementRef, AfterViewInit, ViewChild, signal, inject, PLATFORM_ID } from '@angular/core';
+import { isPlatformBrowser } from '@angular/common';
 import { animate, inView, stagger } from 'motion';
 import { CommonModule } from '@angular/common';
 import { CvBuilderService } from '../cv-builder.service';
@@ -11,6 +12,7 @@ import { CvBuilderService } from '../cv-builder.service';
   styleUrl: './features-section.component.css'
 })
 export class FeaturesSectionComponent implements AfterViewInit {
+  private platformId = inject(PLATFORM_ID);
   cvService = inject(CvBuilderService);
   @ViewChild('section') section!: ElementRef;
   @ViewChild('previewBox') previewBox!: ElementRef;
@@ -25,11 +27,13 @@ export class FeaturesSectionComponent implements AfterViewInit {
   ];
 
   ngAfterViewInit() {
-    inView(this.section.nativeElement, () => {
-      animate(this.previewBox.nativeElement, { opacity: [0, 1], x: [-40, 0] }, { duration: 0.8, ease: [0.22, 1, 0.36, 1] });
-      
-      const items = this.featuresList.nativeElement.querySelectorAll('.feature-item');
-      animate(items, { opacity: [0, 1], x: [40, 0] }, { delay: stagger(0.15), duration: 0.8, ease: [0.22, 1, 0.36, 1] });
-    }, { margin: "-100px" });
+    if (isPlatformBrowser(this.platformId)) {
+      inView(this.section.nativeElement, () => {
+        animate(this.previewBox.nativeElement, { opacity: [0, 1], x: [-40, 0] }, { duration: 0.8, ease: [0.22, 1, 0.36, 1] });
+        
+        const items = this.featuresList.nativeElement.querySelectorAll('.feature-item');
+        animate(items, { opacity: [0, 1], x: [40, 0] }, { delay: stagger(0.15), duration: 0.8, ease: [0.22, 1, 0.36, 1] });
+      }, { margin: "-100px" });
+    }
   }
 }
