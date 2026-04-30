@@ -15,6 +15,6 @@ export class CvPreviewComponent {
   template = this.cvService.selectedTemplate;
 
   templateClass() {
-    return `template-${this.template()}`;
+    return `${this.template()}-template`;
   }
 }

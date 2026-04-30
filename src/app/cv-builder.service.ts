@@ -36,10 +36,12 @@ export interface CVData {
   projects: Project[];
 }
 
+export type TemplateType = 'minimal' | 'modern' | 'professional' | 'creative' | 'corporate' | 'tech' | 'bold' | 'elegant' | 'executive' | 'fresher' | 'designer' | 'compact' | 'sidebar-dark' | 'banner' | 'timeline' | 'bubble' | 'classic-ats' | 'startup';
+
 @Injectable({ providedIn: 'root' })
 export class CvBuilderService {
   isModalOpen = signal(false);
-  selectedTemplate = signal<'minimal' | 'modern' | 'professional'>('modern');
+  selectedTemplate = signal<TemplateType>('modern');
   isImprovingSummary = signal(false);
   
   defaultData: CVData = {
@@ -92,7 +94,7 @@ export class CvBuilderService {
     this.loadFromLocalStorage();
   }
 
-  openModal(template?: 'minimal' | 'modern' | 'professional') {
+  openModal(template?: TemplateType) {
     if (template) {
       this.selectedTemplate.set(template);
     }

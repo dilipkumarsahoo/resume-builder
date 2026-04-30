@@ -1,5 +1,5 @@
 import { Component, inject } from '@angular/core';
-import { CvBuilderService } from '../cv-builder.service';
+import { CvBuilderService, TemplateType } from '../cv-builder.service';
 
 @Component({
   selector: 'app-templates-carousel',
@@ -10,9 +10,7 @@ import { CvBuilderService } from '../cv-builder.service';
 export class TemplatesCarouselComponent {
   cvService = inject(CvBuilderService);
 
-  openTemplate(index: number) {
-    const templates: ('minimal' | 'modern' | 'professional')[] = ['minimal', 'modern', 'professional'];
-    const template = templates[index % 3];
-    this.cvService.openModal(template);
-  }
+  templateNames: TemplateType[] = [
+    'minimal', 'modern', 'professional', 'creative', 'corporate', 'tech', 'bold', 'elegant', 'executive', 'fresher', 'designer', 'compact', 'sidebar-dark', 'banner', 'timeline', 'bubble', 'classic-ats', 'startup'
+  ];
 }

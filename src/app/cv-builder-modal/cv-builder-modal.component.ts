@@ -1,6 +1,6 @@
 import { Component, inject, ElementRef, ViewChild } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { CvBuilderService } from '../cv-builder.service';
+import { CvBuilderService, TemplateType } from '../cv-builder.service';
 import { CvFormComponent } from '../cv-form/cv-form.component';
 import { CvPreviewComponent } from '../cv-preview/cv-preview.component';
 import { animate } from 'motion';
@@ -21,7 +21,7 @@ export class CvBuilderModalComponent {
 
   @ViewChild('modalContent') modalContent?: ElementRef;
 
-  setTemplate(t: 'minimal' | 'modern' | 'professional') {
+  setTemplate(t: TemplateType) {
     this.cvService.selectedTemplate.set(t);
   }
 

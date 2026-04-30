@@ -1,1 +1,89 @@
 /* CV Preview styles */
+
+:host {
+  display: block;
+  width: 100%;
+  height: 100%;
+}
+
+.no-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.no-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+/* Base Template Fonts */
+.modern-template,
+.minimal-template,
+.professional-template,
+.creative-template,
+.bold-template,
+.fresher-template,
+.bubble-template,
+.banner-template,
+.timeline-template,
+.startup-template {
+  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+}
+
+/* Corporate & Classic ATS Template Serif Font */
+.corporate-template h1,
+.corporate-template h2,
+.corporate-template h3,
+.classic-ats-template {
+  font-family: 'Georgia', 'Times New Roman', serif;
+}
+
+/* Elegant Template */
+.elegant-template {
+  font-family: 'Cormorant Garamond', 'EB Garamond', serif;
+}
+
+.elegant-template h1,
+.elegant-template h2,
+.elegant-template h3 {
+  font-family: 'Playfair Display', serif;
+}
+
+/* Executive Template */
+.executive-template {
+  font-family: 'Montserrat', sans-serif;
+}
+
+.executive-template h1,
+.executive-template h2 {
+  font-family: 'Oswald', sans-serif;
+}
+
+/* Designer Template */
+.designer-template {
+  font-family: 'Outfit', sans-serif;
+}
+
+.designer-template h1 {
+  font-family: 'Syncopate', sans-serif;
+  font-weight: 900;
+}
+
+/* Tech & Compact Template */
+.tech-template,
+.compact-template {
+  font-family: 'JetBrains Mono', 'Fira Code', 'Inter', monospace;
+}
+
+/* Startup Template */
+.startup-template h1 {
+  font-family: 'Lexend', sans-serif;
+}
+
+@media print {
+  #cv-preview-content {
+    box-shadow: none !important;
+    border: none !important;
+    width: 210mm;
+    height: 297mm;
+  }
+}
