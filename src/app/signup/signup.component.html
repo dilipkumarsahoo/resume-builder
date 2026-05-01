@@ -1,0 +1,59 @@
+<div class="min-h-screen bg-[#f8f9fc] flex flex-col items-center justify-center relative font-sans">
+  <!-- Logo -->
+  <div class="absolute top-6 left-6 flex items-center gap-2">
+    <!-- Enhancv Logo approximation -->
+    <svg width="34" height="20" viewBox="0 0 34 20" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M8.5 17C3.80558 17 0 13.1944 0 8.5C0 3.80558 3.80558 0 8.5 0C11.5312 0 14.1875 1.58334 15.6562 3.96875C16.3438 5.09375 17.6562 5.09375 18.3438 3.96875C19.8125 1.58334 22.4688 0 25.5 0C30.1944 0 34 3.80558 34 8.5C34 13.1944 30.1944 17 25.5 17C22.4688 17 19.8125 15.4167 18.3438 13.0312C17.6562 11.9062 16.3438 11.9062 15.6562 13.0312C14.1875 15.4167 11.5312 17 8.5 17ZM8.5 2C4.91015 2 2 4.91015 2 8.5C2 12.0899 4.91015 15 8.5 15C10.7937 15 12.8051 13.8038 13.9452 11.9407C15.2239 9.85191 18.7761 9.85191 20.0548 11.9407C21.1949 13.8038 23.2063 15 25.5 15C29.0899 15 32 12.0899 32 8.5C32 4.91015 29.0899 2 25.5 2C23.2063 2 21.1949 3.1962 20.0548 5.05927C18.7761 7.14809 15.2239 7.14809 13.9452 5.05927C12.8051 3.1962 10.7937 2 8.5 2Z" fill="#32c696"/>
+    </svg>
+    <span class="text-[22px] font-medium text-[#32c696] tracking-tight">Enhancv</span>
+  </div>
+
+  <!-- Main Card -->
+  <div class="bg-white rounded-xl shadow-[0_4px_30px_rgb(0,0,0,0.03)] w-full max-w-[420px] p-10 pt-12 border border-gray-50/50">
+    <div class="text-center mb-7">
+      <h1 class="text-[26px] font-bold text-gray-900 mb-1">Create free account</h1>
+      <p class="text-[15px] text-gray-500">
+        Already have an account? <a routerLink="/login" class="text-[#7c8ce0] hover:underline font-medium">Log in</a>
+      </p>
+    </div>
+
+    <!-- Social Logins -->
+    <div class="space-y-3.5 mb-7">
+      <button class="w-full flex items-center justify-center gap-3 py-2.5 px-4 border border-gray-200 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors">
+        <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google" class="w-5 h-5">
+        Continue with Google
+      </button>
+      <button class="w-full flex items-center justify-center gap-3 py-2.5 px-4 border border-gray-200 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors">
+        <img src="https://www.svgrepo.com/show/475661/linkedin-color.svg" alt="LinkedIn" class="w-5 h-5">
+        Continue with LinkedIn
+      </button>
+    </div>
+
+    <!-- Divider -->
+    <div class="relative flex items-center mb-7">
+      <div class="flex-grow border-t border-gray-100"></div>
+      <span class="flex-shrink-0 mx-4 text-[13px] text-gray-400">or continue with</span>
+      <div class="flex-grow border-t border-gray-100"></div>
+    </div>
+
+    <!-- Form -->
+    <form class="space-y-4">
+      <div>
+        <input type="email" placeholder="Your email address" 
+               class="w-full px-4 py-[13px] rounded-lg border border-gray-200 focus:outline-none focus:border-[#32c696] focus:ring-1 focus:ring-[#32c696] text-[15px] text-gray-800 placeholder-gray-400 transition-colors bg-white">
+      </div>
+      
+      <div class="pt-2">
+        <button type="submit" class="w-full py-[13px] px-4 bg-[#32c696] hover:bg-[#2ca67d] text-white rounded-lg text-[15px] font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#32c696]">
+          Continue
+        </button>
+      </div>
+
+      <div class="text-center pt-2">
+        <p class="text-[12px] text-gray-500 leading-relaxed">
+          By signing up, you agree with our <a href="#" class="text-[#7c8ce0] hover:underline">terms of service</a> and <a href="#" class="text-[#7c8ce0] hover:underline">privacy<br>policy</a>.
+        </p>
+      </div>
+    </form>
+  </div>
+</div>
