@@ -4,8 +4,8 @@ import { CvBuilderService, TemplateType } from '../cv-builder.service';
 import { CvFormComponent } from '../cv-form/cv-form.component';
 import { CvPreviewComponent } from '../cv-preview/cv-preview.component';
 import { animate } from 'motion';
-import html2canvas from 'html2canvas';
-import jsPDF from 'jspdf';
+import * as htmlToImage from 'html-to-image';
+import { jsPDF } from 'jspdf';
 
 @Component({
   selector: 'app-cv-builder-modal',
@@ -38,19 +38,17 @@ export class CvBuilderModalComponent {
 
   async downloadPDF() {
     if (!isPlatformBrowser(this.platformId)) return;
-    
+
     this.isDownloading = true;
     try {
       const element = document.getElementById('cv-preview-content');
       if (!element) return;
 
-      const canvas = await html2canvas(element, {
-        scale: 2,
-        useCORS: true,
-        logging: false
+      const imgData = await htmlToImage.toPng(element, {
+        quality: 1,
+        pixelRatio: 2
       });
 
-      const imgData = canvas.toDataURL('image/png');
       const pdf = new jsPDF({
         orientation: 'portrait',
         unit: 'mm',
@@ -58,7 +56,7 @@ export class CvBuilderModalComponent {
       });
 
       const pdfWidth = pdf.internal.pageSize.getWidth();
-      const pdfHeight = (canvas.height * pdfWidth) / canvas.width;
+      const pdfHeight = (element.offsetHeight * pdfWidth) / element.offsetWidth;
 
       pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
       pdf.save(`${this.cvService.cvData().fullName.replace(/\s+/g, '_')}_CV.pdf`);
