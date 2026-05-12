@@ -1,8 +1,8 @@
 <app-loader></app-loader>
-<app-navbar></app-navbar>
+<app-navbar *ngIf="!isDashboard() && !isSignup() && !isLogin()"></app-navbar>
 
 <router-outlet></router-outlet>
 
-<app-footer></app-footer>
+<app-footer *ngIf="!isDashboard() && !isSignup() && !isLogin()"></app-footer>
 <app-cv-builder-modal></app-cv-builder-modal>
 <app-onboarding></app-onboarding>
