@@ -43,6 +43,7 @@ export class CvBuilderService {
   isModalOpen = signal(false);
   isOnboardingOpen = signal(false);
   onboardingStep = signal(1);
+  hideOnboardingSteps = signal(false);
   selectedTemplate = signal<TemplateType>('modern');
   isImprovingSummary = signal(false);
   defaultData: CVData = {
@@ -106,11 +107,13 @@ export class CvBuilderService {
   openOnboarding() {
     this.isOnboardingOpen.set(true);
     this.onboardingStep.set(1);
+    this.hideOnboardingSteps.set(false);
     document.body.style.overflow = 'hidden';
   }
 
   closeOnboarding() {
     this.isOnboardingOpen.set(false);
+    this.hideOnboardingSteps.set(false);
     document.body.style.overflow = 'auto';
   }
 

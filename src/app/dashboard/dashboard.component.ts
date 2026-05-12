@@ -2,6 +2,8 @@ import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
+import { CvBuilderService } from '../cv-builder.service';
+
 @Component({
   selector: 'app-dashboard',
   standalone: true,
@@ -22,5 +24,12 @@ export class DashboardComponent {
     }
   ];
 
-  constructor() {}
+  constructor(public cvService: CvBuilderService) {}
+
+  openTemplateSelection() {
+    this.cvService.isOnboardingOpen.set(true);
+    this.cvService.onboardingStep.set(4);
+    this.cvService.hideOnboardingSteps.set(true);
+    document.body.style.overflow = 'hidden';
+  }
 }

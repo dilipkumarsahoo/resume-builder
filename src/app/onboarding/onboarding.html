@@ -2,6 +2,7 @@
 <div class="fixed inset-0 z-[60] bg-white flex flex-col font-sans">
   <!-- Header with Steps -->
   <div class="h-24 flex items-center justify-between px-8 md:px-20 relative flex-shrink-0 bg-white z-20">
+    @if (!cvService.hideOnboardingSteps()) {
     <div class="flex-1 flex justify-center items-center gap-2 md:gap-3">
       <div
         [class]="cvService.onboardingStep() >= 1 ? 'w-8 h-8 rounded-full bg-[#10b981] text-white flex items-center justify-center text-sm font-medium shadow-lg' : 'w-8 h-8 rounded-full bg-[#cbd5e1] text-white flex items-center justify-center text-sm font-medium'">
@@ -19,117 +20,139 @@
         [class]="cvService.onboardingStep() >= 4 ? 'w-8 h-8 rounded-full bg-[#10b981] text-white flex items-center justify-center text-sm font-medium shadow-lg' : 'w-8 h-8 rounded-full bg-[#94a3b8] opacity-60 text-white flex items-center justify-center text-sm font-medium'">
         4</div>
     </div>
+    } @else {
+    <div class="flex-1"></div>
+    }
 
     <div class="absolute right-8 md:right-20 flex items-center gap-4">
-      <button class="px-6 py-2 border-2 border-[#6366f1] text-[#6366f1] rounded-lg font-bold text-sm hover:bg-[#6366f1] hover:text-white transition-all">Login</button>
-      <button (click)="cvService.closeOnboarding()" class="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-slate-400 hover:bg-slate-200 transition-colors">
+      @if (!cvService.hideOnboardingSteps()) {
+      <button
+        class="px-6 py-2 border-2 border-[#6366f1] text-[#6366f1] rounded-lg font-bold text-sm hover:bg-[#6366f1] hover:text-white transition-all">Login</button>
+
+      <button (click)="cvService.closeOnboarding()"
+        class="w-10 h-10 rounded-full bg-slate-100 flex items-center justify-center text-slate-400 hover:bg-slate-200 transition-colors">
         <span class="material-icons">close</span>
       </button>
+      }
     </div>
   </div>
 
   <!-- Content Container -->
   <div class="flex-1 overflow-hidden flex flex-col">
-    
+
     <!-- Steps 1, 2, 3 (Centered Layout) -->
-    @if (cvService.onboardingStep() < 4) {
-      <div class="flex-1 flex flex-col items-center justify-center text-center px-6">
-        @if (cvService.onboardingStep() === 1) {
-          <div class="blob-container mb-12">
-            <div class="blob-bg"></div>
-            <div class="blob-shape"></div>
-            <div class="relative w-32 h-32 md:w-40 md:h-40 rounded-full overflow-hidden border-4 border-white shadow-xl z-10">
-              <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=400&auto=format&fit=crop" class="w-full h-full object-cover">
-            </div>
-          </div>
-          <h2 class="text-2xl md:text-4xl font-semibold text-[#334155] mb-12 max-w-2xl leading-tight">Do you have an existing resume to use as a starting point?</h2>
-          <div class="flex gap-6">
-            <button (click)="nextStep()" class="min-w-[120px] px-8 py-3 bg-[#10b981] text-white rounded-lg font-bold text-lg hover:brightness-110 shadow-lg">Yes</button>
-            <button (click)="skipToForm()" class="min-w-[120px] px-8 py-3 bg-[#6366f1] text-white rounded-lg font-bold text-lg hover:brightness-110 shadow-lg">No</button>
-          </div>
-        }
-
-        @if (cvService.onboardingStep() === 2) {
-          <div class="max-w-xl w-full bg-slate-50 p-12 rounded-[40px] border border-slate-100 shadow-sm animate-slide-up">
-            <span class="material-icons text-7xl text-[#10b981] mb-6">upload_file</span>
-            <h2 class="text-3xl font-bold text-[#334155] mb-4">Upload your resume</h2>
-            <p class="text-slate-500 mb-10">Save time by importing your current details.</p>
-            <div (click)="!isUploading() && fileInput.click()" class="border-2 border-dashed border-slate-200 rounded-3xl p-16 hover:border-[#10b981] hover:bg-white transition-all cursor-pointer group relative">
-              <input #fileInput type="file" (change)="onFileSelected($event)" class="hidden" accept=".pdf,.doc,.docx">
-              @if (isUploading()) {
-                <div class="flex flex-col items-center animate-pulse">
-                  <span class="material-icons text-5xl text-[#10b981] animate-spin mb-4">refresh</span>
-                  <p class="text-[#10b981] font-bold">Extracting details...</p>
-                </div>
-              } @else {
-                <span class="material-icons text-5xl text-slate-300 group-hover:text-[#10b981] mb-4">add_circle_outline</span>
-                <p class="text-slate-400 font-medium">Click or drag to upload</p>
-              }
-            </div>
-            <button (click)="nextStep()" class="text-slate-400 font-bold hover:text-[#334155] underline mt-10">Skip for now</button>
-          </div>
-        }
-
-        @if (cvService.onboardingStep() === 3) {
-          <div class="max-w-3xl w-full animate-slide-up">
-            <h2 class="text-4xl font-bold text-[#334155] mb-4">Choose your goal</h2>
-            <p class="text-slate-500 mb-12">We'll tailor the builder to your needs.</p>
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
-              <div (click)="nextStep()" class="p-8 bg-white border-2 border-slate-100 rounded-3xl hover:border-[#10b981] transition-all cursor-pointer text-left">
-                <span class="material-icons text-[#94a3b8] mb-6">trending_up</span>
-                <h3 class="font-bold text-[#334155] text-xl mb-2">Professional Growth</h3>
-                <p class="text-slate-500">Advance in your current career path.</p>
-              </div>
-              <div (click)="nextStep()" class="p-8 bg-white border-2 border-slate-100 rounded-3xl hover:border-[#10b981] transition-all cursor-pointer text-left">
-                <span class="material-icons text-[#94a3b8] mb-6">shuffle</span>
-                <h3 class="font-bold text-[#334155] text-xl mb-2">Career Change</h3>
-                <p class="text-slate-500">Pivot to a new industry.</p>
-              </div>
-            </div>
-          </div>
-        }
-      </div>
-    }
-
-    <!-- Step 4: Scrollable Grid Layout -->
-    @if (cvService.onboardingStep() === 4) {
-      <div class="flex-1 flex flex-col h-full overflow-hidden animate-slide-up">
-        <div class="text-center py-8 flex-shrink-0">
-          <h2 class="text-3xl md:text-4xl font-bold text-slate-800 mb-3">Select a template for your resume</h2>
-          <p class="text-slate-500">You can always change it later in the builder.</p>
+    @if (cvService.onboardingStep() < 4) { <div
+      class="flex-1 flex flex-col items-center justify-center text-center px-6">
+      @if (cvService.onboardingStep() === 1) {
+      <div class="blob-container mb-12">
+        <div class="blob-bg"></div>
+        <div class="blob-shape"></div>
+        <div
+          class="relative w-32 h-32 md:w-40 md:h-40 rounded-full overflow-hidden border-4 border-white shadow-xl z-10">
+          <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?q=80&w=400&auto=format&fit=crop"
+            class="w-full h-full object-cover">
         </div>
+      </div>
+      <h2 class="text-2xl md:text-4xl font-semibold text-[#334155] mb-12 max-w-2xl leading-tight">Do you have an
+        existing resume to use as a starting point?</h2>
+      <div class="flex gap-6">
+        <button (click)="nextStep()"
+          class="min-w-[120px] px-8 py-3 bg-[#10b981] text-white rounded-lg font-bold text-lg hover:brightness-110 shadow-lg">Yes</button>
+        <button (click)="skipToForm()"
+          class="min-w-[120px] px-8 py-3 bg-[#6366f1] text-white rounded-lg font-bold text-lg hover:brightness-110 shadow-lg">No</button>
+      </div>
+      }
 
-        <div class="flex-1 overflow-y-auto px-8 md:px-20 pb-12 no-scrollbar">
-          <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
-            @for (template of templates; track template.id) {
-              <div (click)="selectTemplate(template.id)"
-                [class]="'group relative bg-white border-2 rounded-2xl overflow-hidden transition-all duration-300 cursor-pointer ' + (selectedTemplateId() === template.id ? 'border-[#10b981] shadow-2xl scale-[1.02]' : 'border-slate-100 hover:border-emerald-200 hover:shadow-xl')">
-                <div class="aspect-[1/1.4] bg-white overflow-hidden relative border-b border-slate-100">
-                  <!-- Live Miniature Preview -->
-                  <div class="absolute inset-0 origin-top-left scale-[0.25] w-[400%] h-[400%] pointer-events-none">
-                    <app-cv-preview [templateOverride]="template.id" [isPreview]="true"></app-cv-preview>
-                  </div>
-                  <div class="absolute inset-0 bg-emerald-900/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center backdrop-blur-[2px]">
-                    <button (click)="useTemplate(template.id); $event.stopPropagation()" class="px-6 py-3 bg-[#10b981] text-white rounded-xl font-bold shadow-lg">Use Template</button>
-                  </div>
-                  @if (selectedTemplateId() === template.id) {
-                    <div class="absolute top-4 right-4 w-8 h-8 bg-[#10b981] rounded-full flex items-center justify-center text-white shadow-md animate-bounce">
-                      <span class="material-icons text-sm">check</span>
-                    </div>
-                  }
-                </div>
-                <div class="p-5">
-                  <div class="flex justify-between items-center">
-                    <h3 class="font-bold text-[#334155] text-sm">{{ template.name }}</h3>
-                    <span class="text-[9px] uppercase tracking-wider font-bold px-2 py-0.5 bg-slate-100 text-slate-500 rounded-md">{{ template.category }}</span>
-                  </div>
-                </div>
-              </div>
+      @if (cvService.onboardingStep() === 2) {
+      <div class="max-w-xl w-full bg-slate-50 p-12 rounded-[40px] border border-slate-100 shadow-sm animate-slide-up">
+        <span class="material-icons text-7xl text-[#10b981] mb-6">upload_file</span>
+        <h2 class="text-3xl font-bold text-[#334155] mb-4">Upload your resume</h2>
+        <p class="text-slate-500 mb-10">Save time by importing your current details.</p>
+        <div (click)="!isUploading() && fileInput.click()"
+          class="border-2 border-dashed border-slate-200 rounded-3xl p-16 hover:border-[#10b981] hover:bg-white transition-all cursor-pointer group relative">
+          <input #fileInput type="file" (change)="onFileSelected($event)" class="hidden" accept=".pdf,.doc,.docx">
+          @if (isUploading()) {
+          <div class="flex flex-col items-center animate-pulse">
+            <span class="material-icons text-5xl text-[#10b981] animate-spin mb-4">refresh</span>
+            <p class="text-[#10b981] font-bold">Extracting details...</p>
+          </div>
+          } @else {
+          <span class="material-icons text-5xl text-slate-300 group-hover:text-[#10b981] mb-4">add_circle_outline</span>
+          <p class="text-slate-400 font-medium">Click or drag to upload</p>
+          }
+        </div>
+        <button (click)="nextStep()" class="text-slate-400 font-bold hover:text-[#334155] underline mt-10">Skip for
+          now</button>
+      </div>
+      }
+
+      @if (cvService.onboardingStep() === 3) {
+      <div class="max-w-3xl w-full animate-slide-up">
+        <h2 class="text-4xl font-bold text-[#334155] mb-4">Choose your goal</h2>
+        <p class="text-slate-500 mb-12">We'll tailor the builder to your needs.</p>
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div (click)="nextStep()"
+            class="p-8 bg-white border-2 border-slate-100 rounded-3xl hover:border-[#10b981] transition-all cursor-pointer text-left">
+            <span class="material-icons text-[#94a3b8] mb-6">trending_up</span>
+            <h3 class="font-bold text-[#334155] text-xl mb-2">Professional Growth</h3>
+            <p class="text-slate-500">Advance in your current career path.</p>
+          </div>
+          <div (click)="nextStep()"
+            class="p-8 bg-white border-2 border-slate-100 rounded-3xl hover:border-[#10b981] transition-all cursor-pointer text-left">
+            <span class="material-icons text-[#94a3b8] mb-6">shuffle</span>
+            <h3 class="font-bold text-[#334155] text-xl mb-2">Career Change</h3>
+            <p class="text-slate-500">Pivot to a new industry.</p>
+          </div>
+        </div>
+      </div>
+      }
+  </div>
+  }
+
+  <!-- Step 4: Scrollable Grid Layout -->
+  @if (cvService.onboardingStep() === 4) {
+  <div class="flex-1 flex flex-col h-full overflow-hidden animate-slide-up">
+    <div class="text-center py-8 flex-shrink-0">
+      <h2 class="text-3xl md:text-4xl font-bold text-slate-800 mb-3">Select a template for your resume</h2>
+      <p class="text-slate-500">You can always change it later in the builder.</p>
+    </div>
+
+    <div class="flex-1 overflow-y-auto px-8 md:px-20 pb-12 no-scrollbar">
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-8">
+        @for (template of templates; track template.id) {
+        <div (click)="selectTemplate(template.id)"
+          [class]="'group relative bg-white border-2 rounded-2xl overflow-hidden transition-all duration-300 cursor-pointer ' + (selectedTemplateId() === template.id ? 'border-[#10b981] shadow-2xl scale-[1.02]' : 'border-slate-100 hover:border-emerald-200 hover:shadow-xl')">
+          <div class="aspect-[1/1.4] bg-white overflow-hidden relative border-b border-slate-100">
+            <!-- Live Miniature Preview -->
+            <div class="absolute inset-0 origin-top-left scale-[0.25] w-[400%] h-[400%] pointer-events-none">
+              <app-cv-preview [templateOverride]="template.id" [isPreview]="true"></app-cv-preview>
+            </div>
+            <div
+              class="absolute inset-0 bg-emerald-900/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center backdrop-blur-[2px]">
+              <button (click)="useTemplate(template.id); $event.stopPropagation()"
+                class="px-6 py-3 bg-[#10b981] text-white rounded-xl font-bold shadow-lg">Use Template</button>
+            </div>
+            @if (selectedTemplateId() === template.id) {
+            <div
+              class="absolute top-4 right-4 w-8 h-8 bg-[#10b981] rounded-full flex items-center justify-center text-white shadow-md animate-bounce">
+              <span class="material-icons text-sm">check</span>
+            </div>
             }
           </div>
+          <div class="p-5">
+            <div class="flex justify-between items-center">
+              <h3 class="font-bold text-[#334155] text-sm">{{ template.name }}</h3>
+              <span
+                class="text-[9px] uppercase tracking-wider font-bold px-2 py-0.5 bg-slate-100 text-slate-500 rounded-md">{{
+                template.category }}</span>
+            </div>
+          </div>
         </div>
+        }
       </div>
-    }
+    </div>
   </div>
+  }
+</div>
 </div>
 }
