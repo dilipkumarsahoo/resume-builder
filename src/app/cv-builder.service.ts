@@ -1,4 +1,5 @@
-import { Injectable, signal } from '@angular/core';
+import { Injectable, signal, inject } from '@angular/core';
+import { Router } from '@angular/router';
 import { GoogleGenAI } from '@google/genai';
 
 export interface Experience {
@@ -40,7 +41,7 @@ export type TemplateType = 'minimal' | 'modern' | 'professional' | 'creative' | 
 
 @Injectable({ providedIn: 'root' })
 export class CvBuilderService {
-  isModalOpen = signal(false);
+  private router = inject(Router);
   isOnboardingOpen = signal(false);
   onboardingStep = signal(1);
   hideOnboardingSteps = signal(false);
@@ -100,8 +101,7 @@ export class CvBuilderService {
     if (template) {
       this.selectedTemplate.set(template);
     }
-    this.isModalOpen.set(true);
-    document.body.style.overflow = 'hidden';
+    this.router.navigate(['/cv-builder']);
   }
 
   openOnboarding() {
@@ -118,8 +118,7 @@ export class CvBuilderService {
   }
 
   closeModal() {
-    this.isModalOpen.set(false);
-    document.body.style.overflow = '';
+    this.router.navigate(['/dashboard']);
   }
 
   updateData(newData: Partial<CVData>) {

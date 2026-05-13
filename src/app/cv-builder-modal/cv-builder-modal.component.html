@@ -1,107 +1,100 @@
-@if (cvService.isModalOpen()) {
-<div class="fixed inset-0 z-50 flex items-center justify-center bg-black/40 backdrop-blur-sm p-4 md:p-6 lg:p-8">
-  <div #modalContent
-    class="w-full h-full max-w-[1400px] bg-bg-light rounded-2xl shadow-2xl overflow-hidden flex flex-col animate-modal-enter">
-
-    <!-- Header -->
-    <div class="h-16 bg-white border-b border-gray-200 flex items-center justify-between px-6 flex-shrink-0">
-      <div class="flex items-center gap-3">
-        <div class="w-8 h-8 rounded-lg bg-accent flex items-center justify-center text-white font-bold">CV</div>
-        <span class="font-semibold text-text-main">Builder</span>
-      </div>
-
-      <div class="flex items-center gap-4">
-        <div class="flex bg-gray-100 p-1 rounded-lg overflow-x-auto max-w-[600px]">
-          <button (click)="setTemplate('minimal')"
-            [ngClass]="{'bg-white shadow-sm text-text-main': template() === 'minimal', 'text-gray-500 hover:text-gray-700': template() !== 'minimal'}"
-            class="px-3 py-1.5 text-xs font-medium rounded-md transition-all whitespace-nowrap">Minimal</button>
-          <button (click)="setTemplate('modern')"
-            [ngClass]="{'bg-white shadow-sm text-text-main': template() === 'modern', 'text-gray-500 hover:text-gray-700': template() !== 'modern'}"
-            class="px-3 py-1.5 text-xs font-medium rounded-md transition-all whitespace-nowrap">Modern</button>
-          <button (click)="setTemplate('professional')"
-            [ngClass]="{'bg-white shadow-sm text-text-main': template() === 'professional', 'text-gray-500 hover:text-gray-700': template() !== 'professional'}"
-            class="px-3 py-1.5 text-xs font-medium rounded-md transition-all whitespace-nowrap">Professional</button>
-          <button (click)="setTemplate('creative')"
-            [ngClass]="{'bg-white shadow-sm text-text-main': template() === 'creative', 'text-gray-500 hover:text-gray-700': template() !== 'creative'}"
-            class="px-3 py-1.5 text-xs font-medium rounded-md transition-all whitespace-nowrap">Creative</button>
-          <button (click)="setTemplate('corporate')"
-            [ngClass]="{'bg-white shadow-sm text-text-main': template() === 'corporate', 'text-gray-500 hover:text-gray-700': template() !== 'corporate'}"
-            class="px-3 py-1.5 text-xs font-medium rounded-md transition-all whitespace-nowrap">Corporate</button>
-          <button (click)="setTemplate('tech')"
-            [ngClass]="{'bg-white shadow-sm text-text-main': template() === 'tech', 'text-gray-500 hover:text-gray-700': template() !== 'tech'}"
-            class="px-3 py-1.5 text-xs font-medium rounded-md transition-all whitespace-nowrap">Tech</button>
-          <button (click)="setTemplate('bold')"
-            [ngClass]="{'bg-white shadow-sm text-text-main': template() === 'bold', 'text-gray-500 hover:text-gray-700': template() !== 'bold'}"
-            class="px-3 py-1.5 text-xs font-medium rounded-md transition-all whitespace-nowrap">Bold</button>
-          <button (click)="setTemplate('elegant')"
-            [ngClass]="{'bg-white shadow-sm text-text-main': template() === 'elegant', 'text-gray-500 hover:text-gray-700': template() !== 'elegant'}"
-            class="px-3 py-1.5 text-xs font-medium rounded-md transition-all whitespace-nowrap">Elegant</button>
-          <button (click)="setTemplate('executive')"
-            [ngClass]="{'bg-white shadow-sm text-text-main': template() === 'executive', 'text-gray-500 hover:text-gray-700': template() !== 'executive'}"
-            class="px-3 py-1.5 text-xs font-medium rounded-md transition-all whitespace-nowrap">Executive</button>
-          <button (click)="setTemplate('fresher')"
-            [ngClass]="{'bg-white shadow-sm text-text-main': template() === 'fresher', 'text-gray-500 hover:text-gray-700': template() !== 'fresher'}"
-            class="px-3 py-1.5 text-xs font-medium rounded-md transition-all whitespace-nowrap">Fresher</button>
-          <button (click)="setTemplate('designer')"
-            [ngClass]="{'bg-white shadow-sm text-text-main': template() === 'designer', 'text-gray-500 hover:text-gray-700': template() !== 'designer'}"
-            class="px-3 py-1.5 text-xs font-medium rounded-md transition-all whitespace-nowrap">Designer</button>
-          <button (click)="setTemplate('compact')"
-            [ngClass]="{'bg-white shadow-sm text-text-main': template() === 'compact', 'text-gray-500 hover:text-gray-700': template() !== 'compact'}"
-            class="px-3 py-1.5 text-xs font-medium rounded-md transition-all whitespace-nowrap">Compact</button>
-          <button (click)="setTemplate('sidebar-dark')"
-            [ngClass]="{'bg-white shadow-sm text-text-main': template() === 'sidebar-dark', 'text-gray-500 hover:text-gray-700': template() !== 'sidebar-dark'}"
-            class="px-3 py-1.5 text-xs font-medium rounded-md transition-all whitespace-nowrap">Sidebar Dark</button>
-          <button (click)="setTemplate('banner')"
-            [ngClass]="{'bg-white shadow-sm text-text-main': template() === 'banner', 'text-gray-500 hover:text-gray-700': template() !== 'banner'}"
-            class="px-3 py-1.5 text-xs font-medium rounded-md transition-all whitespace-nowrap">Banner</button>
-          <button (click)="setTemplate('timeline')"
-            [ngClass]="{'bg-white shadow-sm text-text-main': template() === 'timeline', 'text-gray-500 hover:text-gray-700': template() !== 'timeline'}"
-            class="px-3 py-1.5 text-xs font-medium rounded-md transition-all whitespace-nowrap">Timeline</button>
-          <button (click)="setTemplate('bubble')"
-            [ngClass]="{'bg-white shadow-sm text-text-main': template() === 'bubble', 'text-gray-500 hover:text-gray-700': template() !== 'bubble'}"
-            class="px-3 py-1.5 text-xs font-medium rounded-md transition-all whitespace-nowrap">Bubble</button>
-          <button (click)="setTemplate('classic-ats')"
-            [ngClass]="{'bg-white shadow-sm text-text-main': template() === 'classic-ats', 'text-gray-500 hover:text-gray-700': template() !== 'classic-ats'}"
-            class="px-3 py-1.5 text-xs font-medium rounded-md transition-all whitespace-nowrap">Classic ATS</button>
-          <button (click)="setTemplate('startup')"
-            [ngClass]="{'bg-white shadow-sm text-text-main': template() === 'startup', 'text-gray-500 hover:text-gray-700': template() !== 'startup'}"
-            class="px-3 py-1.5 text-xs font-medium rounded-md transition-all whitespace-nowrap">Startup</button>
-        </div>
-
-        <button (click)="downloadPDF()" [disabled]="isDownloading"
-          class="bg-text-main text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-gray-800 transition-colors flex items-center gap-2 disabled:opacity-70 flex-shrink-0">
-          @if (isDownloading) {
-          <span class="material-icons text-sm animate-spin">refresh</span> Exporting...
-          } @else {
-          <span class="material-icons text-sm">download</span> Download PDF
-          }
-        </button>
-
-        <button (click)="close()"
-          class="w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 hover:bg-gray-200 text-gray-600 transition-colors ml-2">
-          <span class="material-icons text-sm">close</span>
-        </button>
-      </div>
+<div class="min-h-screen bg-bg-light flex flex-col">
+  <!-- Header -->
+  <div class="h-16 bg-white border-b border-gray-200 flex items-center justify-between px-6 flex-shrink-0 sticky top-0 z-20">
+    <div class="flex items-center gap-3">
+      <div class="w-8 h-8 rounded-lg bg-accent flex items-center justify-center text-white font-bold">CV</div>
+      <span class="font-semibold text-text-main">Builder</span>
     </div>
 
-    <!-- Body Split Screen -->
-    <div class="flex-1 flex overflow-hidden">
-      <!-- Left: Form -->
+    <div class="flex items-center gap-4">
+      <div class="flex bg-gray-100 p-1 rounded-lg overflow-x-auto max-w-[600px] no-scrollbar">
+        <button (click)="setTemplate('minimal')"
+          [ngClass]="{'bg-white shadow-sm text-text-main': template() === 'minimal', 'text-gray-500 hover:text-gray-700': template() !== 'minimal'}"
+          class="px-3 py-1.5 text-xs font-medium rounded-md transition-all whitespace-nowrap">Minimal</button>
+        <button (click)="setTemplate('modern')"
+          [ngClass]="{'bg-white shadow-sm text-text-main': template() === 'modern', 'text-gray-500 hover:text-gray-700': template() !== 'modern'}"
+          class="px-3 py-1.5 text-xs font-medium rounded-md transition-all whitespace-nowrap">Modern</button>
+        <button (click)="setTemplate('professional')"
+          [ngClass]="{'bg-white shadow-sm text-text-main': template() === 'professional', 'text-gray-500 hover:text-gray-700': template() !== 'professional'}"
+          class="px-3 py-1.5 text-xs font-medium rounded-md transition-all whitespace-nowrap">Professional</button>
+        <button (click)="setTemplate('creative')"
+          [ngClass]="{'bg-white shadow-sm text-text-main': template() === 'creative', 'text-gray-500 hover:text-gray-700': template() !== 'creative'}"
+          class="px-3 py-1.5 text-xs font-medium rounded-md transition-all whitespace-nowrap">Creative</button>
+        <button (click)="setTemplate('corporate')"
+          [ngClass]="{'bg-white shadow-sm text-text-main': template() === 'corporate', 'text-gray-500 hover:text-gray-700': template() !== 'corporate'}"
+          class="px-3 py-1.5 text-xs font-medium rounded-md transition-all whitespace-nowrap">Corporate</button>
+        <button (click)="setTemplate('tech')"
+          [ngClass]="{'bg-white shadow-sm text-text-main': template() === 'tech', 'text-gray-500 hover:text-gray-700': template() !== 'tech'}"
+          class="px-3 py-1.5 text-xs font-medium rounded-md transition-all whitespace-nowrap">Tech</button>
+        <button (click)="setTemplate('bold')"
+          [ngClass]="{'bg-white shadow-sm text-text-main': template() === 'bold', 'text-gray-500 hover:text-gray-700': template() !== 'bold'}"
+          class="px-3 py-1.5 text-xs font-medium rounded-md transition-all whitespace-nowrap">Bold</button>
+        <button (click)="setTemplate('elegant')"
+          [ngClass]="{'bg-white shadow-sm text-text-main': template() === 'elegant', 'text-gray-500 hover:text-gray-700': template() !== 'elegant'}"
+          class="px-3 py-1.5 text-xs font-medium rounded-md transition-all whitespace-nowrap">Elegant</button>
+        <button (click)="setTemplate('executive')"
+          [ngClass]="{'bg-white shadow-sm text-text-main': template() === 'executive', 'text-gray-500 hover:text-gray-700': template() !== 'executive'}"
+          class="px-3 py-1.5 text-xs font-medium rounded-md transition-all whitespace-nowrap">Executive</button>
+        <button (click)="setTemplate('fresher')"
+          [ngClass]="{'bg-white shadow-sm text-text-main': template() === 'fresher', 'text-gray-500 hover:text-gray-700': template() !== 'fresher'}"
+          class="px-3 py-1.5 text-xs font-medium rounded-md transition-all whitespace-nowrap">Fresher</button>
+        <button (click)="setTemplate('designer')"
+          [ngClass]="{'bg-white shadow-sm text-text-main': template() === 'designer', 'text-gray-500 hover:text-gray-700': template() !== 'designer'}"
+          class="px-3 py-1.5 text-xs font-medium rounded-md transition-all whitespace-nowrap">Designer</button>
+        <button (click)="setTemplate('compact')"
+          [ngClass]="{'bg-white shadow-sm text-text-main': template() === 'compact', 'text-gray-500 hover:text-gray-700': template() !== 'compact'}"
+          class="px-3 py-1.5 text-xs font-medium rounded-md transition-all whitespace-nowrap">Compact</button>
+        <button (click)="setTemplate('sidebar-dark')"
+          [ngClass]="{'bg-white shadow-sm text-text-main': template() === 'sidebar-dark', 'text-gray-500 hover:text-gray-700': template() !== 'sidebar-dark'}"
+          class="px-3 py-1.5 text-xs font-medium rounded-md transition-all whitespace-nowrap">Sidebar Dark</button>
+        <button (click)="setTemplate('banner')"
+          [ngClass]="{'bg-white shadow-sm text-text-main': template() === 'banner', 'text-gray-500 hover:text-gray-700': template() !== 'banner'}"
+          class="px-3 py-1.5 text-xs font-medium rounded-md transition-all whitespace-nowrap">Banner</button>
+        <button (click)="setTemplate('timeline')"
+          [ngClass]="{'bg-white shadow-sm text-text-main': template() === 'timeline', 'text-gray-500 hover:text-gray-700': template() !== 'timeline'}"
+          class="px-3 py-1.5 text-xs font-medium rounded-md transition-all whitespace-nowrap">Timeline</button>
+        <button (click)="setTemplate('bubble')"
+          [ngClass]="{'bg-white shadow-sm text-text-main': template() === 'bubble', 'text-gray-500 hover:text-gray-700': template() !== 'bubble'}"
+          class="px-3 py-1.5 text-xs font-medium rounded-md transition-all whitespace-nowrap">Bubble</button>
+        <button (click)="setTemplate('classic-ats')"
+          [ngClass]="{'bg-white shadow-sm text-text-main': template() === 'classic-ats', 'text-gray-500 hover:text-gray-700': template() !== 'classic-ats'}"
+          class="px-3 py-1.5 text-xs font-medium rounded-md transition-all whitespace-nowrap">Classic ATS</button>
+        <button (click)="setTemplate('startup')"
+          [ngClass]="{'bg-white shadow-sm text-text-main': template() === 'startup', 'text-gray-500 hover:text-gray-700': template() !== 'startup'}"
+          class="px-3 py-1.5 text-xs font-medium rounded-md transition-all whitespace-nowrap">Startup</button>
+      </div>
+
+      <button (click)="downloadPDF()" [disabled]="isDownloading"
+        class="bg-text-main text-white px-4 py-2 rounded-lg text-sm font-medium hover:bg-gray-800 transition-colors flex items-center gap-2 disabled:opacity-70 flex-shrink-0">
+        @if (isDownloading) {
+        <span class="material-icons text-sm animate-spin">refresh</span> Exporting...
+        } @else {
+        <span class="material-icons text-sm">download</span> Download PDF
+        }
+      </button>
+
+      <button (click)="close()"
+        class="w-8 h-8 flex items-center justify-center rounded-full bg-gray-100 hover:bg-gray-200 text-gray-600 transition-colors ml-2">
+        <span class="material-icons text-sm">close</span>
+      </button>
+    </div>
+  </div>
+
+  <!-- Body Split Screen -->
+  <div class="flex-1 flex overflow-hidden h-[calc(100vh-64px)]">
+    <!-- Left: Form -->
+    <div
+      class="w-full md:w-[45%] lg:w-[40%] border-r border-gray-200 bg-white z-10 shadow-[4px_0_24px_rgba(0,0,0,0.02)] overflow-y-auto no-scrollbar">
+      <app-cv-form></app-cv-form>
+    </div>
+
+    <!-- Right: Preview -->
+    <div class="hidden md:flex flex-1 bg-gray-100/50 p-8 overflow-y-auto items-start justify-center no-scrollbar">
+      <!-- A4 Aspect Ratio Container -->
       <div
-        class="w-full md:w-[45%] lg:w-[40%] border-r border-gray-200 bg-white z-10 shadow-[4px_0_24px_rgba(0,0,0,0.02)]">
-        <app-cv-form></app-cv-form>
-      </div>
-
-      <!-- Right: Preview -->
-      <div class="hidden md:flex flex-1 bg-gray-100/50 p-8 overflow-y-auto items-start justify-center no-scrollbar">
-        <!-- A4 Aspect Ratio Container -->
-        <div
-          class="w-full max-w-[800px] aspect-[1/1.414] shadow-xl rounded-sm overflow-hidden transition-all duration-300 hover:shadow-2xl">
-          <app-cv-preview></app-cv-preview>
-        </div>
+        class="w-full max-w-[800px] aspect-[1/1.414] shadow-xl rounded-sm overflow-hidden transition-all duration-300 hover:shadow-2xl sticky top-8">
+        <app-cv-preview></app-cv-preview>
       </div>
     </div>
-
   </div>
 </div>
-}

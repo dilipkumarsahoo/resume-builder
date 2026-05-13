@@ -1,5 +1,6 @@
 import { Component, inject, ElementRef, ViewChild, PLATFORM_ID } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
+import { Router } from '@angular/router';
 import { CvBuilderService, TemplateType } from '../cv-builder.service';
 import { CvFormComponent } from '../cv-form/cv-form.component';
 import { CvPreviewComponent } from '../cv-preview/cv-preview.component';
@@ -16,6 +17,7 @@ import { jsPDF } from 'jspdf';
 })
 export class CvBuilderModalComponent {
   private platformId = inject(PLATFORM_ID);
+  private router = inject(Router);
   cvService = inject(CvBuilderService);
   template = this.cvService.selectedTemplate;
   isDownloading = false;
@@ -27,13 +29,7 @@ export class CvBuilderModalComponent {
   }
 
   close() {
-    if (isPlatformBrowser(this.platformId) && this.modalContent) {
-      animate(this.modalContent.nativeElement, { opacity: [1, 0], scale: [1, 0.95] }, { duration: 0.2 }).finished.then(() => {
-        this.cvService.closeModal();
-      });
-    } else {
-      this.cvService.closeModal();
-    }
+    this.router.navigate(['/dashboard']);
   }
 
   async downloadPDF() {

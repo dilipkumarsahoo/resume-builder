@@ -4,7 +4,6 @@ import { CommonModule } from '@angular/common';
 import { LoaderComponent } from './loader/loader.component';
 import { NavbarComponent } from './navbar/navbar.component';
 import { FooterComponent } from './footer/footer.component';
-import { CvBuilderModalComponent } from './cv-builder-modal/cv-builder-modal.component';
 import { OnboardingComponent } from './onboarding/onboarding';
 
 @Component({
@@ -17,7 +16,6 @@ import { OnboardingComponent } from './onboarding/onboarding';
     LoaderComponent,
     NavbarComponent,
     FooterComponent,
-    CvBuilderModalComponent,
     OnboardingComponent
   ],
   templateUrl: './app.html',
@@ -28,6 +26,9 @@ export class App {
 
   isDashboard() {
     return this.router.url.includes('/dashboard');
+  }
+  isCvBuilder() {
+    return this.router.url.includes('/cv-builder');
   }
   isLogin() {
     return this.router.url.includes('/login');

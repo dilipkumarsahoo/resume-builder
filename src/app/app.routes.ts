@@ -3,6 +3,7 @@ import { HomeComponent } from './home/home.component';
 import { LoginComponent } from './login/login.component';
 import { SignupComponent } from './signup/signup.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { CvBuilderModalComponent } from './cv-builder-modal/cv-builder-modal.component';
 import { SavedJobsComponent } from './saved-jobs/saved-jobs.component';
 
 export const routes: Routes = [
@@ -10,5 +11,6 @@ export const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignupComponent },
   { path: 'dashboard', component: DashboardComponent },
+  { path: 'cv-builder', component: CvBuilderModalComponent },
   { path: 'saved-jobs', component: SavedJobsComponent }
 ];
