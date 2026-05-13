@@ -50,11 +50,40 @@
         <span class="absolute top-2 right-2 w-2 h-2 bg-red-500 rounded-full border-2 border-white"></span>
       </button>
 
-      <div class="group relative">
-        <div
+      <div class="relative">
+        <div (click)="toggleDropdown()"
           class="w-10 h-10 rounded-full bg-gray-200 border-2 border-white shadow-sm cursor-pointer overflow-hidden hover:ring-2 hover:ring-accent transition-all">
           <img src="https://api.dicebear.com/7.x/avataaars/svg?seed=Felix" alt="User avatar" />
         </div>
+
+        <!-- Dropdown Menu -->
+        @if (isDropdownOpen) {
+        <div
+          class="absolute right-0 mt-2 w-48 bg-white rounded-xl shadow-lg border border-gray-100 py-2 z-50 animate-in fade-in slide-in-from-top-2 duration-200">
+          <div class="px-4 py-2 border-b border-gray-50 mb-1">
+            <p class="text-xs text-gray-500 font-medium uppercase tracking-wider">Account</p>
+          </div>
+          <button
+            class="w-full flex items-center gap-3 px-4 py-2 text-sm text-gray-600 hover:bg-gray-50 hover:text-accent transition-colors">
+            <span class="material-icons text-lg">person</span>
+            Profile
+          </button>
+          <button
+            class="w-full flex items-center gap-3 px-4 py-2 text-sm text-gray-600 hover:bg-gray-50 hover:text-accent transition-colors">
+            <span class="material-icons text-lg">settings</span>
+            Settings
+          </button>
+          <div class="h-px bg-gray-50 my-1"></div>
+          <button (click)="logout()"
+            class="w-full flex items-center gap-3 px-4 py-2 text-sm text-red-500 hover:bg-red-50 hover:text-red-600 transition-colors">
+            <span class="material-icons text-lg">logout</span>
+            Logout
+          </button>
+        </div>
+
+        <!-- Backdrop to close dropdown -->
+        <div (click)="isDropdownOpen = false" class="fixed inset-0 z-40"></div>
+        }
       </div>
 
       <!-- Mobile Menu Button -->

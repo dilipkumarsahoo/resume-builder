@@ -2,6 +2,7 @@ import { Component, inject, ElementRef, ViewChild, PLATFORM_ID } from '@angular/
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { Router } from '@angular/router';
 import { CvBuilderService, TemplateType } from '../cv-builder.service';
+import { AuthService } from '../services/auth.service';
 import { CvFormComponent } from '../cv-form/cv-form.component';
 import { CvPreviewComponent } from '../cv-preview/cv-preview.component';
 import { animate } from 'motion';
@@ -18,6 +19,7 @@ import { jsPDF } from 'jspdf';
 export class CvBuilderModalComponent {
   private platformId = inject(PLATFORM_ID);
   private router = inject(Router);
+  private authService = inject(AuthService);
   cvService = inject(CvBuilderService);
   template = this.cvService.selectedTemplate;
   isDownloading = false;
@@ -34,6 +36,12 @@ export class CvBuilderModalComponent {
 
   async downloadPDF() {
     if (!isPlatformBrowser(this.platformId)) return;
+
+    // Check user login
+    if (!this.authService.getToken()) {
+      this.router.navigate(['/login']);
+      return;
+    }
 
     this.isDownloading = true;
     try {

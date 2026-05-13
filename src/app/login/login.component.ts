@@ -39,8 +39,8 @@ export class LoginComponent {
       this.authService.login(this.loginForm.value).subscribe({
         next: (response) => {
           console.log('Login success', response);
-          if (response.data?.token) {
-            this.authService.saveToken(response.data.token);
+          if (response.data?.accessToken) {
+            this.authService.saveToken(response.data.accessToken);
           }
           this.router.navigate(['/dashboard']); // Assuming there is a dashboard route
         },

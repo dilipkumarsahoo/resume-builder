@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 
 import { CvBuilderService } from '../cv-builder.service';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-dashboard',
@@ -13,6 +14,7 @@ import { CvBuilderService } from '../cv-builder.service';
 })
 export class DashboardComponent {
   showUploadModal = false;
+  isDropdownOpen = false;
   // Mock data for the dashboard
   documents = [
     {
@@ -24,7 +26,20 @@ export class DashboardComponent {
     }
   ];
 
-  constructor(public cvService: CvBuilderService) {}
+  constructor(
+    public cvService: CvBuilderService,
+    private authService: AuthService,
+    private router: Router
+  ) {}
+
+  toggleDropdown() {
+    this.isDropdownOpen = !this.isDropdownOpen;
+  }
+
+  logout() {
+    this.authService.logout();
+    this.router.navigate(['/']);
+  }
 
   openTemplateSelection() {
     this.cvService.isOnboardingOpen.set(true);
