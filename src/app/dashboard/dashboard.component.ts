@@ -15,6 +15,41 @@ import { AuthService } from '../services/auth.service';
 export class DashboardComponent {
   showUploadModal = false;
   isDropdownOpen = false;
+  isDragging = false;
+
+  onFileSelected(event: Event) {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      this.cvService.uploadAndParseResume(input.files[0], () => {
+        this.showUploadModal = false;
+      });
+    }
+  }
+
+  onDragOver(event: DragEvent) {
+    event.preventDefault();
+    event.stopPropagation();
+    this.isDragging = true;
+  }
+
+  onDragLeave(event: DragEvent) {
+    event.preventDefault();
+    event.stopPropagation();
+    this.isDragging = false;
+  }
+
+  onDrop(event: DragEvent) {
+    event.preventDefault();
+    event.stopPropagation();
+    this.isDragging = false;
+    
+    if (event.dataTransfer && event.dataTransfer.files && event.dataTransfer.files.length > 0) {
+      this.cvService.uploadAndParseResume(event.dataTransfer.files[0], () => {
+        this.showUploadModal = false;
+      });
+    }
+  }
+
   // Mock data for the dashboard
   documents = [
     {

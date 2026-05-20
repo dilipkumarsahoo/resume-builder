@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const morgan = require('morgan');
 const authRoutes = require('./modules/auth/auth.routes');
+const parserRoutes = require('./modules/parser/parser.routes');
 const { errorHandler } = require('./middlewares/error.middleware');
 
 const app = express();
@@ -14,6 +15,7 @@ app.use(express.urlencoded({ extended: true }));
 
 // Routes
 app.use('/api/auth', authRoutes);
+app.use('/api/parser', parserRoutes);
 
 // Health check
 app.get('/health', (req, res) => {

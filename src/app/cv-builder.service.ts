@@ -1,5 +1,6 @@
 import { Injectable, signal, inject } from '@angular/core';
 import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
 import { GoogleGenAI } from '@google/genai';
 
 export interface Experience {
@@ -42,11 +43,15 @@ export type TemplateType = 'minimal' | 'modern' | 'professional' | 'creative' | 
 @Injectable({ providedIn: 'root' })
 export class CvBuilderService {
   private router = inject(Router);
+  private http = inject(HttpClient);
   isOnboardingOpen = signal(false);
   onboardingStep = signal(1);
   hideOnboardingSteps = signal(false);
   selectedTemplate = signal<TemplateType>('modern');
   isImprovingSummary = signal(false);
+  isParsing = signal(false);
+  parseError = signal<string | null>(null);
+
   defaultData: CVData = {
     fullName: 'Alex Johnson',
     jobTitle: 'Senior Frontend Developer',
@@ -150,6 +155,31 @@ export class CvBuilderService {
     } finally {
       this.isImprovingSummary.set(false);
     }
+  }
+
+  uploadAndParseResume(file: File, onSuccess?: () => void) {
+    this.isParsing.set(true);
+    this.parseError.set(null);
+    
+    const formData = new FormData();
+    formData.append('resume', file);
+    
+    this.http.post<any>('http://localhost:3000/api/parser/upload', formData).subscribe({
+      next: (res) => {
+        if (res && res.data) {
+          this.updateData(res.data);
+          if (onSuccess) {
+            onSuccess();
+          }
+        }
+        this.isParsing.set(false);
+      },
+      error: (err) => {
+        console.error('Failed to parse resume:', err);
+        this.parseError.set(err?.error?.message || 'Failed to parse resume. Please try again.');
+        this.isParsing.set(false);
+      }
+    });
   }
 
   private saveToLocalStorage(data: CVData) {

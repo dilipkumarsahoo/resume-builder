@@ -14,6 +14,7 @@ export class OnboardingComponent {
   cvService = inject(CvBuilderService);
   isUploading = signal(false);
   selectedTemplateId = signal<TemplateType | null>(null);
+  isDragging = false;
 
   // 18 Professional Templates with Metadata and Fixed Previews
   templates: { id: TemplateType, name: string, category: string, preview: string }[] = [
@@ -41,14 +42,36 @@ export class OnboardingComponent {
     console.log("Total templates loaded:", this.templates.length);
   }
 
-  onFileSelected(event: any) {
-    const file = event.target.files[0];
-    if (file) {
-      this.isUploading.set(true);
-      setTimeout(() => {
-        this.isUploading.set(false);
+  onFileSelected(event: Event) {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      this.cvService.uploadAndParseResume(input.files[0], () => {
         this.nextStep();
-      }, 1500);
+      });
+    }
+  }
+
+  onDragOver(event: DragEvent) {
+    event.preventDefault();
+    event.stopPropagation();
+    this.isDragging = true;
+  }
+
+  onDragLeave(event: DragEvent) {
+    event.preventDefault();
+    event.stopPropagation();
+    this.isDragging = false;
+  }
+
+  onDrop(event: DragEvent) {
+    event.preventDefault();
+    event.stopPropagation();
+    this.isDragging = false;
+    
+    if (event.dataTransfer && event.dataTransfer.files && event.dataTransfer.files.length > 0) {
+      this.cvService.uploadAndParseResume(event.dataTransfer.files[0], () => {
+        this.nextStep();
+      });
     }
   }
 

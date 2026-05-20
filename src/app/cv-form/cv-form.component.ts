@@ -13,6 +13,36 @@ import { CvBuilderService, CVData } from '../cv-builder.service';
 export class CvFormComponent {
   cvService = inject(CvBuilderService);
   data = this.cvService.cvData;
+  isDragging = false;
+
+  onFileSelected(event: Event) {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      this.cvService.uploadAndParseResume(input.files[0]);
+    }
+  }
+
+  onDragOver(event: DragEvent) {
+    event.preventDefault();
+    event.stopPropagation();
+    this.isDragging = true;
+  }
+
+  onDragLeave(event: DragEvent) {
+    event.preventDefault();
+    event.stopPropagation();
+    this.isDragging = false;
+  }
+
+  onDrop(event: DragEvent) {
+    event.preventDefault();
+    event.stopPropagation();
+    this.isDragging = false;
+    
+    if (event.dataTransfer && event.dataTransfer.files && event.dataTransfer.files.length > 0) {
+      this.cvService.uploadAndParseResume(event.dataTransfer.files[0]);
+    }
+  }
 
   updateField(field: keyof CVData, value: unknown) {
     this.cvService.updateData({ [field]: value });
