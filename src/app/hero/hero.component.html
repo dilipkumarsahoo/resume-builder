@@ -35,8 +35,13 @@
       <!-- Floating CV Mockup -->
       <div
         class="relative w-full max-w-md mx-auto aspect-[1/1.4] bg-white rounded-2xl shadow-2xl border border-gray-100 overflow-hidden transform rotate-2 hover:rotate-0 transition-transform duration-500">
-        <img src="https://picsum.photos/seed/cv1/800/1120" alt="CV Template Preview"
-          class="w-full h-full object-cover opacity-90" referrerpolicy="no-referrer" />
+        <div class="absolute inset-0 bg-white overflow-hidden">
+          <div class="absolute top-0 left-0 origin-top-left pointer-events-none"
+            style="transform: scale(0.42); width: 238%; height: 238%;">
+            <app-cv-preview templateOverride="startup" [isPreview]="true">
+            </app-cv-preview>
+          </div>
+        </div>
         <!-- UI Overlays -->
         <div
           class="absolute top-4 right-4 bg-white/90 backdrop-blur-sm px-3 py-1.5 rounded-full shadow-sm border border-gray-100 flex items-center gap-2 animate-bounce"
@@ -45,6 +50,7 @@
           <span class="text-xs font-semibold">ATS Optimized</span>
         </div>
       </div>
+
 
       <!-- Decorative elements -->
       <div

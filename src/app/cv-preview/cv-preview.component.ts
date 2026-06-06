@@ -16,38 +16,87 @@ export class CvPreviewComponent {
 
   // Professional Dummy Data for Previews
   dummyData = {
-    fullName: 'Jonathan Stevens',
-    jobTitle: 'Senior Full Stack Architect',
-    email: 'j.stevens@example.com',
-    phone: '+1 (555) 000-1234',
-    location: 'San Francisco, CA',
-    summary: 'Expert Software Architect with over 10 years of experience in building high-scale distributed systems and beautiful, intuitive user interfaces. Proven track record of leading engineering teams and delivering cutting-edge SaaS solutions using React, Node.js, and cloud technologies.',
-    skills: ['React/Angular', 'TypeScript', 'Node.js', 'AWS/GCP', 'PostgreSQL', 'Docker/K8s', 'System Design', 'Agile Leadership'],
+    fullName: 'Camila Rivera',
+    jobTitle: 'Sales Manager',
+    email: 'camila.rivera@email.com',
+    phone: '+1 305 555 0184',
+    location: 'Miami, United States',
+
+    summary: `Results-driven sales professional with 6+ years of experience in account growth, client relationship management, and pipeline development across B2B environments. Strong track record of improving conversion rates, supporting revenue targets, and building trust with diverse customer groups in English- and Spanish-speaking markets. Brings a practical, people-focused approach to sales planning, team coordination, and long-term customer retention.`,
+
+    skills: [
+      'Account Management',
+      'CRM Management',
+      'Sales Forecasting',
+      'Negotiation',
+      'Client Retention',
+      'Pipeline Development'
+    ],
+
     experience: [
       {
         id: '1',
-        role: 'Principal Software Engineer',
-        company: 'Global Tech Systems',
-        startDate: 'Jan 2021',
+        role: 'Sales Manager',
+        company: 'BrightPath Business Solutions',
+        startDate: '01/2023',
         endDate: 'Present',
-        description: 'Architected and launched a multi-tenant cloud platform serving 1M+ active users. Improved system reliability to 99.99% and reduced infrastructure costs by 30% through containerization.'
+        description: `Manage a portfolio of mid-market clients across retail and service sectors. Lead quarterly sales planning and improved team conversion rates by 14%. Build strong client relationships that increased renewals and upsell opportunities.`
       },
       {
         id: '2',
-        role: 'Senior Web Developer',
-        company: 'Innovate Digital',
-        startDate: 'Mar 2017',
-        endDate: 'Dec 2020',
-        description: 'Led the frontend migration from legacy systems to a modern React architecture. Mentored 12+ junior developers and established company-wide coding standards.'
+        role: 'Account Manager',
+        company: 'Horizon Office Supply',
+        startDate: '03/2020',
+        endDate: '12/2022',
+        description: `Owned inbound and outbound sales activity for regional business accounts. Delivered tailored product proposals and consistently exceeded revenue goals. Coordinated with operations teams to improve customer satisfaction.`
+      },
+      {
+        id: '3',
+        role: 'Sales Coordinator',
+        company: 'SunPeak Telecom',
+        startDate: '06/2018',
+        endDate: '02/2020',
+        description: `Supported account executives with lead tracking, reporting, and proposal preparation. Contributed to pipeline organization and improved follow-up consistency.`
       }
     ],
+
     education: [
-      { id: '1', degree: 'MSc in Software Engineering', institution: 'Stanford University', year: '2017' },
-      { id: '2', degree: 'BSc in Computer Science', institution: 'MIT', year: '2015' }
+      {
+        id: '1',
+        degree: 'Bachelor of Business Administration',
+        institution: 'Florida International University',
+        year: '2018'
+      },
+      {
+        id: '2',
+        degree: 'Associate Degree in Marketing',
+        institution: 'Miami Dade College',
+        year: '2014'
+      }
     ],
+
     projects: [
-      { id: '1', name: 'AI Engine V2', description: 'Real-time natural language processing engine for automated customer support, processing 50k requests per minute.' },
-      { id: '2', name: 'Open Source UI Library', description: 'Created a highly accessible component library used by over 500 developers globally.' }
+      {
+        id: '1',
+        name: 'Regional Growth Initiative',
+        description: 'Developed account expansion strategies that increased customer retention and annual recurring revenue.'
+      },
+      {
+        id: '2',
+        name: 'CRM Optimization Program',
+        description: 'Improved sales tracking workflows and reporting accuracy through CRM process enhancements.'
+      }
+    ],
+
+    languages: [
+      {
+        name: 'English',
+        level: 5
+      },
+      {
+        name: 'Spanish',
+        level: 4
+      }
     ]
   };
 

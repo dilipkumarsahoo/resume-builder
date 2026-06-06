@@ -1,27 +1,57 @@
 <section class="py-20 bg-bg-light overflow-hidden">
   <div class="max-w-7xl mx-auto px-6 mb-12 text-center">
-    <h2 class="text-3xl md:text-4xl font-bold tracking-tight text-text-main mb-4">Templates to win recruiters over</h2>
-    <p class="text-gray-500 max-w-2xl mx-auto text-lg">Choose from over 40 professional templates. Instantly ready to use, no design skills required.</p>
+    <h2 class="text-3xl md:text-4xl font-bold tracking-tight text-text-main mb-4">
+      Templates to win recruiters over
+    </h2>
+    <p class="text-gray-500 max-w-2xl mx-auto text-lg">
+      Choose from over 40 professional templates. Instantly ready to use, no design skills required.
+    </p>
   </div>
 
   <div class="relative w-full flex overflow-hidden group">
-    <!-- Carousel Track -->
     <div class="flex gap-6 px-6 animate-scroll w-max">
-      <!-- Duplicate items for infinite scroll effect -->
-      @for (name of [...templateNames, ...templateNames]; track $index) {
-        <div class="relative w-64 md:w-80 aspect-[1/1.4] rounded-xl overflow-hidden shadow-sm border border-gray-200 bg-white flex-shrink-0 transition-all duration-300 hover:scale-105 hover:shadow-xl hover:border-accent/50 cursor-pointer group/card">
-          <img [src]="'https://picsum.photos/seed/template' + name + '/600/840'" alt="CV Template" class="w-full h-full object-cover opacity-90 group-hover/card:opacity-100 transition-opacity" referrerpolicy="no-referrer" />
-          
-          <!-- Hover Overlay -->
-          <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover/card:opacity-100 transition-all duration-300 flex flex-col justify-end p-6">
-            <h3 class="text-white font-bold text-xl mb-1 capitalize">{{ name.replace('-', ' ') }}</h3>
-            <p class="text-gray-300 text-xs mb-4">Modern & Professional</p>
-            <button (click)="cvService.openModal(name)" class="w-full py-2.5 bg-accent text-white text-center rounded-lg font-bold text-sm transform translate-y-4 group-hover/card:translate-y-0 transition-transform duration-300">
-              Use Template
-            </button>
+
+      @for (template of [...templates, ...templates]; track $index) {
+
+      <div
+        class="relative w-64 md:w-80 aspect-[1/1.4] rounded-xl overflow-hidden shadow-sm border border-gray-200 bg-white flex-shrink-0 transition-all duration-300 hover:scale-105 hover:shadow-xl hover:border-accent/50 cursor-pointer group/card">
+
+        <!-- SAME PREVIEW AS ONBOARDING -->
+        <div class="absolute inset-0 bg-white overflow-hidden">
+          <div class="absolute top-0 left-0 origin-top-left pointer-events-none" style="
+              transform: scale(0.35);
+              width: 285%;
+              height: 285%;
+            ">
+            <app-cv-preview [templateOverride]="template.id" [isPreview]="true">
+            </app-cv-preview>
           </div>
         </div>
+
+        <!-- Hover Overlay -->
+        <div
+          class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent opacity-0 group-hover/card:opacity-100 transition-all duration-300 flex flex-col justify-end p-6">
+
+          <h3 class="text-white font-bold text-xl mb-1">
+            {{ template.name }}
+          </h3>
+
+          <p class="text-gray-300 text-xs mb-4">
+            {{ template.category }}
+          </p>
+
+          <button (click)="cvService.openModal(template.id)"
+            class="w-full py-2.5 bg-accent text-white text-center rounded-lg font-bold text-sm transform translate-y-4 group-hover/card:translate-y-0 transition-transform duration-300">
+
+            Use Template
+
+          </button>
+        </div>
+
+      </div>
+
       }
+
     </div>
   </div>
 </section>
