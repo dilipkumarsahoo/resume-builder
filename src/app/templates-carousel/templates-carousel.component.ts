@@ -12,10 +12,6 @@ import { CvPreviewComponent } from '../cv-preview/cv-preview.component';
 export class TemplatesCarouselComponent {
   cvService = inject(CvBuilderService);
 
-  templateNames: TemplateType[] = [
-    'minimal', 'modern', 'professional', 'creative', 'corporate', 'tech', 'bold', 'elegant', 'executive', 'fresher', 'designer', 'compact', 'sidebar-dark', 'banner', 'timeline', 'bubble', 'classic-ats', 'startup'
-  ];
-
   templates = [
     { id: 'minimal', name: 'Modern Minimal', category: 'Minimal' },
     { id: 'modern', name: 'Creative Edge', category: 'Creative' },
