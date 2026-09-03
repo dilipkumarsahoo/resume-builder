@@ -1,0 +1,536 @@
+<div class="min-h-screen bg-[#f8fafc] flex font-sans text-slate-800">
+  
+  <!-- FlowCV Sidebar -->
+  <aside class="w-64 bg-[#f1f5f9]/80 border-r border-slate-200/80 flex flex-col justify-between p-6 flex-shrink-0 hidden md:flex min-h-screen sticky top-0 h-screen">
+    <div class="space-y-8">
+      <!-- Logo -->
+      <div class="flex items-center gap-3 px-2 cursor-pointer" (click)="close()">
+        <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-indigo-600 via-indigo-500 to-purple-500 flex items-center justify-center text-white shadow-md shadow-indigo-200">
+          <span class="material-icons text-xl">description</span>
+        </div>
+        <div class="flex flex-col">
+          <span class="text-xl font-black tracking-tight text-slate-900 leading-none">GlowCV</span>
+          <span class="text-[10px] font-bold text-indigo-600 uppercase tracking-widest mt-0.5">Career Suite</span>
+        </div>
+      </div>
+
+      <!-- Navigation Links -->
+      <nav class="space-y-2">
+        <!-- Resume Tab -->
+        <button 
+          (click)="navigateToResume()"
+          class="w-full flex items-center gap-3 px-4 py-3 rounded-xl font-bold text-sm text-slate-600 hover:bg-slate-200/60 transition-all cursor-pointer group"
+        >
+          <span class="material-icons text-slate-400 group-hover:text-indigo-600 transition-colors">badge</span>
+          <span>Resume</span>
+        </button>
+
+        <!-- Cover Letter Tab (Active) -->
+        <button 
+          (click)="switchToSelector()"
+          class="w-full flex items-center gap-3 px-4 py-3 rounded-xl font-bold text-sm bg-white text-indigo-600 shadow-sm border border-slate-200/60 transition-all cursor-pointer"
+        >
+          <span class="material-icons text-indigo-600">article</span>
+          <span>Cover Letter</span>
+          <span class="ml-auto w-2 h-2 rounded-full bg-indigo-600"></span>
+        </button>
+
+        <!-- Job Tracker Tab -->
+        <button 
+          (click)="navigateToJobTracker()"
+          class="w-full flex items-center gap-3 px-4 py-3 rounded-xl font-bold text-sm text-slate-600 hover:bg-slate-200/60 transition-all cursor-pointer group"
+        >
+          <span class="material-icons text-slate-400 group-hover:text-indigo-600 transition-colors">work_outline</span>
+          <span>Job Tracker</span>
+        </button>
+      </nav>
+    </div>
+
+    <!-- Sidebar Bottom Auth Buttons -->
+    <div class="space-y-3 pt-6 border-t border-slate-200/80">
+      <button 
+        routerLink="/login"
+        class="w-full py-2.5 px-4 bg-white border border-slate-300 rounded-xl font-bold text-slate-700 text-sm hover:bg-slate-50 transition-all shadow-sm cursor-pointer"
+      >
+        Login
+      </button>
+      <button 
+        routerLink="/signup"
+        class="w-full py-2.5 px-4 bg-slate-900 text-white rounded-xl font-bold text-sm hover:bg-slate-800 transition-all shadow-sm cursor-pointer"
+      >
+        Signup
+      </button>
+    </div>
+  </aside>
+
+  <!-- Main Content Wrapper -->
+  <main class="flex-1 flex flex-col min-w-0 min-h-screen">
+    
+    <!-- VIEW 1: FLOWCV-STYLE TEMPLATE SELECTION GALLERY -->
+    <div *ngIf="viewMode === 'select'" class="flex-1 flex flex-col p-6 sm:p-10 lg:p-14 max-w-7xl mx-auto w-full">
+      
+      <!-- Top Title & Subtitle Section -->
+      <div class="space-y-2 mb-10">
+        <div class="flex items-center justify-between">
+          <h1 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
+            Start building your cover letter
+          </h1>
+          <button 
+            (click)="switchToBuilder()"
+            class="hidden sm:flex items-center gap-2 px-5 py-2.5 border-2 border-slate-800 text-slate-900 font-bold text-sm rounded-xl hover:bg-slate-900 hover:text-white transition-all shadow-sm cursor-pointer"
+          >
+            <span class="material-icons text-base">add</span>
+            Start blank / AI prompt
+          </button>
+        </div>
+        <p class="text-slate-500 text-base sm:text-lg">
+          Choose a design you like. You can customize or switch it later.
+        </p>
+      </div>
+
+      <!-- Filter Pills Row -->
+      <div class="flex flex-wrap items-center justify-between gap-4 mb-10">
+        <div class="flex items-center gap-2 overflow-x-auto pb-2 no-scrollbar">
+          <button 
+            *ngFor="let cat of categories"
+            (click)="filterCategory(cat)"
+            [class]="selectedCategory === cat 
+              ? 'px-6 py-2.5 bg-slate-900 text-white font-bold text-sm rounded-full shadow-md transition-all cursor-pointer' 
+              : 'px-6 py-2.5 bg-white text-slate-600 hover:text-slate-900 font-semibold text-sm rounded-full border border-slate-200 hover:border-slate-300 transition-all cursor-pointer'"
+          >
+            {{ cat }}
+          </button>
+        </div>
+
+        <button 
+          (click)="switchToBuilder()"
+          class="sm:hidden w-full flex items-center justify-center gap-2 py-3 bg-slate-900 text-white font-bold text-sm rounded-xl shadow-md cursor-pointer"
+        >
+          <span class="material-icons text-base">add</span>
+          Start blank / AI prompt
+        </button>
+      </div>
+
+      <!-- Template Cards Grid -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div 
+          *ngFor="let template of filteredTemplates"
+          (click)="selectTemplateAndStart(template.id)"
+          class="group bg-white rounded-2xl border-2 transition-all duration-300 overflow-hidden cursor-pointer flex flex-col shadow-sm hover:shadow-xl hover:-translate-y-1 relative"
+          [class.border-indigo-600]="selectedTemplate === template.id"
+          [class.border-slate-200]="selectedTemplate !== template.id"
+        >
+          <!-- Badge overlay -->
+          <div *ngIf="template.badge" class="absolute top-4 left-4 z-10">
+            <span class="px-3 py-1 bg-indigo-600 text-white text-[10px] font-black uppercase tracking-wider rounded-full shadow-md">
+              {{ template.badge }}
+            </span>
+          </div>
+
+          <!-- Active checkmark badge -->
+          <div *ngIf="selectedTemplate === template.id" class="absolute top-4 right-4 z-10 w-8 h-8 rounded-full bg-emerald-500 text-white flex items-center justify-center shadow-lg animate-bounce">
+            <span class="material-icons text-sm">check</span>
+          </div>
+
+          <!-- Document Visual Miniature Preview Container -->
+          <div class="aspect-[1/1.35] bg-slate-100/70 p-6 flex flex-col relative overflow-hidden border-b border-slate-100 group-hover:bg-slate-100 transition-colors">
+            
+            <!-- Miniature Cover Letter Render Card -->
+            <div 
+              class="w-full h-full bg-white shadow-md rounded border border-slate-200/70 p-6 flex flex-col text-[9px] leading-snug overflow-hidden select-none pointer-events-none transition-transform duration-300 group-hover:scale-[1.02]"
+              [class]="'template-' + template.id"
+            >
+              <!-- HEADER STYLES ACCORDING TO TEMPLATE -->
+              
+              <!-- Modern Header -->
+              <div *ngIf="template.id === 'modern'" class="mb-4">
+                <div class="h-1 bg-indigo-600 -mx-6 -mt-6 mb-3"></div>
+                <h2 class="font-bold text-xs text-slate-900 tracking-tight">{{ fullName || 'Alex Johnson' }}</h2>
+                <p class="text-[8px] text-slate-500 mt-0.5">alex.johnson@example.com  |  +1 (555) 123-4567  |  San Francisco, CA</p>
+                <div class="h-[1px] bg-slate-200 mt-2"></div>
+              </div>
+
+              <!-- Elegant Serif Header -->
+              <div *ngIf="template.id === 'elegant'" class="mb-4 text-center font-serif">
+                <h2 class="font-normal italic text-sm text-slate-900">{{ fullName || 'Alex Johnson' }}</h2>
+                <p class="text-[8px] text-slate-500 mt-0.5 uppercase tracking-widest">alex.johnson@example.com  •  San Francisco, CA</p>
+                <div class="h-[1px] bg-slate-300 mt-2"></div>
+              </div>
+
+              <!-- Creative Header -->
+              <div *ngIf="template.id === 'creative'" class="mb-4">
+                <h2 class="font-black text-xs text-indigo-600">{{ fullName || 'Alex Johnson' }}</h2>
+                <p class="text-[8px] text-slate-500 mt-0.5 font-medium">alex.johnson@example.com   •   +1 (555) 123-4567</p>
+                <div class="h-[2px] bg-indigo-600 mt-2 rounded-full"></div>
+              </div>
+
+              <!-- Minimal Header -->
+              <div *ngIf="template.id === 'minimal'" class="mb-4">
+                <h2 class="font-bold text-xs text-slate-900">{{ fullName || 'Alex Johnson' }}</h2>
+                <p class="text-[8px] text-slate-500 mt-1">alex.johnson@example.com • +1 (555) 123-4567</p>
+              </div>
+
+              <!-- Executive Header -->
+              <div *ngIf="template.id === 'executive'" class="mb-4 -mx-6 -mt-6 bg-slate-800 p-4 text-white">
+                <h2 class="font-bold text-xs">{{ fullName || 'Alex Johnson' }}</h2>
+                <p class="text-[8px] text-slate-300 mt-0.5">alex.johnson@example.com  |  Senior Executive</p>
+              </div>
+
+              <!-- Tech Header -->
+              <div *ngIf="template.id === 'tech'" class="mb-4">
+                <div class="h-1 bg-emerald-500 -mx-6 -mt-6 mb-3"></div>
+                <h2 class="font-bold text-xs text-slate-900">{{ fullName || 'Alex Johnson' }}</h2>
+                <p class="text-[8px] text-emerald-600 font-mono mt-0.5">alex.johnson@example.com  //  Software Architect</p>
+                <div class="h-[1px] bg-slate-200 mt-2"></div>
+              </div>
+
+              <!-- Document Body Skeleton Simulation -->
+              <div class="space-y-2 text-slate-600 text-[8px] flex-1">
+                <p class="font-bold text-slate-800">{{ currentDate }}</p>
+                <p class="font-bold text-slate-800 mb-2">Dear Hiring Manager,</p>
+                <p>I am writing to express my strong interest in joining your team. With over 5 years of experience delivering scalable software applications, I bring proven expertise in modern development practices...</p>
+                <p class="hidden sm:block">Throughout my career, I have consistently driven technical innovation, collaborating with cross-functional teams to build high-performance products that solve real customer problems...</p>
+                <div class="pt-3">
+                  <p>Sincerely,</p>
+                  <p class="font-bold text-slate-900 mt-2">{{ fullName || 'Alex Johnson' }}</p>
+                </div>
+              </div>
+            </div>
+
+            <!-- Hover overlay button -->
+            <div class="absolute inset-0 bg-slate-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center backdrop-blur-[2px]">
+              <button 
+                (click)="selectTemplateAndStart(template.id); $event.stopPropagation()"
+                class="px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-bold text-sm shadow-xl transition-all transform hover:scale-105"
+              >
+                Use Template
+              </button>
+            </div>
+
+          </div>
+
+          <!-- Card Description Footer -->
+          <div class="p-5 flex flex-col justify-between flex-1 bg-white">
+            <div>
+              <div class="flex items-center justify-between mb-1">
+                <h3 class="font-bold text-slate-900 text-base group-hover:text-indigo-600 transition-colors">
+                  {{ template.name }}
+                </h3>
+                <span class="text-[10px] font-bold px-2.5 py-0.5 bg-slate-100 text-slate-600 rounded-md uppercase tracking-wider">
+                  {{ template.category }}
+                </span>
+              </div>
+              <p class="text-xs text-slate-500 leading-relaxed mt-1">
+                {{ template.desc }}
+              </p>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+    </div>
+
+    <!-- VIEW 2: COVER LETTER BUILDER & EDITOR VIEW -->
+    <div *ngIf="viewMode === 'builder'" class="flex-1 flex flex-col h-screen overflow-hidden">
+      
+      <!-- Top Action Bar -->
+      <div class="h-16 bg-white border-b border-slate-200 flex items-center justify-between px-6 flex-shrink-0 sticky top-0 z-20 shadow-sm">
+        <div class="flex items-center gap-4">
+          <button 
+            (click)="switchToSelector()" 
+            class="px-3.5 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer"
+          >
+            <span class="material-icons text-sm">arrow_back</span>
+            Back to Templates
+          </button>
+
+          <div class="h-5 w-[1px] bg-slate-200"></div>
+
+          <div class="flex items-center gap-2">
+            <span class="text-base font-bold text-slate-900">Cover Letter</span>
+            <span class="px-2 py-0.5 text-[10px] font-black bg-indigo-50 text-indigo-600 rounded-full uppercase tracking-wider">Editor</span>
+          </div>
+        </div>
+
+        <!-- Right Side Template Switcher & PDF Export -->
+        <div class="flex items-center gap-4">
+          <div class="relative hidden sm:flex items-center gap-2">
+            <label class="text-xs font-bold text-slate-500">Template:</label>
+            <select 
+              [(ngModel)]="selectedTemplate" 
+              (change)="saveDraft()"
+              class="bg-white border border-slate-300 rounded-xl px-3 py-1.5 text-xs font-bold text-slate-700 min-w-[160px] focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 cursor-pointer"
+            >
+              <option *ngFor="let item of templates" [value]="item.id">
+                {{ item.name }} ({{ item.category }})
+              </option>
+            </select>
+          </div>
+
+          <button 
+            (click)="downloadPDF()" 
+            [disabled]="isDownloading || !coverLetterText"
+            class="bg-indigo-600 text-white px-5 py-2 rounded-xl text-xs font-bold hover:bg-indigo-700 transition-all flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed shadow-md shadow-indigo-100 cursor-pointer"
+          >
+            <span class="material-icons text-sm" *ngIf="!isDownloading">download</span>
+            <span class="material-icons text-sm animate-spin" *ngIf="isDownloading">refresh</span>
+            {{ isDownloading ? 'Exporting...' : 'Export PDF' }}
+          </button>
+        </div>
+      </div>
+
+      <!-- Split Screen Builder Body -->
+      <div class="flex-1 flex overflow-hidden h-[calc(100vh-64px)]">
+        
+        <!-- Left Pane: Inputs & AI Editor -->
+        <div class="w-full md:w-[45%] lg:w-[40%] border-r border-slate-200 bg-white z-10 shadow-[4px_0_24px_rgba(0,0,0,0.02)] overflow-y-auto flex flex-col no-scrollbar">
+          
+          <!-- Tabs: Details vs Edit -->
+          <div class="flex border-b border-slate-100 flex-shrink-0">
+            <button 
+              (click)="activeTab = 'details'"
+              class="flex-1 py-4 text-xs font-bold text-center border-b-2 transition-colors cursor-pointer"
+              [class.border-indigo-600]="activeTab === 'details'"
+              [class.text-indigo-600]="activeTab === 'details'"
+              [class.border-transparent]="activeTab !== 'details'"
+              [class.text-slate-500]="activeTab !== 'details'"
+            >
+              1. Job Details
+            </button>
+            <button 
+              (click)="activeTab = 'edit'"
+              [disabled]="!coverLetterText"
+              class="flex-1 py-4 text-xs font-bold text-center border-b-2 transition-colors cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed"
+              [class.border-indigo-600]="activeTab === 'edit'"
+              [class.text-indigo-600]="activeTab === 'edit'"
+              [class.border-transparent]="activeTab !== 'edit'"
+              [class.text-slate-500]="activeTab !== 'edit'"
+            >
+              2. Edit & Review
+            </button>
+          </div>
+
+          <!-- Tab Content Area -->
+          <div class="p-8 flex-1 flex flex-col gap-6">
+            
+            <!-- Tab 1: DETAILS FORM -->
+            <div *ngIf="activeTab === 'details'" class="space-y-6">
+              
+              <!-- Profile Card -->
+              <div class="bg-slate-50 border border-slate-200/80 rounded-2xl p-5 space-y-4">
+                <h4 class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Personal Info (from Resume)</h4>
+                <div class="grid grid-cols-2 gap-4">
+                  <div class="space-y-1">
+                    <label class="text-[10px] font-bold text-slate-500 uppercase">Full Name</label>
+                    <input type="text" [(ngModel)]="fullName" class="w-full px-3 py-1.5 bg-white border border-slate-200 rounded-lg text-xs outline-none focus:ring-1 focus:ring-indigo-500 font-medium">
+                  </div>
+                  <div class="space-y-1">
+                    <label class="text-[10px] font-bold text-slate-500 uppercase">Email</label>
+                    <input type="text" [(ngModel)]="email" class="w-full px-3 py-1.5 bg-white border border-slate-200 rounded-lg text-xs outline-none focus:ring-1 focus:ring-indigo-500 font-medium">
+                  </div>
+                  <div class="space-y-1">
+                    <label class="text-[10px] font-bold text-slate-500 uppercase">Phone</label>
+                    <input type="text" [(ngModel)]="phone" class="w-full px-3 py-1.5 bg-white border border-slate-200 rounded-lg text-xs outline-none focus:ring-1 focus:ring-indigo-500 font-medium">
+                  </div>
+                  <div class="space-y-1">
+                    <label class="text-[10px] font-bold text-slate-500 uppercase">Location</label>
+                    <input type="text" [(ngModel)]="location" class="w-full px-3 py-1.5 bg-white border border-slate-200 rounded-lg text-xs outline-none focus:ring-1 focus:ring-indigo-500 font-medium">
+                  </div>
+                </div>
+              </div>
+
+              <!-- Target Job Information -->
+              <div class="space-y-4">
+                <h4 class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Target Job Information</h4>
+                
+                <div class="space-y-1.5">
+                  <label class="text-xs font-bold text-slate-700">Target Job Title *</label>
+                  <input 
+                    type="text" 
+                    [(ngModel)]="jobTitle" 
+                    placeholder="e.g. Senior Software Engineer"
+                    class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-indigo-500/10 focus:border-indigo-500 font-medium"
+                  />
+                </div>
+
+                <div class="space-y-1.5">
+                  <label class="text-xs font-bold text-slate-700">Company Name *</label>
+                  <input 
+                    type="text" 
+                    [(ngModel)]="companyName" 
+                    placeholder="e.g. Google"
+                    class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-indigo-500/10 focus:border-indigo-500 font-medium"
+                  />
+                </div>
+
+                <div class="space-y-1.5">
+                  <label class="text-xs font-bold text-slate-700">Hiring Manager Name (Optional)</label>
+                  <input 
+                    type="text" 
+                    [(ngModel)]="hiringManager" 
+                    placeholder="e.g. Jane Doe"
+                    class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-indigo-500/10 focus:border-indigo-500 font-medium"
+                  />
+                </div>
+
+                <div class="space-y-1.5">
+                  <label class="text-xs font-bold text-slate-700">Job Description / Keywords (Optional)</label>
+                  <textarea 
+                    [(ngModel)]="jobDescription" 
+                    placeholder="Paste key responsibilities or instructions to tailor your Cover Letter..."
+                    class="w-full h-32 p-4 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-indigo-500/10 focus:border-indigo-500 resize-none font-medium"
+                  ></textarea>
+                </div>
+              </div>
+
+              <!-- Generate Button -->
+              <button 
+                (click)="generateCoverLetter()" 
+                [disabled]="isGenerating || !jobTitle.trim() || !companyName.trim()"
+                class="w-full py-4 bg-indigo-600 hover:bg-indigo-700 disabled:opacity-50 text-white rounded-xl font-bold text-sm shadow-lg shadow-indigo-100 transition-all flex items-center justify-center gap-2 cursor-pointer"
+              >
+                <span class="material-icons text-base" *ngIf="!isGenerating">psychology</span>
+                <span class="material-icons text-base animate-spin" *ngIf="isGenerating">refresh</span>
+                {{ isGenerating ? 'Generating Draft...' : 'Generate with Gemini AI' }}
+              </button>
+            </div>
+
+            <!-- Tab 2: RAW TEXT EDITOR -->
+            <div *ngIf="activeTab === 'edit'" class="flex-1 flex flex-col gap-4 min-h-0">
+              <div class="flex items-center justify-between">
+                <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Edit Cover Letter Text</span>
+                
+                <button 
+                  (click)="copyToClipboard()" 
+                  class="text-xs text-indigo-600 hover:text-indigo-800 font-bold flex items-center gap-1 cursor-pointer"
+                >
+                  <span class="material-icons text-xs">{{ copySuccess ? 'check' : 'content_copy' }}</span>
+                  {{ copySuccess ? 'Copied!' : 'Copy' }}
+                </button>
+              </div>
+
+              <textarea 
+                [(ngModel)]="coverLetterText"
+                (ngModelChange)="saveDraft()"
+                class="w-full flex-1 p-5 border border-slate-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-indigo-500/10 focus:border-indigo-500 font-mono text-xs leading-relaxed resize-none bg-slate-50/30"
+                placeholder="Edit Cover Letter content here..."
+              ></textarea>
+
+              <button 
+                (click)="activeTab = 'details'" 
+                class="py-3 border border-slate-200 text-slate-600 rounded-xl text-xs font-bold hover:bg-slate-50 transition-colors cursor-pointer"
+              >
+                ← Back to Job Details
+              </button>
+            </div>
+
+          </div>
+
+        </div>
+
+        <!-- Right Pane: Real-Time Preview -->
+        <div class="hidden md:flex flex-1 bg-slate-100/70 p-10 overflow-y-auto items-start justify-center no-scrollbar">
+          
+          <!-- A4 Aspect Ratio paper container -->
+          <div 
+            class="w-full max-w-[680px] aspect-[1/1.414] bg-white shadow-xl rounded-sm border border-slate-200/80 flex flex-col relative overflow-hidden transition-all duration-300 hover:shadow-2xl select-text"
+            [class]="'template-' + selectedTemplate"
+          >
+            
+            <!-- MODERN TEMPLATE HEADER -->
+            <div *ngIf="selectedTemplate === 'modern'" class="flex-shrink-0">
+              <div class="h-1.5 bg-indigo-600 w-full"></div>
+              <div class="p-10 pb-4 border-b border-slate-100">
+                <h1 class="text-3xl font-black text-slate-900 leading-none tracking-tight">{{ fullName || 'Your Name' }}</h1>
+                <p class="text-xs text-slate-500 mt-2 font-medium">
+                  {{ email || 'email@example.com' }}  |  {{ phone || '+1 (555) 000-0000' }}  |  {{ location || 'City, State' }}
+                </p>
+              </div>
+            </div>
+
+            <!-- ELEGANT TEMPLATE HEADER -->
+            <div *ngIf="selectedTemplate === 'elegant'" class="flex-shrink-0 p-10 pb-4 text-center border-b border-slate-200 font-serif">
+              <h1 class="text-4xl font-normal italic text-slate-900 tracking-wide">{{ fullName || 'Your Name' }}</h1>
+              <p class="text-xs text-slate-600 mt-3 tracking-widest uppercase">
+                {{ email || 'email@example.com' }}  •  {{ phone || '+1 (555) 000-0000' }}  •  {{ location || 'City, State' }}
+              </p>
+            </div>
+
+            <!-- CREATIVE TEMPLATE HEADER -->
+            <div *ngIf="selectedTemplate === 'creative'" class="flex-shrink-0 p-10 pb-4">
+              <h1 class="text-3xl font-black text-indigo-600 leading-none tracking-tight">{{ fullName || 'Your Name' }}</h1>
+              <p class="text-xs text-slate-500 mt-2 font-semibold tracking-wider">
+                {{ email || 'email@example.com' }}   •   {{ phone || '+1 (555) 000-0000' }}   •   {{ location || 'City, State' }}
+              </p>
+              <div class="h-0.5 bg-indigo-600 w-full mt-4 rounded-full"></div>
+            </div>
+
+            <!-- MINIMAL TEMPLATE HEADER -->
+            <div *ngIf="selectedTemplate === 'minimal'" class="flex-shrink-0 p-10 pb-4">
+              <h1 class="text-2xl font-bold text-slate-900 leading-none tracking-tight">{{ fullName || 'Your Name' }}</h1>
+              <div class="text-[11px] text-slate-500 mt-3 space-y-1 font-medium">
+                <p>{{ email || 'email@example.com' }}</p>
+                <p>{{ phone || '+1 (555) 000-0000' }}</p>
+                <p>{{ location || 'City, State' }}</p>
+              </div>
+            </div>
+
+            <!-- EXECUTIVE TEMPLATE HEADER -->
+            <div *ngIf="selectedTemplate === 'executive'" class="flex-shrink-0 bg-slate-800 text-white p-10 pb-6">
+              <h1 class="text-3xl font-bold tracking-tight">{{ fullName || 'Your Name' }}</h1>
+              <p class="text-xs text-slate-300 mt-2 font-medium">
+                {{ email || 'email@example.com' }}   |   {{ phone || '+1 (555) 000-0000' }}   |   {{ location || 'City, State' }}
+              </p>
+            </div>
+
+            <!-- TECH TEMPLATE HEADER -->
+            <div *ngIf="selectedTemplate === 'tech'" class="flex-shrink-0">
+              <div class="h-1.5 bg-emerald-500 w-full"></div>
+              <div class="p-10 pb-4 border-b border-slate-200">
+                <h1 class="text-3xl font-bold text-slate-900 leading-none tracking-tight">{{ fullName || 'Your Name' }}</h1>
+                <p class="text-xs text-emerald-600 font-mono mt-2 font-semibold">
+                  {{ email || 'email@example.com' }}  //  {{ phone || '+1 (555) 000-0000' }}  //  {{ location || 'City, State' }}
+                </p>
+              </div>
+            </div>
+
+            <!-- Document Content Section -->
+            <div class="p-10 pt-6 flex-1 flex flex-col text-slate-800 text-[13px] leading-relaxed overflow-y-auto no-scrollbar font-sans" [class.font-serif]="selectedTemplate === 'elegant'">
+              
+              <!-- Date -->
+              <div class="mb-4">
+                {{ currentDate }}
+              </div>
+
+              <!-- Recipient -->
+              <div class="mb-6 font-bold" *ngIf="hiringManager || companyName">
+                <p *ngIf="hiringManager">{{ hiringManager }}</p>
+                <p *ngIf="companyName">{{ companyName }}</p>
+              </div>
+
+              <!-- Letter Body -->
+              <div class="whitespace-pre-wrap flex-1 min-h-[200px]">
+                {{ coverLetterText || 'Your generated Cover Letter will appear here...' }}
+              </div>
+
+              <!-- Signature -->
+              <div class="mt-8">
+                <p>Sincerely,</p>
+                <p class="mt-6 font-bold">{{ fullName || 'Your Name' }}</p>
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+    </div>
+
+  </main>
+
+</div>
+

@@ -12,8 +12,8 @@
 
        <!-- Search Bar -->
        <div class="hidden md:flex items-center relative group">
-         <svg class="absolute left-3 w-4 h-4 text-gray-400 group-focus-within:text-accent transition-colors" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
-         <input type="text" placeholder="Search" class="pl-10 pr-4 py-1.5 bg-gray-100/80 border-none rounded-full text-sm focus:ring-2 focus:ring-accent/20 w-64 transition-all focus:bg-white focus:shadow-sm outline-none">
+         <svg class="absolute left-3 w-4 h-4 text-gray-400 group-focus-within:text-[#6366F1] transition-colors" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" /></svg>
+         <input type="text" placeholder="Search" class="pl-10 pr-4 py-1.5 bg-gray-100/80 border-none rounded-full text-sm focus:ring-2 focus:ring-[#6366F1]/20 w-64 transition-all focus:bg-white focus:shadow-sm outline-none">
        </div>
     </div>
 
@@ -36,7 +36,7 @@
         </button>
       </div>
 
-      <button class="px-5 py-2.5 bg-[#6366F1] text-white rounded-xl text-sm font-bold shadow-lg shadow-indigo-200 hover:bg-[#5558E3] hover:scale-[1.02] active:scale-95 transition-all flex items-center gap-2">
+      <button (click)="openAddJobModal()" class="px-5 py-2.5 bg-[#6366F1] text-white rounded-xl text-sm font-bold shadow-lg shadow-indigo-200 hover:bg-[#5558E3] hover:scale-[1.02] active:scale-95 transition-all flex items-center gap-2">
         <svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg>
         New Job Application
       </button>
@@ -61,29 +61,27 @@
               <th class="p-5 w-10"></th>
               <th class="p-5 text-[11px] font-black text-gray-400 uppercase tracking-[0.1em]">Status</th>
               <th class="p-5 text-[11px] font-black text-gray-400 uppercase tracking-[0.1em]">Date Saved</th>
-              <th class="p-5 text-[11px] font-black text-gray-400 uppercase tracking-[0.1em]">Date App...</th>
+              <th class="p-5 text-[11px] font-black text-gray-400 uppercase tracking-[0.1em]">Date Applied</th>
               <th class="p-5 text-[11px] font-black text-gray-400 uppercase tracking-[0.1em]">Type</th>
               <th class="p-5 text-[11px] font-black text-gray-400 uppercase tracking-[0.1em]">Resume</th>
               <th class="p-5 text-[11px] font-black text-gray-400 uppercase tracking-[0.1em]">Cover Letter</th>
               <th class="p-5 text-[11px] font-black text-gray-400 uppercase tracking-[0.1em]">Notes</th>
-              <th class="p-5 w-10 text-gray-300">
-                <svg class="w-5 h-5 mx-auto" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M12 6v6m0 0v6m0-6h6m-6 0H6" /></svg>
-              </th>
+              <th class="p-5 w-16 text-gray-300 text-right pr-6"></th>
             </tr>
           </thead>
           <tbody class="divide-y divide-gray-50">
-            <tr *ngFor="let job of jobs" class="hover:bg-gray-50/50 transition-colors group">
+            <tr *ngFor="let job of jobs; let i = index" class="hover:bg-gray-50/50 transition-colors group">
               <td class="p-5"><input type="checkbox" class="w-4 h-4 rounded border-gray-300"></td>
               <td class="p-5">
                 <span class="text-sm font-semibold text-gray-900" *ngIf="job.position">{{job.position}}</span>
-                <span class="text-sm text-gray-300 italic font-medium" *ngIf="!job.position">Add Job Position</span>
+                <span class="text-sm text-gray-300 italic font-medium cursor-pointer" (click)="openCoverLetterModal(job)" *ngIf="!job.position">Add Job Position</span>
               </td>
               <td class="p-5">
-                <span class="text-sm font-semibold text-gray-500" *ngIf="job.company">{{job.company}}</span>
-                <span class="text-sm text-gray-300 italic font-medium" *ngIf="!job.company">Add Company</span>
+                <span class="text-sm font-semibold text-gray-505 text-gray-500" *ngIf="job.company">{{job.company}}</span>
+                <span class="text-sm text-gray-300 italic font-medium cursor-pointer" (click)="openCoverLetterModal(job)" *ngIf="!job.company">Add Company</span>
               </td>
               <td class="p-5">
-                <button class="text-gray-300 hover:text-accent transition-colors">
+                <button class="text-gray-300 hover:text-[#6366F1] transition-colors">
                   <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M13.828 10.172a4 4 0 00-5.656 0l-4 4a4 4 0 105.656 5.656l1.102-1.101m-.758-4.828a4 4 0 005.656 0l4-4a4 4 0 00-5.656-5.656l-1.1 1.1" /></svg>
                 </button>
               </td>
@@ -111,27 +109,58 @@
                    <span class="text-xl leading-none -mt-1">+</span> Resume
                 </button>
               </td>
+              
+              <!-- Cover Letter Column -->
               <td class="p-5">
-                <button class="text-sm text-gray-300 hover:text-gray-500 font-medium italic flex items-center gap-1.5">
+                <!-- If Cover Letter does not exist -->
+                <button 
+                  *ngIf="!job.coverLetter" 
+                  (click)="openCoverLetterModal(job)" 
+                  class="text-sm text-gray-300 hover:text-indigo-500 font-medium italic flex items-center gap-1.5 transition-colors"
+                >
                    <span class="text-xl leading-none -mt-1">+</span> Cover Letter
                 </button>
+                
+                <!-- If Cover Letter exists -->
+                <div *ngIf="job.coverLetter" class="flex items-center gap-2">
+                  <button 
+                    (click)="openCoverLetterModal(job)" 
+                    class="px-2.5 py-1 bg-indigo-50 hover:bg-indigo-100 text-indigo-600 font-bold text-xs rounded-lg flex items-center gap-1.5 transition-all"
+                  >
+                    <span class="material-icons text-[14px]">visibility</span> View
+                  </button>
+                  
+                  <button 
+                    (click)="downloadJobCoverLetter(job)" 
+                    class="p-1 text-gray-400 hover:text-indigo-600 rounded hover:bg-gray-100 transition-all flex items-center justify-center" 
+                    title="Download PDF"
+                  >
+                    <span class="material-icons text-[16px]">download</span>
+                  </button>
+                </div>
               </td>
+
               <td class="p-5">
                 <button class="text-sm text-gray-300 hover:text-gray-500 font-medium italic group-hover:text-gray-400 transition-colors">
                   Write a note
                 </button>
               </td>
-              <td class="p-5"></td>
+              
+              <td class="p-5 text-right pr-6">
+                <button (click)="deleteJob(i); $event.stopPropagation()" class="p-1 text-gray-400 hover:text-red-500 hover:bg-red-50 rounded transition-all" title="Delete Job">
+                  <span class="material-icons text-[18px]">delete</span>
+                </button>
+              </td>
             </tr>
             
             <!-- Empty State / Add New Row Hint -->
-            <tr class="group cursor-pointer">
+            <tr (click)="openAddJobModal()" class="group cursor-pointer">
               <td class="p-5 border-t border-gray-50"></td>
               <td class="p-5 border-t border-gray-50">
-                <span class="text-sm text-gray-300 italic font-medium group-hover:text-accent transition-colors">Add Job Position</span>
+                <span class="text-sm text-gray-300 italic font-medium group-hover:text-[#6366F1] transition-colors">Add Job Position</span>
               </td>
               <td class="p-5 border-t border-gray-50">
-                <span class="text-sm text-gray-300 italic font-medium group-hover:text-accent transition-colors">Add Company</span>
+                <span class="text-sm text-gray-300 italic font-medium group-hover:text-[#6366F1] transition-colors">Add Company</span>
               </td>
               <td colspan="9" class="p-5 border-t border-gray-50"></td>
             </tr>
@@ -143,5 +172,211 @@
     <p class="mt-6 text-center text-xs font-bold text-gray-400 uppercase tracking-widest">
       Showing {{jobs.length}} of {{jobs.length}} saved jobs
     </p>
+  </div>
+
+  <!-- AI Cover Letter Modal -->
+  <div *ngIf="showCoverLetterModal" class="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-gray-900/40 backdrop-blur-sm">
+    <div class="bg-white w-full max-w-2xl rounded-[24px] shadow-2xl border border-gray-100 flex flex-col max-h-[90vh] overflow-hidden">
+      
+      <!-- Modal Header -->
+      <div class="px-8 py-6 border-b border-gray-100 flex items-center justify-between flex-shrink-0">
+        <div>
+          <h2 class="text-xl font-bold text-gray-900 flex items-center gap-2">
+            <span class="material-icons text-indigo-500">description</span>
+            Cover Letter Generator
+          </h2>
+          <p class="text-xs text-gray-500 mt-1">
+            For <span class="font-bold text-gray-700">{{selectedJob?.position}}</span> at <span class="font-bold text-gray-700">{{selectedJob?.company}}</span>
+          </p>
+        </div>
+        <button (click)="closeCoverLetterModal()" class="w-9 h-9 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-500 hover:text-gray-700 transition-colors flex items-center justify-center">
+          <span class="material-icons text-sm">close</span>
+        </button>
+      </div>
+
+      <!-- Modal Body (Scrollable) -->
+      <div class="p-8 overflow-y-auto flex-1 space-y-6">
+        
+        <!-- If cover letter doesn't exist or we want to regenerate -->
+        <div *ngIf="!selectedJob?.coverLetter && !isGenerating" class="space-y-4">
+          <div class="p-4 bg-indigo-50/50 border border-indigo-100 rounded-xl">
+            <p class="text-xs text-indigo-700 leading-relaxed font-medium">
+              We will use the information from your resume (skills, experience, projects) to draft a personalized cover letter. You can optionally paste the job description below to tailor it even further.
+            </p>
+          </div>
+          
+          <div class="space-y-2">
+            <label class="text-xs font-black text-gray-400 uppercase tracking-widest block">Job Description / Target Notes (Optional)</label>
+            <textarea 
+              [(ngModel)]="additionalNotesInput" 
+              placeholder="Paste target job responsibilities, keywords, or special notes here..."
+              class="w-full h-32 p-4 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all resize-none"
+            ></textarea>
+          </div>
+          
+          <button 
+            (click)="generateCoverLetter()" 
+            class="w-full py-3.5 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-bold shadow-md shadow-indigo-200 transition-all hover:scale-[1.01] active:scale-[0.99] flex items-center justify-center gap-2"
+          >
+            <span class="material-icons text-sm">psychology</span>
+            Generate with Gemini AI
+          </button>
+        </div>
+
+        <!-- Generating Loader -->
+        <div *ngIf="isGenerating" class="py-12 flex flex-col items-center justify-center space-y-4">
+          <div class="w-12 h-12 border-3 border-indigo-600 border-t-transparent rounded-full animate-spin"></div>
+          <div class="text-center">
+            <p class="text-sm font-semibold text-gray-700 animate-pulse">Drafting cover letter...</p>
+            <p class="text-xs text-gray-400 mt-1">Analyzing resume details & job requirements</p>
+          </div>
+        </div>
+
+        <!-- Cover Letter Editor -->
+        <div *ngIf="selectedJob?.coverLetter && !isGenerating" class="space-y-4">
+          <div class="flex items-center justify-between">
+            <span class="text-xs font-black text-gray-400 uppercase tracking-widest">Tailored Cover Letter</span>
+            <button (click)="isEditing = !isEditing" class="text-xs text-indigo-600 hover:text-indigo-800 font-bold flex items-center gap-1">
+              <span class="material-icons text-xs">{{ isEditing ? 'check' : 'edit' }}</span>
+              {{ isEditing ? 'Done Editing' : 'Edit Text' }}
+            </button>
+          </div>
+
+          <!-- Cover Letter Text Area -->
+          <div class="border border-gray-200 rounded-xl overflow-hidden shadow-sm">
+            <textarea 
+              *ngIf="isEditing"
+              [(ngModel)]="generatedCoverLetterText"
+              class="w-full h-96 p-6 text-sm text-gray-700 focus:outline-none font-sans leading-relaxed resize-none"
+            ></textarea>
+            
+            <div 
+              *ngIf="!isEditing"
+              class="w-full h-96 p-6 overflow-y-auto text-sm text-gray-700 bg-gray-50/50 font-sans leading-relaxed whitespace-pre-wrap select-text"
+            >{{generatedCoverLetterText}}</div>
+          </div>
+
+          <!-- Regenerate option -->
+          <div class="flex items-center justify-between pt-2">
+            <button (click)="clearCoverLetter()" class="text-xs text-red-500 hover:text-red-700 font-semibold flex items-center gap-1">
+              <span class="material-icons text-xs">delete</span> Delete
+            </button>
+            
+            <button (click)="showRegenerateForm()" class="text-xs text-gray-500 hover:text-gray-700 font-semibold flex items-center gap-1">
+              <span class="material-icons text-xs">refresh</span> Regenerate with new notes
+            </button>
+          </div>
+        </div>
+
+      </div>
+
+      <!-- Modal Footer -->
+      <div *ngIf="selectedJob?.coverLetter && !isGenerating" class="px-8 py-5 bg-gray-50 border-t border-gray-100 flex items-center justify-between flex-shrink-0">
+        <div class="flex gap-2">
+          <button 
+            (click)="copyToClipboard()" 
+            class="px-4 py-2 bg-white border border-gray-200 text-gray-700 hover:bg-gray-50 rounded-xl text-sm font-bold shadow-sm transition-all flex items-center gap-1.5 active:scale-95"
+          >
+            <span class="material-icons text-sm">{{ copySuccess ? 'check' : 'content_copy' }}</span>
+            {{ copySuccess ? 'Copied!' : 'Copy' }}
+          </button>
+          
+          <button 
+            (click)="downloadPDF()" 
+            class="px-4 py-2 bg-white border border-gray-200 text-gray-700 hover:bg-gray-50 rounded-xl text-sm font-bold shadow-sm transition-all flex items-center gap-1.5 active:scale-95"
+          >
+            <span class="material-icons text-sm">download</span>
+            Download PDF
+          </button>
+        </div>
+        
+        <button 
+          (click)="saveAndClose()" 
+          class="px-6 py-2 bg-[#6366F1] hover:bg-[#5558E3] text-white rounded-xl text-sm font-bold shadow-md shadow-indigo-200 transition-all flex items-center gap-1.5 active:scale-95"
+        >
+          <span class="material-icons text-sm">save</span>
+          Save & Close
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- Add Job Modal -->
+  <div *ngIf="showAddJobModal" class="fixed inset-0 z-[100] flex items-center justify-center p-4 bg-gray-900/40 backdrop-blur-sm">
+    <div class="bg-white w-full max-w-md rounded-[24px] shadow-2xl border border-gray-100 p-8">
+      <div class="flex items-center justify-between mb-6">
+        <h3 class="text-lg font-bold text-gray-900">Add New Job Application</h3>
+        <button (click)="showAddJobModal = false" class="w-8 h-8 rounded-full bg-gray-100 hover:bg-gray-200 text-gray-500 transition-colors flex items-center justify-center">
+          <span class="material-icons text-sm">close</span>
+        </button>
+      </div>
+
+      <div class="space-y-4">
+        <div class="space-y-1">
+          <label class="text-xs font-black text-gray-400 uppercase tracking-widest block">Position Title *</label>
+          <input 
+            type="text" 
+            [(ngModel)]="newJobPosition" 
+            placeholder="e.g. Software Engineer"
+            class="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all"
+          />
+        </div>
+
+        <div class="space-y-1">
+          <label class="text-xs font-black text-gray-400 uppercase tracking-widest block">Company Name *</label>
+          <input 
+            type="text" 
+            [(ngModel)]="newJobCompany" 
+            placeholder="e.g. Google"
+            class="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all"
+          />
+        </div>
+
+        <div class="grid grid-cols-2 gap-4">
+          <div class="space-y-1">
+            <label class="text-xs font-black text-gray-400 uppercase tracking-widest block">Job Type</label>
+            <select 
+              [(ngModel)]="newJobType"
+              class="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all"
+            >
+              <option value="Full-time">Full-time</option>
+              <option value="Part-time">Part-time</option>
+              <option value="Contract">Contract</option>
+              <option value="Internship">Internship</option>
+            </select>
+          </div>
+
+          <div class="space-y-1">
+            <label class="text-xs font-black text-gray-400 uppercase tracking-widest block">Status</label>
+            <select 
+              [(ngModel)]="newJobStatus"
+              class="w-full px-4 py-2.5 bg-gray-50 border border-gray-200 rounded-xl text-sm focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 transition-all"
+            >
+              <option value="Bookmarked">Bookmarked</option>
+              <option value="Applied">Applied</option>
+              <option value="Interviewing">Interviewing</option>
+              <option value="Offered">Offered</option>
+              <option value="Rejected">Rejected</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="pt-4 flex gap-3">
+          <button 
+            (click)="showAddJobModal = false" 
+            class="flex-1 py-3 border border-gray-200 text-gray-700 rounded-xl text-sm font-bold hover:bg-gray-50 transition-colors"
+          >
+            Cancel
+          </button>
+          <button 
+            (click)="addJob()" 
+            [disabled]="!newJobPosition.trim() || !newJobCompany.trim()"
+            class="flex-1 py-3 bg-[#6366F1] hover:bg-[#5558E3] disabled:opacity-50 text-white rounded-xl text-sm font-bold shadow-md shadow-indigo-200 transition-colors"
+          >
+            Add Job
+          </button>
+        </div>
+      </div>
+    </div>
   </div>
 </div>

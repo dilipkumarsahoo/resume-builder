@@ -4,9 +4,10 @@
 
 @layer base {
   body {
-    color: #1e293b;
-    background-color: #f8fafc;
-    font-family: ui-sans-serif, system-ui, -apple-system, sans-serif;
+    color: #2b0b3c;
+    background-color: #f6f6f9;
+    font-family: 'Nunito Sans', system-ui, -apple-system, sans-serif;
+    font-weight: 400;
   }
 }
 

@@ -1,1 +1,63 @@
-/* Navbar styles */
+.flowcv-nav {
+  font-family: 'Nunito Sans', system-ui, -apple-system, sans-serif;
+}
+
+.nav-link {
+  color: #5c556b;
+  font-family: 'Nunito Sans', sans-serif;
+  font-size: 15px;
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  transition: color 0.15s ease-in-out;
+  background: transparent;
+  border: none;
+  padding: 8px 4px;
+  cursor: pointer;
+}
+
+.nav-link:hover {
+  color: #2b0b3c;
+}
+
+.btn-login {
+  font-family: 'Nunito Sans', sans-serif;
+  border: 1.5px solid #2b0b3c;
+  color: #2b0b3c;
+  background-color: transparent;
+  font-weight: 700;
+  font-size: 14px;
+  padding: 9px 24px;
+  border-radius: 12px;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  cursor: pointer;
+}
+
+.btn-login:hover {
+  background-color: rgba(43, 11, 60, 0.05);
+  border-color: #2b0b3c;
+}
+
+.btn-start {
+  font-family: 'Nunito Sans', sans-serif;
+  background-color: #2b0b3c;
+  color: #ffffff;
+  font-weight: 700;
+  font-size: 14px;
+  padding: 9px 26px;
+  border-radius: 12px;
+  transition: all 0.2s cubic-bezier(0.16, 1, 0.3, 1);
+  box-shadow: 0 4px 14px rgba(43, 11, 60, 0.18);
+  cursor: pointer;
+}
+
+.btn-start:hover {
+  background-color: #1c0628;
+  transform: translateY(-1px);
+  box-shadow: 0 6px 20px rgba(43, 11, 60, 0.25);
+}
+
+.accent-badge {
+  background: linear-gradient(135deg, #ff5858 0%, #f857a6 100%);
+}
+
+

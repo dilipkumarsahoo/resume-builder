@@ -116,6 +116,13 @@ export class CvBuilderService {
     document.body.style.overflow = 'hidden';
   }
 
+  openResumeTemplates() {
+    this.isOnboardingOpen.set(true);
+    this.onboardingStep.set(4);
+    this.hideOnboardingSteps.set(true);
+    document.body.style.overflow = 'hidden';
+  }
+
   closeOnboarding() {
     this.isOnboardingOpen.set(false);
     this.hideOnboardingSteps.set(false);
@@ -156,6 +163,90 @@ export class CvBuilderService {
       this.isImprovingSummary.set(false);
     }
   }
+
+  async generateCoverLetter(jobPosition: string, companyName: string, additionalNotes?: string): Promise<string> {
+    const data = this.cvData();
+    const candidateName = data.fullName || 'Candidate';
+    const email = data.email || '';
+    const phone = data.phone || '';
+    const location = data.location || '';
+    const skillsList = data.skills ? data.skills.join(', ') : '';
+    
+    let experienceText = '';
+    if (data.experience && data.experience.length > 0) {
+      experienceText = data.experience.map(exp => 
+        `- Role: ${exp.role} at ${exp.company} (${exp.startDate} - ${exp.endDate}): ${exp.description}`
+      ).join('\n');
+    }
+
+    let educationText = '';
+    if (data.education && data.education.length > 0) {
+      educationText = data.education.map(edu => 
+        `- Degree: ${edu.degree} from ${edu.institution} (${edu.year})`
+      ).join('\n');
+    }
+
+    let projectsText = '';
+    if (data.projects && data.projects.length > 0) {
+      projectsText = data.projects.map(proj => 
+        `- Project: ${proj.name}: ${proj.description}`
+      ).join('\n');
+    }
+
+    const prompt = `You are an expert career coach, recruiter, and professional resume writer.
+Generate a personalized, professional cover letter based on the candidate's resume information and the target job.
+
+Requirements:
+- Write a compelling, human-sounding cover letter.
+- Length: 300–450 words.
+- Keep a professional yet conversational tone.
+- Do NOT sound AI-generated.
+- Avoid clichés like "I am writing to express my interest..."
+- Start with an engaging opening.
+- Explain why the candidate is a strong fit.
+- Highlight the most relevant experience and measurable achievements from their resume.
+- Mention skills that match the job.
+- End with a confident, polite closing and call to action.
+- Use standard business letter formatting.
+- Never invent experience, certifications, companies, or achievements.
+- If some information is missing, gracefully omit it instead of making assumptions.
+- Optimize naturally for ATS without keyword stuffing.
+- Return ONLY the finished cover letter text (do not include markdown block markers like \`\`\` or extra conversational text).
+
+Inputs:
+Candidate Information:
+Name: ${candidateName}
+Email: ${email}
+Phone: ${phone}
+Location: ${location}
+Skills: ${skillsList}
+Experience:
+${experienceText}
+Education:
+${educationText}
+Projects:
+${projectsText}
+
+Job Position: ${jobPosition}
+Company Name: ${companyName}
+${additionalNotes ? `Additional Notes/Job Description: ${additionalNotes}` : ''}
+
+Output:
+Return only the finished cover letter.`;
+
+    try {
+      const response = await this.ai.models.generateContent({
+        model: "gemini-3-flash-preview",
+        contents: prompt,
+      });
+
+      return response.text ? response.text.trim() : '';
+    } catch (error) {
+      console.error('Failed to generate cover letter:', error);
+      throw error;
+    }
+  }
+
 
   uploadAndParseResume(file: File, onSuccess?: () => void) {
     this.isParsing.set(true);

@@ -1,0 +1,431 @@
+<div class="min-h-screen bg-[#f4f2ee] font-sans text-[#2b0b3c] pt-24 pb-20 px-4 sm:px-6 lg:px-8">
+  
+  <!-- Header Title -->
+  <div class="max-w-4xl mx-auto text-center space-y-2 mb-14">
+    <h1 class="text-3xl sm:text-5xl font-extrabold tracking-tight text-[#2b0b3c]">
+      Build your resume for free.
+    </h1>
+    <h2 class="text-2xl sm:text-4xl font-extrabold text-slate-600">
+      Upgrade your job search with Pro.
+    </h2>
+  </div>
+
+  <!-- Pricing Cards Container -->
+  <div class="max-w-5xl mx-auto grid grid-cols-1 md:grid-cols-2 gap-8 mb-24 items-stretch">
+    
+    <!-- FREE CARD -->
+    <div class="bg-white rounded-3xl p-8 sm:p-10 border border-slate-200/80 shadow-sm flex flex-col justify-between hover:shadow-md transition-shadow">
+      <div>
+        <h3 class="text-2xl font-bold text-slate-800 mb-4">Free</h3>
+        
+        <div class="flex items-baseline gap-1 mb-2">
+          <span class="text-4xl sm:text-5xl font-black text-[#2b0b3c]">$0</span>
+          <span class="text-slate-500 font-semibold text-base">/month</span>
+        </div>
+        
+        <p class="text-xs font-semibold text-slate-500 mb-8">
+          Free forever • No credit card required
+        </p>
+
+        <!-- Button -->
+        <button 
+          (click)="createFreeResume()"
+          class="w-full py-3.5 px-6 border-2 border-slate-300 hover:border-slate-800 rounded-xl text-sm font-bold text-slate-800 transition-all cursor-pointer mb-8"
+        >
+          Create my free resume
+        </button>
+
+        <!-- Features Checklist -->
+        <div class="space-y-4 pt-4 border-t border-slate-100">
+          <p class="text-xs font-bold text-slate-400 uppercase tracking-wider">Everything you need for a professional resume:</p>
+          
+          <ul class="space-y-3.5 text-sm font-medium text-slate-700">
+            <li class="flex items-center gap-3">
+              <span class="w-5 h-5 rounded-full bg-indigo-50 text-indigo-600 flex items-center justify-center text-xs font-bold">✓</span>
+              <span>1 resume and 1 cover letter</span>
+            </li>
+            <li class="flex items-center gap-3">
+              <span class="w-5 h-5 rounded-full bg-indigo-50 text-indigo-600 flex items-center justify-center text-xs font-bold">✓</span>
+              <span>Unlimited PDF downloads</span>
+            </li>
+            <li class="flex items-center gap-3">
+              <span class="w-5 h-5 rounded-full bg-indigo-50 text-indigo-600 flex items-center justify-center text-xs font-bold">✓</span>
+              <span>No watermarks or branding</span>
+            </li>
+            <li class="flex items-center gap-3">
+              <span class="w-5 h-5 rounded-full bg-indigo-50 text-indigo-600 flex items-center justify-center text-xs font-bold">✓</span>
+              <span>All resume templates</span>
+            </li>
+            <li class="flex items-center gap-3">
+              <span class="w-5 h-5 rounded-full bg-indigo-50 text-indigo-600 flex items-center justify-center text-xs font-bold">✓</span>
+              <span>Full design customization</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+
+    <!-- PRO CARD -->
+    <div class="bg-white rounded-3xl p-8 sm:p-10 border-2 border-indigo-500/30 shadow-xl flex flex-col justify-between relative overflow-hidden">
+      
+      <!-- Pro Badge Header -->
+      <div>
+        <div class="flex items-center justify-between mb-4">
+          <h3 class="text-2xl font-bold text-slate-800">Pro</h3>
+          
+          <!-- Yearly Billing Toggle -->
+          <div class="flex items-center gap-3 bg-slate-100 p-1.5 rounded-full">
+            <span class="text-[10px] font-black px-2 py-0.5 bg-indigo-100 text-indigo-700 rounded-full uppercase">
+              -74%
+            </span>
+            
+            <label class="relative inline-flex items-center cursor-pointer">
+              <input type="checkbox" [(ngModel)]="isYearly" class="sr-only peer">
+              <div class="w-9 h-5 bg-slate-300 peer-focus:outline-none rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-slate-300 after:border after:rounded-full after:h-4 after:w-4 after:transition-all peer-checked:bg-[#2b0b3c]"></div>
+            </label>
+            
+            <span class="text-xs font-bold text-slate-700 pr-2">
+              Yearly billing
+            </span>
+          </div>
+        </div>
+
+        <div class="flex items-baseline gap-2 mb-2">
+          <span class="text-4xl sm:text-5xl font-black text-[#2b0b3c]">
+            ${{ proMonthlyPrice }}
+          </span>
+          <span class="text-slate-500 font-semibold text-base">/month</span>
+          <span class="text-xs font-bold text-emerald-600 bg-emerald-50 px-2 py-1 rounded-md ml-2">
+            (₹{{ proInrPrice }}/mo)
+          </span>
+        </div>
+
+        <p class="text-xs font-semibold text-slate-500 mb-8">
+          {{ isYearly ? '$60 billed yearly • Cancel anytime' : 'Billed monthly • Cancel anytime' }}
+        </p>
+
+        <!-- Button -->
+        <button 
+          (click)="openPhonePeCheckout()"
+          class="w-full py-4 px-6 bg-[#2b0b3c] hover:bg-[#1a0626] rounded-xl text-sm font-bold text-white shadow-lg shadow-indigo-950/20 transition-all cursor-pointer flex items-center justify-center gap-2"
+        >
+          <span class="material-icons text-base">verified</span>
+          {{ isProUser ? 'You are a Pro Member' : 'Get Pro' }}
+        </button>
+
+        <!-- Features Checklist -->
+        <div class="space-y-4 pt-6 mt-8 border-t border-slate-100">
+          <p class="text-xs font-bold text-slate-400 uppercase tracking-wider">Includes all Free features, plus:</p>
+          
+          <ul class="space-y-3.5 text-sm font-semibold text-slate-800">
+            <li class="flex items-center gap-3">
+              <span class="w-5 h-5 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center text-xs font-bold">✓</span>
+              <span>Unlimited resumes</span>
+            </li>
+            <li class="flex items-center gap-3">
+              <span class="w-5 h-5 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center text-xs font-bold">✓</span>
+              <span>Unlimited cover letters</span>
+            </li>
+            <li class="flex items-center gap-3">
+              <span class="w-5 h-5 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center text-xs font-bold">✓</span>
+              <span>Unlimited imports</span>
+            </li>
+            <li class="flex items-center gap-3">
+              <span class="w-5 h-5 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center text-xs font-bold">✓</span>
+              <span>Job Application Tracker</span>
+            </li>
+            <li class="flex items-center gap-3">
+              <span class="w-5 h-5 rounded-full bg-emerald-100 text-emerald-700 flex items-center justify-center text-xs font-bold">✓</span>
+              <span class="flex items-center gap-1.5">
+                AI features
+                <span class="text-amber-500">✨</span>
+              </span>
+            </li>
+          </ul>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+
+  <!-- FAQ SECTION -->
+  <div class="max-w-3xl mx-auto">
+    <h2 class="text-3xl sm:text-4xl font-extrabold text-center text-[#2b0b3c] mb-12">
+      Frequently Asked Questions
+    </h2>
+
+    <div class="space-y-4">
+      <div 
+        *ngFor="let item of faqs; let i = index"
+        class="bg-white rounded-2xl border border-slate-200/80 overflow-hidden shadow-sm transition-all"
+      >
+        <button 
+          (click)="toggleFAQ(i)"
+          class="w-full p-6 text-left flex items-center justify-between font-bold text-slate-800 text-base sm:text-lg hover:text-[#2b0b3c] cursor-pointer"
+        >
+          <span>{{ item.question }}</span>
+          <span class="text-2xl font-normal text-slate-400 leading-none">
+            {{ item.isOpen ? '−' : '+' }}
+          </span>
+        </button>
+
+        <div *ngIf="item.isOpen" class="px-6 pb-6 pt-0 text-slate-600 text-sm sm:text-base leading-relaxed border-t border-slate-50 font-normal">
+          {{ item.answer }}
+        </div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- PHONEPE MERCURY HOSTED PAYMENT GATEWAY MODAL (1:1 UI MATCHING PHOTO) -->
+  <div *ngIf="showPaymentModal" class="fixed inset-0 z-50 bg-slate-900/70 backdrop-blur-sm flex items-center justify-center p-3 sm:p-6">
+    <div class="bg-[#f5f5f7] w-full max-w-5xl rounded-3xl shadow-2xl border border-slate-300 overflow-hidden flex flex-col max-h-[92vh] animate-modal-enter">
+      
+      <!-- Top Gateway Title Bar -->
+      <div class="bg-slate-900 text-white px-6 py-3.5 flex items-center justify-between flex-shrink-0">
+        <div class="flex items-center gap-3">
+          <div class="w-6 h-6 rounded-md bg-[#5f259f] flex items-center justify-center text-white font-black text-xs">
+            pe
+          </div>
+          <span class="text-sm font-bold tracking-tight">PhonePe | India's Payments App (Hosted Checkout)</span>
+        </div>
+        
+        <button (click)="closePaymentModal()" class="text-slate-400 hover:text-white transition-colors cursor-pointer text-xl font-bold">
+          ✕
+        </button>
+      </div>
+
+      <!-- Main PhonePe Mercury Layout (Split Screen matching screenshot) -->
+      <div class="p-6 overflow-y-auto flex-1 font-sans" *ngIf="!paymentSuccess">
+        
+        <div class="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+          
+          <!-- LEFT PANEL: Merchant Code & Total Amount -->
+          <div class="lg:col-span-4 bg-[#e9e9ed] rounded-2xl p-6 flex flex-col justify-between space-y-6">
+            <div class="space-y-6">
+              
+              <!-- Merchant Header -->
+              <div class="flex items-center gap-3">
+                <div class="w-10 h-10 rounded-xl bg-[#e65100] flex items-center justify-center text-white font-bold shadow-sm">
+                  <span class="material-icons text-xl">shopping_bag</span>
+                </div>
+                <div class="flex flex-col">
+                  <span class="font-extrabold text-slate-900 text-base leading-none tracking-tight">{{ merchantCode }}</span>
+                  <span class="text-[11px] text-slate-500 font-semibold mt-1">Verified Merchant</span>
+                </div>
+              </div>
+
+              <!-- Total Amount Box -->
+              <div class="bg-white rounded-2xl p-5 shadow-sm border border-slate-200/80 flex items-center justify-between">
+                <span class="text-base font-bold text-slate-700">Total :</span>
+                <div class="flex items-center gap-2">
+                  <span class="text-2xl font-black text-slate-900">₹{{ proInrPrice }}.00</span>
+                  <span class="material-icons text-slate-400 text-sm">expand_more</span>
+                </div>
+              </div>
+
+            </div>
+
+            <!-- Powered by PhonePe Footer -->
+            <div class="pt-10 flex items-center gap-2 text-slate-500 text-xs font-semibold">
+              <span>Powered by</span>
+              <div class="flex items-center gap-1 font-black text-[#5f259f]">
+                <span class="w-4 h-4 rounded-full bg-[#5f259f] text-white text-[9px] flex items-center justify-center">pe</span>
+                <span>PhonePe</span>
+              </div>
+            </div>
+          </div>
+
+          <!-- CENTER & RIGHT PANEL: Payment Options & Scan QR -->
+          <div class="lg:col-span-8 grid grid-cols-1 md:grid-cols-12 gap-6 bg-white rounded-2xl p-6 border border-slate-200/80 shadow-sm">
+            
+            <!-- CENTER: Payment Options Menu -->
+            <div class="md:col-span-5 space-y-6 border-r border-slate-100 pr-4">
+              <div>
+                <h4 class="text-sm font-extrabold text-slate-800 mb-4">Payment Options</h4>
+                
+                <!-- UPI Payment (Selected Pill) -->
+                <div class="space-y-2">
+                  <p class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">UPI Payment</p>
+                  
+                  <div 
+                    (click)="selectedPaymentMethod = 'upi'"
+                    class="p-3.5 rounded-2xl border-2 transition-all cursor-pointer flex items-center gap-3"
+                    [class]="selectedPaymentMethod === 'upi' ? 'bg-[#e4ebfc] border-[#5f259f] shadow-sm' : 'bg-slate-50 border-slate-200'"
+                  >
+                    <div class="w-8 h-8 rounded-lg bg-gradient-to-tr from-emerald-500 via-indigo-600 to-purple-600 flex items-center justify-center text-white text-xs font-black shadow-sm">
+                      ▲
+                    </div>
+                    <div class="flex flex-col">
+                      <span class="font-bold text-slate-900 text-sm leading-tight">UPI</span>
+                      <span class="text-[11px] text-slate-500 font-medium mt-0.5">Pay via UPI apps, number or ID</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Other Methods -->
+                <div class="space-y-2.5 mt-6">
+                  <p class="text-[11px] font-bold text-slate-400 uppercase tracking-wider">Other Methods</p>
+
+                  <div 
+                    (click)="selectedPaymentMethod = 'card'"
+                    class="p-3.5 rounded-2xl border transition-all cursor-pointer flex items-center justify-between"
+                    [class]="selectedPaymentMethod === 'card' ? 'bg-[#e4ebfc] border-[#5f259f]' : 'bg-white border-slate-200 hover:bg-slate-50'"
+                  >
+                    <div class="flex items-center gap-3">
+                      <span class="material-icons text-slate-600 text-lg">credit_card</span>
+                      <span class="font-bold text-slate-800 text-xs">Debit/Credit Card</span>
+                    </div>
+                    <div class="flex items-center gap-1">
+                      <span class="w-5 h-3 bg-blue-700 text-white text-[6px] font-bold flex items-center justify-center rounded">VISA</span>
+                      <span class="w-5 h-3 bg-red-600 text-white text-[6px] font-bold flex items-center justify-center rounded">MC</span>
+                    </div>
+                  </div>
+
+                  <div 
+                    (click)="selectedPaymentMethod = 'netbank'"
+                    class="p-3.5 rounded-2xl border transition-all cursor-pointer flex items-center justify-between"
+                    [class]="selectedPaymentMethod === 'netbank' ? 'bg-[#e4ebfc] border-[#5f259f]' : 'bg-white border-slate-200 hover:bg-slate-50'"
+                  >
+                    <div class="flex items-center gap-3">
+                      <span class="material-icons text-slate-600 text-lg">account_balance</span>
+                      <span class="font-bold text-slate-800 text-xs">Net Banking</span>
+                    </div>
+                    <span class="text-[10px] text-slate-400 font-bold">+57</span>
+                  </div>
+                </div>
+
+              </div>
+            </div>
+
+            <!-- RIGHT: QR Code / UPI Input Container (1:1 matching screenshot) -->
+            <div class="md:col-span-7 flex flex-col items-center justify-center text-center p-4 bg-[#fafafc] rounded-2xl border border-slate-200/80 relative">
+              
+              <!-- QR Mode -->
+              <div *ngIf="selectedPaymentMethod === 'upi'" class="w-full flex flex-col items-center">
+                <h4 class="text-sm font-extrabold text-slate-900 mb-3">Scan via any UPI app</h4>
+                
+                <!-- Supported App Logos -->
+                <div class="flex items-center justify-center gap-3 mb-4">
+                  <span class="px-2 py-0.5 bg-[#5f259f] text-white font-black text-[10px] rounded">pe</span>
+                  <span class="px-2 py-0.5 bg-blue-600 text-white font-bold text-[10px] rounded">GPay</span>
+                  <span class="px-2 py-0.5 bg-cyan-600 text-white font-bold text-[10px] rounded">Paytm</span>
+                  <span class="px-2 py-0.5 bg-emerald-600 text-white font-bold text-[10px] rounded">BHIM</span>
+                </div>
+
+                <!-- High-Fidelity Scannable QR Code Box -->
+                <div class="w-52 h-52 bg-white p-3 rounded-2xl border border-slate-200 shadow-md flex items-center justify-center relative mb-3">
+                  <!-- Simulated High Res Scannable QR -->
+                  <div class="w-full h-full bg-slate-900 rounded-xl p-2 relative flex items-center justify-center overflow-hidden">
+                    <!-- Standard QR Grid Pattern -->
+                    <div class="grid grid-cols-6 gap-1 w-full h-full opacity-90">
+                      <div class="bg-white rounded-sm"></div>
+                      <div class="bg-white rounded-sm"></div>
+                      <div class="bg-white rounded-sm"></div>
+                      <div class="bg-[#5f259f] rounded-sm"></div>
+                      <div class="bg-white rounded-sm"></div>
+                      <div class="bg-white rounded-sm"></div>
+                      <div class="bg-white rounded-sm"></div>
+                      <div class="bg-transparent"></div>
+                      <div class="bg-white rounded-sm"></div>
+                      <div class="bg-white rounded-sm"></div>
+                      <div class="bg-transparent"></div>
+                      <div class="bg-white rounded-sm"></div>
+                      <div class="bg-white rounded-sm"></div>
+                      <div class="bg-white rounded-sm"></div>
+                      <div class="bg-white rounded-sm"></div>
+                      <div class="bg-white rounded-sm"></div>
+                      <div class="bg-white rounded-sm"></div>
+                      <div class="bg-white rounded-sm"></div>
+                    </div>
+
+                    <!-- Center PhonePe Logo Badge -->
+                    <div class="absolute w-9 h-9 rounded-full bg-[#5f259f] border-2 border-white flex items-center justify-center text-white font-black text-xs shadow-lg">
+                      pe
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Expiry Note -->
+                <p class="text-xs font-semibold text-slate-500 mb-4">
+                  This QR will expire in <span class="font-extrabold text-slate-800">{{ formattedTimer }}</span>
+                </p>
+
+                <!-- Initiate Button -->
+                <button 
+                  (click)="initiatePhonePeGateway()"
+                  [disabled]="isProcessingPayment"
+                  class="w-full py-3 bg-[#5f259f] hover:bg-[#4d1c85] text-white rounded-xl font-bold text-xs shadow-md transition-all cursor-pointer flex items-center justify-center gap-2"
+                >
+                  <span class="material-icons text-sm animate-spin" *ngIf="isProcessingPayment">refresh</span>
+                  <span>{{ isProcessingPayment ? 'Verifying with PhonePe...' : 'Simulate PhonePe Payment' }}</span>
+                </button>
+
+                <!-- Timeout Alert -->
+                <p class="text-[11px] font-bold text-amber-600 mt-3 flex items-center gap-1">
+                  <span class="w-2 h-2 rounded-full bg-amber-500 animate-ping"></span>
+                  This page will timeout in {{ formattedTimer }} mins
+                </p>
+              </div>
+
+              <!-- Card Mode -->
+              <div *ngIf="selectedPaymentMethod === 'card'" class="w-full space-y-4">
+                <h4 class="text-sm font-extrabold text-slate-900">Enter Card Details</h4>
+                <input type="text" placeholder="Card Number (XXXX XXXX XXXX XXXX)" class="w-full px-4 py-2.5 bg-white border border-slate-200 rounded-xl text-xs outline-none">
+                <div class="grid grid-cols-2 gap-2">
+                  <input type="text" placeholder="MM/YY" class="w-full px-4 py-2.5 bg-white border border-slate-200 rounded-xl text-xs outline-none">
+                  <input type="password" placeholder="CVV" class="w-full px-4 py-2.5 bg-white border border-slate-200 rounded-xl text-xs outline-none">
+                </div>
+                <button (click)="initiatePhonePeGateway()" class="w-full py-3 bg-[#5f259f] text-white rounded-xl font-bold text-xs shadow-md cursor-pointer">
+                  Pay ₹{{ proInrPrice }}
+                </button>
+              </div>
+
+              <!-- Netbank Mode -->
+              <div *ngIf="selectedPaymentMethod === 'netbank'" class="w-full space-y-4">
+                <h4 class="text-sm font-extrabold text-slate-900">Select Bank</h4>
+                <select class="w-full p-3 bg-white border border-slate-200 rounded-xl text-xs font-semibold">
+                  <option>State Bank of India (SBI)</option>
+                  <option>HDFC Bank</option>
+                  <option>ICICI Bank</option>
+                  <option>Axis Bank</option>
+                </select>
+                <button (click)="initiatePhonePeGateway()" class="w-full py-3 bg-[#5f259f] text-white rounded-xl font-bold text-xs shadow-md cursor-pointer">
+                  Proceed to Bank
+                </button>
+              </div>
+
+            </div>
+
+          </div>
+
+        </div>
+
+      </div>
+
+      <!-- Success State Confirmation -->
+      <div *ngIf="paymentSuccess" class="p-10 text-center space-y-4 bg-white flex-1 flex flex-col items-center justify-center">
+        <div class="w-20 h-20 rounded-full bg-emerald-100 text-emerald-600 flex items-center justify-center shadow-lg animate-bounce">
+          <span class="material-icons text-4xl">check_circle</span>
+        </div>
+        
+        <h3 class="text-3xl font-black text-slate-900">Payment Successful!</h3>
+        <p class="text-sm text-slate-600 leading-relaxed max-w-sm">
+          Transaction <span class="font-mono font-bold text-slate-900">TXN_{{ merchantCode }}</span> verified by PhonePe Gateway. Your GlowCV account is upgraded to <span class="font-extrabold text-[#5f259f]">PRO</span>.
+        </p>
+
+        <button 
+          (click)="closePaymentModal(); cvService.openOnboarding()"
+          class="px-8 py-3.5 bg-[#2b0b3c] text-white rounded-xl font-bold text-sm shadow-lg hover:bg-slate-900 transition-all cursor-pointer mt-4"
+        >
+          Start Building with Pro Features
+        </button>
+      </div>
+
+    </div>
+  </div>
+
+
+</div>
