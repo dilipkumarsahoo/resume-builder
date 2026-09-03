@@ -1,5 +1,14 @@
-<div class="w-full h-full bg-white shadow-lg origin-top transition-all duration-500" id="cv-preview-content"
-  [ngClass]="templateClass()">
+<div class="w-full h-full bg-white shadow-lg origin-top transition-all duration-300" id="cv-preview-content"
+  [ngClass]="customizationClasses()"
+  [style.--custom-font]="getFontFamily()"
+  [style.font-family]="getFontFamily()"
+  [style.--accent]="cvService.customization().primaryColor"
+  [style.--primary-color]="cvService.customization().primaryColor"
+  [style.line-height]="getLineHeight()"
+  [style.--base-font-size.pt]="cvService.customization().baseFontPt || 10.5"
+  [style.--name-font-size.pt]="(cvService.customization().baseFontPt || 10.5) + (cvService.customization().nameFontPt || 11)"
+  [style.--headings-font-size.pt]="(cvService.customization().baseFontPt || 10.5) + (cvService.customization().headingsFontPt || 3)"
+  [style.--entry-header-font-size.pt]="(cvService.customization().baseFontPt || 10.5) + (cvService.customization().entryHeaderFontPt || 0)">
 
   @if (currentTemplate() === 'modern') {
   <!-- Modern Template -->

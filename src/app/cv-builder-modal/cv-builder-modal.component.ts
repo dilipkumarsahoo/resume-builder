@@ -1,10 +1,11 @@
-import { Component, inject, ElementRef, ViewChild, PLATFORM_ID } from '@angular/core';
+import { Component, inject, ElementRef, ViewChild, PLATFORM_ID, signal } from '@angular/core';
 import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { Router } from '@angular/router';
 import { CvBuilderService, TemplateType } from '../cv-builder.service';
 import { AuthService } from '../services/auth.service';
 import { CvFormComponent } from '../cv-form/cv-form.component';
 import { CvPreviewComponent } from '../cv-preview/cv-preview.component';
+import { CvCustomizeComponent } from '../cv-customize/cv-customize.component';
 import { animate } from 'motion';
 import * as htmlToImage from 'html-to-image';
 import { jsPDF } from 'jspdf';
@@ -12,7 +13,7 @@ import { jsPDF } from 'jspdf';
 @Component({
   selector: 'app-cv-builder-modal',
   standalone: true,
-  imports: [CommonModule, CvFormComponent, CvPreviewComponent],
+  imports: [CommonModule, CvFormComponent, CvPreviewComponent, CvCustomizeComponent],
   templateUrl: './cv-builder-modal.component.html',
   styleUrl: './cv-builder-modal.component.css'
 })
@@ -23,8 +24,18 @@ export class CvBuilderModalComponent {
   cvService = inject(CvBuilderService);
   template = this.cvService.selectedTemplate;
   isDownloading = false;
+  activeTab = signal<'overview' | 'content' | 'customize' | 'ai-tools'>('customize');
+  showOptionsMenu = signal(false);
 
   @ViewChild('modalContent') modalContent?: ElementRef;
+
+  setActiveTab(tab: 'overview' | 'content' | 'customize' | 'ai-tools') {
+    if (tab === 'overview') {
+      this.router.navigate(['/cover-letter'], { queryParams: { tab: 'resume' } });
+      return;
+    }
+    this.activeTab.set(tab);
+  }
 
   setTemplate(t: TemplateType) {
     this.cvService.selectedTemplate.set(t);

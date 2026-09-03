@@ -40,6 +40,33 @@ export interface CVData {
 
 export type TemplateType = 'minimal' | 'modern' | 'professional' | 'creative' | 'corporate' | 'tech' | 'bold' | 'elegant' | 'executive' | 'fresher' | 'designer' | 'compact' | 'sidebar-dark' | 'banner' | 'timeline' | 'bubble' | 'classic-ats' | 'startup';
 
+export interface CustomizationSettings {
+  language: string;
+  dateFormat: string;
+  pageFormat: 'A4' | 'US Letter';
+  columns: 'one' | 'two' | 'mix';
+  fontFamily: string;
+  bodyFontSize: 'small' | 'medium' | 'large';
+  headingSize: 'small' | 'medium' | 'large';
+  baseFontPt: number;
+  nameFontPt: number;
+  headingsFontPt: number;
+  entryHeaderFontPt: number;
+  lineHeight: 'tight' | 'normal' | 'relaxed';
+  sectionSpacing: 'compact' | 'normal' | 'spacious';
+  primaryColor: string;
+  headingStyle: 'simple' | 'underlined' | 'pill' | 'accent-left';
+  headingTransform: 'none' | 'uppercase' | 'capitalize';
+  headerAlignment: 'left' | 'center' | 'banner';
+  showPhoto: boolean;
+  photoShape: 'circle' | 'rounded' | 'square';
+  photoSize: 'small' | 'medium' | 'large';
+  showIcons: boolean;
+  underlineLinks: boolean;
+  showPageNumbers: boolean;
+  footerText: string;
+}
+
 @Injectable({ providedIn: 'root' })
 export class CvBuilderService {
   private router = inject(Router);
@@ -51,6 +78,37 @@ export class CvBuilderService {
   isImprovingSummary = signal(false);
   isParsing = signal(false);
   parseError = signal<string | null>(null);
+
+  defaultCustomization: CustomizationSettings = {
+    language: 'English (UK)',
+    dateFormat: 'DD/MM/YYYY',
+    pageFormat: 'A4',
+    columns: 'one',
+    fontFamily: 'Inter',
+    bodyFontSize: 'medium',
+    headingSize: 'medium',
+    baseFontPt: 10.5,
+    nameFontPt: 11,
+    headingsFontPt: 3,
+    entryHeaderFontPt: 0,
+    lineHeight: 'normal',
+    sectionSpacing: 'normal',
+    primaryColor: '#10b981',
+    headingStyle: 'simple',
+    headingTransform: 'uppercase',
+    headerAlignment: 'left',
+    showPhoto: true,
+    photoShape: 'circle',
+    photoSize: 'medium',
+    showIcons: true,
+    underlineLinks: false,
+    showPageNumbers: true,
+    footerText: ''
+  };
+
+  customization = signal<CustomizationSettings>(this.defaultCustomization);
+  private history: CustomizationSettings[] = [];
+  private historyIndex = -1;
 
   defaultData: CVData = {
     fullName: 'Alex Johnson',
@@ -100,6 +158,72 @@ export class CvBuilderService {
 
   constructor() {
     this.loadFromLocalStorage();
+    this.loadCustomizationFromStorage();
+  }
+
+  updateCustomization(patch: Partial<CustomizationSettings>, recordHistory: boolean = true) {
+    if (recordHistory) {
+      if (this.historyIndex < this.history.length - 1) {
+        this.history = this.history.slice(0, this.historyIndex + 1);
+      }
+      this.history.push({ ...this.customization() });
+      if (this.history.length > 30) this.history.shift();
+      this.historyIndex = this.history.length - 1;
+    }
+    this.customization.update(current => {
+      const updated = { ...current, ...patch };
+      this.saveCustomizationToStorage(updated);
+      return updated;
+    });
+  }
+
+  canUndo(): boolean {
+    return this.historyIndex >= 0;
+  }
+
+  canRedo(): boolean {
+    return this.historyIndex < this.history.length - 1;
+  }
+
+  undo() {
+    if (!this.canUndo()) return;
+    const previous = this.history[this.historyIndex];
+    this.historyIndex--;
+    this.customization.set(previous);
+    this.saveCustomizationToStorage(previous);
+  }
+
+  redo() {
+    if (!this.canRedo()) return;
+    this.historyIndex++;
+    const next = this.history[this.historyIndex];
+    this.customization.set(next);
+    this.saveCustomizationToStorage(next);
+  }
+
+  resetCustomization() {
+    this.updateCustomization(this.defaultCustomization);
+  }
+
+  private saveCustomizationToStorage(data: CustomizationSettings) {
+    if (typeof window === 'undefined') return;
+    try {
+      localStorage.setItem('cv_builder_customization', JSON.stringify(data));
+    } catch (e) {
+      console.error('Failed to save customization to local storage', e);
+    }
+  }
+
+  private loadCustomizationFromStorage() {
+    if (typeof window === 'undefined') return;
+    try {
+      const saved = localStorage.getItem('cv_builder_customization');
+      if (saved) {
+        this.customization.set({ ...this.defaultCustomization, ...JSON.parse(saved) });
+      }
+    } catch (e) {
+      console.error('Failed to load customization from local storage', e);
+    }
   }
 
   openModal(template?: TemplateType) {

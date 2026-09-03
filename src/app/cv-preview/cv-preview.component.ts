@@ -112,4 +112,39 @@ export class CvPreviewComponent {
   templateClass() {
     return `${this.currentTemplate()}-template`;
   }
+
+  customizationClasses() {
+    const c = this.cvService.customization();
+    return [
+      this.templateClass(),
+      `font-size-${c.bodyFontSize || 'medium'}`,
+      `heading-size-${c.headingSize || 'medium'}`,
+      `heading-${c.headingTransform || 'uppercase'}`,
+      `heading-style-${c.headingStyle || 'simple'}`,
+      `spacing-${c.sectionSpacing || 'normal'}`,
+      `photo-shape-${c.photoShape || 'circle'}`,
+      `page-format-${(c.pageFormat || 'A4').toLowerCase().replace(/\s+/g, '-')}`
+    ].join(' ');
+  }
+
+  getFontFamily(): string {
+    const font = this.cvService.customization().fontFamily;
+    switch (font) {
+      case 'Roboto': return "'Roboto', sans-serif";
+      case 'Poppins': return "'Poppins', sans-serif";
+      case 'Outfit': return "'Outfit', sans-serif";
+      case 'Plus Jakarta Sans': return "'Plus Jakarta Sans', sans-serif";
+      case 'Merriweather': return "'Merriweather', serif";
+      case 'Playfair Display': return "'Playfair Display', serif";
+      case 'Space Grotesk': return "'Space Grotesk', sans-serif";
+      default: return "'Inter', sans-serif";
+    }
+  }
+
+  getLineHeight(): string {
+    const lh = this.cvService.customization().lineHeight;
+    if (lh === 'tight') return '1.25';
+    if (lh === 'relaxed') return '1.75';
+    return '1.5';
+  }
 }

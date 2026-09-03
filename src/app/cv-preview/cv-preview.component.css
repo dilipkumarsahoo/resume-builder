@@ -1,4 +1,4 @@
-/* CV Preview styles */
+/* CV Preview Styles */
 
 :host {
   display: block;
@@ -15,68 +15,136 @@
   scrollbar-width: none;
 }
 
-/* Base Template Fonts */
-.modern-template,
-.minimal-template,
-.professional-template,
-.creative-template,
-.bold-template,
-.fresher-template,
-.bubble-template,
-.banner-template,
-.timeline-template,
-.startup-template {
-  font-family: 'Inter', system-ui, -apple-system, sans-serif;
+/* ==========================================================================
+   DYNAMIC CUSTOMIZATION ENGINE
+   ========================================================================== */
+
+/* 1. Global Font Application */
+#cv-preview-content,
+#cv-preview-content * {
+  font-family: var(--custom-font, 'Inter', sans-serif);
 }
 
-/* Corporate & Classic ATS Template Serif Font */
-.corporate-template h1,
-.corporate-template h2,
-.corporate-template h3,
-.classic-ats-template {
-  font-family: 'Georgia', 'Times New Roman', serif;
+/* 2. Dynamic Accent Color Overrides */
+#cv-preview-content .text-accent {
+  color: var(--accent, #10b981) !important;
 }
 
-/* Elegant Template */
-.elegant-template {
-  font-family: 'Cormorant Garamond', 'EB Garamond', serif;
+#cv-preview-content .bg-accent {
+  background-color: var(--accent, #10b981) !important;
 }
 
-.elegant-template h1,
-.elegant-template h2,
-.elegant-template h3 {
-  font-family: 'Playfair Display', serif;
+#cv-preview-content .border-accent {
+  border-color: var(--accent, #10b981) !important;
 }
 
-/* Executive Template */
-.executive-template {
-  font-family: 'Montserrat', sans-serif;
+#cv-preview-content .border-t-accent {
+  border-top-color: var(--accent, #10b981) !important;
 }
 
-.executive-template h1,
-.executive-template h2 {
-  font-family: 'Oswald', sans-serif;
+#cv-preview-content .border-b-accent {
+  border-bottom-color: var(--accent, #10b981) !important;
 }
 
-/* Designer Template */
-.designer-template {
-  font-family: 'Outfit', sans-serif;
+#cv-preview-content .border-l-accent {
+  border-left-color: var(--accent, #10b981) !important;
 }
 
-.designer-template h1 {
-  font-family: 'Syncopate', sans-serif;
-  font-weight: 900;
+#cv-preview-content .ring-accent {
+  --tw-ring-color: var(--accent, #10b981) !important;
 }
 
-/* Tech & Compact Template */
-.tech-template,
-.compact-template {
-  font-family: 'JetBrains Mono', 'Fira Code', 'Inter', monospace;
+/* 3. Heading Text Transforms */
+#cv-preview-content.heading-uppercase h1,
+#cv-preview-content.heading-uppercase h2,
+#cv-preview-content.heading-uppercase h3 {
+  text-transform: uppercase !important;
 }
 
-/* Startup Template */
-.startup-template h1 {
-  font-family: 'Lexend', sans-serif;
+#cv-preview-content.heading-capitalize h1,
+#cv-preview-content.heading-capitalize h2,
+#cv-preview-content.heading-capitalize h3 {
+  text-transform: capitalize !important;
+}
+
+#cv-preview-content.heading-none h1,
+#cv-preview-content.heading-none h2,
+#cv-preview-content.heading-none h3 {
+  text-transform: none !important;
+}
+
+/* 4. Heading Styles */
+#cv-preview-content.heading-style-underlined h2 {
+  border-bottom: 2px solid var(--accent, #10b981) !important;
+  padding-bottom: 3px !important;
+}
+
+#cv-preview-content.heading-style-pill h2 {
+  background-color: var(--accent, #10b981) !important;
+  color: #ffffff !important;
+  padding: 3px 10px !important;
+  border-radius: 6px !important;
+  display: inline-block !important;
+}
+
+#cv-preview-content.heading-style-accent-left h2 {
+  border-left: 4px solid var(--accent, #10b981) !important;
+  padding-left: 8px !important;
+}
+
+/* 5. Precise Font Sizing (FlowCV Stepped Sizing Engine) */
+#cv-preview-content {
+  font-size: var(--base-font-size, 10.5pt);
+}
+
+#cv-preview-content p,
+#cv-preview-content span,
+#cv-preview-content li {
+  font-size: inherit;
+}
+
+#cv-preview-content h1 {
+  font-size: var(--name-font-size, 21.5pt) !important;
+}
+
+#cv-preview-content h2 {
+  font-size: var(--headings-font-size, 13.5pt) !important;
+}
+
+#cv-preview-content h3 {
+  font-size: var(--entry-header-font-size, 10.5pt) !important;
+}
+
+/* 7. Section Spacing */
+#cv-preview-content.spacing-compact .space-y-4 > * + * {
+  margin-top: 0.5rem !important;
+}
+#cv-preview-content.spacing-compact .space-y-6 > * + * {
+  margin-top: 0.75rem !important;
+}
+#cv-preview-content.spacing-compact .p-8 {
+  padding: 1.25rem !important;
+}
+
+#cv-preview-content.spacing-spacious .space-y-4 > * + * {
+  margin-top: 1.4rem !important;
+}
+#cv-preview-content.spacing-spacious .space-y-6 > * + * {
+  margin-top: 1.85rem !important;
+}
+#cv-preview-content.spacing-spacious .p-8 {
+  padding: 2.5rem !important;
+}
+
+/* 8. Photo Shapes */
+#cv-preview-content.photo-shape-circle img {
+  border-radius: 9999px !important;
+}
+#cv-preview-content.photo-shape-rounded img {
+  border-radius: 12px !important;
+}
+#cv-preview-content.photo-shape-square img {
+  border-radius: 0px !important;
 }
 
 @media print {
