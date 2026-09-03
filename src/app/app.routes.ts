@@ -8,6 +8,7 @@ import { SavedJobsComponent } from './saved-jobs/saved-jobs.component';
 
 import { CoverLetterComponent } from './cover-letter/cover-letter.component';
 import { PricingComponent } from './pricing/pricing.component';
+import { AboutComponent } from './about/about.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -17,6 +18,7 @@ export const routes: Routes = [
   { path: 'cv-builder', component: CvBuilderModalComponent },
   { path: 'saved-jobs', component: SavedJobsComponent },
   { path: 'cover-letter', component: CoverLetterComponent },
-  { path: 'pricing', component: PricingComponent }
+  { path: 'pricing', component: PricingComponent },
+  { path: 'about', component: AboutComponent }
 ];
 

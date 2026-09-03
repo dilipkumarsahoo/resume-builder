@@ -1,8 +1,9 @@
 import { Component, inject, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Router, RouterModule } from '@angular/router';
-import { CvBuilderService } from '../cv-builder.service';
+import { Router, RouterModule, ActivatedRoute } from '@angular/router';
+import { CvBuilderService, TemplateType } from '../cv-builder.service';
+import { CvPreviewComponent } from '../cv-preview/cv-preview.component';
 import { jsPDF } from 'jspdf';
 
 export type CoverLetterTemplate = 'minimal' | 'modern' | 'elegant' | 'creative' | 'executive' | 'tech';
@@ -15,16 +16,27 @@ export interface TemplateItem {
   badge?: string;
 }
 
+export interface ResumeTemplateItem {
+  id: TemplateType;
+  name: string;
+  category: string;
+  badge?: string;
+}
+
 @Component({
   selector: 'app-cover-letter',
   standalone: true,
-  imports: [CommonModule, FormsModule, RouterModule],
+  imports: [CommonModule, FormsModule, RouterModule, CvPreviewComponent],
   templateUrl: './cover-letter.component.html',
   styleUrl: './cover-letter.component.css'
 })
 export class CoverLetterComponent implements OnInit {
   public cvService = inject(CvBuilderService);
   private router = inject(Router);
+  private route = inject(ActivatedRoute);
+
+  // Active Section in Career Suite
+  activeTabSection: 'resume' | 'cover-letter' | 'jobs' = 'cover-letter';
 
   // Form Fields
   fullName = '';
@@ -36,6 +48,48 @@ export class CoverLetterComponent implements OnInit {
   companyName = '';
   hiringManager = '';
   jobDescription = '';
+
+  // Resume Templates State
+  selectedResumeCategory = 'All Templates';
+  selectedResumeTemplate: TemplateType = 'modern';
+  resumeCategories = [
+    'All Templates',
+    'Minimal',
+    'Creative',
+    'Corporate',
+    'Tech'
+  ];
+
+  resumeTemplates: ResumeTemplateItem[] = [
+    { id: 'minimal', name: 'Modern Minimal', category: 'Minimal', badge: 'Popular' },
+    { id: 'modern', name: 'Creative Edge', category: 'Creative', badge: 'Recommended' },
+    { id: 'professional', name: 'Corporate Pro', category: 'Corporate', badge: 'ATS Ready' },
+    { id: 'creative', name: 'Design Studio', category: 'Creative', badge: 'New' },
+    { id: 'corporate', name: 'Executive Suite', category: 'Corporate' },
+    { id: 'tech', name: 'Silicon Valley', category: 'Tech', badge: 'Popular' },
+    { id: 'bold', name: 'Bold Statement', category: 'Creative' },
+    { id: 'elegant', name: 'Elegant Serif', category: 'Minimal' },
+    { id: 'executive', name: 'Leadership', category: 'Corporate' },
+    { id: 'fresher', name: 'Early Career', category: 'Minimal' },
+    { id: 'designer', name: 'Portfolio Plus', category: 'Creative' },
+    { id: 'compact', name: 'Dense Info', category: 'Minimal' },
+    { id: 'sidebar-dark', name: 'Midnight Pro', category: 'Corporate', badge: 'Dark Mode' },
+    { id: 'banner', name: 'Hero Header', category: 'Creative' },
+    { id: 'timeline', name: 'History View', category: 'Tech' },
+    { id: 'bubble', name: 'Playful UI', category: 'Creative' },
+    { id: 'classic-ats', name: 'ATS Scanner', category: 'Corporate', badge: 'ATS 100%' },
+    { id: 'startup', name: 'Fast Track', category: 'Tech' }
+  ];
+
+  // Job Tracker State
+  jobs: any[] = [];
+  showAddJobModal = false;
+  newJobPosition = '';
+  newJobCompany = '';
+  newJobType = 'Full-time';
+  newJobStatus = 'Bookmarked';
+  jobSearchQuery = '';
+  selectedJobStatusFilter = 'All Statuses';
 
   // App State & FlowCV Views
   viewMode: 'select' | 'builder' = 'select'; // FlowCV style: starts on Template Selection!
@@ -106,8 +160,153 @@ export class CoverLetterComponent implements OnInit {
       day: 'numeric',
       year: 'numeric'
     });
+
+    this.route.queryParams.subscribe(params => {
+      if (params['tab'] === 'resume') {
+        this.activeTabSection = 'resume';
+      } else if (params['tab'] === 'cover-letter') {
+        this.activeTabSection = 'cover-letter';
+      } else if (params['tab'] === 'jobs' || params['tab'] === 'job-tracker') {
+        this.activeTabSection = 'jobs';
+      }
+    });
+
     this.loadResumeData();
     this.loadDraft();
+    this.loadJobs();
+  }
+
+  loadJobs() {
+    if (typeof window !== 'undefined') {
+      const saved = localStorage.getItem('saved_jobs');
+      if (saved) {
+        this.jobs = JSON.parse(saved);
+      } else {
+        this.jobs = [
+          {
+            position: 'Software Engineer',
+            company: 'Google',
+            status: 'Bookmarked',
+            dateSaved: 'May 13, 2026',
+            dateApplied: null,
+            type: 'Full-time',
+            resume: null,
+            coverLetter: null,
+            notes: ''
+          }
+        ];
+        this.saveJobs();
+      }
+    }
+  }
+
+  saveJobs() {
+    if (typeof window !== 'undefined') {
+      localStorage.setItem('saved_jobs', JSON.stringify(this.jobs));
+    }
+  }
+
+  get bookmarkedCount(): number {
+    return this.jobs.filter(j => j.status === 'Bookmarked').length;
+  }
+
+  get appliedCount(): number {
+    return this.jobs.filter(j => j.status === 'Applied').length;
+  }
+
+  get interviewingOrOfferCount(): number {
+    return this.jobs.filter(j => j.status === 'Interviewing' || j.status === 'Offer').length;
+  }
+
+  get filteredJobs(): any[] {
+    return this.jobs.filter(job => {
+      const matchesSearch = !this.jobSearchQuery.trim() || 
+        job.position.toLowerCase().includes(this.jobSearchQuery.toLowerCase()) || 
+        job.company.toLowerCase().includes(this.jobSearchQuery.toLowerCase());
+      const matchesStatus = this.selectedJobStatusFilter === 'All Statuses' || job.status === this.selectedJobStatusFilter;
+      return matchesSearch && matchesStatus;
+    });
+  }
+
+  openAddJobModal() {
+    this.newJobPosition = '';
+    this.newJobCompany = '';
+    this.newJobType = 'Full-time';
+    this.newJobStatus = 'Bookmarked';
+    this.showAddJobModal = true;
+  }
+
+  closeAddJobModal() {
+    this.showAddJobModal = false;
+  }
+
+  addJob() {
+    if (!this.newJobPosition.trim() || !this.newJobCompany.trim()) return;
+    const newJob = {
+      position: this.newJobPosition.trim(),
+      company: this.newJobCompany.trim(),
+      status: this.newJobStatus,
+      dateSaved: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
+      dateApplied: this.newJobStatus === 'Applied' ? new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : null,
+      type: this.newJobType,
+      resume: null,
+      coverLetter: null,
+      notes: ''
+    };
+    this.jobs.push(newJob);
+    this.saveJobs();
+    this.showAddJobModal = false;
+  }
+
+  deleteJob(index: number) {
+    if (confirm('Are you sure you want to delete this job application?')) {
+      this.jobs.splice(index, 1);
+      this.saveJobs();
+    }
+  }
+
+  updateJobStatus(job: any, newStatus: string) {
+    job.status = newStatus;
+    if (newStatus === 'Applied' && !job.dateApplied) {
+      job.dateApplied = new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
+    }
+    this.saveJobs();
+  }
+
+  get filteredResumeTemplates(): ResumeTemplateItem[] {
+    if (this.selectedResumeCategory === 'All Templates') {
+      return this.resumeTemplates;
+    }
+    return this.resumeTemplates.filter(t => t.category === this.selectedResumeCategory);
+  }
+
+  filterResumeCategory(cat: string) {
+    this.selectedResumeCategory = cat;
+  }
+
+  switchToResumeSection() {
+    this.activeTabSection = 'resume';
+    this.router.navigate([], { relativeTo: this.route, queryParams: { tab: 'resume' }, queryParamsHandling: 'merge' });
+  }
+
+  switchToCoverLetterSection() {
+    this.activeTabSection = 'cover-letter';
+    this.viewMode = 'select';
+    this.router.navigate([], { relativeTo: this.route, queryParams: { tab: 'cover-letter' }, queryParamsHandling: 'merge' });
+  }
+
+  switchToJobTrackerSection() {
+    this.activeTabSection = 'jobs';
+    this.router.navigate([], { relativeTo: this.route, queryParams: { tab: 'jobs' }, queryParamsHandling: 'merge' });
+  }
+
+  selectResumeTemplateAndStart(templateId: TemplateType) {
+    this.selectedResumeTemplate = templateId;
+    this.cvService.openModal(templateId);
+  }
+
+  startBlankResume() {
+    this.cvService.openModal('modern');
   }
 
   get filteredTemplates(): TemplateItem[] {

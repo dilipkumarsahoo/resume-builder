@@ -24,6 +24,18 @@ import { OnboardingComponent } from './onboarding/onboarding';
 export class App {
   router = inject(Router);
 
+  hideNavAndFooter() {
+    const url = this.router.url;
+    return (
+      url.includes('/dashboard') ||
+      url.includes('/signup') ||
+      url.includes('/login') ||
+      url.includes('/cv-builder') ||
+      url.includes('/cover-letter') ||
+      url.includes('/saved-jobs')
+    );
+  }
+
   isDashboard() {
     return this.router.url.includes('/dashboard');
   }
@@ -35,5 +47,8 @@ export class App {
   }
   isSignup() {
     return this.router.url.includes('/signup');
+  }
+  isCoverLetter() {
+    return this.router.url.includes('/cover-letter');
   }
 }

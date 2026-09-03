@@ -1,5 +1,6 @@
 import { Component, inject, signal } from '@angular/core';
 import { CommonModule } from '@angular/common';
+import { Router } from '@angular/router';
 import { CvBuilderService, TemplateType } from '../cv-builder.service';
 import { CvPreviewComponent } from '../cv-preview/cv-preview.component';
 
@@ -12,9 +13,14 @@ import { CvPreviewComponent } from '../cv-preview/cv-preview.component';
 })
 export class OnboardingComponent {
   cvService = inject(CvBuilderService);
+  private router = inject(Router);
+
   isUploading = signal(false);
   selectedTemplateId = signal<TemplateType | null>(null);
+  selectedCategory = signal<string>('All');
   isDragging = false;
+
+  categories = ['All', 'Minimal', 'Creative', 'Corporate', 'Tech'];
 
   // 18 Professional Templates with Metadata and Fixed Previews
   templates: { id: TemplateType, name: string, category: string, preview: string }[] = [
@@ -37,6 +43,26 @@ export class OnboardingComponent {
     { id: 'classic-ats', name: 'ATS Scanner', category: 'Corporate', preview: 'https://images.unsplash.com/photo-1454165833767-027ffea9e77b?q=80&w=400' },
     { id: 'startup', name: 'Fast Track', category: 'Tech', preview: 'https://images.unsplash.com/photo-1519389950473-47ba0277781c?q=80&w=400' }
   ];
+
+  navigateTo(path: string, queryParams?: any) {
+    this.cvService.closeOnboarding();
+    if (queryParams) {
+      this.router.navigate([path], { queryParams });
+    } else {
+      this.router.navigate([path]);
+    }
+  }
+
+  filterCategory(cat: string) {
+    this.selectedCategory.set(cat);
+  }
+
+  get filteredTemplates() {
+    if (this.selectedCategory() === 'All') {
+      return this.templates;
+    }
+    return this.templates.filter(t => t.category === this.selectedCategory());
+  }
 
   constructor() {
     console.log("Total templates loaded:", this.templates.length);
@@ -67,7 +93,7 @@ export class OnboardingComponent {
     event.preventDefault();
     event.stopPropagation();
     this.isDragging = false;
-    
+
     if (event.dataTransfer && event.dataTransfer.files && event.dataTransfer.files.length > 0) {
       this.cvService.uploadAndParseResume(event.dataTransfer.files[0], () => {
         this.nextStep();

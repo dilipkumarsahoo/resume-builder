@@ -58,7 +58,7 @@ export class NavbarComponent implements OnInit {
 
   openResumeBuilder() {
     this.closeMobileMenu();
-    this.cvService.openOnboarding();
+    this.router.navigate(['/cover-letter'], { queryParams: { tab: 'resume' } });
   }
 
   openResumeTemplates() {

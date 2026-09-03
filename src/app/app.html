@@ -1,7 +1,7 @@
 <app-loader></app-loader>
-<app-navbar *ngIf="!isDashboard() && !isSignup() && !isLogin() && !isCvBuilder()"></app-navbar>
+<app-navbar *ngIf="!hideNavAndFooter()"></app-navbar>
 
 <router-outlet></router-outlet>
 
-<app-footer *ngIf="!isDashboard() && !isSignup() && !isLogin() && !isCvBuilder()"></app-footer>
+<app-footer *ngIf="!hideNavAndFooter()"></app-footer>
 <app-onboarding></app-onboarding>

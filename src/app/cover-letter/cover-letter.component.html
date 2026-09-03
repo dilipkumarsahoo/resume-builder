@@ -18,30 +18,38 @@
       <nav class="space-y-2">
         <!-- Resume Tab -->
         <button 
-          (click)="navigateToResume()"
-          class="w-full flex items-center gap-3 px-4 py-3 rounded-xl font-bold text-sm text-slate-600 hover:bg-slate-200/60 transition-all cursor-pointer group"
+          (click)="switchToResumeSection()"
+          [class]="activeTabSection === 'resume'
+            ? 'w-full flex items-center gap-3 px-4 py-3 rounded-xl font-bold text-sm bg-white text-indigo-600 shadow-sm border border-slate-200/60 transition-all cursor-pointer'
+            : 'w-full flex items-center gap-3 px-4 py-3 rounded-xl font-bold text-sm text-slate-600 hover:bg-slate-200/60 transition-all cursor-pointer group'"
         >
-          <span class="material-icons text-slate-400 group-hover:text-indigo-600 transition-colors">badge</span>
+          <span class="material-icons" [class]="activeTabSection === 'resume' ? 'text-indigo-600' : 'text-slate-400 group-hover:text-indigo-600'">badge</span>
           <span>Resume</span>
+          <span *ngIf="activeTabSection === 'resume'" class="ml-auto w-2 h-2 rounded-full bg-indigo-600"></span>
         </button>
 
-        <!-- Cover Letter Tab (Active) -->
+        <!-- Cover Letter Tab -->
         <button 
-          (click)="switchToSelector()"
-          class="w-full flex items-center gap-3 px-4 py-3 rounded-xl font-bold text-sm bg-white text-indigo-600 shadow-sm border border-slate-200/60 transition-all cursor-pointer"
+          (click)="switchToCoverLetterSection()"
+          [class]="activeTabSection === 'cover-letter'
+            ? 'w-full flex items-center gap-3 px-4 py-3 rounded-xl font-bold text-sm bg-white text-indigo-600 shadow-sm border border-slate-200/60 transition-all cursor-pointer'
+            : 'w-full flex items-center gap-3 px-4 py-3 rounded-xl font-bold text-sm text-slate-600 hover:bg-slate-200/60 transition-all cursor-pointer group'"
         >
-          <span class="material-icons text-indigo-600">article</span>
+          <span class="material-icons" [class]="activeTabSection === 'cover-letter' ? 'text-indigo-600' : 'text-slate-400 group-hover:text-indigo-600'">article</span>
           <span>Cover Letter</span>
-          <span class="ml-auto w-2 h-2 rounded-full bg-indigo-600"></span>
+          <span *ngIf="activeTabSection === 'cover-letter'" class="ml-auto w-2 h-2 rounded-full bg-indigo-600"></span>
         </button>
 
         <!-- Job Tracker Tab -->
         <button 
-          (click)="navigateToJobTracker()"
-          class="w-full flex items-center gap-3 px-4 py-3 rounded-xl font-bold text-sm text-slate-600 hover:bg-slate-200/60 transition-all cursor-pointer group"
+          (click)="switchToJobTrackerSection()"
+          [class]="activeTabSection === 'jobs'
+            ? 'w-full flex items-center gap-3 px-4 py-3 rounded-xl font-bold text-sm bg-white text-indigo-600 shadow-sm border border-slate-200/60 transition-all cursor-pointer'
+            : 'w-full flex items-center gap-3 px-4 py-3 rounded-xl font-bold text-sm text-slate-600 hover:bg-slate-200/60 transition-all cursor-pointer group'"
         >
-          <span class="material-icons text-slate-400 group-hover:text-indigo-600 transition-colors">work_outline</span>
+          <span class="material-icons" [class]="activeTabSection === 'jobs' ? 'text-indigo-600' : 'text-slate-400 group-hover:text-indigo-600'">work_outline</span>
           <span>Job Tracker</span>
+          <span *ngIf="activeTabSection === 'jobs'" class="ml-auto w-2 h-2 rounded-full bg-indigo-600"></span>
         </button>
       </nav>
     </div>
@@ -66,8 +74,239 @@
   <!-- Main Content Wrapper -->
   <main class="flex-1 flex flex-col min-w-0 min-h-screen">
     
-    <!-- VIEW 1: FLOWCV-STYLE TEMPLATE SELECTION GALLERY -->
-    <div *ngIf="viewMode === 'select'" class="flex-1 flex flex-col p-6 sm:p-10 lg:p-14 max-w-7xl mx-auto w-full">
+    <!-- RESUME TEMPLATES SELECTION GALLERY VIEW -->
+    <div *ngIf="activeTabSection === 'resume'" class="flex-1 flex flex-col p-6 sm:p-10 lg:p-14 max-w-7xl mx-auto w-full">
+      <!-- Top Title & Subtitle Section -->
+      <div class="space-y-2 mb-10">
+        <div class="flex items-center justify-between">
+          <h1 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
+            Start building your resume
+          </h1>
+          <button 
+            (click)="startBlankResume()"
+            class="hidden sm:flex items-center gap-2 px-5 py-2.5 border-2 border-slate-800 text-slate-900 font-bold text-sm rounded-xl hover:bg-slate-900 hover:text-white transition-all shadow-sm cursor-pointer"
+          >
+            <span class="material-icons text-base">add</span>
+            Start blank / AI prompt
+          </button>
+        </div>
+        <p class="text-slate-500 text-base sm:text-lg">
+          Choose a design you like. You can customize or switch it later.
+        </p>
+      </div>
+
+      <!-- Filter Pills Row -->
+      <div class="flex flex-wrap items-center justify-between gap-4 mb-10">
+        <div class="flex items-center gap-2 overflow-x-auto pb-2 no-scrollbar">
+          <button 
+            *ngFor="let cat of resumeCategories"
+            (click)="filterResumeCategory(cat)"
+            [class]="selectedResumeCategory === cat 
+              ? 'px-6 py-2.5 bg-slate-900 text-white font-bold text-sm rounded-full shadow-md transition-all cursor-pointer' 
+              : 'px-6 py-2.5 bg-white text-slate-600 hover:text-slate-900 font-semibold text-sm rounded-full border border-slate-200 hover:border-slate-300 transition-all cursor-pointer'"
+          >
+            {{ cat }}
+          </button>
+        </div>
+
+        <button 
+          (click)="startBlankResume()"
+          class="sm:hidden w-full flex items-center justify-center gap-2 py-3 bg-slate-900 text-white font-bold text-sm rounded-xl shadow-md cursor-pointer"
+        >
+          <span class="material-icons text-base">add</span>
+          Start blank / AI prompt
+        </button>
+      </div>
+
+      <!-- Resume Templates Grid -->
+      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+        <div 
+          *ngFor="let template of filteredResumeTemplates"
+          (click)="selectResumeTemplateAndStart(template.id)"
+          class="group bg-white rounded-2xl border-2 transition-all duration-300 overflow-hidden cursor-pointer flex flex-col shadow-sm hover:shadow-xl hover:-translate-y-1 relative border-slate-200 hover:border-indigo-600"
+        >
+          <!-- Badge overlay -->
+          <div *ngIf="template.badge" class="absolute top-4 left-4 z-10">
+            <span class="px-3 py-1 bg-indigo-600 text-white text-[10px] font-black uppercase tracking-wider rounded-full shadow-md">
+              {{ template.badge }}
+            </span>
+          </div>
+
+          <!-- Document Visual Miniature Preview Container -->
+          <div class="aspect-[1/1.35] bg-slate-100/70 p-4 flex flex-col relative overflow-hidden border-b border-slate-100 group-hover:bg-slate-100 transition-colors">
+            <div class="w-full h-full bg-white shadow-md rounded-xl overflow-hidden relative select-none pointer-events-none">
+              <div class="absolute top-0 left-0 origin-top-left" style="transform: scale(0.36); width: 278%; height: 278%;">
+                <app-cv-preview [templateOverride]="template.id" [isPreview]="true"></app-cv-preview>
+              </div>
+            </div>
+
+            <!-- Hover overlay button -->
+            <div class="absolute inset-0 bg-slate-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center backdrop-blur-[2px]">
+              <button 
+                class="px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-bold text-sm shadow-xl transition-all transform hover:scale-105"
+              >
+                Use Template
+              </button>
+            </div>
+          </div>
+
+          <!-- Card Description Footer -->
+          <div class="p-5 flex flex-col justify-between flex-1 bg-white">
+            <div class="flex items-center justify-between mb-1">
+              <h3 class="font-bold text-slate-900 text-base group-hover:text-indigo-600 transition-colors">
+                {{ template.name }}
+              </h3>
+              <span class="text-[10px] font-bold px-2.5 py-0.5 bg-slate-100 text-slate-600 rounded-md uppercase tracking-wider">
+                {{ template.category }}
+              </span>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- JOB TRACKER SECTION -->
+    <div *ngIf="activeTabSection === 'jobs'" class="flex-1 flex flex-col p-6 sm:p-10 lg:p-14 max-w-7xl mx-auto w-full">
+      <!-- Top Title & Subtitle Section -->
+      <div class="space-y-2 mb-10">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+          <div>
+            <h1 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
+              Job Application Tracker
+            </h1>
+            <p class="text-slate-500 text-base sm:text-lg mt-1">
+              Organize, track, and manage your job applications across every stage.
+            </p>
+          </div>
+          <button 
+            (click)="openAddJobModal()"
+            class="flex items-center justify-center gap-2 px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-sm rounded-xl transition-all shadow-md shadow-indigo-200 cursor-pointer"
+          >
+            <span class="material-icons text-base">add</span>
+            New Application
+          </button>
+        </div>
+      </div>
+
+      <!-- Quick Metrics Bar -->
+      <div class="grid grid-cols-2 sm:grid-cols-4 gap-4 mb-8">
+        <div class="bg-white rounded-2xl p-5 border border-slate-200/80 shadow-xs">
+          <p class="text-xs font-bold text-slate-400 uppercase tracking-wider">Total Tracked</p>
+          <p class="text-2xl font-black text-slate-900 mt-1">{{ jobs.length }}</p>
+        </div>
+        <div class="bg-white rounded-2xl p-5 border border-slate-200/80 shadow-xs">
+          <p class="text-xs font-bold text-blue-500 uppercase tracking-wider">Bookmarked</p>
+          <p class="text-2xl font-black text-blue-600 mt-1">{{ bookmarkedCount }}</p>
+        </div>
+        <div class="bg-white rounded-2xl p-5 border border-slate-200/80 shadow-xs">
+          <p class="text-xs font-bold text-amber-500 uppercase tracking-wider">Active Applied</p>
+          <p class="text-2xl font-black text-amber-600 mt-1">{{ appliedCount }}</p>
+        </div>
+        <div class="bg-white rounded-2xl p-5 border border-slate-200/80 shadow-xs">
+          <p class="text-xs font-bold text-emerald-500 uppercase tracking-wider">Interviews / Offers</p>
+          <p class="text-2xl font-black text-emerald-600 mt-1">{{ interviewingOrOfferCount }}</p>
+        </div>
+      </div>
+
+      <!-- Controls: Search & Filter -->
+      <div class="flex flex-col sm:flex-row items-center justify-between gap-4 mb-6">
+        <div class="relative w-full sm:w-80">
+          <span class="material-icons absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-sm">search</span>
+          <input 
+            type="text" 
+            [(ngModel)]="jobSearchQuery" 
+            placeholder="Search role or company..." 
+            class="w-full pl-10 pr-4 py-2.5 bg-white border border-slate-200 rounded-xl text-sm text-slate-800 outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 transition-all shadow-xs"
+          />
+        </div>
+
+        <div class="flex items-center gap-3 w-full sm:w-auto">
+          <select 
+            [(ngModel)]="selectedJobStatusFilter"
+            class="w-full sm:w-auto px-4 py-2.5 bg-white border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 outline-none focus:border-indigo-500 shadow-xs"
+          >
+            <option value="All Statuses">All Statuses</option>
+            <option value="Bookmarked">Bookmarked</option>
+            <option value="Applied">Applied</option>
+            <option value="Interviewing">Interviewing</option>
+            <option value="Offer">Offer</option>
+            <option value="Rejected">Rejected</option>
+          </select>
+        </div>
+      </div>
+
+      <!-- Jobs Table -->
+      <div class="bg-white border border-slate-200/80 rounded-2xl overflow-hidden shadow-xs">
+        <div class="overflow-x-auto">
+          <table class="w-full text-left border-collapse">
+            <thead>
+              <tr class="bg-slate-50/70 border-b border-slate-100 text-[11px] font-black text-slate-400 uppercase tracking-wider">
+                <th class="p-4 pl-6">Job Position</th>
+                <th class="p-4">Company</th>
+                <th class="p-4">Status</th>
+                <th class="p-4">Type</th>
+                <th class="p-4">Date Saved</th>
+                <th class="p-4 text-right pr-6">Action</th>
+              </tr>
+            </thead>
+            <tbody class="divide-y divide-slate-100 text-sm">
+              <tr *ngFor="let job of filteredJobs; let i = index" class="hover:bg-slate-50/60 transition-colors group">
+                <td class="p-4 pl-6 font-bold text-slate-900">
+                  {{ job.position }}
+                </td>
+                <td class="p-4 font-semibold text-slate-600">
+                  {{ job.company }}
+                </td>
+                <td class="p-4">
+                  <select 
+                    [ngModel]="job.status" 
+                    (ngModelChange)="updateJobStatus(job, $event)"
+                    class="px-3 py-1 text-xs font-bold rounded-lg border border-slate-200 bg-white text-slate-700 outline-none cursor-pointer"
+                    [class.text-blue-700]="job.status === 'Bookmarked'"
+                    [class.text-amber-700]="job.status === 'Applied'"
+                    [class.text-purple-700]="job.status === 'Interviewing'"
+                    [class.text-emerald-700]="job.status === 'Offer'"
+                    [class.text-rose-700]="job.status === 'Rejected'"
+                  >
+                    <option value="Bookmarked">Bookmarked</option>
+                    <option value="Applied">Applied</option>
+                    <option value="Interviewing">Interviewing</option>
+                    <option value="Offer">Offer</option>
+                    <option value="Rejected">Rejected</option>
+                  </select>
+                </td>
+                <td class="p-4 text-xs font-medium text-slate-500">
+                  {{ job.type }}
+                </td>
+                <td class="p-4 text-xs font-medium text-slate-400">
+                  {{ job.dateSaved }}
+                </td>
+                <td class="p-4 text-right pr-6">
+                  <button 
+                    (click)="deleteJob(i)"
+                    class="p-1.5 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition-colors cursor-pointer"
+                    title="Delete Application"
+                  >
+                    <span class="material-icons text-base">delete_outline</span>
+                  </button>
+                </td>
+              </tr>
+
+              <tr *ngIf="filteredJobs.length === 0">
+                <td colspan="6" class="p-12 text-center text-slate-400 font-medium">
+                  No job applications found matching your criteria.
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+    </div>
+
+    <!-- COVER LETTER SECTIONS -->
+    <ng-container *ngIf="activeTabSection === 'cover-letter'">
+      <!-- VIEW 1: FLOWCV-STYLE TEMPLATE SELECTION GALLERY -->
+      <div *ngIf="viewMode === 'select'" class="flex-1 flex flex-col p-6 sm:p-10 lg:p-14 max-w-7xl mx-auto w-full">
       
       <!-- Top Title & Subtitle Section -->
       <div class="space-y-2 mb-10">
@@ -529,8 +768,64 @@
       </div>
 
     </div>
+    </ng-container>
 
   </main>
+
+  <!-- ADD JOB MODAL -->
+  <div *ngIf="showAddJobModal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4">
+    <div class="bg-white rounded-3xl max-w-md w-full p-8 shadow-2xl border border-slate-200 animate-modal-enter space-y-6">
+      <div class="flex items-center justify-between">
+        <h3 class="text-xl font-extrabold text-slate-900">New Job Application</h3>
+        <button (click)="closeAddJobModal()" class="text-slate-400 hover:text-slate-700 text-xl font-bold cursor-pointer">✕</button>
+      </div>
+
+      <div class="space-y-4">
+        <div>
+          <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Job Title / Position *</label>
+          <input type="text" [(ngModel)]="newJobPosition" placeholder="e.g. Senior Software Engineer" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm outline-none focus:border-indigo-500 focus:bg-white transition-all">
+        </div>
+
+        <div>
+          <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Company Name *</label>
+          <input type="text" [(ngModel)]="newJobCompany" placeholder="e.g. Google, Spotify, Stripe" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm outline-none focus:border-indigo-500 focus:bg-white transition-all">
+        </div>
+
+        <div class="grid grid-cols-2 gap-4">
+          <div>
+            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Job Type</label>
+            <select [(ngModel)]="newJobType" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm outline-none focus:border-indigo-500 focus:bg-white">
+              <option value="Full-time">Full-time</option>
+              <option value="Part-time">Part-time</option>
+              <option value="Contract">Contract</option>
+              <option value="Remote">Remote</option>
+              <option value="Internship">Internship</option>
+            </select>
+          </div>
+
+          <div>
+            <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Status</label>
+            <select [(ngModel)]="newJobStatus" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm outline-none focus:border-indigo-500 focus:bg-white">
+              <option value="Bookmarked">Bookmarked</option>
+              <option value="Applied">Applied</option>
+              <option value="Interviewing">Interviewing</option>
+              <option value="Offer">Offer</option>
+              <option value="Rejected">Rejected</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <div class="flex items-center gap-3 pt-4 border-t border-slate-100">
+        <button (click)="closeAddJobModal()" class="flex-1 py-3 px-4 border border-slate-200 rounded-xl font-bold text-sm text-slate-600 hover:bg-slate-50 cursor-pointer transition-colors">
+          Cancel
+        </button>
+        <button (click)="addJob()" class="flex-1 py-3 px-4 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-bold text-sm shadow-md shadow-indigo-200 cursor-pointer transition-all">
+          Save Job
+        </button>
+      </div>
+    </div>
+  </div>
 
 </div>
 
