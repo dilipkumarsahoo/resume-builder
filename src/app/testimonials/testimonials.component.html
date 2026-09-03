@@ -1,30 +1,108 @@
-<section class="py-24 bg-white" #section>
-  <div class="max-w-7xl mx-auto px-6">
-    <div class="text-center mb-16">
-      <div class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-green-50 text-sm font-medium text-green-700 mb-4 opacity-0 translate-y-4" #trustBadge>
-        <span class="material-icons text-sm">star</span> Trustpilot
+<section class="py-24 bg-gradient-to-b from-white via-slate-50/50 to-white relative overflow-hidden" #section>
+  <!-- Background subtle glow elements -->
+  <div class="absolute top-10 left-1/2 -translate-x-1/2 w-[700px] h-[350px] bg-emerald-500/5 blur-[120px] rounded-full pointer-events-none"></div>
+
+  <div class="max-w-7xl mx-auto px-6 relative z-10">
+    <!-- Header -->
+    <div class="text-center max-w-3xl mx-auto mb-16">
+      <div class="inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-emerald-50 border border-emerald-100/80 text-xs md:text-sm font-semibold text-emerald-700 mb-4 opacity-0 translate-y-4 shadow-xs" #trustBadge>
+        <span class="flex text-amber-400">
+          <span class="material-icons text-sm">star</span>
+          <span class="material-icons text-sm">star</span>
+          <span class="material-icons text-sm">star</span>
+          <span class="material-icons text-sm">star</span>
+          <span class="material-icons text-sm">star</span>
+        </span>
+        <span class="text-slate-700 font-medium">Rated 4.9/5 by 15,000+ Job Seekers</span>
       </div>
-      <h2 class="text-3xl md:text-5xl font-bold tracking-tight text-text-main mb-4 opacity-0 translate-y-4" #heading>
-        Trusted by recruiters and <br/> job-seekers around the world.
+
+      <h2 class="text-3xl md:text-5xl font-bold tracking-tight text-slate-900 mb-4 opacity-0 translate-y-4 leading-tight" #heading>
+        Real stories from candidates who landed their <span class="bg-gradient-to-r from-emerald-600 to-teal-500 bg-clip-text text-transparent">dream roles</span>.
       </h2>
-      <p class="text-xl text-gray-500 opacity-0 translate-y-4" #subheading>Users got the job on average 48 days faster.*</p>
+
+      <p class="text-lg md:text-xl text-slate-600 opacity-0 translate-y-4" #subheading>
+        See how candidates use our AI-powered resume builder to bypass automated ATS filters and get hired faster.
+      </p>
     </div>
 
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-4 md:gap-6 max-w-4xl mx-auto" #photoGrid>
-      @for (i of [1,2,3,4,5,6,7,8]; track $index) {
-        <div class="aspect-square rounded-2xl overflow-hidden relative group cursor-pointer photo-item opacity-0 scale-95">
-          <img [src]="'https://picsum.photos/seed/person' + i + '/400/400'" alt="User" class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-110" referrerpolicy="no-referrer" />
-          <div class="absolute inset-0 bg-gradient-to-t from-black/60 via-transparent to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 flex items-end p-4">
-            <div class="flex text-yellow-400 text-sm">
-              <span class="material-icons text-sm">star</span>
-              <span class="material-icons text-sm">star</span>
-              <span class="material-icons text-sm">star</span>
-              <span class="material-icons text-sm">star</span>
-              <span class="material-icons text-sm">star</span>
+    <!-- Testimonials Cards Grid -->
+    <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 lg:gap-8" #cardsGrid>
+      @for (item of testimonials; track item.name) {
+        <div class="testimonial-card opacity-0 translate-y-8 bg-white rounded-2xl p-7 border border-slate-200/80 shadow-xs hover:shadow-xl hover:border-emerald-500/30 transition-all duration-300 flex flex-col justify-between group">
+          <div>
+            <!-- Header of card: Stars & Feature Tag -->
+            <div class="flex items-center justify-between gap-2 mb-4">
+              <div class="flex items-center text-amber-400">
+                @for (star of [1,2,3,4,5]; track star) {
+                  <span class="material-icons text-sm">star</span>
+                }
+              </div>
+              <span class="inline-flex items-center gap-1 text-[11px] font-semibold px-2.5 py-1 rounded-full bg-slate-100 text-slate-600 group-hover:bg-emerald-50 group-hover:text-emerald-700 transition-colors">
+                <span class="material-icons text-[12px]">verified</span>
+                {{ item.tag }}
+              </span>
             </div>
+
+            <!-- Highlight Quote Headline -->
+            <h3 class="text-base font-bold text-slate-900 mb-2 leading-snug">
+              "{{ item.highlight }}"
+            </h3>
+
+            <!-- Testimonial Quote -->
+            <p class="text-sm text-slate-600 leading-relaxed mb-6 font-normal">
+              {{ item.quote }}
+            </p>
+          </div>
+
+          <!-- Author Info -->
+          <div class="pt-4 border-t border-slate-100 flex items-center justify-between">
+            <div class="flex items-center gap-3">
+              <div class="w-10 h-10 rounded-full bg-gradient-to-tr {{ item.gradient }} text-white font-bold text-xs flex items-center justify-center shadow-xs">
+                {{ item.initials }}
+              </div>
+              <div>
+                <div class="flex items-center gap-1.5">
+                  <span class="font-semibold text-sm text-slate-900 leading-tight">{{ item.name }}</span>
+                  <span class="material-icons text-emerald-500 text-xs" title="Verified Review">verified</span>
+                </div>
+                <div class="text-xs text-slate-500 leading-tight mt-0.5">
+                  {{ item.role }} &bull; <span class="font-medium text-slate-700">{{ item.company }}</span>
+                </div>
+              </div>
+            </div>
+
+            <span class="text-[11px] text-slate-400 font-medium">
+              {{ item.timeAgo }}
+            </span>
           </div>
         </div>
       }
     </div>
+
+    <!-- Bottom Stat Highlights Banner -->
+    <div class="mt-16 bg-slate-900 rounded-2xl p-8 md:p-10 text-white shadow-xl relative overflow-hidden">
+      <div class="absolute -right-10 -bottom-10 w-64 h-64 bg-emerald-500/20 rounded-full blur-3xl pointer-events-none"></div>
+      
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-8 text-center divide-y md:divide-y-0 md:divide-x divide-slate-800">
+        <div class="pt-4 md:pt-0">
+          <div class="text-3xl md:text-4xl font-extrabold text-emerald-400 mb-1">94%</div>
+          <p class="text-sm text-slate-300 font-medium">Interview Callback Rate</p>
+          <span class="text-xs text-slate-500">Based on user survey responses</span>
+        </div>
+
+        <div class="pt-6 md:pt-0">
+          <div class="text-3xl md:text-4xl font-extrabold text-white mb-1">48 Days</div>
+          <p class="text-sm text-slate-300 font-medium">Faster Time-to-Offer</p>
+          <span class="text-xs text-slate-500">Compared to traditional resumes</span>
+        </div>
+
+        <div class="pt-6 md:pt-0">
+          <div class="text-3xl md:text-4xl font-extrabold text-teal-400 mb-1">50,000+</div>
+          <p class="text-sm text-slate-300 font-medium">Resumes Built This Month</p>
+          <span class="text-xs text-slate-500">Global career transformations</span>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
+

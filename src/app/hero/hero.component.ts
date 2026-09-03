@@ -28,14 +28,8 @@ export class HeroComponent implements AfterViewInit {
         );
 
         animate(this.heroImage.nativeElement,
-          { opacity: [0, 1], x: [40, 0], y: [40, 0] },
-          { duration: 1, delay: 0.3, ease: [0.22, 1, 0.36, 1] }
-        );
-
-        // Floating animation for the image
-        animate(this.heroImage.nativeElement,
-          { y: [-10, 10] },
-          { duration: 3, repeat: Infinity, repeatType: 'reverse', ease: 'easeInOut' }
+          { opacity: [0, 1], x: [30, 0], y: [0, 0] },
+          { duration: 0.8, delay: 0.3, ease: [0.22, 1, 0.36, 1] }
         );
       }, 1800);
     }

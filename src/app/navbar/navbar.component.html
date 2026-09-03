@@ -1,6 +1,8 @@
-<header class="sticky top-0 z-[100] w-full bg-[#f6f6f9]/90 backdrop-blur-md px-4 pt-3 lg:px-8 lg:pt-4 transition-all duration-300 flowcv-nav">
-  <div class="max-w-7xl mx-auto bg-white rounded-xl border border-slate-200/80 shadow-[0_2px_12px_rgba(43,11,60,0.04)] px-6 lg:px-8 py-3 flex items-center justify-between gap-8">
-    
+<header
+  class="sticky top-0 z-[100] w-full bg-[#f6f6f9]/90 backdrop-blur-md px-4 pt-3 lg:px-8 lg:pt-4 transition-all duration-300 flowcv-nav">
+  <div
+    class="max-w-7xl mx-auto bg-white rounded-xl border border-slate-200/80 shadow-[0_2px_12px_rgba(43,11,60,0.04)] px-6 lg:px-8 py-3 flex items-center justify-between gap-8">
+
     <!-- Logo (Original Logo Preserved) -->
     <a routerLink="/" class="flex items-center gap-3 hover:opacity-90 transition-opacity cursor-pointer">
       <div class="w-8 h-8 lg:w-9 lg:h-9 rounded-lg overflow-hidden flex items-center justify-center">
@@ -13,17 +15,11 @@
 
     <!-- Nav Items (Center) - Nunito Sans 500-600 -->
     <div class="hidden lg:flex items-center justify-center gap-8 font-semibold">
-      <button 
-        (click)="openResumeBuilder()"
-        class="nav-link"
-      >
+      <button (click)="openResumeBuilder()" class="nav-link">
         Resume Builder
       </button>
 
-      <button 
-        (click)="openResumeTemplates()"
-        class="nav-link"
-      >
+      <button (click)="openResumeTemplates()" class="nav-link">
         Resume Templates
       </button>
 
@@ -33,20 +29,18 @@
 
     <!-- Right Action Buttons - Nunito Sans 700, 12px border radius -->
     <div class="flex items-center gap-3">
-      <button 
-        routerLink="/login"
-        class="btn-login hidden sm:block"
-      >
+      <button routerLink="/login" class="btn-login hidden sm:block">
         Login
       </button>
-      
-      <button 
-        (click)="cvService.openOnboarding()"
-        class="btn-start"
-      >
+
+      <button (click)="cvService.openOnboarding()" class="btn-start">
         Start now
       </button>
     </div>
 
   </div>
+</header>utton>
+</div>
+
+</div>
 </header>

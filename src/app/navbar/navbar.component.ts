@@ -22,3 +22,11 @@ export class NavbarComponent {
   }
 }
 
+  }
+
+openResumeTemplates() {
+  this.cvService.openResumeTemplates();
+}
+}
+
+
