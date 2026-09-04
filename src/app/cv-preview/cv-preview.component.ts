@@ -143,6 +143,15 @@ export class CvPreviewComponent {
     return idx === -1 ? 99 : idx + 1;
   }
 
+  hasPageBreakBefore(sectionId: string): boolean {
+    const order = this.cvService.customization().sectionOrder;
+    if (!order) return false;
+    const breakIdx = order.indexOf('pageBreak');
+    if (breakIdx === -1) return false;
+    const nextSectionId = order.slice(breakIdx + 1).find(id => id !== 'pageBreak');
+    return nextSectionId === sectionId;
+  }
+
   getNameFontFamily(): string {
     const nameFont = this.cvService.customization().nameFontFamily;
     if (!nameFont || nameFont === 'Same as body font') {

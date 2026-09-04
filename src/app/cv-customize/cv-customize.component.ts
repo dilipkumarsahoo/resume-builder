@@ -101,7 +101,7 @@ export class CvCustomizeComponent {
     this.layoutSections.set(list);
     this.draggedSectionIndex = null;
     this.cvService.updateCustomization({
-      sectionOrder: list.filter(s => !s.isPageBreak).map(s => s.id)
+      sectionOrder: list.map(s => s.id)
     });
   }
 

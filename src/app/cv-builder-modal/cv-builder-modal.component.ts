@@ -61,20 +61,38 @@ export class CvBuilderModalComponent {
 
       const imgData = await htmlToImage.toPng(element, {
         quality: 1,
-        pixelRatio: 2
+        pixelRatio: 2,
+        backgroundColor: '#ffffff'
       });
 
+      const isLetter = this.cvService.customization().pageFormat === 'US Letter';
       const pdf = new jsPDF({
         orientation: 'portrait',
         unit: 'mm',
-        format: 'a4'
+        format: isLetter ? 'letter' : 'a4'
       });
 
       const pdfWidth = pdf.internal.pageSize.getWidth();
-      const pdfHeight = (element.offsetHeight * pdfWidth) / element.offsetWidth;
+      const pdfPageHeight = pdf.internal.pageSize.getHeight();
+      const totalPdfHeight = (element.offsetHeight * pdfWidth) / element.offsetWidth;
 
-      pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, pdfHeight);
-      pdf.save(`${this.cvService.cvData().fullName.replace(/\s+/g, '_')}_CV.pdf`);
+      let heightLeft = totalPdfHeight;
+      let position = 0;
+
+      // Add Page 1
+      pdf.addImage(imgData, 'PNG', 0, position, pdfWidth, totalPdfHeight, undefined, 'FAST');
+      heightLeft -= pdfPageHeight;
+
+      // Add Page 2+ if content overflows
+      while (heightLeft > 2) {
+        position -= pdfPageHeight;
+        pdf.addPage();
+        pdf.addImage(imgData, 'PNG', 0, position, pdfWidth, totalPdfHeight, undefined, 'FAST');
+        heightLeft -= pdfPageHeight;
+      }
+
+      const fileName = (this.cvService.cvData().fullName || 'My_Resume').trim().replace(/\s+/g, '_');
+      pdf.save(`${fileName}_CV.pdf`);
     } catch (error) {
       console.error('Error generating PDF', error);
     } finally {

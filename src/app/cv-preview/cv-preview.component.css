@@ -3,7 +3,7 @@
 :host {
   display: block;
   width: 100%;
-  height: 100%;
+  min-height: 100%;
 }
 
 .no-scrollbar::-webkit-scrollbar {
@@ -243,11 +243,68 @@
   box-sizing: border-box !important;
 }
 
+/* ==========================================================================
+   MULTI-PAGE LAYOUT & PAGE BREAK ENGINE
+   ========================================================================== */
+
+/* Page Break Divider for Manual / Dynamic Page Breaks */
+.page-break-before {
+  break-before: page !important;
+  page-break-before: always !important;
+  position: relative !important;
+  margin-top: 3.5rem !important;
+  padding-top: 2rem !important;
+  border-top: 2px dashed #cbd5e1 !important;
+}
+
+.page-break-before::before {
+  content: '📄 Page 2';
+  position: absolute;
+  top: -14px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: #ffffff;
+  color: #475569;
+  font-size: 11px;
+  font-weight: 700;
+  padding: 3px 14px;
+  border-radius: 9999px;
+  border: 1px solid #cbd5e1;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.08);
+  letter-spacing: 0.05em;
+  text-transform: uppercase;
+  z-index: 10;
+}
+
+/* Page Guide seam for continuous A4 layout */
+#cv-preview-content {
+  box-sizing: border-box;
+}
+
+[data-section] {
+  box-sizing: border-box;
+}
+
 @media print {
   #cv-preview-content {
     box-shadow: none !important;
     border: none !important;
-    width: 210mm;
-    height: 297mm;
+    width: 210mm !important;
+    min-height: auto !important;
+  }
+
+  .page-break-before {
+    margin-top: 0 !important;
+    padding-top: 0 !important;
+    border-top: none !important;
+  }
+
+  .page-break-before::before {
+    display: none !important;
+  }
+
+  [data-section] {
+    break-inside: avoid !important;
+    page-break-inside: avoid !important;
   }
 }
