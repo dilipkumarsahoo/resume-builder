@@ -74,11 +74,49 @@ export class CvCustomizeComponent {
 
   pageFormats: ('A4' | 'US Letter')[] = ['A4', 'US Letter'];
 
+  // Layout Section Ordering
+  layoutSections = signal([
+    { id: 'summary', name: 'Summary', type: 'summary', isPageBreak: false },
+    { id: 'skills', name: 'Skills', type: 'skills', isPageBreak: false },
+    { id: 'experience', name: 'Experience', type: 'experience', isPageBreak: false },
+    { id: 'education', name: 'Education', type: 'education', isPageBreak: false },
+    { id: 'pageBreak', name: 'Page break', type: 'pageBreak', isPageBreak: true }
+  ]);
+
+  draggedSectionIndex: number | null = null;
+
+  onSectionDragStart(index: number) {
+    this.draggedSectionIndex = index;
+  }
+
+  onSectionDragOver(event: DragEvent) {
+    event.preventDefault();
+  }
+
+  onSectionDrop(targetIndex: number) {
+    if (this.draggedSectionIndex === null || this.draggedSectionIndex === targetIndex) return;
+    const list = [...this.layoutSections()];
+    const [moved] = list.splice(this.draggedSectionIndex, 1);
+    list.splice(targetIndex, 0, moved);
+    this.layoutSections.set(list);
+    this.draggedSectionIndex = null;
+    this.cvService.updateCustomization({
+      sectionOrder: list.filter(s => !s.isPageBreak).map(s => s.id)
+    });
+  }
+
   // Font Size Stepped Controls (matching FlowCV pt scale)
   baseFontSteps = [9, 9.5, 10, 10.5, 11, 11.5, 12, 12.5];
   nameFontSteps = [5, 7, 9, 11, 13, 15, 17, 19];
   headingsFontSteps = [0, 1, 2, 3, 4, 5, 6, 7];
   entryHeaderSteps = [0, 0.5, 1, 1.5, 2, 2.5, 3, 3.5];
+
+  // Spacing Stepped Controls (matching FlowCV stepped scale)
+  lineHeightSteps = [1.05, 1.15, 1.25, 1.4, 1.55, 1.7, 1.85, 2.0];
+  spaceBetweenElementsSteps = [8, 12, 16, 20, 24, 28, 32, 36];
+  spaceElementLabels = ['[ · ]', '[--]', '[- -]', '[ - - ]', '[  -  -  ]', '[   -   -   ]', '[    -    -    ]', '[     -     -     ]'];
+  sideMarginSteps = [12, 14, 16, 18, 20, 22, 26, 30];
+  topBottomMarginSteps = [8, 12, 16, 20, 24, 28, 32, 36];
 
   setBaseFontPt(val: number) {
     this.cvService.updateCustomization({ baseFontPt: val });
@@ -140,8 +178,79 @@ export class CvCustomizeComponent {
     }
   }
 
+  // Spacing Stepped Handlers
+  setLineHeight(val: number | string) {
+    this.cvService.updateCustomization({ lineHeight: val });
+  }
+
+  stepLineHeight(delta: number) {
+    const current = Number(this.cvService.customization().lineHeight) || 1.15;
+    const idx = this.lineHeightSteps.indexOf(current);
+    if (idx !== -1) {
+      const nextIdx = Math.max(0, Math.min(this.lineHeightSteps.length - 1, idx + delta));
+      this.setLineHeight(this.lineHeightSteps[nextIdx]);
+    } else {
+      this.setLineHeight(1.15);
+    }
+  }
+
+  setSpaceBetweenElements(val: number) {
+    this.cvService.updateCustomization({ spaceBetweenElements: val });
+  }
+
+  stepSpaceBetweenElements(delta: number) {
+    const current = this.cvService.customization().spaceBetweenElements ?? 12;
+    const idx = this.spaceBetweenElementsSteps.indexOf(current);
+    if (idx !== -1) {
+      const nextIdx = Math.max(0, Math.min(this.spaceBetweenElementsSteps.length - 1, idx + delta));
+      this.setSpaceBetweenElements(this.spaceBetweenElementsSteps[nextIdx]);
+    } else {
+      this.setSpaceBetweenElements(12);
+    }
+  }
+
+  getSpaceBetweenElementsLabel(): string {
+    const current = this.cvService.customization().spaceBetweenElements ?? 12;
+    const idx = this.spaceBetweenElementsSteps.indexOf(current);
+    if (idx !== -1 && idx < this.spaceElementLabels.length) {
+      return this.spaceElementLabels[idx];
+    }
+    return '[--]';
+  }
+
+  setSideMargin(val: number) {
+    this.cvService.updateCustomization({ sideMarginMm: val });
+  }
+
+  stepSideMargin(delta: number) {
+    const current = this.cvService.customization().sideMarginMm ?? 22;
+    const idx = this.sideMarginSteps.indexOf(current);
+    if (idx !== -1) {
+      const nextIdx = Math.max(0, Math.min(this.sideMarginSteps.length - 1, idx + delta));
+      this.setSideMargin(this.sideMarginSteps[nextIdx]);
+    } else {
+      this.setSideMargin(22);
+    }
+  }
+
+  setTopBottomMargin(val: number) {
+    this.cvService.updateCustomization({ topBottomMarginMm: val });
+  }
+
+  stepTopBottomMargin(delta: number) {
+    const current = this.cvService.customization().topBottomMarginMm ?? 12;
+    const idx = this.topBottomMarginSteps.indexOf(current);
+    if (idx !== -1) {
+      const nextIdx = Math.max(0, Math.min(this.topBottomMarginSteps.length - 1, idx + delta));
+      this.setTopBottomMargin(this.topBottomMarginSteps[nextIdx]);
+    } else {
+      this.setTopBottomMargin(12);
+    }
+  }
+
   // Font options
   fontFamilies = [
+    { name: 'Alegreya', type: 'Elegant Serif', family: "'Alegreya', serif" },
     { name: 'Inter', type: 'Sans-Serif', family: "'Inter', sans-serif" },
     { name: 'Roboto', type: 'Sans-Serif', family: "'Roboto', sans-serif" },
     { name: 'Poppins', type: 'Modern Sans', family: "'Poppins', sans-serif" },
@@ -149,8 +258,36 @@ export class CvCustomizeComponent {
     { name: 'Plus Jakarta Sans', type: 'Clean Sans', family: "'Plus Jakarta Sans', sans-serif" },
     { name: 'Merriweather', type: 'Classic Serif', family: "'Merriweather', serif" },
     { name: 'Playfair Display', type: 'Editorial Serif', family: "'Playfair Display', serif" },
-    { name: 'Space Grotesk', type: 'Tech & Mono', family: "'Space Grotesk', sans-serif" }
+    { name: 'Space Grotesk', type: 'Tech & Mono', family: "'Space Grotesk', sans-serif" },
+    { name: 'Lora', type: 'Contemporary Serif', family: "'Lora', serif" },
+    { name: 'Montserrat', type: 'Modern Sans', family: "'Montserrat', sans-serif" },
+    { name: 'Open Sans', type: 'Neutral Sans', family: "'Open Sans', sans-serif" },
+    { name: 'Lato', type: 'Warm Sans', family: "'Lato', sans-serif" },
+    { name: 'EB Garamond', type: 'Classical Serif', family: "'EB Garamond', serif" }
   ];
+
+  bodyFontDropdownOpen = signal(false);
+  nameFontDropdownOpen = signal(false);
+
+  toggleBodyFontDropdown() {
+    this.bodyFontDropdownOpen.update(v => !v);
+    this.nameFontDropdownOpen.set(false);
+  }
+
+  toggleNameFontDropdown() {
+    this.nameFontDropdownOpen.update(v => !v);
+    this.bodyFontDropdownOpen.set(false);
+  }
+
+  selectBodyFont(fontName: string) {
+    this.cvService.updateCustomization({ fontFamily: fontName });
+    this.bodyFontDropdownOpen.set(false);
+  }
+
+  selectNameFont(fontName: string) {
+    this.cvService.updateCustomization({ nameFontFamily: fontName });
+    this.nameFontDropdownOpen.set(false);
+  }
 
   // Color palette presets
   colorPresets = [
@@ -224,13 +361,6 @@ export class CvCustomizeComponent {
     this.cvService.updateCustomization({ headingSize: size });
   }
 
-  setLineHeight(lh: 'tight' | 'normal' | 'relaxed') {
-    this.cvService.updateCustomization({ lineHeight: lh });
-  }
-
-  setSectionSpacing(sp: 'compact' | 'normal' | 'spacious') {
-    this.cvService.updateCustomization({ sectionSpacing: sp });
-  }
 
   setColor(hex: string) {
     this.cvService.updateCustomization({ primaryColor: hex });
@@ -269,7 +399,80 @@ export class CvCustomizeComponent {
   }
 
   togglePageNumbers(show: boolean) {
-    this.cvService.updateCustomization({ showPageNumbers: show });
+    this.cvService.updateCustomization({ showPageNumbers: show, footerPageNumbers: show });
+  }
+
+  // Footer Controls
+  footerAdvancedOpen = signal<boolean>(false);
+  activeFooterColumn = signal<'left' | 'center' | 'right'>('left');
+
+  toggleFooterAdvanced() {
+    this.footerAdvancedOpen.update(v => !v);
+  }
+
+  toggleFooterPageNumbers(val: boolean) {
+    this.cvService.updateCustomization({ footerPageNumbers: val, showPageNumbers: val });
+  }
+
+  toggleFooterEmail(val: boolean) {
+    this.cvService.updateCustomization({ footerEmail: val });
+  }
+
+  toggleFooterName(val: boolean) {
+    this.cvService.updateCustomization({ footerName: val });
+  }
+
+  toggleFooterCustom(val: boolean) {
+    this.cvService.updateCustomization({ footerCustom: val });
+    if (val) {
+      this.footerAdvancedOpen.set(true);
+    }
+  }
+
+  setFooterLeft(val: string) {
+    this.cvService.updateCustomization({ footerLeft: val });
+  }
+
+  setFooterCenter(val: string) {
+    this.cvService.updateCustomization({ footerCenter: val });
+  }
+
+  setFooterRight(val: string) {
+    this.cvService.updateCustomization({ footerRight: val });
+  }
+
+  insertFooterPlaceholder(tag: string) {
+    const col = this.activeFooterColumn();
+    const c = this.cvService.customization();
+    if (col === 'left') {
+      const current = c.footerLeft || '';
+      this.setFooterLeft(current ? `${current} ${tag}` : tag);
+    } else if (col === 'center') {
+      const current = c.footerCenter || '';
+      this.setFooterCenter(current ? `${current} ${tag}` : tag);
+    } else {
+      const current = c.footerRight || '';
+      this.setFooterRight(current ? `${current} ${tag}` : tag);
+    }
+  }
+
+  // Entry Layout Controls
+  entryAdvancedOpen = signal<boolean>(false);
+
+  toggleEntryAdvanced() {
+    this.entryAdvancedOpen.update(v => !v);
+  }
+
+  setEntryStructure(val: 'full' | 'columns') {
+    this.cvService.updateCustomization({ entryStructure: val });
+  }
+
+  setEntryDateLocationPosition(val: 'right' | 'left' | 'split') {
+    this.cvService.updateCustomization({ entryDateLocationPosition: val });
+  }
+
+  setEntrySubtitlePlacement(val: 'same-line' | 'below-title') {
+    this.cvService.updateCustomization({ entrySubtitlePlacement: val });
   }
 
   selectTemplate(templateId: TemplateType) {

@@ -46,14 +46,18 @@ export interface CustomizationSettings {
   pageFormat: 'A4' | 'US Letter';
   columns: 'one' | 'two' | 'mix';
   fontFamily: string;
+  nameFontFamily?: string;
   bodyFontSize: 'small' | 'medium' | 'large';
   headingSize: 'small' | 'medium' | 'large';
   baseFontPt: number;
   nameFontPt: number;
   headingsFontPt: number;
   entryHeaderFontPt: number;
-  lineHeight: 'tight' | 'normal' | 'relaxed';
-  sectionSpacing: 'compact' | 'normal' | 'spacious';
+  lineHeight: number | string;
+  spaceBetweenElements: number;
+  sideMarginMm: number;
+  topBottomMarginMm: number;
+  sectionSpacing?: 'compact' | 'normal' | 'spacious';
   primaryColor: string;
   headingStyle: 'simple' | 'underlined' | 'pill' | 'accent-left';
   headingTransform: 'none' | 'uppercase' | 'capitalize';
@@ -64,6 +68,17 @@ export interface CustomizationSettings {
   showIcons: boolean;
   underlineLinks: boolean;
   showPageNumbers: boolean;
+  footerPageNumbers?: boolean;
+  footerEmail?: boolean;
+  footerName?: boolean;
+  footerCustom?: boolean;
+  footerLeft?: string;
+  footerCenter?: string;
+  footerRight?: string;
+  entryStructure?: 'full' | 'columns';
+  entryDateLocationPosition?: 'right' | 'left' | 'split';
+  entrySubtitlePlacement?: 'same-line' | 'below-title';
+  sectionOrder?: string[];
   footerText: string;
 }
 
@@ -84,15 +99,23 @@ export class CvBuilderService {
     dateFormat: 'DD/MM/YYYY',
     pageFormat: 'A4',
     columns: 'one',
-    fontFamily: 'Inter',
+    fontFamily: 'Alegreya',
+    nameFontFamily: 'Same as body font',
     bodyFontSize: 'medium',
     headingSize: 'medium',
     baseFontPt: 10.5,
     nameFontPt: 11,
     headingsFontPt: 3,
     entryHeaderFontPt: 0,
-    lineHeight: 'normal',
+    lineHeight: 1.15,
+    spaceBetweenElements: 12,
+    sideMarginMm: 22,
+    topBottomMarginMm: 12,
     sectionSpacing: 'normal',
+    entryStructure: 'columns',
+    entryDateLocationPosition: 'right',
+    entrySubtitlePlacement: 'below-title',
+    sectionOrder: ['summary', 'skills', 'experience', 'education', 'projects'],
     primaryColor: '#10b981',
     headingStyle: 'simple',
     headingTransform: 'uppercase',
@@ -102,7 +125,14 @@ export class CvBuilderService {
     photoSize: 'medium',
     showIcons: true,
     underlineLinks: false,
-    showPageNumbers: true,
+    showPageNumbers: false,
+    footerPageNumbers: false,
+    footerEmail: false,
+    footerName: false,
+    footerCustom: false,
+    footerLeft: '',
+    footerCenter: '',
+    footerRight: '',
     footerText: ''
   };
 

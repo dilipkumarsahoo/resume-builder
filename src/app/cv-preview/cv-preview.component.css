@@ -105,6 +105,7 @@
 
 #cv-preview-content h1 {
   font-size: var(--name-font-size, 21.5pt) !important;
+  font-family: var(--name-font, inherit) !important;
 }
 
 #cv-preview-content h2 {
@@ -115,7 +116,32 @@
   font-size: var(--entry-header-font-size, 10.5pt) !important;
 }
 
-/* 7. Section Spacing */
+/* 6. Spacing, Line Height & Margins */
+#cv-preview-content {
+  line-height: var(--line-height, 1.15);
+}
+
+#cv-preview-content .space-y-4 > * + * {
+  margin-top: calc(var(--element-spacing, 12px) * 0.75) !important;
+}
+
+#cv-preview-content .space-y-6 > * + * {
+  margin-top: var(--element-spacing, 16px) !important;
+}
+
+#cv-preview-content .gap-6 {
+  gap: var(--element-spacing, 16px) !important;
+}
+
+#cv-preview-content .gap-8 {
+  gap: calc(var(--element-spacing, 16px) * 1.25) !important;
+}
+
+#cv-preview-content .gap-4 {
+  gap: calc(var(--element-spacing, 12px) * 0.75) !important;
+}
+
+/* 7. Section Spacing Overrides */
 #cv-preview-content.spacing-compact .space-y-4 > * + * {
   margin-top: 0.5rem !important;
 }
@@ -145,6 +171,76 @@
 }
 #cv-preview-content.photo-shape-square img {
   border-radius: 0px !important;
+}
+
+/* ==========================================================================
+   SECTION REORDERING & COLUMN LAYOUT ENGINE
+   ========================================================================== */
+
+/* 9. Section Reordering Support (CSS Flexbox Order) */
+[data-section="header"] { order: 0 !important; }
+[data-section="summary"] { order: var(--order-summary, 1) !important; }
+[data-section="skills"] { order: var(--order-skills, 2) !important; }
+[data-section="experience"] { order: var(--order-experience, 3) !important; }
+[data-section="education"] { order: var(--order-education, 4) !important; }
+[data-section="projects"] { order: var(--order-projects, 5) !important; }
+[data-section="languages"] { order: var(--order-languages, 6) !important; }
+
+/* 10. Columns Layout Controls (One, Two, Mix) */
+
+/* Columns - ONE (Full width single column stacked) */
+#cv-preview-content.columns-one .flex.h-full {
+  flex-direction: column !important;
+}
+#cv-preview-content.columns-one .w-1\/3,
+#cv-preview-content.columns-one .w-2\/3,
+#cv-preview-content.columns-one .w-1\/4,
+#cv-preview-content.columns-one .w-3\/4 {
+  width: 100% !important;
+}
+#cv-preview-content.columns-one .flex.gap-8,
+#cv-preview-content.columns-one .flex.gap-6 {
+  flex-direction: column !important;
+}
+
+/* Columns - TWO (Balanced Two Column Multi-Section View) */
+#cv-preview-content.columns-two .minimal-template,
+#cv-preview-content.columns-two .professional-template > div:last-child {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: wrap !important;
+}
+#cv-preview-content.columns-two .minimal-template > div,
+#cv-preview-content.columns-two .professional-template > div > div {
+  width: 50% !important;
+  box-sizing: border-box !important;
+}
+#cv-preview-content.columns-two [data-section="header"],
+#cv-preview-content.columns-two [data-section="summary"] {
+  width: 100% !important;
+}
+
+/* Columns - MIX (Mixed Spans: Full width Header/Summary + 2-Column Details) */
+#cv-preview-content.columns-mix .minimal-template,
+#cv-preview-content.columns-mix .professional-template > div:last-child {
+  display: flex !important;
+  flex-direction: row !important;
+  flex-wrap: wrap !important;
+}
+#cv-preview-content.columns-mix [data-section="header"],
+#cv-preview-content.columns-mix [data-section="summary"] {
+  width: 100% !important;
+}
+#cv-preview-content.columns-mix [data-section="experience"] {
+  width: 58% !important;
+  box-sizing: border-box !important;
+  padding-right: 1rem !important;
+}
+#cv-preview-content.columns-mix [data-section="education"],
+#cv-preview-content.columns-mix [data-section="skills"],
+#cv-preview-content.columns-mix [data-section="projects"] {
+  width: 42% !important;
+  box-sizing: border-box !important;
 }
 
 @media print {

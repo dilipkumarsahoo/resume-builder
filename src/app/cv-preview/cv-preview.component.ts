@@ -122,14 +122,43 @@ export class CvPreviewComponent {
       `heading-${c.headingTransform || 'uppercase'}`,
       `heading-style-${c.headingStyle || 'simple'}`,
       `spacing-${c.sectionSpacing || 'normal'}`,
+      `columns-${c.columns || 'one'}`,
+      `layout-cols-${c.columns || 'one'}`,
+      `entry-struct-${c.entryStructure || 'columns'}`,
+      `entry-date-${c.entryDateLocationPosition || 'right'}`,
+      `entry-subtitle-${c.entrySubtitlePlacement || 'below-title'}`,
       `photo-shape-${c.photoShape || 'circle'}`,
       `page-format-${(c.pageFormat || 'A4').toLowerCase().replace(/\s+/g, '-')}`
     ].join(' ');
   }
 
+  getSectionOrder(sectionId: string): number {
+    const order = this.cvService.customization().sectionOrder;
+    if (!order || !order.length) {
+      const defaults = ['summary', 'skills', 'experience', 'education', 'projects', 'languages'];
+      const idx = defaults.indexOf(sectionId);
+      return idx === -1 ? 99 : idx + 1;
+    }
+    const idx = order.indexOf(sectionId);
+    return idx === -1 ? 99 : idx + 1;
+  }
+
+  getNameFontFamily(): string {
+    const nameFont = this.cvService.customization().nameFontFamily;
+    if (!nameFont || nameFont === 'Same as body font') {
+      return this.getFontFamily();
+    }
+    return this.getFontFamilyByName(nameFont);
+  }
+
   getFontFamily(): string {
     const font = this.cvService.customization().fontFamily;
+    return this.getFontFamilyByName(font);
+  }
+
+  getFontFamilyByName(font: string): string {
     switch (font) {
+      case 'Alegreya': return "'Alegreya', serif";
       case 'Roboto': return "'Roboto', sans-serif";
       case 'Poppins': return "'Poppins', sans-serif";
       case 'Outfit': return "'Outfit', sans-serif";
@@ -137,14 +166,64 @@ export class CvPreviewComponent {
       case 'Merriweather': return "'Merriweather', serif";
       case 'Playfair Display': return "'Playfair Display', serif";
       case 'Space Grotesk': return "'Space Grotesk', sans-serif";
+      case 'Lora': return "'Lora', serif";
+      case 'Montserrat': return "'Montserrat', sans-serif";
+      case 'Open Sans': return "'Open Sans', sans-serif";
+      case 'Lato': return "'Lato', sans-serif";
+      case 'EB Garamond': return "'EB Garamond', serif";
       default: return "'Inter', sans-serif";
     }
   }
 
   getLineHeight(): string {
     const lh = this.cvService.customization().lineHeight;
-    if (lh === 'tight') return '1.25';
+    if (typeof lh === 'number') return `${lh}`;
+    if (lh === 'tight') return '1.15';
     if (lh === 'relaxed') return '1.75';
-    return '1.5';
+    if (lh === 'normal') return '1.4';
+    return lh ? `${lh}` : '1.15';
+  }
+
+  hasFooter(): boolean {
+    const c = this.cvService.customization();
+    if (c.footerCustom) {
+      return Boolean(c.footerLeft || c.footerCenter || c.footerRight);
+    }
+    return Boolean(c.footerPageNumbers || c.footerEmail || c.footerName || c.showPageNumbers);
+  }
+
+  getFooterLeft(): string {
+    const c = this.cvService.customization();
+    if (c.footerCustom) {
+      return this.formatFooterText(c.footerLeft || '');
+    }
+    return c.footerName ? (this.displayData.fullName || '') : '';
+  }
+
+  getFooterCenter(): string {
+    const c = this.cvService.customization();
+    if (c.footerCustom) {
+      return this.formatFooterText(c.footerCenter || '');
+    }
+    return c.footerEmail ? (this.displayData.email || '') : '';
+  }
+
+  getFooterRight(): string {
+    const c = this.cvService.customization();
+    if (c.footerCustom) {
+      return this.formatFooterText(c.footerRight || '');
+    }
+    return (c.footerPageNumbers || c.showPageNumbers) ? '1 / 1' : '';
+  }
+
+  private formatFooterText(template: string): string {
+    if (!template) return '';
+    const d = this.displayData;
+    return template
+      .replace(/\{\{\s*name\s*\}\}/gi, d.fullName || '')
+      .replace(/\{\{\s*phone\s*\}\}/gi, d.phone || '')
+      .replace(/\{\{\s*email\s*\}\}/gi, d.email || '')
+      .replace(/\{\{\s*page\s*\}\}/gi, '1')
+      .replace(/\{\{\s*pages\s*\}\}/gi, '1');
   }
 }

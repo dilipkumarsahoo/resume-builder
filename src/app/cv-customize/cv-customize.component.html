@@ -138,61 +138,229 @@
       </div>
     </section>
 
-    <!-- CARD 3: LAYOUT -->
-    <section id="card-layout" class="bg-white rounded-3xl p-6 md:p-8 shadow-xs border border-slate-200/70 space-y-5">
-      <div>
-        <h2 class="text-xl md:text-2xl font-extrabold text-[#1a0826] tracking-tight">Layout</h2>
-        <p class="text-xs font-bold text-slate-500 uppercase tracking-wider mt-3">Columns</p>
+    <!-- CARD 3: LAYOUT (FlowCV Style) -->
+    <section id="card-layout" class="bg-white rounded-3xl p-6 md:p-8 shadow-xs border border-slate-200/70 space-y-6">
+      <h2 class="text-xl md:text-2xl font-extrabold text-[#1a0826] tracking-tight">Layout</h2>
+
+      <!-- Columns -->
+      <div class="space-y-3">
+        <label class="block text-sm font-bold text-slate-800">Columns</label>
+
+        <div class="grid grid-cols-3 gap-3.5">
+          <!-- 1. One Column -->
+          <div 
+            (click)="setColumns('one')"
+            class="cursor-pointer group flex flex-col items-center"
+          >
+            <div 
+              class="w-full h-18 rounded-2xl flex flex-col items-center justify-center gap-1.5 transition-all"
+              [class]="cvService.customization().columns === 'one' ? 'border-2 border-indigo-600 bg-indigo-50/70 shadow-xs' : 'border border-slate-200 hover:border-slate-300 bg-white'"
+            >
+              <div 
+                class="w-12 h-2 rounded-full transition-colors"
+                [class]="cvService.customization().columns === 'one' ? 'bg-indigo-600' : 'bg-slate-300'"
+              ></div>
+              <div 
+                class="w-12 h-2 rounded-full transition-colors"
+                [class]="cvService.customization().columns === 'one' ? 'bg-indigo-600' : 'bg-slate-300'"
+              ></div>
+              <div 
+                class="w-12 h-2 rounded-full transition-colors"
+                [class]="cvService.customization().columns === 'one' ? 'bg-indigo-600' : 'bg-slate-300'"
+              ></div>
+            </div>
+            <span class="text-xs font-bold text-slate-700 mt-2">One</span>
+          </div>
+
+          <!-- 2. Two Columns -->
+          <div 
+            (click)="setColumns('two')"
+            class="cursor-pointer group flex flex-col items-center"
+          >
+            <div 
+              class="w-full h-18 rounded-2xl flex items-center justify-center gap-1.5 px-3 transition-all"
+              [class]="cvService.customization().columns === 'two' ? 'border-2 border-indigo-600 bg-indigo-50/70 shadow-xs' : 'border border-slate-200 hover:border-slate-300 bg-white'"
+            >
+              <!-- Left Col -->
+              <div class="flex flex-col gap-1.5 flex-1 items-center">
+                <div 
+                  class="w-full h-2 rounded-full transition-colors"
+                  [class]="cvService.customization().columns === 'two' ? 'bg-indigo-600' : 'bg-slate-300'"
+                ></div>
+                <div 
+                  class="w-full h-2 rounded-full transition-colors"
+                  [class]="cvService.customization().columns === 'two' ? 'bg-indigo-600' : 'bg-slate-300'"
+                ></div>
+                <div 
+                  class="w-full h-2 rounded-full transition-colors"
+                  [class]="cvService.customization().columns === 'two' ? 'bg-indigo-600' : 'bg-slate-300'"
+                ></div>
+              </div>
+              <!-- Right Col -->
+              <div class="flex flex-col gap-1.5 flex-1 items-center">
+                <div 
+                  class="w-full h-2 rounded-full transition-colors"
+                  [class]="cvService.customization().columns === 'two' ? 'bg-indigo-600' : 'bg-slate-300'"
+                ></div>
+                <div 
+                  class="w-full h-2 rounded-full transition-colors"
+                  [class]="cvService.customization().columns === 'two' ? 'bg-indigo-600' : 'bg-slate-300'"
+                ></div>
+                <div 
+                  class="w-full h-2 rounded-full transition-colors"
+                  [class]="cvService.customization().columns === 'two' ? 'bg-indigo-600' : 'bg-slate-300'"
+                ></div>
+              </div>
+            </div>
+            <span class="text-xs font-bold text-slate-700 mt-2">Two</span>
+          </div>
+
+          <!-- 3. Mix Columns -->
+          <div 
+            (click)="setColumns('mix')"
+            class="cursor-pointer group flex flex-col items-center"
+          >
+            <div 
+              class="w-full h-18 rounded-2xl flex flex-col justify-center gap-1.5 px-3 transition-all"
+              [class]="cvService.customization().columns === 'mix' ? 'border-2 border-indigo-600 bg-indigo-50/70 shadow-xs' : 'border border-slate-200 hover:border-slate-300 bg-white'"
+            >
+              <!-- Row 1 -->
+              <div class="flex gap-1.5 w-full">
+                <div 
+                  class="w-2/5 h-2 rounded-full transition-colors"
+                  [class]="cvService.customization().columns === 'mix' ? 'bg-indigo-600' : 'bg-slate-300'"
+                ></div>
+                <div 
+                  class="w-3/5 h-2 rounded-full transition-colors"
+                  [class]="cvService.customization().columns === 'mix' ? 'bg-indigo-600' : 'bg-slate-300'"
+                ></div>
+              </div>
+              <!-- Row 2 -->
+              <div class="flex gap-1.5 w-full">
+                <div 
+                  class="w-3/5 h-2 rounded-full transition-colors"
+                  [class]="cvService.customization().columns === 'mix' ? 'bg-indigo-600' : 'bg-slate-300'"
+                ></div>
+                <div 
+                  class="w-2/5 h-2 rounded-full transition-colors"
+                  [class]="cvService.customization().columns === 'mix' ? 'bg-indigo-600' : 'bg-slate-300'"
+                ></div>
+              </div>
+              <!-- Row 3 -->
+              <div class="flex gap-1.5 w-full">
+                <div 
+                  class="w-1/2 h-2 rounded-full transition-colors"
+                  [class]="cvService.customization().columns === 'mix' ? 'bg-indigo-600' : 'bg-slate-300'"
+                ></div>
+                <div 
+                  class="w-1/4 h-2 rounded-full transition-colors"
+                  [class]="cvService.customization().columns === 'mix' ? 'bg-indigo-600' : 'bg-slate-300'"
+                ></div>
+              </div>
+            </div>
+            <span class="text-xs font-bold text-slate-700 mt-2">Mix</span>
+          </div>
+        </div>
       </div>
 
-      <div class="grid grid-cols-3 gap-4">
-        <!-- One Column -->
-        <div 
-          (click)="setColumns('one')"
-          class="p-4 rounded-2xl border-2 flex flex-col items-center justify-center gap-3 transition-all cursor-pointer"
-          [class]="cvService.customization().columns === 'one' ? 'border-indigo-600 bg-indigo-50/40 shadow-sm' : 'border-slate-200 hover:border-slate-300 bg-white'"
-        >
-          <div class="w-16 h-12 bg-white rounded-lg border border-slate-200 p-2 flex flex-col justify-between shadow-2xs">
-            <div class="w-full h-1.5 bg-indigo-500 rounded-sm"></div>
-            <div class="w-full h-1.5 bg-indigo-400 rounded-sm"></div>
-            <div class="w-full h-1.5 bg-indigo-300 rounded-sm"></div>
-          </div>
-          <span class="text-xs font-bold text-slate-800">One</span>
+      <!-- Change Section Layout -->
+      <div class="space-y-3 pt-2">
+        <h3 class="text-sm font-bold text-slate-800">Change Section Layout</h3>
+
+        <!-- Personal Details Box -->
+        <div class="w-full bg-slate-100/80 hover:bg-slate-100/90 rounded-2xl py-6 flex flex-col items-center justify-center gap-2 border border-slate-200/50 select-none transition-colors">
+          <svg class="w-8 h-8 text-slate-700" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M16 21v-2a4 4 0 0 0-4-4H6a4 4 0 0 0-4 4v2" />
+            <circle cx="9" cy="7" r="4" />
+            <line x1="16" y1="9" x2="22" y2="9" />
+            <line x1="16" y1="13" x2="22" y2="13" />
+          </svg>
+          <span class="text-xs md:text-sm font-bold text-slate-800">Personal Details</span>
         </div>
 
-        <!-- Two Columns -->
-        <div 
-          (click)="setColumns('two')"
-          class="p-4 rounded-2xl border-2 flex flex-col items-center justify-center gap-3 transition-all cursor-pointer"
-          [class]="cvService.customization().columns === 'two' ? 'border-indigo-600 bg-indigo-50/40 shadow-sm' : 'border-slate-200 hover:border-slate-300 bg-white'"
-        >
-          <div class="w-16 h-12 bg-white rounded-lg border border-slate-200 p-2 flex gap-1.5 shadow-2xs">
-            <div class="w-1/2 h-full bg-slate-300 rounded-sm flex flex-col justify-around p-0.5">
-              <div class="w-full h-1 bg-slate-400 rounded-2xs"></div>
-              <div class="w-full h-1 bg-slate-400 rounded-2xs"></div>
-            </div>
-            <div class="w-1/2 h-full bg-indigo-400 rounded-sm flex flex-col justify-around p-0.5">
-              <div class="w-full h-1 bg-indigo-600 rounded-2xs"></div>
-              <div class="w-full h-1 bg-indigo-600 rounded-2xs"></div>
-            </div>
-          </div>
-          <span class="text-xs font-bold text-slate-800">Two</span>
-        </div>
+        <!-- Draggable Section Items -->
+        <div class="space-y-2.5">
+          @for (sec of layoutSections(); track sec.id; let i = $index) {
+          @if (!sec.isPageBreak) {
+          <div 
+            draggable="true"
+            (dragstart)="onSectionDragStart(i)"
+            (dragover)="onSectionDragOver($event)"
+            (drop)="onSectionDrop(i)"
+            class="bg-slate-100/80 hover:bg-slate-100 rounded-2xl px-4 py-3.5 flex items-center justify-between transition-all cursor-grab active:cursor-grabbing border border-slate-200/50 group select-none shadow-2xs"
+          >
+            <div class="flex items-center gap-3.5">
+              <!-- Drag Grip Indicator (6 Dots) -->
+              <svg class="w-4 h-4 text-slate-400 group-hover:text-slate-600 transition-colors shrink-0" viewBox="0 0 24 24" fill="currentColor">
+                <circle cx="8" cy="6" r="1.75" />
+                <circle cx="16" cy="6" r="1.75" />
+                <circle cx="8" cy="12" r="1.75" />
+                <circle cx="16" cy="12" r="1.75" />
+                <circle cx="8" cy="18" r="1.75" />
+                <circle cx="16" cy="18" r="1.75" />
+              </svg>
 
-        <!-- Mix Columns -->
-        <div 
-          (click)="setColumns('mix')"
-          class="p-4 rounded-2xl border-2 flex flex-col items-center justify-center gap-3 transition-all cursor-pointer"
-          [class]="cvService.customization().columns === 'mix' ? 'border-indigo-600 bg-indigo-50/40 shadow-sm' : 'border-slate-200 hover:border-slate-300 bg-white'"
-        >
-          <div class="w-16 h-12 bg-white rounded-lg border border-slate-200 p-2 flex flex-col gap-1.5 shadow-2xs">
-            <div class="w-full h-2 bg-indigo-500 rounded-sm"></div>
-            <div class="flex-1 flex gap-1">
-              <div class="w-1/3 h-full bg-slate-300 rounded-xs"></div>
-              <div class="w-2/3 h-full bg-indigo-300 rounded-xs"></div>
+              <!-- Section Icon -->
+              @if (sec.type === 'summary') {
+              <svg class="w-5 h-5 text-slate-800 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="3" y="4" width="18" height="16" rx="2" />
+                <line x1="7" y1="8" x2="11" y2="8" />
+                <line x1="7" y1="12" x2="17" y2="12" />
+                <line x1="7" y1="16" x2="14" y2="16" />
+              </svg>
+              } @else if (sec.type === 'skills') {
+              <svg class="w-5 h-5 text-slate-800 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M12 2a7 7 0 0 0-7 7c0 2.38 1.19 4.47 3 5.74V17a2 2 0 0 0 2 2h4a2 2 0 0 0 2-2v-2.26c1.81-1.27 3-3.36 3-5.74a7 7 0 0 0-7-7z" />
+                <path d="M9 21h6" />
+              </svg>
+              } @else if (sec.type === 'experience') {
+              <svg class="w-5 h-5 text-slate-800 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <rect x="2" y="7" width="20" height="14" rx="2" ry="2" />
+                <path d="M16 21V5a2 2 0 0 0-2-2h-4a2 2 0 0 0-2 2v16" />
+              </svg>
+              } @else if (sec.type === 'education') {
+              <svg class="w-5 h-5 text-slate-800 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M22 10v6M2 10l10-5 10 5-10 5z" />
+                <path d="M6 12v5c3 3 9 3 12 0v-5" />
+              </svg>
+              }
+
+              <span class="font-bold text-sm text-slate-900">{{ sec.name }}</span>
             </div>
           </div>
-          <span class="text-xs font-bold text-slate-800">Mix</span>
+          } @else {
+          <!-- Page Break Box (Dashed Outline) -->
+          <div 
+            draggable="true"
+            (dragstart)="onSectionDragStart(i)"
+            (dragover)="onSectionDragOver($event)"
+            (drop)="onSectionDrop(i)"
+            class="border border-dashed border-slate-300 hover:border-slate-400 bg-white/80 hover:bg-slate-50/80 rounded-2xl px-4 py-3.5 flex items-center justify-between transition-all cursor-grab active:cursor-grabbing group select-none"
+          >
+            <div class="flex items-center gap-3.5">
+              <!-- Drag Grip Indicator (6 Dots) -->
+              <svg class="w-4 h-4 text-slate-400 group-hover:text-slate-600 transition-colors shrink-0" viewBox="0 0 24 24" fill="currentColor">
+                <circle cx="8" cy="6" r="1.75" />
+                <circle cx="16" cy="6" r="1.75" />
+                <circle cx="8" cy="12" r="1.75" />
+                <circle cx="16" cy="12" r="1.75" />
+                <circle cx="8" cy="18" r="1.75" />
+                <circle cx="16" cy="18" r="1.75" />
+              </svg>
+
+              <!-- Page Break Icon -->
+              <svg class="w-5 h-5 text-slate-800 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+                <path d="M14 2H6a2 2 0 0 0-2 2v6" />
+                <path d="M4 18v2a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2v-2" />
+                <line x1="2" y1="14" x2="22" y2="14" stroke-dasharray="3 3" />
+                <path d="M14 2v6h6" />
+              </svg>
+
+              <span class="font-bold text-sm text-slate-900">{{ sec.name }}</span>
+            </div>
+          </div>
+          }
+          }
         </div>
       </div>
     </section>
@@ -364,92 +532,472 @@
 
     </section>
 
-    <!-- CARD 5: SPACING -->
+    <!-- CARD 5: SPACING (FlowCV Stepped Sliders) -->
     <section id="card-spacing" class="bg-white rounded-3xl p-6 md:p-8 shadow-xs border border-slate-200/70 space-y-6">
       <h2 class="text-xl md:text-2xl font-extrabold text-[#1a0826] tracking-tight">Spacing</h2>
 
-      <!-- Line Height -->
-      <div class="space-y-2.5">
-        <label class="block text-xs font-bold text-slate-600 uppercase tracking-wider">Line Height</label>
-        <div class="grid grid-cols-3 gap-3">
+      <!-- 1. Line Height -->
+      <div class="space-y-2">
+        <div class="flex items-center justify-between">
+          <label class="text-sm font-bold text-slate-800">Line Height</label>
+          <span class="text-xs font-bold text-slate-600 font-mono">{{ cvService.customization().lineHeight || 1.15 }}</span>
+        </div>
+
+        <div class="flex items-center gap-2.5">
+          <!-- Stepped Slider Track -->
+          <div class="flex-1 h-12 bg-slate-100/90 rounded-2xl flex items-center px-1.5 relative border border-slate-200/70 select-none">
+            @for (step of lineHeightSteps; track step) {
+            <div 
+              (click)="setLineHeight(step)"
+              class="flex-1 h-full flex items-center justify-center cursor-pointer relative group"
+            >
+              @if (cvService.customization().lineHeight === step) {
+              <div class="w-full h-9 bg-indigo-600 rounded-xl shadow-md shadow-indigo-600/30 transition-all"></div>
+              } @else {
+              <div class="w-px h-3 bg-slate-300 group-hover:bg-slate-500 group-hover:h-4 transition-all"></div>
+              }
+            </div>
+            }
+          </div>
+
+          <!-- Minus Button -->
           <button 
-            (click)="setLineHeight('tight')"
-            [class]="cvService.customization().lineHeight === 'tight' ? 'bg-indigo-600 text-white font-bold shadow-sm' : 'bg-slate-50 text-slate-700 hover:bg-slate-100 border border-slate-200/80'"
-            class="py-3 rounded-2xl text-xs font-semibold transition-all cursor-pointer"
+            (click)="stepLineHeight(-1)"
+            class="w-12 h-12 rounded-2xl border border-slate-200 bg-white hover:bg-slate-50 flex items-center justify-center text-slate-700 text-lg font-bold shadow-2xs active:scale-95 transition-all cursor-pointer"
+            title="Decrease line height"
           >
-            Tight (1.25)
+            －
           </button>
+
+          <!-- Plus Button -->
           <button 
-            (click)="setLineHeight('normal')"
-            [class]="cvService.customization().lineHeight === 'normal' ? 'bg-indigo-600 text-white font-bold shadow-sm' : 'bg-slate-50 text-slate-700 hover:bg-slate-100 border border-slate-200/80'"
-            class="py-3 rounded-2xl text-xs font-semibold transition-all cursor-pointer"
+            (click)="stepLineHeight(1)"
+            class="w-12 h-12 rounded-2xl border border-slate-200 bg-white hover:bg-slate-50 flex items-center justify-center text-slate-700 text-lg font-bold shadow-2xs active:scale-95 transition-all cursor-pointer"
+            title="Increase line height"
           >
-            Normal (1.5)
-          </button>
-          <button 
-            (click)="setLineHeight('relaxed')"
-            [class]="cvService.customization().lineHeight === 'relaxed' ? 'bg-indigo-600 text-white font-bold shadow-sm' : 'bg-slate-50 text-slate-700 hover:bg-slate-100 border border-slate-200/80'"
-            class="py-3 rounded-2xl text-xs font-semibold transition-all cursor-pointer"
-          >
-            Relaxed (1.75)
+            ＋
           </button>
         </div>
       </div>
 
-      <!-- Section Margins -->
-      <div class="space-y-2.5">
-        <label class="block text-xs font-bold text-slate-600 uppercase tracking-wider">Section Margins</label>
-        <div class="grid grid-cols-3 gap-3">
+      <!-- 2. Space Between Elements -->
+      <div class="space-y-2">
+        <div class="flex items-center justify-between">
+          <label class="text-sm font-bold text-slate-800">Space Between Elements</label>
+          <span class="text-xs font-bold text-slate-600 font-mono">{{ getSpaceBetweenElementsLabel() }}</span>
+        </div>
+
+        <div class="flex items-center gap-2.5">
+          <!-- Stepped Slider Track -->
+          <div class="flex-1 h-12 bg-slate-100/90 rounded-2xl flex items-center px-1.5 relative border border-slate-200/70 select-none">
+            @for (step of spaceBetweenElementsSteps; track step) {
+            <div 
+              (click)="setSpaceBetweenElements(step)"
+              class="flex-1 h-full flex items-center justify-center cursor-pointer relative group"
+            >
+              @if (cvService.customization().spaceBetweenElements === step) {
+              <div class="w-full h-9 bg-indigo-600 rounded-xl shadow-md shadow-indigo-600/30 transition-all"></div>
+              } @else {
+              <div class="w-px h-3 bg-slate-300 group-hover:bg-slate-500 group-hover:h-4 transition-all"></div>
+              }
+            </div>
+            }
+          </div>
+
+          <!-- Minus Button -->
           <button 
-            (click)="setSectionSpacing('compact')"
-            [class]="cvService.customization().sectionSpacing === 'compact' ? 'bg-indigo-600 text-white font-bold shadow-sm' : 'bg-slate-50 text-slate-700 hover:bg-slate-100 border border-slate-200/80'"
-            class="py-3 rounded-2xl text-xs font-semibold transition-all cursor-pointer"
+            (click)="stepSpaceBetweenElements(-1)"
+            class="w-12 h-12 rounded-2xl border border-slate-200 bg-white hover:bg-slate-50 flex items-center justify-center text-slate-700 text-lg font-bold shadow-2xs active:scale-95 transition-all cursor-pointer"
+            title="Decrease space between elements"
           >
-            Compact
+            －
           </button>
+
+          <!-- Plus Button -->
           <button 
-            (click)="setSectionSpacing('normal')"
-            [class]="cvService.customization().sectionSpacing === 'normal' ? 'bg-indigo-600 text-white font-bold shadow-sm' : 'bg-slate-50 text-slate-700 hover:bg-slate-100 border border-slate-200/80'"
-            class="py-3 rounded-2xl text-xs font-semibold transition-all cursor-pointer"
+            (click)="stepSpaceBetweenElements(1)"
+            class="w-12 h-12 rounded-2xl border border-slate-200 bg-white hover:bg-slate-50 flex items-center justify-center text-slate-700 text-lg font-bold shadow-2xs active:scale-95 transition-all cursor-pointer"
+            title="Increase space between elements"
           >
-            Standard
+            ＋
           </button>
+        </div>
+      </div>
+
+      <!-- 3. Left & Right Margin -->
+      <div class="space-y-2">
+        <div class="flex items-center justify-between">
+          <label class="text-sm font-bold text-slate-800">Left & Right Margin</label>
+          <span class="text-xs font-bold text-slate-600 font-mono">{{ cvService.customization().sideMarginMm || 22 }}mm</span>
+        </div>
+
+        <div class="flex items-center gap-2.5">
+          <!-- Stepped Slider Track -->
+          <div class="flex-1 h-12 bg-slate-100/90 rounded-2xl flex items-center px-1.5 relative border border-slate-200/70 select-none">
+            @for (step of sideMarginSteps; track step) {
+            <div 
+              (click)="setSideMargin(step)"
+              class="flex-1 h-full flex items-center justify-center cursor-pointer relative group"
+            >
+              @if (cvService.customization().sideMarginMm === step) {
+              <div class="w-full h-9 bg-indigo-600 rounded-xl shadow-md shadow-indigo-600/30 transition-all"></div>
+              } @else {
+              <div class="w-px h-3 bg-slate-300 group-hover:bg-slate-500 group-hover:h-4 transition-all"></div>
+              }
+            </div>
+            }
+          </div>
+
+          <!-- Minus Button -->
           <button 
-            (click)="setSectionSpacing('spacious')"
-            [class]="cvService.customization().sectionSpacing === 'spacious' ? 'bg-indigo-600 text-white font-bold shadow-sm' : 'bg-slate-50 text-slate-700 hover:bg-slate-100 border border-slate-200/80'"
-            class="py-3 rounded-2xl text-xs font-semibold transition-all cursor-pointer"
+            (click)="stepSideMargin(-1)"
+            class="w-12 h-12 rounded-2xl border border-slate-200 bg-white hover:bg-slate-50 flex items-center justify-center text-slate-700 text-lg font-bold shadow-2xs active:scale-95 transition-all cursor-pointer"
+            title="Decrease left and right margin"
           >
-            Spacious
+            －
+          </button>
+
+          <!-- Plus Button -->
+          <button 
+            (click)="stepSideMargin(1)"
+            class="w-12 h-12 rounded-2xl border border-slate-200 bg-white hover:bg-slate-50 flex items-center justify-center text-slate-700 text-lg font-bold shadow-2xs active:scale-95 transition-all cursor-pointer"
+            title="Increase left and right margin"
+          >
+            ＋
+          </button>
+        </div>
+      </div>
+
+      <!-- 4. Top & Bottom Margin -->
+      <div class="space-y-2">
+        <div class="flex items-center justify-between">
+          <label class="text-sm font-bold text-slate-800">Top & Bottom Margin</label>
+          <span class="text-xs font-bold text-slate-600 font-mono">{{ cvService.customization().topBottomMarginMm || 12 }}mm</span>
+        </div>
+
+        <div class="flex items-center gap-2.5">
+          <!-- Stepped Slider Track -->
+          <div class="flex-1 h-12 bg-slate-100/90 rounded-2xl flex items-center px-1.5 relative border border-slate-200/70 select-none">
+            @for (step of topBottomMarginSteps; track step) {
+            <div 
+              (click)="setTopBottomMargin(step)"
+              class="flex-1 h-full flex items-center justify-center cursor-pointer relative group"
+            >
+              @if (cvService.customization().topBottomMarginMm === step) {
+              <div class="w-full h-9 bg-indigo-600 rounded-xl shadow-md shadow-indigo-600/30 transition-all"></div>
+              } @else {
+              <div class="w-px h-3 bg-slate-300 group-hover:bg-slate-500 group-hover:h-4 transition-all"></div>
+              }
+            </div>
+            }
+          </div>
+
+          <!-- Minus Button -->
+          <button 
+            (click)="stepTopBottomMargin(-1)"
+            class="w-12 h-12 rounded-2xl border border-slate-200 bg-white hover:bg-slate-50 flex items-center justify-center text-slate-700 text-lg font-bold shadow-2xs active:scale-95 transition-all cursor-pointer"
+            title="Decrease top and bottom margin"
+          >
+            －
+          </button>
+
+          <!-- Plus Button -->
+          <button 
+            (click)="stepTopBottomMargin(1)"
+            class="w-12 h-12 rounded-2xl border border-slate-200 bg-white hover:bg-slate-50 flex items-center justify-center text-slate-700 text-lg font-bold shadow-2xs active:scale-95 transition-all cursor-pointer"
+            title="Increase top and bottom margin"
+          >
+            ＋
           </button>
         </div>
       </div>
     </section>
 
-    <!-- CARD 6: FONT -->
-    <section id="card-font" class="bg-white rounded-3xl p-6 md:p-8 shadow-xs border border-slate-200/70 space-y-5">
-      <div>
-        <h2 class="text-xl md:text-2xl font-extrabold text-[#1a0826] tracking-tight">Typography & Font Family</h2>
-        <p class="text-slate-500 text-xs mt-1">Select from recruiter-tested, ATS-compliant typeface families.</p>
+    <!-- CARD 6: ENTRIES (Entry Layout FlowCV Style) -->
+    <section id="card-entries" class="bg-white rounded-3xl p-6 md:p-8 shadow-xs border border-slate-200/70 space-y-6">
+      <h2 class="text-xl md:text-2xl font-extrabold text-[#1a0826] tracking-tight">Entry Layout</h2>
+
+      <!-- 1. Structure -->
+      <div class="space-y-3">
+        <label class="block text-sm font-bold text-slate-800">Structure</label>
+        <div class="grid grid-cols-2 gap-3.5 max-w-sm">
+          <!-- Full Width -->
+          <div 
+            (click)="setEntryStructure('full')"
+            class="cursor-pointer group flex flex-col items-center"
+          >
+            <div 
+              class="w-full h-18 rounded-2xl flex flex-col items-center justify-center gap-1.5 transition-all"
+              [class]="cvService.customization().entryStructure === 'full' ? 'border-2 border-indigo-600 bg-indigo-50/70 shadow-xs' : 'border border-slate-200 hover:border-slate-300 bg-white'"
+            >
+              <div 
+                class="w-12 h-1.5 rounded-full transition-colors"
+                [class]="cvService.customization().entryStructure === 'full' ? 'bg-indigo-600' : 'bg-slate-300'"
+              ></div>
+              <div 
+                class="w-12 h-1.5 rounded-full transition-colors"
+                [class]="cvService.customization().entryStructure === 'full' ? 'bg-indigo-600' : 'bg-slate-300'"
+              ></div>
+              <div 
+                class="w-12 h-1.5 rounded-full transition-colors"
+                [class]="cvService.customization().entryStructure === 'full' ? 'bg-indigo-600' : 'bg-slate-300'"
+              ></div>
+            </div>
+            <span class="text-xs font-bold text-slate-700 mt-2">Full Width</span>
+          </div>
+
+          <!-- Columns -->
+          <div 
+            (click)="setEntryStructure('columns')"
+            class="cursor-pointer group flex flex-col items-center"
+          >
+            <div 
+              class="w-full h-18 rounded-2xl flex flex-col items-center justify-center gap-1.5 px-3 transition-all"
+              [class]="cvService.customization().entryStructure === 'columns' ? 'border-2 border-indigo-600 bg-indigo-50/70 shadow-xs' : 'border border-slate-200 hover:border-slate-300 bg-white'"
+            >
+              <div class="flex gap-1.5 w-full justify-center">
+                <div 
+                  class="w-8 h-1.5 rounded-full transition-colors"
+                  [class]="cvService.customization().entryStructure === 'columns' ? 'bg-indigo-600' : 'bg-slate-300'"
+                ></div>
+                <div 
+                  class="w-4 h-1.5 rounded-full transition-colors"
+                  [class]="cvService.customization().entryStructure === 'columns' ? 'bg-indigo-600' : 'bg-slate-300'"
+                ></div>
+              </div>
+              <div class="flex gap-1.5 w-full justify-center">
+                <div 
+                  class="w-8 h-1.5 rounded-full transition-colors"
+                  [class]="cvService.customization().entryStructure === 'columns' ? 'bg-indigo-600' : 'bg-slate-300'"
+                ></div>
+                <div 
+                  class="w-4 h-1.5 rounded-full transition-colors"
+                  [class]="cvService.customization().entryStructure === 'columns' ? 'bg-indigo-600' : 'bg-slate-300'"
+                ></div>
+              </div>
+              <div class="flex gap-1.5 w-full justify-center">
+                <div 
+                  class="w-8 h-1.5 rounded-full transition-colors"
+                  [class]="cvService.customization().entryStructure === 'columns' ? 'bg-indigo-600' : 'bg-slate-300'"
+                ></div>
+                <div 
+                  class="w-4 h-1.5 rounded-full transition-colors"
+                  [class]="cvService.customization().entryStructure === 'columns' ? 'bg-indigo-600' : 'bg-slate-300'"
+                ></div>
+              </div>
+            </div>
+            <span class="text-xs font-bold text-slate-700 mt-2">Columns</span>
+          </div>
+        </div>
       </div>
 
-      <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
-        @for (font of fontFamilies; track font.name) {
-        <button 
-          (click)="setFontFamily(font.name)"
-          class="p-4 rounded-2xl border-2 flex items-center justify-between text-left transition-all cursor-pointer group"
-          [class]="cvService.customization().fontFamily === font.name ? 'border-indigo-600 bg-indigo-50/50 shadow-sm' : 'border-slate-200/90 hover:border-slate-300 bg-white'"
-        >
-          <div>
-            <p class="font-bold text-slate-900 text-base" [style.font-family]="font.family">{{ font.name }}</p>
-            <p class="text-xs text-slate-400 font-medium">{{ font.type }}</p>
-          </div>
-          <span 
-            *ngIf="cvService.customization().fontFamily === font.name" 
-            class="w-6 h-6 rounded-full bg-indigo-600 text-white flex items-center justify-center text-xs"
+      <!-- 2. Date & Location Position -->
+      <div class="space-y-3">
+        <label class="block text-sm font-bold text-slate-800">Date & Location Position</label>
+        <div class="grid grid-cols-3 gap-3">
+          <button 
+            type="button"
+            (click)="setEntryDateLocationPosition('right')"
+            class="py-3 px-4 rounded-2xl text-xs font-bold transition-all cursor-pointer text-center"
+            [class]="cvService.customization().entryDateLocationPosition === 'right' ? 'border-2 border-indigo-600 bg-indigo-50/70 text-indigo-700 shadow-xs' : 'border border-slate-200 hover:border-slate-300 bg-white text-slate-700 font-semibold'"
           >
-            ✓
+            Right
+          </button>
+          <button 
+            type="button"
+            (click)="setEntryDateLocationPosition('left')"
+            class="py-3 px-4 rounded-2xl text-xs font-bold transition-all cursor-pointer text-center"
+            [class]="cvService.customization().entryDateLocationPosition === 'left' ? 'border-2 border-indigo-600 bg-indigo-50/70 text-indigo-700 shadow-xs' : 'border border-slate-200 hover:border-slate-300 bg-white text-slate-700 font-semibold'"
+          >
+            Left
+          </button>
+          <button 
+            type="button"
+            (click)="setEntryDateLocationPosition('split')"
+            class="py-3 px-4 rounded-2xl text-xs font-bold transition-all cursor-pointer text-center"
+            [class]="cvService.customization().entryDateLocationPosition === 'split' ? 'border-2 border-indigo-600 bg-indigo-50/70 text-indigo-700 shadow-xs' : 'border border-slate-200 hover:border-slate-300 bg-white text-slate-700 font-semibold'"
+          >
+            Split
+          </button>
+        </div>
+      </div>
+
+      <!-- 3. Subtitle Placement -->
+      <div class="space-y-3">
+        <label class="block text-sm font-bold text-slate-800">Subtitle Placement</label>
+        <div class="grid grid-cols-2 gap-3 max-w-sm">
+          <button 
+            type="button"
+            (click)="setEntrySubtitlePlacement('same-line')"
+            class="py-3 px-4 rounded-2xl text-xs font-bold transition-all cursor-pointer text-center"
+            [class]="cvService.customization().entrySubtitlePlacement === 'same-line' ? 'border-2 border-indigo-600 bg-indigo-50/70 text-indigo-700 shadow-xs' : 'border border-slate-200 hover:border-slate-300 bg-white text-slate-700 font-semibold'"
+          >
+            Try Same Line
+          </button>
+          <button 
+            type="button"
+            (click)="setEntrySubtitlePlacement('below-title')"
+            class="py-3 px-4 rounded-2xl text-xs font-bold transition-all cursor-pointer text-center"
+            [class]="cvService.customization().entrySubtitlePlacement === 'below-title' ? 'border-2 border-indigo-600 bg-indigo-50/70 text-indigo-700 shadow-xs' : 'border border-slate-200 hover:border-slate-300 bg-white text-slate-700 font-semibold'"
+          >
+            Below Title
+          </button>
+        </div>
+      </div>
+
+      <!-- 4. Advanced Settings Accordion -->
+      <div class="bg-slate-50/80 rounded-2xl p-4 md:p-5 border border-slate-200/60 space-y-3">
+        <div 
+          (click)="toggleEntryAdvanced()"
+          class="flex items-center justify-between cursor-pointer select-none group"
+        >
+          <span class="text-xs font-bold text-slate-700 group-hover:text-slate-900">Advanced settings</span>
+          <svg 
+            class="w-4 h-4 text-slate-500 group-hover:text-slate-700 transition-transform duration-200"
+            [class.rotate-180]="entryAdvancedOpen()"
+            viewBox="0 0 24 24" 
+            fill="none" 
+            stroke="currentColor" 
+            stroke-width="2.5" 
+            stroke-linecap="round" 
+            stroke-linejoin="round"
+          >
+            <path d="m6 9 6 6 6-6"/>
+          </svg>
+        </div>
+
+        @if (entryAdvancedOpen()) {
+        <div class="space-y-3 pt-2 text-xs text-slate-600">
+          <p class="font-medium">Fine-tune entry line spacing, bullets, and date-range formatting.</p>
+          <div class="flex items-center justify-between py-1 border-t border-slate-200/60">
+            <span>Show compact entry margins</span>
+            <span class="text-xs font-bold text-indigo-600">Automatic</span>
+          </div>
+        </div>
+        }
+      </div>
+    </section>
+
+    <!-- CARD 7: FONT (FlowCV Style) -->
+    <section id="card-font" class="bg-white rounded-3xl p-6 md:p-8 shadow-xs border border-slate-200/70 space-y-6">
+      <h2 class="text-xl md:text-2xl font-extrabold text-[#1a0826] tracking-tight">Font</h2>
+
+      <!-- 1. Body Font -->
+      <div class="space-y-2 relative">
+        <label class="block text-sm font-bold text-slate-800">Body Font</label>
+
+        <!-- Dropdown trigger -->
+        <button 
+          type="button"
+          (click)="toggleBodyFontDropdown()"
+          class="w-full bg-white border border-slate-200 hover:border-slate-300 rounded-2xl py-3.5 px-4 flex items-center justify-between shadow-2xs transition-all cursor-pointer text-left group"
+        >
+          <span 
+            class="text-base font-semibold text-slate-800"
+            [style.font-family]="cvService.customization().fontFamily || 'Alegreya'"
+          >
+            {{ cvService.customization().fontFamily || 'Alegreya' }}
           </span>
+          <svg 
+            class="w-4 h-4 text-slate-400 group-hover:text-slate-600 transition-transform duration-200"
+            [class.rotate-180]="bodyFontDropdownOpen()"
+            viewBox="0 0 24 24" 
+            fill="none" 
+            stroke="currentColor" 
+            stroke-width="2.5" 
+            stroke-linecap="round" 
+            stroke-linejoin="round"
+          >
+            <path d="m6 9 6 6 6-6"/>
+          </svg>
         </button>
+
+        <!-- Dropdown Menu -->
+        @if (bodyFontDropdownOpen()) {
+        <div class="absolute top-full left-0 w-full mt-2 bg-white rounded-2xl shadow-xl border border-slate-200/90 py-2 z-30 max-h-64 overflow-y-auto">
+          @for (font of fontFamilies; track font.name) {
+          <div 
+            (click)="selectBodyFont(font.name)"
+            class="px-4 py-2.5 flex items-center justify-between hover:bg-slate-50 cursor-pointer transition-colors"
+            [class.bg-indigo-50]="cvService.customization().fontFamily === font.name"
+          >
+            <div>
+              <span class="text-sm font-bold text-slate-900 block" [style.font-family]="font.family">{{ font.name }}</span>
+              <span class="text-[11px] text-slate-400 font-medium">{{ font.type }}</span>
+            </div>
+            @if (cvService.customization().fontFamily === font.name) {
+            <span class="text-indigo-600 text-sm font-bold">✓</span>
+            }
+          </div>
+          }
+        </div>
+        }
+      </div>
+
+      <!-- 2. Name Font -->
+      <div class="space-y-2 relative">
+        <label class="block text-sm font-bold text-slate-800">Name Font</label>
+
+        <!-- Dropdown trigger -->
+        <button 
+          type="button"
+          (click)="toggleNameFontDropdown()"
+          class="w-full bg-white border border-slate-200 hover:border-slate-300 rounded-2xl py-3.5 px-4 flex items-center justify-between shadow-2xs transition-all cursor-pointer text-left group"
+        >
+          <span 
+            class="text-sm md:text-base font-semibold text-slate-800"
+            [style.font-family]="cvService.customization().nameFontFamily && cvService.customization().nameFontFamily !== 'Same as body font' ? cvService.customization().nameFontFamily : (cvService.customization().fontFamily || 'Alegreya')"
+          >
+            {{ cvService.customization().nameFontFamily || 'Same as body font' }}
+          </span>
+          <svg 
+            class="w-4 h-4 text-slate-400 group-hover:text-slate-600 transition-transform duration-200"
+            [class.rotate-180]="nameFontDropdownOpen()"
+            viewBox="0 0 24 24" 
+            fill="none" 
+            stroke="currentColor" 
+            stroke-width="2.5" 
+            stroke-linecap="round" 
+            stroke-linejoin="round"
+          >
+            <path d="m6 9 6 6 6-6"/>
+          </svg>
+        </button>
+
+        <!-- Dropdown Menu -->
+        @if (nameFontDropdownOpen()) {
+        <div class="absolute top-full left-0 w-full mt-2 bg-white rounded-2xl shadow-xl border border-slate-200/90 py-2 z-30 max-h-64 overflow-y-auto">
+          <!-- Same as body font option -->
+          <div 
+            (click)="selectNameFont('Same as body font')"
+            class="px-4 py-2.5 flex items-center justify-between hover:bg-slate-50 cursor-pointer transition-colors border-b border-slate-100"
+            [class.bg-indigo-50]="!cvService.customization().nameFontFamily || cvService.customization().nameFontFamily === 'Same as body font'"
+          >
+            <div>
+              <span class="text-sm font-bold text-slate-900 block">Same as body font</span>
+              <span class="text-[11px] text-slate-400 font-medium">Matches {{ cvService.customization().fontFamily || 'body font' }}</span>
+            </div>
+            @if (!cvService.customization().nameFontFamily || cvService.customization().nameFontFamily === 'Same as body font') {
+            <span class="text-indigo-600 text-sm font-bold">✓</span>
+            }
+          </div>
+
+          @for (font of fontFamilies; track font.name) {
+          <div 
+            (click)="selectNameFont(font.name)"
+            class="px-4 py-2.5 flex items-center justify-between hover:bg-slate-50 cursor-pointer transition-colors"
+            [class.bg-indigo-50]="cvService.customization().nameFontFamily === font.name"
+          >
+            <div>
+              <span class="text-sm font-bold text-slate-900 block" [style.font-family]="font.family">{{ font.name }}</span>
+              <span class="text-[11px] text-slate-400 font-medium">{{ font.type }}</span>
+            </div>
+            @if (cvService.customization().nameFontFamily === font.name) {
+            <span class="text-indigo-600 text-sm font-bold">✓</span>
+            }
+          </div>
+          }
+        </div>
         }
       </div>
     </section>
@@ -671,19 +1219,185 @@
       </div>
     </section>
 
-    <!-- CARD 12: FOOTER -->
-    <section id="card-footer" class="bg-white rounded-3xl p-6 md:p-8 shadow-xs border border-slate-200/70 space-y-4">
-      <div class="flex items-center justify-between">
-        <div>
-          <h2 class="text-xl md:text-2xl font-extrabold text-[#1a0826] tracking-tight">Footer & Page Numbers</h2>
-          <p class="text-slate-500 text-xs mt-0.5">Show standard page number footer.</p>
-        </div>
-        <input 
-          type="checkbox" 
-          [ngModel]="cvService.customization().showPageNumbers" 
-          (ngModelChange)="togglePageNumbers($event)"
-          class="w-5 h-5 accent-indigo-600 rounded cursor-pointer"
+    <!-- CARD 12: FOOTER (FlowCV Style) -->
+    <section id="card-footer" class="bg-white rounded-3xl p-6 md:p-8 shadow-xs border border-slate-200/70 space-y-5">
+      <h2 class="text-xl md:text-2xl font-extrabold text-[#1a0826] tracking-tight">Footer</h2>
+
+      <!-- Standard Checkboxes -->
+      <div class="space-y-3.5">
+        <!-- 1. Page Numbers -->
+        <label class="flex items-center gap-3 cursor-pointer group select-none">
+          <div 
+            (click)="toggleFooterPageNumbers(!cvService.customization().footerPageNumbers)"
+            class="w-5 h-5 rounded-md border flex items-center justify-center transition-all"
+            [class]="cvService.customization().footerPageNumbers ? 'bg-indigo-600 border-indigo-600 text-white shadow-xs' : 'border-slate-300 group-hover:border-slate-400 bg-white'"
+          >
+            @if (cvService.customization().footerPageNumbers) {
+            <svg class="w-3.5 h-3.5 stroke-[3]" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+            </svg>
+            }
+          </div>
+          <span class="text-sm font-semibold text-slate-700 group-hover:text-slate-900 transition-colors">Page numbers</span>
+        </label>
+
+        <!-- 2. Email -->
+        <label class="flex items-center gap-3 cursor-pointer group select-none">
+          <div 
+            (click)="toggleFooterEmail(!cvService.customization().footerEmail)"
+            class="w-5 h-5 rounded-md border flex items-center justify-center transition-all"
+            [class]="cvService.customization().footerEmail ? 'bg-indigo-600 border-indigo-600 text-white shadow-xs' : 'border-slate-300 group-hover:border-slate-400 bg-white'"
+          >
+            @if (cvService.customization().footerEmail) {
+            <svg class="w-3.5 h-3.5 stroke-[3]" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+            </svg>
+            }
+          </div>
+          <span class="text-sm font-semibold text-slate-700 group-hover:text-slate-900 transition-colors">Email</span>
+        </label>
+
+        <!-- 3. Name -->
+        <label class="flex items-center gap-3 cursor-pointer group select-none">
+          <div 
+            (click)="toggleFooterName(!cvService.customization().footerName)"
+            class="w-5 h-5 rounded-md border flex items-center justify-center transition-all"
+            [class]="cvService.customization().footerName ? 'bg-indigo-600 border-indigo-600 text-white shadow-xs' : 'border-slate-300 group-hover:border-slate-400 bg-white'"
+          >
+            @if (cvService.customization().footerName) {
+            <svg class="w-3.5 h-3.5 stroke-[3]" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+              <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+            </svg>
+            }
+          </div>
+          <span class="text-sm font-semibold text-slate-700 group-hover:text-slate-900 transition-colors">Name</span>
+        </label>
+      </div>
+
+      <!-- Advanced Settings Accordion Box -->
+      <div class="bg-slate-50/80 rounded-2xl p-4 md:p-5 border border-slate-200/60 space-y-4">
+        <!-- Header -->
+        <div 
+          (click)="toggleFooterAdvanced()"
+          class="flex items-center justify-between cursor-pointer select-none group"
         >
+          <span class="text-xs font-bold text-slate-700 group-hover:text-slate-900">Advanced Settings</span>
+          <svg 
+            class="w-4 h-4 text-slate-500 group-hover:text-slate-700 transition-transform duration-200"
+            [class.rotate-180]="footerAdvancedOpen()"
+            viewBox="0 0 24 24" 
+            fill="none" 
+            stroke="currentColor" 
+            stroke-width="2.5" 
+            stroke-linecap="round" 
+            stroke-linejoin="round"
+          >
+            <path d="m6 9 6 6 6-6"/>
+          </svg>
+        </div>
+
+        <!-- Content -->
+        @if (footerAdvancedOpen()) {
+        <div class="space-y-4 pt-1">
+          <!-- Custom Footer Toggle -->
+          <label class="flex items-center gap-3 cursor-pointer group select-none">
+            <div 
+              (click)="toggleFooterCustom(!cvService.customization().footerCustom)"
+              class="w-5 h-5 rounded-md border flex items-center justify-center transition-all"
+              [class]="cvService.customization().footerCustom ? 'bg-indigo-600 border-indigo-600 text-white shadow-xs' : 'border-slate-300 group-hover:border-slate-400 bg-white'"
+            >
+              @if (cvService.customization().footerCustom) {
+              <svg class="w-3.5 h-3.5 stroke-[3]" viewBox="0 0 24 24" fill="none" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" d="M4.5 12.75l6 6 9-13.5" />
+              </svg>
+              }
+            </div>
+            <span class="text-sm font-semibold text-slate-700 group-hover:text-slate-900 transition-colors">Custom footer</span>
+          </label>
+
+          @if (cvService.customization().footerCustom) {
+          <!-- Insert Placeholders -->
+          <div class="space-y-2 pt-1">
+            <label class="block text-xs font-bold text-slate-800 tracking-tight">Insert placeholders</label>
+            <div class="flex flex-wrap gap-2">
+              <button 
+                type="button"
+                (click)="insertFooterPlaceholder('{{name}}')"
+                class="bg-white hover:bg-slate-100 border border-slate-300 hover:border-slate-400 rounded-xl px-3 py-1.5 text-xs text-slate-800 font-medium transition-all shadow-2xs cursor-pointer active:scale-95"
+              >
+                Name <span class="text-slate-400 font-mono">{{ '{{name}}' }}</span>
+              </button>
+
+              <button 
+                type="button"
+                (click)="insertFooterPlaceholder('{{phone}}')"
+                class="bg-white hover:bg-slate-100 border border-slate-300 hover:border-slate-400 rounded-xl px-3 py-1.5 text-xs text-slate-800 font-medium transition-all shadow-2xs cursor-pointer active:scale-95"
+              >
+                Phone <span class="text-slate-400 font-mono">{{ '{{phone}}' }}</span>
+              </button>
+
+              <button 
+                type="button"
+                (click)="insertFooterPlaceholder('{{email}}')"
+                class="bg-white hover:bg-slate-100 border border-slate-300 hover:border-slate-400 rounded-xl px-3 py-1.5 text-xs text-slate-800 font-medium transition-all shadow-2xs cursor-pointer active:scale-95"
+              >
+                Email <span class="text-slate-400 font-mono">{{ '{{email}}' }}</span>
+              </button>
+
+              <button 
+                type="button"
+                (click)="insertFooterPlaceholder('{{page}} / {{pages}}')"
+                class="bg-white hover:bg-slate-100 border border-slate-300 hover:border-slate-400 rounded-xl px-3 py-1.5 text-xs text-slate-800 font-medium transition-all shadow-2xs cursor-pointer active:scale-95"
+              >
+                Pagenumbers <span class="text-slate-400 font-mono">{{ '{{page}} / {{pages}}' }}</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Column Inputs -->
+          <div class="space-y-3.5 pt-1">
+            <!-- Left Column -->
+            <div class="space-y-1.5">
+              <label class="block text-xs font-bold text-slate-800">Left column</label>
+              <input 
+                type="text"
+                [ngModel]="cvService.customization().footerLeft"
+                (ngModelChange)="setFooterLeft($event)"
+                (focus)="activeFooterColumn.set('left')"
+                placeholder="e.g. {{ '{{name}}' }}"
+                class="w-full bg-slate-100/90 border border-slate-200/70 rounded-xl px-3.5 py-2.5 text-xs md:text-sm text-slate-800 placeholder-slate-400 focus:bg-white focus:border-indigo-500 focus:outline-none transition-all"
+              >
+            </div>
+
+            <!-- Center Column -->
+            <div class="space-y-1.5">
+              <label class="block text-xs font-bold text-slate-800">Center column</label>
+              <input 
+                type="text"
+                [ngModel]="cvService.customization().footerCenter"
+                (ngModelChange)="setFooterCenter($event)"
+                (focus)="activeFooterColumn.set('center')"
+                placeholder="Optional"
+                class="w-full bg-slate-100/90 border border-slate-200/70 rounded-xl px-3.5 py-2.5 text-xs md:text-sm text-slate-800 placeholder-slate-400 focus:bg-white focus:border-indigo-500 focus:outline-none transition-all"
+              >
+            </div>
+
+            <!-- Right Column -->
+            <div class="space-y-1.5">
+              <label class="block text-xs font-bold text-slate-800">Right column</label>
+              <input 
+                type="text"
+                [ngModel]="cvService.customization().footerRight"
+                (ngModelChange)="setFooterRight($event)"
+                (focus)="activeFooterColumn.set('right')"
+                placeholder="e.g. {{ '{{page}} / {{pages}}' }}"
+                class="w-full bg-slate-100/90 border border-slate-200/70 rounded-xl px-3.5 py-2.5 text-xs md:text-sm text-slate-800 placeholder-slate-400 focus:bg-white focus:border-indigo-500 focus:outline-none transition-all"
+              >
+            </div>
+          </div>
+          }
+        </div>
+        }
       </div>
     </section>
 
