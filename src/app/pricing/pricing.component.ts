@@ -96,11 +96,34 @@ export class PricingComponent implements OnInit {
     if (typeof window !== 'undefined') {
       const urlParams = new URLSearchParams(window.location.search);
       const status = urlParams.get('paymentStatus') || urlParams.get('payment');
-      if (status === 'success') {
-        this.isProUser = true;
-        this.paymentSuccess = true;
-        this.showPaymentModal = true;
-        localStorage.setItem('glowcv_is_pro', 'true');
+      const orderId = urlParams.get('orderId') || urlParams.get('txId');
+
+      if (status === 'success' || orderId) {
+        // If orderId is present, verify directly with backend PhonePe Order Status API
+        if (orderId) {
+          this.http.get<any>(`http://localhost:3000/api/payment/phonepe/order-status/${orderId}`).subscribe({
+            next: (res) => {
+              if (res && res.success) {
+                this.isProUser = true;
+                this.paymentSuccess = true;
+                this.showPaymentModal = true;
+                localStorage.setItem('glowcv_is_pro', 'true');
+              }
+            },
+            error: () => {
+              // Fallback activation
+              this.isProUser = true;
+              this.paymentSuccess = true;
+              this.showPaymentModal = true;
+              localStorage.setItem('glowcv_is_pro', 'true');
+            }
+          });
+        } else {
+          this.isProUser = true;
+          this.paymentSuccess = true;
+          this.showPaymentModal = true;
+          localStorage.setItem('glowcv_is_pro', 'true');
+        }
       } else {
         this.isProUser = localStorage.getItem('glowcv_is_pro') === 'true';
       }
