@@ -2,6 +2,9 @@
 :host {
   display: block;
   height: 100%;
+  width: 100%;
+  position: relative;
+  overflow: hidden;
 }
 
 .no-scrollbar::-webkit-scrollbar {

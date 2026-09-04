@@ -1,17 +1,20 @@
-<div class="min-h-screen bg-[#f8f8fb] flex flex-col font-sans">
-  
+<div class="h-screen max-h-screen overflow-hidden bg-[#f8f8fb] flex flex-col font-sans">
+
   <!-- TOP NAVIGATION HEADER (FlowCV Style) -->
-  <header class="h-16 bg-white border-b border-slate-200/80 flex items-center justify-between px-4 sm:px-8 flex-shrink-0 sticky top-0 z-30 shadow-2xs">
-    
+  <header
+    class="h-16 bg-white border-b border-slate-200/80 flex items-center justify-between px-4 sm:px-8 flex-shrink-0 sticky top-0 z-30 shadow-2xs">
+
     <!-- Left: Brand Logo -->
     <div class="flex items-center gap-3">
       <a (click)="close()" class="flex items-center gap-2 cursor-pointer group select-none">
-        <div class="w-8 h-8 rounded-lg bg-gradient-to-tr from-emerald-500 to-teal-600 p-0.5 shadow-xs group-hover:scale-105 transition-transform">
+        <div
+          class="w-8 h-8 rounded-lg bg-gradient-to-tr from-emerald-500 to-teal-600 p-0.5 shadow-xs group-hover:scale-105 transition-transform">
           <div class="w-full h-full bg-white rounded-[6px] overflow-hidden flex items-center justify-center p-0.5">
             <img src="../assets/logo.png" alt="GlowCV Logo" class="w-full h-full object-contain" />
           </div>
         </div>
-        <span class="text-lg font-extrabold tracking-tight text-slate-900 group-hover:text-emerald-600 transition-colors hidden sm:inline">
+        <span
+          class="text-lg font-extrabold tracking-tight text-slate-900 group-hover:text-emerald-600 transition-colors hidden sm:inline">
           GlowCV
         </span>
       </a>
@@ -19,42 +22,36 @@
 
     <!-- Center: Main Navigation Mode Pills -->
     <div class="flex items-center gap-1 bg-slate-100/80 p-1 rounded-2xl border border-slate-200/60">
-      
+
       <!-- Overview -->
-      <button 
-        (click)="setActiveTab('overview')"
-        class="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer text-slate-600 hover:text-slate-900 hover:bg-white/60"
-      >
+      <button (click)="setActiveTab('overview')"
+        class="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer text-slate-600 hover:text-slate-900 hover:bg-white/60">
         <span class="material-icons text-sm">grid_view</span>
         <span class="hidden md:inline">Overview</span>
       </button>
 
       <!-- Content -->
-      <button 
-        (click)="setActiveTab('content')"
+      <button (click)="setActiveTab('content')"
         [class]="activeTab() === 'content' ? 'bg-white text-slate-900 shadow-xs font-extrabold' : 'text-slate-600 hover:text-slate-900 hover:bg-white/60 font-bold'"
-        class="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs transition-all cursor-pointer"
-      >
-        <span class="material-icons text-sm" [class]="activeTab() === 'content' ? 'text-indigo-600' : 'text-slate-500'">description</span>
+        class="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs transition-all cursor-pointer">
+        <span class="material-icons text-sm"
+          [class]="activeTab() === 'content' ? 'text-indigo-600' : 'text-slate-500'">description</span>
         <span>Content</span>
       </button>
 
-      <!-- Customize (Active Pink/Purple pill) -->
-      <button 
-        (click)="setActiveTab('customize')"
+      <!-- Customize -->
+      <button (click)="setActiveTab('customize')"
         [class]="activeTab() === 'customize' ? 'bg-[#fdf2f8] text-[#be185d] border border-[#fbcfe8] shadow-xs font-extrabold' : 'text-slate-600 hover:text-slate-900 hover:bg-white/60 font-bold'"
-        class="flex items-center gap-1.5 px-4 py-1.5 rounded-xl text-xs transition-all cursor-pointer"
-      >
-        <span class="material-icons text-sm" [class]="activeTab() === 'customize' ? 'text-[#db2777]' : 'text-slate-500'">auto_fix_high</span>
+        class="flex items-center gap-1.5 px-4 py-1.5 rounded-xl text-xs transition-all cursor-pointer">
+        <span class="material-icons text-sm"
+          [class]="activeTab() === 'customize' ? 'text-[#db2777]' : 'text-slate-500'">auto_fix_high</span>
         <span>Customize</span>
       </button>
 
       <!-- AI Tools -->
-      <button 
-        (click)="setActiveTab('ai-tools')"
+      <button (click)="setActiveTab('ai-tools')"
         [class]="activeTab() === 'ai-tools' ? 'bg-white text-slate-900 shadow-xs font-extrabold' : 'text-slate-600 hover:text-slate-900 hover:bg-white/60 font-bold'"
-        class="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs transition-all cursor-pointer"
-      >
+        class="flex items-center gap-1.5 px-3.5 py-1.5 rounded-xl text-xs transition-all cursor-pointer">
         <span class="material-icons text-sm text-emerald-500">auto_awesome</span>
         <span>AI Tools</span>
       </button>
@@ -63,12 +60,11 @@
 
     <!-- Right: Actions -->
     <div class="flex items-center gap-3">
-      
+
       <!-- Resume Version Selector -->
       <div class="relative hidden sm:block">
-        <select 
-          class="bg-slate-50 hover:bg-slate-100 border border-slate-200/90 rounded-xl px-3 py-1.5 text-xs font-bold text-slate-700 focus:outline-none cursor-pointer"
-        >
+        <select
+          class="bg-slate-50 hover:bg-slate-100 border border-slate-200/90 rounded-xl px-3 py-1.5 text-xs font-bold text-slate-700 focus:outline-none cursor-pointer">
           <option>Resume 1</option>
           <option>Tech Version</option>
           <option>Executive Version</option>
@@ -76,42 +72,38 @@
       </div>
 
       <!-- Download Button -->
-      <button 
-        (click)="downloadPDF()" 
-        [disabled]="isDownloading"
-        class="bg-[#1c0a2a] hover:bg-[#2b0b3c] text-white px-4 py-2 rounded-xl text-xs font-bold transition-all shadow-md shadow-slate-900/10 hover:shadow-lg flex items-center gap-1.5 disabled:opacity-60 cursor-pointer"
-      >
+      <button (click)="downloadPDF()" [disabled]="isDownloading"
+        class="bg-[#1c0a2a] hover:bg-[#2b0b3c] text-white px-4 py-2 rounded-xl text-xs font-bold transition-all shadow-md shadow-slate-900/10 hover:shadow-lg flex items-center gap-1.5 disabled:opacity-60 cursor-pointer">
         @if (isDownloading) {
         <span class="material-icons text-xs animate-spin">refresh</span>
         <span>Exporting...</span>
         } @else {
-        <span>Download</span>
         <span class="material-icons text-xs">download</span>
+        <span>Download PDF</span>
         }
       </button>
 
       <!-- More Options Button -->
       <div class="relative">
-        <button 
-          (click)="showOptionsMenu.set(!showOptionsMenu())"
-          class="w-8 h-8 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 flex items-center justify-center text-slate-600 transition-colors cursor-pointer"
-        >
+        <button (click)="showOptionsMenu.set(!showOptionsMenu())"
+          class="w-8 h-8 rounded-xl border border-slate-200 bg-white hover:bg-slate-50 flex items-center justify-center text-slate-600 transition-colors cursor-pointer">
           <span class="material-icons text-base">more_vert</span>
         </button>
 
-        <!-- Dropdown menu -->
-        <div 
-          *ngIf="showOptionsMenu()"
-          class="absolute right-0 mt-2 w-48 bg-white rounded-2xl shadow-xl border border-slate-100 py-1.5 z-50 animate-modal-enter text-xs font-semibold text-slate-700"
-        >
-          <button (click)="setActiveTab('customize'); showOptionsMenu.set(false)" class="w-full text-left px-4 py-2 hover:bg-slate-50 flex items-center gap-2">
+        <!-- Dropdown Menu -->
+        <div *ngIf="showOptionsMenu()"
+          class="absolute right-0 mt-2 w-48 bg-white rounded-2xl shadow-xl border border-slate-100 py-1.5 z-50 animate-modal-enter text-xs font-semibold text-slate-700">
+          <button (click)="setActiveTab('customize'); showOptionsMenu.set(false)"
+            class="w-full text-left px-4 py-2 hover:bg-slate-50 flex items-center gap-2">
             <span class="material-icons text-sm text-slate-400">tune</span> Customize Layout
           </button>
-          <button (click)="cvService.resetCustomization(); showOptionsMenu.set(false)" class="w-full text-left px-4 py-2 hover:bg-slate-50 flex items-center gap-2 text-amber-600">
+          <button (click)="cvService.resetCustomization(); showOptionsMenu.set(false)"
+            class="w-full text-left px-4 py-2 hover:bg-slate-50 flex items-center gap-2 text-amber-600">
             <span class="material-icons text-sm">restart_alt</span> Reset Styles
           </button>
           <div class="h-px bg-slate-100 my-1"></div>
-          <button (click)="close(); showOptionsMenu.set(false)" class="w-full text-left px-4 py-2 hover:bg-red-50 text-red-600 flex items-center gap-2">
+          <button (click)="close(); showOptionsMenu.set(false)"
+            class="w-full text-left px-4 py-2 hover:bg-red-50 text-red-600 flex items-center gap-2">
             <span class="material-icons text-sm">close</span> Exit Builder
           </button>
         </div>
@@ -122,48 +114,48 @@
   </header>
 
   <!-- BODY SPLIT SCREEN -->
-  <div class="flex-1 flex overflow-hidden h-[calc(100vh-64px)]">
-    
+  <div class="flex-1 flex overflow-hidden min-h-0 h-[calc(100vh-64px)]">
+
     <!-- LEFT PANE (Editor / Customizer) -->
-    <div class="w-full md:w-[50%] lg:w-[46%] border-r border-slate-200 bg-white z-10 shadow-sm overflow-hidden flex flex-col">
-      
+    <div
+      class="w-full md:w-[50%] lg:w-[46%] border-r border-slate-200 bg-white z-10 shadow-sm overflow-hidden flex flex-col h-full min-h-0">
+
       <!-- Content Tab Form -->
       @if (activeTab() === 'content') {
-      <div class="flex-1 overflow-y-auto no-scrollbar">
+      <div class="flex-1 overflow-y-auto no-scrollbar min-h-0 h-full">
         <app-cv-form></app-cv-form>
       </div>
       }
 
       <!-- Customize Tab Panel -->
       @if (activeTab() === 'customize') {
-      <div class="flex-1 overflow-hidden h-full">
-        <app-cv-customize class="h-full block"></app-cv-customize>
+      <div class="flex-1 overflow-hidden h-full min-h-0 relative w-full flex flex-col">
+        <app-cv-customize class="h-full w-full block min-h-0 flex-1"></app-cv-customize>
       </div>
       }
 
       <!-- AI Tools Tab Panel -->
       @if (activeTab() === 'ai-tools') {
       <div class="flex-1 overflow-y-auto p-8 space-y-6 no-scrollbar">
-        <div class="bg-gradient-to-br from-emerald-500/10 via-indigo-500/10 to-teal-500/10 rounded-3xl p-8 border border-emerald-500/20 text-center space-y-4">
-          <div class="w-14 h-14 bg-emerald-500 text-white rounded-2xl flex items-center justify-center mx-auto shadow-md shadow-emerald-500/20">
+        <div
+          class="bg-gradient-to-br from-emerald-500/10 via-indigo-500/10 to-teal-500/10 rounded-3xl p-8 border border-emerald-500/20 text-center space-y-4">
+          <div
+            class="w-14 h-14 bg-emerald-500 text-white rounded-2xl flex items-center justify-center mx-auto shadow-md shadow-emerald-500/20">
             <span class="material-icons text-2xl">auto_awesome</span>
           </div>
           <h2 class="text-2xl font-black text-slate-900">AI Career Assistant</h2>
           <p class="text-slate-600 text-sm max-w-md mx-auto">
-            Enhance your bullet points, generate ATS-friendly summaries, and test keyword match against any job description.
+            Enhance your bullet points, generate ATS-friendly summaries, and test keyword match against any job
+            description.
           </p>
           <div class="pt-2 flex flex-col sm:flex-row gap-3 justify-center">
-            <button 
-              (click)="cvService.improveSummary(); setActiveTab('content')"
-              class="px-6 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-xl shadow-md transition-all cursor-pointer flex items-center justify-center gap-2"
-            >
+            <button (click)="cvService.improveSummary(); setActiveTab('content')"
+              class="px-6 py-3 bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs rounded-xl shadow-md transition-all cursor-pointer flex items-center justify-center gap-2">
               <span class="material-icons text-sm">auto_fix_high</span>
               <span>AI Improve Summary</span>
             </button>
-            <button 
-              (click)="setActiveTab('customize')"
-              class="px-6 py-3 bg-white hover:bg-slate-50 text-slate-700 border border-slate-200 font-bold text-xs rounded-xl shadow-xs transition-all cursor-pointer"
-            >
+            <button (click)="setActiveTab('customize')"
+              class="px-6 py-3 bg-white hover:bg-slate-50 text-slate-700 border border-slate-200 font-bold text-xs rounded-xl shadow-xs transition-all cursor-pointer">
               Tune Layout & Colors
             </button>
           </div>
@@ -177,7 +169,7 @@
     <div class="hidden md:flex flex-1 bg-[#eeeff4] p-6 lg:p-10 overflow-y-auto items-start justify-center no-scrollbar">
       <div class="w-full max-w-[800px] flex flex-col items-center gap-4 pb-24">
         <!-- Live Preview Header -->
-        <div class="w-full flex items-center justify-between px-2 text-xs font-semibold text-slate-500 select-none">
+        <!-- <div class="w-full flex items-center justify-between px-2 text-xs font-semibold text-slate-500 select-none">
           <span class="flex items-center gap-1.5 bg-white/90 backdrop-blur px-3 py-1 rounded-full shadow-2xs border border-slate-200/80">
             <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
             <span>Live Resume Canvas</span>
@@ -185,10 +177,11 @@
           <span class="bg-white/90 backdrop-blur px-3 py-1 rounded-full shadow-2xs border border-slate-200/80 font-mono">
             {{ cvService.customization().pageFormat || 'A4' }} Format
           </span>
-        </div>
+        </div> -->
 
         <!-- A4 Multi-Page Paper Canvas -->
-        <div class="w-full max-w-[800px] shadow-2xl rounded-sm transition-all duration-300 hover:shadow-3xl bg-white border border-slate-300/60 relative flex flex-col min-h-[850px] overflow-visible">
+        <div
+          class="w-full max-w-[800px] shadow-2xl rounded-sm transition-all duration-300 hover:shadow-3xl bg-white border border-slate-300/60 relative flex flex-col min-h-[850px] overflow-visible">
           <app-cv-preview class="w-full block"></app-cv-preview>
         </div>
       </div>
