@@ -1,94 +1,151 @@
-<div class="min-h-screen bg-[#f8f9fc] flex flex-col items-center justify-center relative font-sans">
-  <!-- Logo -->
-  <div class="absolute top-6 left-6 flex items-center gap-2">
-    <!-- GlowCV Logo approximation -->
-    <svg width="34" height="20" viewBox="0 0 34 20" fill="none" xmlns="http://www.w3.org/2000/svg">
-      <path
-        d="M8.5 17C3.80558 17 0 13.1944 0 8.5C0 3.80558 3.80558 0 8.5 0C11.5312 0 14.1875 1.58334 15.6562 3.96875C16.3438 5.09375 17.6562 5.09375 18.3438 3.96875C19.8125 1.58334 22.4688 0 25.5 0C30.1944 0 34 3.80558 34 8.5C34 13.1944 30.1944 17 25.5 17C22.4688 17 19.8125 15.4167 18.3438 13.0312C17.6562 11.9062 16.3438 11.9062 15.6562 13.0312C14.1875 15.4167 11.5312 17 8.5 17ZM8.5 2C4.91015 2 2 4.91015 2 8.5C2 12.0899 4.91015 15 8.5 15C10.7937 15 12.8051 13.8038 13.9452 11.9407C15.2239 9.85191 18.7761 9.85191 20.0548 11.9407C21.1949 13.8038 23.2063 15 25.5 15C29.0899 15 32 12.0899 32 8.5C32 4.91015 29.0899 2 25.5 2C23.2063 2 21.1949 3.1962 20.0548 5.05927C18.7761 7.14809 15.2239 7.14809 13.9452 5.05927C12.8051 3.1962 10.7937 2 8.5 2Z"
-        fill="#32c696" />
-    </svg>
-    <span class="text-[22px] font-medium text-[#32c696] tracking-tight">GlowCV</span>
+<div class="min-h-screen bg-[#fafafc] flex flex-col justify-between py-8 sm:py-12 px-4 sm:px-6 relative font-sans">
+  
+  <!-- Top Navigation: Back to Home & Brand Logo -->
+  <div class="max-w-6xl w-full mx-auto flex items-center justify-between">
+    <a routerLink="/" class="inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-[#3b82f6] hover:text-blue-700 transition-colors">
+      <span class="text-sm font-bold">&lsaquo;</span>
+      <span>Back to Home</span>
+    </a>
+
+    <a routerLink="/" class="flex items-center gap-2 group select-none">
+      <div class="w-8 h-8 rounded-xl bg-gradient-to-tr from-emerald-500 to-teal-600 p-0.5 shadow-2xs">
+        <div class="w-full h-full bg-white rounded-[10px] overflow-hidden flex items-center justify-center p-1">
+          <img src="../assets/logo.png" alt="GlowCV Logo" class="w-full h-full object-contain" />
+        </div>
+      </div>
+      <span class="text-lg font-bold tracking-tight text-slate-900 group-hover:text-emerald-600 transition-colors">
+        GlowCV
+      </span>
+    </a>
   </div>
 
-  <!-- Main Card -->
-  <div
-    class="bg-white rounded-xl shadow-[0_4px_30px_rgb(0,0,0,0.03)] w-full max-w-[420px] p-10 pt-12 border border-gray-50/50">
-    <div class="text-center mb-7">
-      <h1 class="text-[26px] font-bold text-gray-900 mb-1">Welcome back</h1>
-      <p class="text-[15px] text-gray-500">
-        Don't have an account? <a routerLink="/signup" class="text-[#7c8ce0] hover:underline font-medium">Sign up</a>
+  <!-- Main Auth Container -->
+  <div class="my-auto py-8">
+    
+    <!-- Centered Header -->
+    <div class="text-center mb-8 max-w-md mx-auto">
+      <h1 class="auth-serif-title text-3xl sm:text-4xl font-normal text-slate-900 tracking-tight mb-2">
+        Welcome Back
+      </h1>
+      <p class="text-xs sm:text-sm text-slate-500 font-normal">
+        Log in to manage your resumes, cover letters, and job applications.
       </p>
     </div>
 
-    <!-- Social Logins -->
-    <div class="space-y-3.5 mb-7">
-      <button
-        class="w-full flex items-center justify-center gap-3 py-2.5 px-4 border border-gray-200 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors">
-        <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google" class="w-5 h-5">
-        Continue with Google
-      </button>
-      <button
-        class="w-full flex items-center justify-center gap-3 py-2.5 px-4 border border-gray-200 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors">
-        <img src="https://www.svgrepo.com/show/475647/facebook-color.svg" alt="Facebook" class="w-5 h-5">
-        Continue with Facebook
-      </button>
-      <button
-        class="w-full flex items-center justify-center gap-3 py-2.5 px-4 border border-gray-200 rounded-lg text-sm font-medium text-gray-700 hover:bg-gray-50 transition-colors">
-        <img src="https://www.svgrepo.com/show/475661/linkedin-color.svg" alt="LinkedIn" class="w-5 h-5">
-        Continue with LinkedIn
-      </button>
-    </div>
-
-    <!-- Divider -->
-    <div class="relative flex items-center mb-7">
-      <div class="flex-grow border-t border-gray-100"></div>
-      <span class="flex-shrink-0 mx-4 text-[13px] text-gray-400">or continue with</span>
-      <div class="flex-grow border-t border-gray-100"></div>
-    </div>
-
-    <!-- Form -->
-    <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="space-y-4">
-      <div *ngIf="errorMessage" class="p-3 text-sm text-red-600 bg-red-50 rounded-lg border border-red-100">
-        {{ errorMessage }}
-      </div>
-
-      <div>
-        <input type="email" formControlName="email" placeholder="Your email address"
-          class="w-full px-4 py-[13px] rounded-lg border border-gray-200 focus:outline-none focus:border-[#32c696] focus:ring-1 focus:ring-[#32c696] text-[15px] text-gray-800 placeholder-gray-400 transition-colors bg-white"
-          [class.border-red-500]="loginForm.get('email')?.invalid && loginForm.get('email')?.touched">
-      </div>
-
-      <div class="relative">
-        <input [type]="showPassword ? 'text' : 'password'" formControlName="password" placeholder="Enter your password"
-          class="w-full px-4 py-[13px] rounded-lg border border-gray-200 focus:outline-none focus:border-[#32c696] focus:ring-1 focus:ring-[#32c696] text-[15px] text-gray-800 placeholder-gray-400 transition-colors bg-white pr-12"
-          [class.border-red-500]="loginForm.get('password')?.invalid && loginForm.get('password')?.touched">
-        <button type="button" (click)="togglePassword()"
-          class="absolute right-4 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600 focus:outline-none">
-          <svg *ngIf="!showPassword" class="w-[18px] h-[18px]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z">
-            </path>
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-              d="M2.458 12C3.732 7.943 7.523 5 12 5c4.478 0 8.268 2.943 9.542 7-1.274 4.057-5.064 7-9.542 7-4.477 0-8.268-2.943-9.542-7z">
-            </path>
-          </svg>
-          <svg *ngIf="showPassword" class="w-[18px] h-[18px]" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-              d="M13.875 18.825A10.05 10.05 0 0112 19c-4.478 0-8.268-2.943-9.543-7a9.97 9.97 0 011.563-3.029m5.858.908a3 3 0 114.243 4.243M9.878 9.878l4.242 4.242M9.88 9.88l-3.29-3.29m7.532 7.532l3.29 3.29M3 3l3.59 3.59m0 0A9.953 9.953 0 0112 5c4.478 0 8.268 2.943 9.543 7a10.025 10.025 0 01-4.132 5.411m0 0L21 21">
-            </path>
-          </svg>
+    <!-- Main Card -->
+    <div class="bg-white rounded-3xl shadow-sm border border-slate-100 w-full max-w-[440px] mx-auto p-6 sm:p-9 animate-modal-enter">
+      
+      <!-- Social Logins -->
+      <div class="space-y-3 mb-6">
+        <button
+          type="button"
+          class="w-full flex items-center justify-center gap-3 py-2.5 px-4 border border-slate-200/90 rounded-xl text-xs sm:text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:border-slate-300 transition-all shadow-2xs cursor-pointer">
+          <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google" class="w-4 h-4">
+          <span>Continue with Google</span>
+        </button>
+        <button
+          type="button"
+          class="w-full flex items-center justify-center gap-3 py-2.5 px-4 border border-slate-200/90 rounded-xl text-xs sm:text-sm font-semibold text-slate-700 hover:bg-slate-50 hover:border-slate-300 transition-all shadow-2xs cursor-pointer">
+          <img src="https://www.svgrepo.com/show/475661/linkedin-color.svg" alt="LinkedIn" class="w-4 h-4">
+          <span>Continue with LinkedIn</span>
         </button>
       </div>
 
-      <div class="flex justify-end pt-1">
-        <a href="#" class="text-[13px] text-[#7c8ce0] hover:underline">Forgot password?</a>
+      <!-- Divider -->
+      <div class="relative flex items-center mb-6">
+        <div class="flex-grow border-t border-slate-100"></div>
+        <span class="flex-shrink-0 mx-3 text-[11px] font-medium text-slate-400 uppercase tracking-wider">or with email</span>
+        <div class="flex-grow border-t border-slate-100"></div>
       </div>
 
-      <div class="pt-3">
-        <button type="submit" [disabled]="loginForm.invalid || loading"
-          class="w-full py-[13px] px-4 bg-[#32c696] hover:bg-[#2ca67d] disabled:opacity-50 disabled:cursor-not-allowed text-white rounded-lg text-[15px] font-semibold transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#32c696]">
-          {{ loading ? 'Logging in...' : 'Log in' }}
-        </button>
+      <!-- Login Form -->
+      <form [formGroup]="loginForm" (ngSubmit)="onSubmit()" class="space-y-4">
+        
+        <!-- Error Alert -->
+        @if (errorMessage) {
+          <div class="p-3 text-xs text-red-600 bg-red-50 rounded-xl border border-red-200 flex items-center gap-2">
+            <span class="material-icons text-sm text-red-500">error_outline</span>
+            <span>{{ errorMessage }}</span>
+          </div>
+        }
+
+        <!-- Email Field -->
+        <div>
+          <label class="block text-xs font-semibold text-slate-800 mb-1.5">
+            Email Address
+          </label>
+          <input 
+            type="email" 
+            formControlName="email" 
+            placeholder="name@example.com"
+            class="input-field w-full px-4 py-2.5 sm:py-3 rounded-xl border border-slate-200 text-sm text-slate-900 placeholder:text-slate-400 bg-white shadow-2xs"
+            [class.border-red-500]="loginForm.get('email')?.invalid && loginForm.get('email')?.touched">
+          @if (loginForm.get('email')?.invalid && loginForm.get('email')?.touched) {
+            <p class="mt-1 text-[11px] text-red-500">Please enter a valid email address.</p>
+          }
+        </div>
+
+        <!-- Password Field -->
+        <div>
+          <div class="flex items-center justify-between mb-1.5">
+            <label class="block text-xs font-semibold text-slate-800">
+              Password
+            </label>
+            <a routerLink="/forgot-password" class="text-xs text-blue-600 hover:text-blue-700 font-medium">
+              Forgot password?
+            </a>
+          </div>
+          <div class="relative">
+            <input 
+              [type]="showPassword ? 'text' : 'password'" 
+              formControlName="password" 
+              placeholder="Enter your password"
+              class="input-field w-full px-4 py-2.5 sm:py-3 rounded-xl border border-slate-200 text-sm text-slate-900 placeholder:text-slate-400 bg-white pr-11 shadow-2xs"
+              [class.border-red-500]="loginForm.get('password')?.invalid && loginForm.get('password')?.touched">
+            <button 
+              type="button" 
+              (click)="togglePassword()"
+              class="absolute right-3.5 top-1/2 -translate-y-1/2 text-slate-400 hover:text-slate-600 cursor-pointer p-1">
+              <span class="material-icons text-base">
+                {{ showPassword ? 'visibility_off' : 'visibility' }}
+              </span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Submit Button -->
+        <div class="pt-2">
+          <button 
+            type="submit" 
+            [disabled]="loginForm.invalid || loading"
+            class="w-full py-3 sm:py-3.5 px-4 bg-[#1b4df0] hover:bg-[#1541d4] active:bg-[#0f34b3] disabled:opacity-50 disabled:cursor-not-allowed text-white rounded-xl text-sm font-semibold transition-all shadow-sm hover:shadow-md cursor-pointer flex items-center justify-center gap-2">
+            @if (loading) {
+              <span class="w-4 h-4 border-2 border-white border-t-transparent rounded-full animate-spin"></span>
+              <span>Logging in...</span>
+            } @else {
+              <span>Log In</span>
+            }
+          </button>
+        </div>
+
+      </form>
+
+      <!-- Card Footer Switcher -->
+      <div class="mt-6 pt-5 border-t border-slate-100 text-center">
+        <p class="text-xs sm:text-sm text-slate-500">
+          Don't have an account? 
+          <a routerLink="/signup" class="text-blue-600 hover:text-blue-700 font-semibold hover:underline">
+            Sign up for free
+          </a>
+        </p>
       </div>
-    </form>
+
+    </div>
   </div>
+
+  <!-- Bottom Footer -->
+  <div class="text-center text-xs text-slate-400">
+    &copy; 2026 GlowCV. All rights reserved.
+  </div>
+
 </div>

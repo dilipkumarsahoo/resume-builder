@@ -1,89 +1,339 @@
-<section class="py-24 bg-white overflow-hidden" #section>
-  <div class="max-w-7xl mx-auto px-6">
-    <div class="text-center mb-16">
-      <h2 class="text-3xl md:text-5xl font-bold tracking-tight text-text-main mb-4">Easiest and most feature-packed <br/> CV builder available</h2>
+<section class="py-20 md:py-28 bg-white overflow-hidden" #section>
+  <div class="max-w-6xl mx-auto px-4 sm:px-6">
+    
+    <!-- Section Header (Centered) -->
+    <div class="text-center max-w-3xl mx-auto mb-14 md:mb-20">
+      <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold tracking-tight text-slate-900 mb-3 leading-tight">
+        Create a job-worthy resume<br class="hidden sm:inline" /> quickly and easily.
+      </h2>
+      <p class="text-sm sm:text-base text-slate-500 font-normal">
+        Build a polished, professional CV that lands interviews with smart AI tools and intuitive drag-and-drop editing.
+      </p>
     </div>
 
-    <div class="grid lg:grid-cols-2 gap-16 items-center">
-      <!-- Left: UI Preview -->
-      <div class="relative bg-bg-light rounded-3xl p-8 md:p-12 border border-gray-100 shadow-inner opacity-0 translate-x-[-40px]" #previewBox>
-        <div class="bg-white rounded-xl shadow-lg border border-gray-200 overflow-hidden aspect-[4/3] flex flex-col">
-          <!-- Fake Browser Header -->
-          <div class="h-10 border-b border-gray-100 flex items-center px-4 gap-2 bg-gray-50/50">
-            <div class="w-3 h-3 rounded-full bg-red-400"></div>
-            <div class="w-3 h-3 rounded-full bg-yellow-400"></div>
-            <div class="w-3 h-3 rounded-full bg-green-400"></div>
-          </div>
-          <!-- Fake UI Body -->
-          <div class="flex-1 p-6 flex gap-6">
-            <!-- Sidebar -->
-            <div class="w-1/3 flex flex-col gap-3">
-              <div class="h-8 bg-gray-100 rounded animate-pulse"></div>
-              <div class="h-24 bg-gray-100 rounded animate-pulse transition-colors" [ngClass]="{'bg-accent/20': activeFeature() === 0}"></div>
-              <div class="h-24 bg-gray-100 rounded animate-pulse transition-colors" [ngClass]="{'bg-accent/20': activeFeature() === 1}"></div>
-              <div class="h-24 bg-gray-100 rounded animate-pulse transition-colors" [ngClass]="{'bg-accent/20': activeFeature() === 2}"></div>
-            </div>
-            <!-- Main Area -->
-            <div class="flex-1 bg-gray-50 rounded border border-gray-100 p-4 flex flex-col gap-4">
-               <div class="h-32 bg-white rounded shadow-sm border border-gray-100 p-4 flex flex-col gap-2">
-                  <div class="h-4 w-1/2 bg-gray-200 rounded"></div>
-                  <div class="h-3 w-full bg-gray-100 rounded"></div>
-                  <div class="h-3 w-3/4 bg-gray-100 rounded"></div>
-               </div>
-               <div class="h-32 bg-white rounded shadow-sm border border-gray-100 p-4 flex flex-col gap-2 relative overflow-hidden">
-                  <div class="h-4 w-1/3 bg-gray-200 rounded"></div>
-                  <div class="h-3 w-full bg-gray-100 rounded"></div>
-                  <div class="h-3 w-5/6 bg-gray-100 rounded"></div>
-                  
-                  <!-- Highlight overlay based on active feature -->
-                  @if (activeFeature() === 0) {
-                    <div class="absolute inset-0 bg-accent/10 border-2 border-accent rounded flex items-center justify-center">
-                      <span class="bg-accent text-white text-xs px-2 py-1 rounded-full font-medium">Pre-written</span>
-                    </div>
-                  }
-                  @if (activeFeature() === 1) {
-                    <div class="absolute inset-0 bg-accent-secondary/10 border-2 border-accent-secondary rounded flex items-center justify-center">
-                      <span class="bg-accent-secondary text-white text-xs px-2 py-1 rounded-full font-medium">ATS Ready</span>
-                    </div>
-                  }
-               </div>
-            </div>
-          </div>
-        </div>
-      </div>
+    <!-- 2 Column Features Grid -->
+    <div class="grid lg:grid-cols-12 gap-10 lg:gap-14 items-center">
+      
+      <!-- Left Column: Interactive Feature Steps & CTA -->
+      <div class="lg:col-span-5 flex flex-col gap-6" #leftCol>
+        
+        <!-- Steps List -->
+        <div class="space-y-4">
+          @for (feature of features; track $index) {
+            <div 
+              (click)="selectFeature($index)"
+              class="feature-step-item cursor-pointer group pb-3"
+              [ngClass]="activeFeature() === $index ? 'border-b-2 border-blue-600' : 'border-b border-slate-100 hover:border-slate-300'">
+              
+              <!-- Step Number Badge -->
+              <span 
+                class="inline-block text-[11px] font-bold tracking-wider mb-1 uppercase transition-colors"
+                [ngClass]="activeFeature() === $index ? 'text-blue-600' : 'text-slate-400 group-hover:text-slate-600'">
+                {{ feature.num }}
+              </span>
 
-      <!-- Right: Features List -->
-      <div class="flex flex-col gap-8" #featuresList>
-        @for (feature of features; track $index) {
-          <div class="flex gap-6 cursor-pointer group feature-item opacity-0 translate-x-[40px]" 
-               (mouseenter)="activeFeature.set($index)"
-               (click)="activeFeature.set($index)"
-               tabindex="0"
-               (keydown.enter)="activeFeature.set($index)"
-               (keydown.space)="activeFeature.set($index)">
-            <div class="flex-shrink-0 w-12 h-12 rounded-full flex items-center justify-center text-lg font-bold transition-colors duration-300"
-                 [ngClass]="activeFeature() === $index ? 'bg-accent text-white shadow-lg shadow-accent/30' : 'bg-gray-100 text-gray-400 group-hover:bg-gray-200'">
-              {{ $index + 1 }}
-            </div>
-            <div>
-              <h3 class="text-xl font-semibold mb-2 transition-colors duration-300"
-                  [ngClass]="activeFeature() === $index ? 'text-text-main' : 'text-gray-500 group-hover:text-gray-800'">
+              <!-- Step Title -->
+              <h3 
+                class="text-lg sm:text-xl font-bold tracking-tight transition-colors"
+                [ngClass]="activeFeature() === $index ? 'text-slate-900' : 'text-slate-800 group-hover:text-blue-600'">
                 {{ feature.title }}
               </h3>
-              <p class="text-gray-500 leading-relaxed transition-all duration-300 overflow-hidden"
-                 [ngStyle]="{'max-height': activeFeature() === $index ? '100px' : '0px', 'opacity': activeFeature() === $index ? '1' : '0'}">
-                {{ feature.desc }}
-              </p>
+
+              <!-- Description (Shown on Active) -->
+              @if (activeFeature() === $index) {
+                <p class="text-xs sm:text-sm text-slate-500 leading-relaxed mt-2 animate-modal-enter font-normal max-w-md">
+                  {{ feature.desc }}
+                </p>
+              }
             </div>
-          </div>
-        }
-        
-        <div class="pt-6 feature-item opacity-0 translate-x-[40px]">
-          <button (click)="cvService.openModal()" class="bg-accent text-white px-8 py-4 rounded-full text-lg font-medium hover:bg-emerald-500 transition-all shadow-lg shadow-accent/30 hover:shadow-xl hover:-translate-y-1">
-            Let's get started
+          }
+        </div>
+
+        <!-- CTA Button -->
+        <div class="pt-2">
+          <button 
+            (click)="cvService.openOnboarding()"
+            class="bg-[#1b4df0] hover:bg-[#1541d4] active:bg-[#0f34b3] text-white px-6 sm:px-7 py-3 sm:py-3.5 rounded-xl font-medium text-sm sm:text-base shadow-sm hover:shadow-md transition-all duration-200 flex items-center justify-center gap-2 cursor-pointer transform hover:-translate-y-0.5">
+            <span class="text-base font-bold">+</span>
+            <span>Start Creating</span>
           </button>
         </div>
+
       </div>
+
+      <!-- Right Column: Solid Purple-Blue Dynamic Mockup Box -->
+      <div class="lg:col-span-7" #rightCol>
+        <div class="bg-[#5964f6] blue-preview-card rounded-3xl p-5 sm:p-8 md:p-10 min-h-[440px] flex flex-col justify-center text-slate-900 transition-all duration-300">
+          
+          <!-- View 1: Easy Edit Online (Active = 0) -->
+          @if (activeFeature() === 0) {
+            <div class="flex flex-col gap-5 animate-modal-enter">
+              <!-- Card 1: Education -->
+              <div class="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-white/80 transition-all hover:shadow-md">
+                <div class="flex items-center gap-2 mb-3 select-none">
+                  <span class="text-slate-400 text-sm font-bold tracking-widest cursor-grab">⠿</span>
+                  <h4 class="text-sm sm:text-base font-bold text-slate-900">Education</h4>
+                </div>
+
+                <div class="border border-slate-200/90 rounded-xl p-3 sm:p-3.5 flex items-center justify-between bg-white hover:border-blue-400 transition-colors cursor-pointer group mb-3 shadow-2xs">
+                  <div class="flex items-center gap-2.5">
+                    <span class="text-slate-300 text-xs font-bold tracking-widest cursor-grab group-hover:text-blue-500 transition-colors">⠿</span>
+                    <div>
+                      <p class="text-xs sm:text-sm font-bold text-slate-900 leading-tight">Masters of Arts from NYU</p>
+                      <p class="text-[11px] text-slate-400 leading-tight mt-0.5">03/2016 - 09/2020</p>
+                    </div>
+                  </div>
+                  <svg class="w-4 h-4 text-slate-400 group-hover:text-slate-700 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                  </svg>
+                </div>
+
+                <button (click)="cvService.openOnboarding()" class="inline-flex items-center gap-1.5 text-xs font-semibold text-blue-600 hover:text-blue-700 cursor-pointer pt-1 transition-colors">
+                  <span class="w-4 h-4 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center text-[11px] font-bold">+</span>
+                  <span>Add more education</span>
+                </button>
+              </div>
+
+              <!-- Card 2: Work Experience -->
+              <div class="bg-white rounded-2xl p-4 sm:p-5 shadow-sm border border-white/80 transition-all hover:shadow-md">
+                <div class="flex items-center gap-2 mb-3 select-none">
+                  <span class="text-slate-400 text-sm font-bold tracking-widest cursor-grab">⠿</span>
+                  <h4 class="text-sm sm:text-base font-bold text-slate-900">Work Experience</h4>
+                </div>
+
+                <div class="border border-slate-200/90 rounded-xl p-3 sm:p-3.5 flex items-center justify-between bg-white hover:border-blue-400 transition-colors cursor-pointer group mb-2.5 shadow-2xs">
+                  <div class="flex items-center gap-2.5">
+                    <span class="text-slate-300 text-xs font-bold tracking-widest cursor-grab group-hover:text-blue-500 transition-colors">⠿</span>
+                    <div>
+                      <p class="text-xs sm:text-sm font-bold text-slate-900 leading-tight">Sales Lead at Adobe</p>
+                      <p class="text-[11px] text-slate-400 leading-tight mt-0.5">04/2017 - Present</p>
+                    </div>
+                  </div>
+                  <svg class="w-4 h-4 text-slate-400 group-hover:text-slate-700 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                  </svg>
+                </div>
+
+                <div class="border border-slate-200/90 rounded-xl p-3 sm:p-3.5 flex items-center justify-between bg-white hover:border-blue-400 transition-colors cursor-pointer group mb-3 shadow-2xs">
+                  <div class="flex items-center gap-2.5">
+                    <span class="text-slate-300 text-xs font-bold tracking-widest cursor-grab group-hover:text-blue-500 transition-colors">⠿</span>
+                    <div>
+                      <p class="text-xs sm:text-sm font-bold text-slate-900 leading-tight">Sr. Sales Executive at Deloitte</p>
+                      <p class="text-[11px] text-slate-400 leading-tight mt-0.5">11/2016 - 02/2017</p>
+                    </div>
+                  </div>
+                  <svg class="w-4 h-4 text-slate-400 group-hover:text-slate-700 transition-transform" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                  </svg>
+                </div>
+
+                <button (click)="cvService.openOnboarding()" class="inline-flex items-center gap-1.5 text-xs font-semibold text-blue-600 hover:text-blue-700 cursor-pointer pt-1 transition-colors">
+                  <span class="w-4 h-4 rounded-full bg-blue-100 text-blue-600 flex items-center justify-center text-[11px] font-bold">+</span>
+                  <span>Add more experience</span>
+                </button>
+              </div>
+            </div>
+          }
+
+          <!-- View 2: Add AI Pre-written Phrases (Active = 1) -->
+          @if (activeFeature() === 1) {
+            <div class="flex flex-col gap-4 animate-modal-enter">
+              <div class="bg-white rounded-2xl p-5 sm:p-6 shadow-sm border border-white/80">
+                
+                <!-- AI Assistant Header -->
+                <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+                  <div class="flex items-center gap-2">
+                    <div class="w-8 h-8 rounded-xl bg-gradient-to-tr from-blue-600 to-indigo-600 text-white flex items-center justify-center shadow-xs">
+                      <span class="material-icons text-base">auto_awesome</span>
+                    </div>
+                    <div>
+                      <h4 class="text-sm font-bold text-slate-900 leading-tight">AI Bullet Point Generator</h4>
+                      <p class="text-[11px] text-slate-400">Tailored for Sales & Management</p>
+                    </div>
+                  </div>
+                  <span class="text-[10px] font-semibold bg-emerald-50 text-emerald-700 border border-emerald-200 px-2 py-0.5 rounded-full flex items-center gap-1">
+                    <span class="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                    ATS Optimized
+                  </span>
+                </div>
+
+                <!-- AI Suggestions List -->
+                <div class="space-y-3">
+                  <!-- Suggestion 1 -->
+                  <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200/80 hover:border-blue-400 transition-all flex items-start justify-between gap-3 group">
+                    <div class="flex items-start gap-2.5">
+                      <span class="text-blue-600 text-xs mt-0.5 font-bold">✦</span>
+                      <p class="text-xs text-slate-700 leading-relaxed font-normal">
+                        "Spearheaded enterprise sales pipeline generating <strong>$4.2M ARR</strong>, exceeding quarterly targets by <strong>142%</strong>."
+                      </p>
+                    </div>
+                    <button class="flex-shrink-0 text-[11px] font-semibold bg-blue-600 text-white px-2.5 py-1 rounded-lg hover:bg-blue-700 transition-colors shadow-2xs">
+                      + Insert
+                    </button>
+                  </div>
+
+                  <!-- Suggestion 2 -->
+                  <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200/80 hover:border-blue-400 transition-all flex items-start justify-between gap-3 group">
+                    <div class="flex items-start gap-2.5">
+                      <span class="text-blue-600 text-xs mt-0.5 font-bold">✦</span>
+                      <p class="text-xs text-slate-700 leading-relaxed font-normal">
+                        "Managed cross-functional team of 8 SDRs and account executives, improving deal close velocity by <strong>35%</strong>."
+                      </p>
+                    </div>
+                    <button class="flex-shrink-0 text-[11px] font-semibold bg-blue-600 text-white px-2.5 py-1 rounded-lg hover:bg-blue-700 transition-colors shadow-2xs">
+                      + Insert
+                    </button>
+                  </div>
+
+                  <!-- Suggestion 3 -->
+                  <div class="p-3.5 rounded-xl bg-slate-50 border border-slate-200/80 hover:border-blue-400 transition-all flex items-start justify-between gap-3 group">
+                    <div class="flex items-start gap-2.5">
+                      <span class="text-blue-600 text-xs mt-0.5 font-bold">✦</span>
+                      <p class="text-xs text-slate-700 leading-relaxed font-normal">
+                        "Implemented automated CRM customer journeys reducing onboarding churn from <strong>14% to 3.2%</strong>."
+                      </p>
+                    </div>
+                    <button class="flex-shrink-0 text-[11px] font-semibold bg-blue-600 text-white px-2.5 py-1 rounded-lg hover:bg-blue-700 transition-colors shadow-2xs">
+                      + Insert
+                    </button>
+                  </div>
+                </div>
+
+                <!-- Footer Actions -->
+                <div class="mt-4 pt-3 border-t border-slate-100 flex items-center justify-between text-xs">
+                  <span class="text-slate-400 text-[11px]">100+ phrases available</span>
+                  <button class="text-blue-600 font-semibold hover:text-blue-700 flex items-center gap-1 cursor-pointer">
+                    <span class="material-icons text-sm">refresh</span>
+                    <span>Generate More</span>
+                  </button>
+                </div>
+
+              </div>
+            </div>
+          }
+
+          <!-- View 3: Automatic Spell-checker & ATS (Active = 2) -->
+          @if (activeFeature() === 2) {
+            <div class="flex flex-col gap-4 animate-modal-enter">
+              <div class="bg-white rounded-2xl p-5 sm:p-6 shadow-sm border border-white/80">
+                
+                <!-- Score Header -->
+                <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+                  <div class="flex items-center gap-2.5">
+                    <div class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 border border-emerald-200 flex items-center justify-center font-black text-sm">
+                      98%
+                    </div>
+                    <div>
+                      <h4 class="text-sm font-bold text-slate-900 leading-tight">Resume Score & Spell-Check</h4>
+                      <p class="text-[11px] text-emerald-600 font-semibold">Ready for Recruiter Submission</p>
+                    </div>
+                  </div>
+                  <span class="text-[11px] bg-emerald-100 text-emerald-800 font-bold px-2.5 py-1 rounded-full">
+                    Passed
+                  </span>
+                </div>
+
+                <!-- Quality Metrics -->
+                <div class="grid grid-cols-2 gap-2.5 mb-4">
+                  <div class="p-3 bg-slate-50 rounded-xl border border-slate-200/60">
+                    <p class="text-[11px] text-slate-400">Grammar & Typos</p>
+                    <p class="text-sm font-bold text-slate-800 flex items-center gap-1 mt-0.5">
+                      <span class="text-emerald-500 font-bold">✓</span> 0 Errors Found
+                    </p>
+                  </div>
+                  <div class="p-3 bg-slate-50 rounded-xl border border-slate-200/60">
+                    <p class="text-[11px] text-slate-400">Action Verbs</p>
+                    <p class="text-sm font-bold text-slate-800 flex items-center gap-1 mt-0.5">
+                      <span class="text-emerald-500 font-bold">✓</span> 18 Impactful
+                    </p>
+                  </div>
+                </div>
+
+                <!-- Live Fix Suggestion Box -->
+                <div class="p-3.5 rounded-xl bg-amber-50/80 border border-amber-200 flex items-center justify-between gap-3">
+                  <div>
+                    <span class="text-[10px] font-bold text-amber-800 uppercase tracking-wider">Style Recommendation</span>
+                    <p class="text-xs text-slate-800 mt-0.5">
+                      Replace <em>"was responsible for"</em> with strong action verb <strong>"Orchestrated"</strong>.
+                    </p>
+                  </div>
+                  <button class="bg-amber-500 hover:bg-amber-600 text-white text-xs font-semibold px-3 py-1.5 rounded-lg shadow-2xs transition-colors flex-shrink-0">
+                    Auto-Fix
+                  </button>
+                </div>
+
+              </div>
+            </div>
+          }
+
+          <!-- View 4: Export to any format (Active = 3) -->
+          @if (activeFeature() === 3) {
+            <div class="flex flex-col gap-4 animate-modal-enter">
+              <div class="bg-white rounded-2xl p-5 sm:p-6 shadow-sm border border-white/80">
+                
+                <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+                  <div class="flex items-center gap-2">
+                    <div class="w-8 h-8 rounded-xl bg-blue-50 text-blue-600 flex items-center justify-center">
+                      <span class="material-icons text-base">download</span>
+                    </div>
+                    <div>
+                      <h4 class="text-sm font-bold text-slate-900 leading-tight">Export & Share Suite</h4>
+                      <p class="text-[11px] text-slate-400">Instant high-resolution downloads</p>
+                    </div>
+                  </div>
+                  <span class="text-[10px] font-semibold bg-blue-50 text-blue-700 px-2 py-0.5 rounded-full">
+                    Unlimited
+                  </span>
+                </div>
+
+                <!-- Export Options Grid -->
+                <div class="grid grid-cols-2 gap-3 mb-4">
+                  
+                  <!-- PDF Option -->
+                  <div class="p-3.5 rounded-xl border-2 border-blue-500 bg-blue-50/40 flex flex-col justify-between group cursor-pointer">
+                    <div class="flex items-center gap-2 mb-2">
+                      <span class="w-6 h-6 rounded-md bg-red-500 text-white font-bold text-[9px] flex items-center justify-center">PDF</span>
+                      <span class="text-xs font-bold text-slate-900">PDF Document</span>
+                    </div>
+                    <p class="text-[10px] text-slate-500 mb-2">Recruiter-ready, ATS vector file</p>
+                    <button class="w-full bg-blue-600 hover:bg-blue-700 text-white font-semibold text-xs py-1.5 rounded-lg transition-colors shadow-2xs">
+                      Download PDF
+                    </button>
+                  </div>
+
+                  <!-- DOCX Option -->
+                  <div class="p-3.5 rounded-xl border border-slate-200 bg-white hover:border-slate-300 flex flex-col justify-between group cursor-pointer">
+                    <div class="flex items-center gap-2 mb-2">
+                      <span class="w-6 h-6 rounded-md bg-blue-600 text-white font-bold text-[9px] flex items-center justify-center">DOC</span>
+                      <span class="text-xs font-bold text-slate-900">Word (DOCX)</span>
+                    </div>
+                    <p class="text-[10px] text-slate-500 mb-2">Fully editable Word format</p>
+                    <button class="w-full bg-slate-100 hover:bg-slate-200 text-slate-800 font-semibold text-xs py-1.5 rounded-lg transition-colors">
+                      Download DOCX
+                    </button>
+                  </div>
+
+                </div>
+
+                <!-- Shareable Link Row -->
+                <div class="p-3 rounded-xl bg-slate-50 border border-slate-200 flex items-center justify-between">
+                  <div class="flex items-center gap-2 truncate">
+                    <span class="material-icons text-slate-400 text-sm">link</span>
+                    <span class="text-xs font-mono text-slate-600 truncate">glowcv.ai/p/martin-edwards</span>
+                  </div>
+                  <button class="text-xs font-bold text-blue-600 hover:text-blue-700 cursor-pointer ml-2 flex-shrink-0">
+                    Copy Link
+                  </button>
+                </div>
+
+              </div>
+            </div>
+          }
+
+        </div>
+      </div>
+
     </div>
+
   </div>
 </section>

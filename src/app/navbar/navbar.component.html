@@ -1,80 +1,122 @@
-<header class="fixed top-0 left-0 right-0 z-50 transition-all duration-300"
-  [ngClass]="isScrolled() ? 'bg-white/90 backdrop-blur-xl border-b border-slate-200/80 shadow-xs py-3' : 'bg-white/70 backdrop-blur-md border-b border-slate-100/80 py-4'">
+<header class="fixed top-0 left-0 right-0 z-50 transition-all duration-200"
+  [ngClass]="isScrolled() ? 'bg-white/95 backdrop-blur-md border-b border-slate-200/80 shadow-xs py-3' : 'bg-[#fafafc]/90 backdrop-blur-sm border-b border-transparent py-4'">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-    <div class="flex items-center justify-between gap-4">
+    <div class="flex items-center justify-between">
 
-      <!-- Brand Logo -->
+      <!-- Brand Logo (Builder.io style with wave logo icon) -->
       <a routerLink="/" (click)="closeMobileMenu()" class="flex items-center gap-2.5 group cursor-pointer select-none">
-        <div
-          class="w-9 h-9 rounded-xl bg-gradient-to-tr from-emerald-500 to-teal-600 p-0.5 shadow-sm shadow-emerald-500/20 group-hover:scale-105 transition-transform duration-200">
-          <div class="w-full h-full bg-white rounded-[10px] overflow-hidden flex items-center justify-center p-1">
-            <img src="../assets/logo.png" alt="GlowCV Logo" class="w-full h-full object-contain" />
-          </div>
+        <div class="w-7 h-7 flex items-center justify-center">
+          <svg viewBox="0 0 32 32" class="w-6 h-6 text-[#2563eb]" fill="currentColor">
+            <path d="M6 10 C 10 6, 16 6, 20 10 L 14 16 C 12 14, 8 14, 6 16 Z" fill="#4338ca" />
+            <path d="M12 16 C 16 12, 22 12, 26 16 L 20 22 C 18 20, 14 20, 12 22 Z" fill="#2563eb" />
+            <path d="M18 22 C 22 18, 28 18, 32 22 L 26 28 C 24 26, 20 26, 18 28 Z" fill="#60a5fa" />
+          </svg>
         </div>
-        <div class="flex items-center gap-1.5">
-          <span
-            class="text-xl font-extrabold tracking-tight text-slate-900 group-hover:text-emerald-600 transition-colors">
-            GlowCV
-          </span>
-          <span
-            class="text-[10px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded-md bg-emerald-100 text-emerald-700 font-mono">
-            AI
-          </span>
-        </div>
+        <span class="text-xl font-bold tracking-tight text-slate-900 group-hover:text-blue-600 transition-colors">
+          GlowCV
+        </span>
       </a>
 
-      <!-- Desktop Navigation Center Links -->
-      <nav class="hidden lg:flex items-center gap-1 bg-slate-100/60 p-1 rounded-full border border-slate-200/60">
-        <button (click)="openResumeBuilder()"
-          class="px-4 py-1.5 rounded-full text-sm font-medium text-slate-600 hover:text-slate-900 hover:bg-white hover:shadow-xs transition-all cursor-pointer flex items-center gap-1.5">
-          <span class="material-icons text-emerald-500 text-base">auto_awesome</span>
-          Resume Builder
-        </button>
+      <!-- Desktop Center Navigation Links -->
+      <nav class="hidden md:flex items-center gap-8 text-[15px] font-medium text-slate-800">
 
-        <button (click)="openResumeTemplates()"
-          class="px-4 py-1.5 rounded-full text-sm font-medium text-slate-600 hover:text-slate-900 hover:bg-white hover:shadow-xs transition-all cursor-pointer">
-          Templates
-        </button>
+        <!-- Tools Dropdown Menu -->
+        <div class="relative group" (mouseleave)="closeToolsDropdown()">
+          <button (click)="toggleToolsDropdown($event)" (mouseenter)="openToolsDropdown()"
+            class="flex items-center gap-1.5 py-1 text-slate-800 hover:text-blue-600 transition-colors cursor-pointer select-none">
+            <span>Tools</span>
+            <svg class="w-3.5 h-3.5 text-slate-500 transition-transform duration-200"
+              [ngClass]="toolsDropdownOpen() ? 'rotate-180 text-blue-600' : ''" fill="none" stroke="currentColor"
+              viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M19 9l-7 7-7-7"></path>
+            </svg>
+          </button>
 
-        <a routerLink="/cover-letter"
-          class="px-4 py-1.5 rounded-full text-sm font-medium text-slate-600 hover:text-slate-900 hover:bg-white hover:shadow-xs transition-all">
-          Cover Letter
-        </a>
+          <!-- Dropdown Popover Card -->
+          <div *ngIf="toolsDropdownOpen()"
+            class="absolute top-full left-1/2 -translate-x-1/2 pt-2 z-50 animate-modal-enter w-64">
+            <div class="bg-white rounded-2xl p-2 shadow-xl border border-slate-100 ring-1 ring-slate-900/5">
 
-        <a routerLink="/pricing"
-          class="px-4 py-1.5 rounded-full text-sm font-medium text-slate-600 hover:text-slate-900 hover:bg-white hover:shadow-xs transition-all">
+              <!-- 1. Resume Templates -->
+              <button (click)="openResumeTemplates()"
+                class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-left hover:bg-slate-50 group/item transition-colors cursor-pointer">
+                <div
+                  class="w-8 h-8 rounded-lg bg-blue-50 text-blue-600 flex items-center justify-center group-hover/item:bg-blue-600 group-hover/item:text-white transition-colors">
+                  <span class="material-icons text-lg">description</span>
+                </div>
+                <div>
+                  <p class="text-sm font-semibold text-slate-800 group-hover/item:text-blue-600 transition-colors">
+                    Resume Templates</p>
+                  <p class="text-[11px] text-slate-400">Professional ATS layouts</p>
+                </div>
+              </button>
+
+              <!-- 2. Cover Letter -->
+              <button (click)="openCoverLetter()"
+                class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-left hover:bg-slate-50 group/item transition-colors cursor-pointer">
+                <div
+                  class="w-8 h-8 rounded-lg bg-indigo-50 text-indigo-600 flex items-center justify-center group-hover/item:bg-indigo-600 group-hover/item:text-white transition-colors">
+                  <span class="material-icons text-lg">edit_note</span>
+                </div>
+                <div>
+                  <p class="text-sm font-semibold text-slate-800 group-hover/item:text-blue-600 transition-colors">Cover
+                    Letter</p>
+                  <p class="text-[11px] text-slate-400">AI letter generator & editor</p>
+                </div>
+              </button>
+
+              <!-- 3. Job Tracker -->
+              <button (click)="openJobTracker()"
+                class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-left hover:bg-slate-50 group/item transition-colors cursor-pointer">
+                <div
+                  class="w-8 h-8 rounded-lg bg-emerald-50 text-emerald-600 flex items-center justify-center group-hover/item:bg-emerald-600 group-hover/item:text-white transition-colors">
+                  <span class="material-icons text-lg">work_outline</span>
+                </div>
+                <div>
+                  <p class="text-sm font-semibold text-slate-800 group-hover/item:text-blue-600 transition-colors">Job
+                    Tracker</p>
+                  <p class="text-[11px] text-slate-400">Track saved jobs & applications</p>
+                </div>
+              </button>
+
+            </div>
+          </div>
+        </div>
+
+        <!-- Pricing Link -->
+        <a routerLink="/pricing" class="text-slate-800 hover:text-blue-600 transition-colors cursor-pointer py-1">
           Pricing
         </a>
 
-        <a routerLink="/about"
-          class="px-4 py-1.5 rounded-full text-sm font-medium text-slate-600 hover:text-slate-900 hover:bg-white hover:shadow-xs transition-all">
-          About
+        <!-- FAQ's Link -->
+        <a routerLink="/about" class="text-slate-800 hover:text-blue-600 transition-colors cursor-pointer py-1">
+          FAQ's
         </a>
+
       </nav>
 
-      <!-- Desktop Right Action Buttons -->
-      <div class="hidden sm:flex items-center gap-3">
-        <button routerLink="/login"
-          class="text-sm font-semibold text-slate-700 hover:text-slate-900 px-4 py-2 hover:bg-slate-100 rounded-full transition-all cursor-pointer">
-          Log in
-        </button>
+      <!-- Desktop Right Action Buttons (Log In & Get Started) -->
+      <div class="hidden sm:flex items-center gap-4">
+        <a routerLink="/login"
+          class="text-sm font-semibold text-slate-800 hover:text-blue-600 px-3 py-2 transition-colors cursor-pointer">
+          Log In
+        </a>
 
-        <button (click)="openResumeBuilder()"
-          class="bg-gradient-to-r from-emerald-500 to-teal-600 hover:from-emerald-600 hover:to-teal-700 text-white font-semibold text-sm px-5 py-2.5 rounded-full shadow-md shadow-emerald-500/20 hover:shadow-lg hover:shadow-emerald-500/30 hover:-translate-y-0.5 active:translate-y-0 transition-all flex items-center gap-1.5 cursor-pointer">
-          <span>Create CV</span>
-          <span class="material-icons text-sm">arrow_forward</span>
+        <button (click)="openGetStarted()"
+          class="border border-slate-900 hover:bg-slate-900 hover:text-white text-slate-900 text-sm font-semibold px-5 py-2 rounded-xl transition-all duration-200 cursor-pointer shadow-2xs hover:shadow-xs active:scale-98">
+          Get Started
         </button>
       </div>
 
       <!-- Mobile Hamburger Button -->
-      <div class="flex lg:hidden items-center gap-2">
-        <button (click)="openResumeBuilder()"
-          class="sm:hidden bg-emerald-600 text-white font-semibold text-xs px-3.5 py-1.5 rounded-full shadow-xs">
-          Create CV
+      <div class="flex md:hidden items-center gap-2">
+        <button (click)="openGetStarted()"
+          class="text-xs font-semibold px-3 py-1.5 border border-slate-900 rounded-lg text-slate-900 hover:bg-slate-900 hover:text-white transition-all">
+          Get Started
         </button>
 
         <button (click)="toggleMobileMenu()"
-          class="p-2 rounded-xl text-slate-600 hover:text-slate-900 hover:bg-slate-100 transition-colors focus:outline-none"
+          class="p-2 rounded-xl text-slate-700 hover:text-slate-900 hover:bg-slate-100 transition-colors focus:outline-none"
           aria-label="Toggle Navigation Menu">
           <span class="material-icons text-2xl">
             {{ mobileMenuOpen() ? 'close' : 'menu' }}
@@ -87,49 +129,66 @@
 
   <!-- Mobile Drawer / Menu -->
   <div *ngIf="mobileMenuOpen()"
-    class="lg:hidden bg-white/95 backdrop-blur-2xl border-b border-slate-200 px-6 py-6 shadow-xl animate-modal-enter">
+    class="md:hidden bg-white/98 backdrop-blur-2xl border-b border-slate-200 px-6 py-5 shadow-xl animate-modal-enter">
     <div class="flex flex-col space-y-3">
-      <button (click)="openResumeBuilder()"
-        class="flex items-center gap-3 w-full text-left px-4 py-3 rounded-xl font-semibold text-slate-800 hover:bg-emerald-50 hover:text-emerald-700 transition-colors">
-        <span class="material-icons text-emerald-600">auto_awesome</span>
-        <span>Resume Builder</span>
-      </button>
 
-      <button (click)="openResumeTemplates()"
-        class="flex items-center gap-3 w-full text-left px-4 py-3 rounded-xl font-semibold text-slate-800 hover:bg-slate-50 transition-colors">
-        <span class="material-icons text-slate-500">grid_view</span>
-        <span>Resume Templates</span>
-      </button>
+      <!-- Mobile Tools Dropdown Accordion -->
+      <div>
+        <button (click)="toggleMobileTools()"
+          class="flex items-center justify-between w-full text-left px-3 py-2.5 rounded-xl font-semibold text-slate-800 hover:bg-slate-50 transition-colors">
+          <span>Tools</span>
+          <svg class="w-4 h-4 text-slate-500 transition-transform duration-200"
+            [ngClass]="mobileToolsOpen() ? 'rotate-180 text-blue-600' : ''" fill="none" stroke="currentColor"
+            viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+          </svg>
+        </button>
 
-      <a routerLink="/cover-letter" (click)="closeMobileMenu()"
-        class="flex items-center gap-3 w-full text-left px-4 py-3 rounded-xl font-semibold text-slate-800 hover:bg-slate-50 transition-colors">
-        <span class="material-icons text-slate-500">description</span>
-        <span>Cover Letter</span>
-      </a>
+        <div *ngIf="mobileToolsOpen()" class="pl-4 space-y-1.5 mt-1 border-l-2 border-slate-100 ml-3">
+          <button (click)="openResumeTemplates()"
+            class="flex items-center gap-2.5 w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-700 hover:text-blue-600 hover:bg-slate-50 transition-colors">
+            <span class="material-icons text-base text-blue-500">description</span>
+            <span>Resume Templates</span>
+          </button>
 
+          <button (click)="openCoverLetter()"
+            class="flex items-center gap-2.5 w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-700 hover:text-blue-600 hover:bg-slate-50 transition-colors">
+            <span class="material-icons text-base text-indigo-500">edit_note</span>
+            <span>Cover Letter</span>
+          </button>
+
+          <button (click)="openJobTracker()"
+            class="flex items-center gap-2.5 w-full text-left px-3 py-2 rounded-lg text-sm font-medium text-slate-700 hover:text-blue-600 hover:bg-slate-50 transition-colors">
+            <span class="material-icons text-base text-emerald-500">work_outline</span>
+            <span>Job Tracker</span>
+          </button>
+        </div>
+      </div>
+
+      <!-- Pricing -->
       <a routerLink="/pricing" (click)="closeMobileMenu()"
-        class="flex items-center gap-3 w-full text-left px-4 py-3 rounded-xl font-semibold text-slate-800 hover:bg-slate-50 transition-colors">
-        <span class="material-icons text-slate-500">sell</span>
-        <span>Pricing</span>
+        class="block px-3 py-2.5 rounded-xl font-semibold text-slate-800 hover:bg-slate-50 transition-colors">
+        Pricing
       </a>
 
+      <!-- FAQ's -->
       <a routerLink="/about" (click)="closeMobileMenu()"
-        class="flex items-center gap-3 w-full text-left px-4 py-3 rounded-xl font-semibold text-slate-800 hover:bg-slate-50 transition-colors">
-        <span class="material-icons text-slate-500">info</span>
-        <span>About</span>
+        class="block px-3 py-2.5 rounded-xl font-semibold text-slate-800 hover:bg-slate-50 transition-colors">
+        FAQ's
       </a>
 
       <div class="pt-4 border-t border-slate-100 flex flex-col gap-2.5">
-        <button routerLink="/login" (click)="closeMobileMenu()"
-          class="w-full py-3 rounded-xl font-semibold text-sm text-slate-700 border border-slate-200 hover:bg-slate-50 transition-colors">
-          Log in
-        </button>
+        <a routerLink="/login" (click)="closeMobileMenu()"
+          class="w-full py-2.5 rounded-xl font-semibold text-sm text-center text-slate-800 border border-slate-200 hover:bg-slate-50 transition-colors">
+          Log In
+        </a>
 
-        <button (click)="openResumeBuilder()"
-          class="w-full py-3 rounded-xl font-semibold text-sm bg-gradient-to-r from-emerald-500 to-teal-600 text-white shadow-md shadow-emerald-500/20 text-center">
-          Create CV Free
+        <button (click)="openGetStarted()"
+          class="w-full py-2.5 rounded-xl font-semibold text-sm bg-slate-900 text-white text-center hover:bg-slate-800 transition-colors">
+          Get Started
         </button>
       </div>
+
     </div>
   </div>
 </header>

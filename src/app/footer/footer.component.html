@@ -1,66 +1,167 @@
-<footer class="bg-bg-light pt-20 pb-10 border-t border-gray-200">
-  <div class="max-w-7xl mx-auto px-6">
-    <div class="grid grid-cols-2 md:grid-cols-4 gap-8 mb-16">
-      <div>
-        <div class="flex items-center gap-2 cursor-pointer">
-          <div class="w-8 h-8 rounded-lg overflow-hidden">
-            <img src="../assets/logo.png" alt="GlowCV Logo" class="w-full h-full object-contain" />
+<footer class="bg-white border-t border-slate-100 pt-16 sm:pt-20 pb-12 font-sans">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    
+    <!-- Top Main Grid (Brand + 3 Navigation Columns + Language Selector) -->
+    <div class="grid grid-cols-2 md:grid-cols-12 gap-8 lg:gap-12 mb-16">
+      
+      <!-- Brand & Social Column (Col span 4) -->
+      <div class="col-span-2 md:col-span-4 space-y-4">
+        
+        <!-- Brand Logo -->
+        <a routerLink="/" class="flex items-center gap-2.5 group select-none">
+          <div class="w-8 h-8 rounded-xl bg-gradient-to-tr from-emerald-500 to-teal-600 p-0.5 shadow-2xs">
+            <div class="w-full h-full bg-white rounded-[10px] overflow-hidden flex items-center justify-center p-1">
+              <img src="../assets/logo.png" alt="GlowCV Logo" class="w-full h-full object-contain" />
+            </div>
           </div>
-
-          <span class="text-xl font-semibold tracking-tight text-text-main">
+          <span class="text-xl font-bold tracking-tight text-slate-900 group-hover:text-blue-600 transition-colors">
             GlowCV
           </span>
+        </a>
+
+        <!-- Brand Description -->
+        <p class="text-xs sm:text-sm text-slate-500 max-w-xs leading-relaxed font-normal">
+          Building products to improve the career and resume creation experience.
+        </p>
+
+        <!-- Social Media Icons Row -->
+        <div class="flex items-center gap-3 pt-2 text-slate-700">
+          
+          <!-- Instagram -->
+          <a href="https://instagram.com" target="_blank" rel="noopener" class="w-8 h-8 rounded-full border border-slate-200/90 flex items-center justify-center hover:bg-slate-50 hover:text-blue-600 transition-colors shadow-2xs" aria-label="Instagram">
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/>
+            </svg>
+          </a>
+
+          <!-- Twitter / X -->
+          <a href="https://twitter.com" target="_blank" rel="noopener" class="w-8 h-8 rounded-full border border-slate-200/90 flex items-center justify-center hover:bg-slate-50 hover:text-blue-600 transition-colors shadow-2xs" aria-label="Twitter">
+            <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+            </svg>
+          </a>
+
+          <!-- TikTok -->
+          <a href="https://tiktok.com" target="_blank" rel="noopener" class="w-8 h-8 rounded-full border border-slate-200/90 flex items-center justify-center hover:bg-slate-50 hover:text-blue-600 transition-colors shadow-2xs" aria-label="TikTok">
+            <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M12.525.02c1.31-.02 2.61-.01 3.91-.02.08 1.53.63 3.09 1.75 4.17 1.12 1.11 2.7 1.62 4.24 1.79v4.03c-1.44-.05-2.89-.35-4.2-.97-.57-.26-1.1-.59-1.62-.93-.01 2.92.01 5.84-.02 8.75-.08 1.4-.54 2.79-1.35 3.94-1.31 1.92-3.58 3.17-5.91 3.21-1.43.08-2.86-.31-4.08-1.03-2.02-1.19-3.44-3.37-3.65-5.71-.02-.5-.03-1-.01-1.49.18-1.9 1.12-3.72 2.58-4.96 1.66-1.44 3.98-2.13 6.15-1.72.02 1.48-.04 2.96-.04 4.44-.99-.32-2.15-.23-3.02.37-.63.41-1.11 1.04-1.36 1.75-.21.51-.15.99-.14 1.54.12 1.07.74 2.05 1.64 2.62 1.12.7 2.59.73 3.73.08.77-.44 1.34-1.19 1.54-2.05.13-.56.14-1.14.13-1.72V.02z"/>
+            </svg>
+          </a>
+
+          <!-- LinkedIn -->
+          <a href="https://linkedin.com" target="_blank" rel="noopener" class="w-8 h-8 rounded-full border border-slate-200/90 flex items-center justify-center hover:bg-slate-50 hover:text-blue-600 transition-colors shadow-2xs" aria-label="LinkedIn">
+            <svg class="w-3.5 h-3.5" fill="currentColor" viewBox="0 0 24 24">
+              <path d="M19 0h-14c-2.761 0-5 2.239-5 5v14c0 2.761 2.239 5 5 5h14c2.762 0 5-2.239 5-5v-14c0-2.761-2.238-5-5-5zm-11 19h-3v-11h3v11zm-1.5-12.268c-.966 0-1.75-.79-1.75-1.764s.784-1.764 1.75-1.764 1.75.79 1.75 1.764-.783 1.764-1.75 1.764zm13.5 12.268h-3v-5.604c0-3.368-4-3.113-4 0v5.604h-3v-11h3v1.765c1.396-2.586 7-2.777 7 2.476v6.759z"/>
+            </svg>
+          </a>
+
         </div>
-        <p class="text-gray-500 text-sm">Empowering job seekers with professional tools to land their dream jobs.</p>
+
       </div>
 
-      <div>
-        <h4 class="font-semibold text-text-main mb-4">CV Builder</h4>
-        <ul class="space-y-3 text-sm text-gray-500">
-          <li><a href="#" class="hover:text-accent transition-colors">CV Templates</a></li>
-          <li><a href="#" class="hover:text-accent transition-colors">CV Examples</a></li>
-          <li><a href="#" class="hover:text-accent transition-colors">CV Format</a></li>
-          <li><a href="#" class="hover:text-accent transition-colors">How to Write a CV</a></li>
+      <!-- Column 2: Resources (Col span 2) -->
+      <div class="col-span-1 md:col-span-2 space-y-3">
+        <h4 class="text-sm font-bold text-slate-900 tracking-tight">Resources</h4>
+        <ul class="space-y-2 text-xs sm:text-sm text-slate-600">
+          <li>
+            <a routerLink="/cover-letter" [queryParams]="{ tab: 'resume' }" class="hover:text-blue-600 transition-colors">
+              Resume
+            </a>
+          </li>
+          <li>
+            <a routerLink="/cover-letter" class="hover:text-blue-600 transition-colors">
+              Cover Letters
+            </a>
+          </li>
+          <li>
+            <a routerLink="/cover-letter" [queryParams]="{ tab: 'jobs' }" class="hover:text-blue-600 transition-colors">
+              Jobs
+            </a>
+          </li>
         </ul>
       </div>
 
-      <div>
-        <h4 class="font-semibold text-text-main mb-4">Cover Letter</h4>
-        <ul class="space-y-3 text-sm text-gray-500">
-          <li><a href="#" class="hover:text-accent transition-colors">Cover Letter Templates</a></li>
-          <li><a href="#" class="hover:text-accent transition-colors">Cover Letter Examples</a></li>
-          <li><a href="#" class="hover:text-accent transition-colors">Cover Letter Formats</a></li>
-          <li><a href="#" class="hover:text-accent transition-colors">How to Write a Cover Letter</a></li>
+      <!-- Column 3: Products (Col span 2) -->
+      <div class="col-span-1 md:col-span-2 space-y-3">
+        <h4 class="text-sm font-bold text-slate-900 tracking-tight">Products</h4>
+        <ul class="space-y-2 text-xs sm:text-sm text-slate-600">
+          <li>
+            <a routerLink="/pricing" class="hover:text-blue-600 transition-colors">
+              Pricing
+            </a>
+          </li>
+          <li>
+            <a routerLink="/about" class="hover:text-blue-600 transition-colors">
+              Reviews
+            </a>
+          </li>
         </ul>
       </div>
 
-      <div>
-        <h4 class="font-semibold text-text-main mb-4">Support</h4>
-        <ul class="space-y-3 text-sm text-gray-500">
-          <li><a routerLink="/about" class="hover:text-accent transition-colors">About Us</a></li>
-          <li><a href="mailto:contact@glowcv.com" class="hover:text-accent transition-colors">Contact</a></li>
-          <li><a href="#" class="hover:text-accent transition-colors">Privacy Policy</a></li>
-          <li><a href="#" class="hover:text-accent transition-colors">Terms of Service</a></li>
+      <!-- Column 4: Support (Col span 2) -->
+      <div class="col-span-1 md:col-span-2 space-y-3">
+        <h4 class="text-sm font-bold text-slate-900 tracking-tight">Support</h4>
+        <ul class="space-y-2 text-xs sm:text-sm text-slate-600">
+          <li>
+            <a routerLink="/about" class="hover:text-blue-600 transition-colors">
+              FAQ's
+            </a>
+          </li>
+          <li>
+            <a routerLink="/contact" class="hover:text-blue-600 transition-colors">
+              Contact US
+            </a>
+          </li>
         </ul>
+      </div>
+
+      <!-- Column 5: Language Switcher Dropdown (Col span 2) -->
+      <div class="col-span-1 md:col-span-2 flex justify-start md:justify-end items-start relative">
+        <div class="relative">
+          <button 
+            type="button" 
+            (click)="toggleLangDropdown()"
+            class="inline-flex items-center gap-2 px-3.5 py-2 rounded-xl border border-slate-200 bg-white text-xs font-medium text-slate-700 hover:bg-slate-50 transition-colors cursor-pointer shadow-2xs">
+            <span class="text-slate-500 font-serif font-bold text-xs">文A</span>
+            <span>{{ selectedLanguage() }}</span>
+            <svg class="w-3 h-3 text-slate-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+            </svg>
+          </button>
+
+          <!-- Dropdown items -->
+          @if (langDropdownOpen()) {
+            <div class="absolute right-0 bottom-full mb-1 w-32 bg-white rounded-xl shadow-lg border border-slate-100 p-1 z-30 animate-modal-enter">
+              @for (lang of languages; track lang) {
+                <button 
+                  type="button"
+                  (click)="setLanguage(lang)"
+                  class="w-full text-left px-3 py-1.5 rounded-lg text-xs font-medium text-slate-700 hover:bg-slate-50 hover:text-blue-600 transition-colors cursor-pointer">
+                  {{ lang }}
+                </button>
+              }
+            </div>
+          }
+        </div>
+      </div>
+
+    </div>
+
+    <!-- Bottom Row (Copyright & Legal Links) -->
+    <div class="pt-8 border-t border-slate-100 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-slate-500">
+      <p class="font-normal">
+        &copy; 2026 GlowCV. All Rights Reserved.
+      </p>
+
+      <div class="flex items-center gap-6">
+        <a routerLink="/about" class="hover:text-slate-900 underline transition-colors">
+          Terms & conditions
+        </a>
+        <a routerLink="/about" class="font-bold text-slate-900 hover:text-blue-600 underline transition-colors">
+          Privacy Policy
+        </a>
       </div>
     </div>
 
-    <div class="flex flex-col md:flex-row items-center justify-between pt-8 border-t border-gray-200 gap-4">
-      <p class="text-gray-400 text-sm">© 2026 CV Builder. All rights reserved.</p>
-      <div class="flex gap-4">
-        <a href="#"
-          class="w-10 h-10 rounded-full bg-white flex items-center justify-center text-gray-400 hover:text-accent hover:shadow-md transition-all">
-          <span class="material-icons text-sm">facebook</span>
-        </a>
-        <a href="#"
-          class="w-10 h-10 rounded-full bg-white flex items-center justify-center text-gray-400 hover:text-accent hover:shadow-md transition-all">
-          <span class="material-icons text-sm">link</span>
-        </a>
-        <a href="#"
-          class="w-10 h-10 rounded-full bg-white flex items-center justify-center text-gray-400 hover:text-accent hover:shadow-md transition-all">
-          <span class="material-icons text-sm">photo_camera</span>
-        </a>
-      </div>
-    </div>
   </div>
 </footer>

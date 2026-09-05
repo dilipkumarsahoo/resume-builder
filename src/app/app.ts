@@ -29,6 +29,7 @@ export class App {
     return (
       url.includes('/signup') ||
       url.includes('/login') ||
+      url.includes('/forgot-password') ||
       url.includes('/cv-builder') ||
       url.includes('/cover-letter')
     );

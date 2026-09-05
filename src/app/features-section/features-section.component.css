@@ -1,1 +1,11 @@
-/* Features Section styles */
+.feature-title-serif {
+  letter-spacing: -0.02em;
+}
+
+.feature-step-item {
+  transition: all 0.25s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.blue-preview-card {
+  box-shadow: 0 24px 50px -12px rgba(89, 100, 246, 0.4);
+}
