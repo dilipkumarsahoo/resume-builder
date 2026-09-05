@@ -42,7 +42,7 @@ export class LoginComponent {
           if (response.data?.accessToken) {
             this.authService.saveToken(response.data.accessToken);
           }
-          this.router.navigate(['/dashboard']); // Assuming there is a dashboard route
+          this.router.navigate(['/cover-letter']);
         },
         error: (error) => {
           console.error('Login error', error);

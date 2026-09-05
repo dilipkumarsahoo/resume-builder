@@ -284,7 +284,7 @@ export class CvBuilderService {
   }
 
   closeModal() {
-    this.router.navigate(['/dashboard']);
+    this.router.navigate(['/cover-letter'], { queryParams: { tab: 'resume' } });
   }
 
   updateData(newData: Partial<CVData>) {

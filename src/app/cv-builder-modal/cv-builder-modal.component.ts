@@ -42,7 +42,7 @@ export class CvBuilderModalComponent {
   }
 
   close() {
-    this.router.navigate(['/dashboard']);
+    this.router.navigate(['/cover-letter'], { queryParams: { tab: 'resume' } });
   }
 
   async downloadPDF() {

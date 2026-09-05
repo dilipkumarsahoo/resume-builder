@@ -27,18 +27,13 @@ export class App {
   hideNavAndFooter() {
     const url = this.router.url;
     return (
-      url.includes('/dashboard') ||
       url.includes('/signup') ||
       url.includes('/login') ||
       url.includes('/cv-builder') ||
-      url.includes('/cover-letter') ||
-      url.includes('/saved-jobs')
+      url.includes('/cover-letter')
     );
   }
 
-  isDashboard() {
-    return this.router.url.includes('/dashboard');
-  }
   isCvBuilder() {
     return this.router.url.includes('/cv-builder');
   }

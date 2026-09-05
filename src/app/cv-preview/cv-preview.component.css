@@ -308,3 +308,56 @@
     page-break-inside: avoid !important;
   }
 }
+
+/* ==========================================================================
+   TEMPLATE BACKGROUNDS & PREVIEW MODE STYLES
+   ========================================================================== */
+
+#cv-preview-content.startup-template {
+  background-color: #0f172a !important;
+  color: #cbd5e1 !important;
+}
+
+#cv-preview-content.tech-template {
+  background-color: #f8fafc;
+}
+
+#cv-preview-content.elegant-template {
+  background-color: #fdfcfb;
+}
+
+#cv-preview-content.bubble-template {
+  background-color: #f8fafc;
+}
+
+#cv-preview-content.fresher-template {
+  background-color: #f9fafb;
+}
+
+/* Ensure template direct child fills full container height */
+#cv-preview-content > div:first-child {
+  flex: 1 1 auto;
+  width: 100%;
+  min-height: 100%;
+}
+
+/* Isolated Preview Mode (Hero, Carousel, Onboarding cards) */
+#cv-preview-content.is-preview {
+  box-shadow: none !important;
+  border: none !important;
+  height: 100% !important;
+  min-height: 100% !important;
+  overflow: hidden !important;
+}
+
+#cv-preview-content.is-preview * {
+  user-select: none !important;
+}
+
+#cv-preview-content.is-preview [data-section] {
+  order: initial !important;
+}
+
+#cv-preview-content.is-preview .overflow-y-auto {
+  overflow-y: hidden !important;
+}

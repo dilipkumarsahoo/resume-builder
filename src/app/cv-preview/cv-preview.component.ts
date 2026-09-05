@@ -114,6 +114,9 @@ export class CvPreviewComponent {
   }
 
   customizationClasses() {
+    if (this.isPreview) {
+      return `${this.templateClass()} is-preview`;
+    }
     const c = this.cvService.customization();
     return [
       this.templateClass(),
@@ -133,6 +136,11 @@ export class CvPreviewComponent {
   }
 
   getSectionOrder(sectionId: string): number {
+    if (this.isPreview) {
+      const defaults = ['summary', 'skills', 'experience', 'education', 'projects', 'languages'];
+      const idx = defaults.indexOf(sectionId);
+      return idx === -1 ? 99 : idx + 1;
+    }
     const order = this.cvService.customization().sectionOrder;
     if (!order || !order.length) {
       const defaults = ['summary', 'skills', 'experience', 'education', 'projects', 'languages'];
@@ -144,6 +152,7 @@ export class CvPreviewComponent {
   }
 
   hasPageBreakBefore(sectionId: string): boolean {
+    if (this.isPreview) return false;
     const order = this.cvService.customization().sectionOrder;
     if (!order) return false;
     const breakIdx = order.indexOf('pageBreak');
@@ -153,6 +162,7 @@ export class CvPreviewComponent {
   }
 
   getNameFontFamily(): string {
+    if (this.isPreview) return '';
     const nameFont = this.cvService.customization().nameFontFamily;
     if (!nameFont || nameFont === 'Same as body font') {
       return this.getFontFamily();
@@ -161,6 +171,7 @@ export class CvPreviewComponent {
   }
 
   getFontFamily(): string {
+    if (this.isPreview) return '';
     const font = this.cvService.customization().fontFamily;
     return this.getFontFamilyByName(font);
   }
@@ -185,6 +196,7 @@ export class CvPreviewComponent {
   }
 
   getLineHeight(): string {
+    if (this.isPreview) return '1.25';
     const lh = this.cvService.customization().lineHeight;
     if (typeof lh === 'number') return `${lh}`;
     if (lh === 'tight') return '1.15';
@@ -194,6 +206,7 @@ export class CvPreviewComponent {
   }
 
   hasFooter(): boolean {
+    if (this.isPreview) return false;
     const c = this.cvService.customization();
     if (c.footerCustom) {
       return Boolean(c.footerLeft || c.footerCenter || c.footerRight);

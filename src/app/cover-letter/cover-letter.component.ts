@@ -378,14 +378,11 @@ export class CoverLetterComponent implements OnInit {
   }
 
   navigateToResume() {
-    this.cvService.openOnboarding();
-    this.cvService.onboardingStep.set(4);
-    this.cvService.hideOnboardingSteps.set(true);
-    this.router.navigate(['/dashboard']);
+    this.switchToResumeSection();
   }
 
   navigateToJobTracker() {
-    this.router.navigate(['/saved-jobs']);
+    this.switchToJobTrackerSection();
   }
 
   async generateCoverLetter() {
@@ -432,7 +429,7 @@ export class CoverLetterComponent implements OnInit {
   }
 
   close() {
-    this.router.navigate(['/dashboard']);
+    this.router.navigate(['/']);
   }
 
   downloadPDF() {
