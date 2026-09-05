@@ -1,164 +1,315 @@
-<div class="min-h-screen bg-[#fafafc] text-slate-800 font-sans pt-28 pb-24 px-6 md:px-12 selection:bg-emerald-100 selection:text-emerald-900">
-  
-  <div class="max-w-3xl mx-auto space-y-16 md:space-y-20">
+<div class="min-h-screen bg-[#fafafc] pt-24 sm:pt-28 pb-20 text-slate-800 font-sans">
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8">
     
-    <!-- SECTION 1: Why We Created GlowCV -->
-    <section class="space-y-6">
-      <h1 class="text-3xl md:text-5xl font-black tracking-tight text-[#2b0b3c] leading-tight">
-        Why We Created GlowCV
+    <!-- Top Nav: Back to Home -->
+    <div class="mb-6">
+      <a routerLink="/" class="inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-[#1b4df0] hover:text-blue-700 transition-colors cursor-pointer">
+        <span class="text-sm font-bold">&lsaquo;</span>
+        <span>Back to Home</span>
+      </a>
+    </div>
+
+    <!-- Centered Header -->
+    <div class="text-center mb-12 sm:mb-16">
+      <h1 class="about-serif-title text-4xl sm:text-5xl md:text-6xl font-normal text-slate-900 tracking-tight mb-3">
+        About GlowCV
       </h1>
+      <p class="text-xs sm:text-sm md:text-base text-slate-500 font-normal max-w-xl mx-auto">
+        Empowering job seekers worldwide with modern, ATS-friendly career tools and transparent values.
+      </p>
+    </div>
+
+    <div class="space-y-12 sm:space-y-16">
       
-      <div class="space-y-5 text-slate-600 text-base md:text-lg leading-relaxed font-normal">
-        <p>
-          Writing a resume shouldn't be frustrating. Yet most people still use Word or Google Docs, losing hours to formatting issues, misaligned margins, and clunky design struggles.
-        </p>
-        <p>
-          Meanwhile, modern apps and AI have made everyday tasks seamless — so why is resume creation still stuck in the past?
-        </p>
-        <p>
-          That's why we built <strong class="text-slate-900 font-bold">GlowCV — a free, easy-to-use online resume and cover letter builder</strong>. Our goal: to create a fast, intuitive platform that is actually enjoyable to use. You focus on your story and achievements — we handle structure, layout, and ATS optimization.
-        </p>
-      </div>
-    </section>
-
-    <!-- SECTION 2: Built by a Passionate, Independent Team -->
-    <section class="space-y-6">
-      <h2 class="text-2xl md:text-3xl font-extrabold tracking-tight text-[#2b0b3c]">
-        Built by a Small, Independent Team
-      </h2>
-      
-      <p class="text-slate-600 text-base md:text-lg leading-relaxed">
-        We're not driven by aggressive monetization or dark patterns. We're a quality-oriented team with a candidate-first philosophy, committed to building the <strong class="text-slate-900 font-bold">best truly accessible resume builder</strong> for job seekers worldwide.
-      </p>
-
-      <ul class="space-y-4 text-slate-700 text-base md:text-lg font-medium pt-2">
-        <li class="flex items-start gap-3.5">
-          <span class="text-xl leading-none select-none">👉</span>
-          <span><strong class="text-slate-900 font-bold">No paywalls, no watermarks, no surprises</strong> when downloading your resume PDF.</span>
-        </li>
-        <li class="flex items-start gap-3.5">
-          <span class="text-xl leading-none select-none">👉</span>
-          <span><strong class="text-slate-900 font-bold">Your first resume is free forever</strong>, with full access to all professional design features.</span>
-        </li>
-        <li class="flex items-start gap-3.5">
-          <span class="text-xl leading-none select-none">👉</span>
-          <span>You only upgrade if you want to manage multiple resumes, unlock unlimited cover letters, or utilize advanced AI generation.</span>
-        </li>
-      </ul>
-
-      <p class="text-slate-600 text-base md:text-lg leading-relaxed pt-2">
-        We built GlowCV to support your career success — not to trap your work behind paywalls.
-      </p>
-    </section>
-
-    <!-- SECTION 3: Why GlowCV Is Different -->
-    <section class="space-y-6">
-      <h2 class="text-2xl md:text-3xl font-extrabold tracking-tight text-[#2b0b3c]">
-        Why GlowCV Is Different
-      </h2>
-      
-      <p class="text-slate-600 text-base md:text-lg leading-relaxed">
-        Unlike multi-purpose design tools like Canva, Word, or Adobe, GlowCV is built specifically for <strong class="text-slate-900 font-bold">job-winning resume & cover letter creation</strong> — fully optimized for modern Applicant Tracking Systems (ATS). That means:
-      </p>
-
-      <ul class="space-y-3.5 text-slate-700 text-base md:text-lg font-medium pt-2">
-        <li class="flex items-center gap-3">
-          <span class="w-5 h-5 rounded-md bg-emerald-100 text-emerald-700 flex items-center justify-center text-xs font-black">✓</span>
-          <span>Structured guidance so you always know what to write</span>
-        </li>
-        <li class="flex items-center gap-3">
-          <span class="w-5 h-5 rounded-md bg-emerald-100 text-emerald-700 flex items-center justify-center text-xs font-black">✓</span>
-          <span>18+ Templates that follow recruiter-approved industry standards</span>
-        </li>
-        <li class="flex items-center gap-3">
-          <span class="w-5 h-5 rounded-md bg-emerald-100 text-emerald-700 flex items-center justify-center text-xs font-black">✓</span>
-          <span>Full design flexibility without sacrificing ATS readability</span>
-        </li>
-        <li class="flex items-center gap-3">
-          <span class="w-5 h-5 rounded-md bg-emerald-100 text-emerald-700 flex items-center justify-center text-xs font-black">✓</span>
-          <span>No design or technical skills required</span>
-        </li>
-      </ul>
-
-      <p class="text-slate-600 text-base md:text-lg leading-relaxed pt-2">
-        And unlike many so-called "free" resume builders, we don't hold your downloads hostage, watermark your PDF, or use misleading upselling tricks.
-      </p>
-
-      <p class="text-slate-600 text-base md:text-lg leading-relaxed">
-        We're proud of our community ratings — showing that job applicants around the world value our honest, transparent approach:
-      </p>
-
-      <!-- Trust Ratings Line -->
-      <div class="pt-2 space-y-3">
-        <div class="flex items-center gap-2 text-base md:text-lg font-bold text-slate-900">
-          <span>Top rated by our amazing users</span>
-          <span class="text-amber-400 tracking-tighter text-lg">★★★★★</span>
-        </div>
-
-        <div class="flex flex-wrap items-center gap-4 text-sm font-semibold text-slate-600">
-          <span class="flex items-center gap-1.5 hover:text-slate-900 transition-colors cursor-pointer">
-            <span class="w-4 h-4 rounded-full bg-blue-500 text-white text-[9px] flex items-center justify-center font-bold">G</span>
-            <span class="underline underline-offset-4 decoration-slate-300">Google reviews (4.9)</span>
-          </span>
-          <span class="text-slate-300">|</span>
-          <span class="flex items-center gap-1.5 hover:text-slate-900 transition-colors cursor-pointer">
-            <span class="text-emerald-500">★</span>
-            <span class="underline underline-offset-4 decoration-slate-300">Trustpilot (4.9)</span>
-          </span>
-          <span class="text-slate-300">|</span>
-          <span class="flex items-center gap-1.5 hover:text-slate-900 transition-colors cursor-pointer">
-            <span class="w-4 h-4 rounded-full bg-orange-500 text-white text-[9px] flex items-center justify-center font-bold">P</span>
-            <span class="underline underline-offset-4 decoration-slate-300">Product Hunt (4.9)</span>
-          </span>
+      <!-- Card 1: Our Story / Why We Built GlowCV -->
+      <div class="bg-white rounded-3xl border border-slate-100 shadow-sm p-6 sm:p-10 md:p-12">
+        <span class="text-[11px] font-bold text-[#1b4df0] uppercase tracking-wider mb-2 block">Our Mission</span>
+        <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 mb-6 tracking-tight">
+          Why We Created GlowCV
+        </h2>
+        
+        <div class="space-y-4 text-slate-600 text-sm sm:text-base leading-relaxed font-normal">
+          <p>
+            Writing a resume shouldn't be stressful or time-consuming. Yet most professionals still wrestle with misaligned margins in Word or Google Docs, spending hours fighting formatting rather than telling their story.
+          </p>
+          <p>
+            Meanwhile, modern design tools and AI have revolutionized everyday productivity — so why is resume building still stuck in the past?
+          </p>
+          <p>
+            That's why we created <strong class="text-slate-900 font-semibold">GlowCV</strong>: a fast, intuitive, and genuinely delightful resume and cover letter builder. You focus on your achievements — we ensure flawless typography, modern layouts, and automated ATS compliance.
+          </p>
         </div>
       </div>
 
-      <p class="text-slate-600 text-base md:text-lg leading-relaxed font-medium pt-2">
-        With GlowCV, <strong class="text-slate-900 font-bold">free means free</strong> — no tricks, no traps.
-      </p>
-    </section>
+      <!-- Card 2: What Sets Us Apart (4 Grid Cards) -->
+      <div class="bg-white rounded-3xl border border-slate-100 shadow-sm p-6 sm:p-10 md:p-12">
+        <span class="text-[11px] font-bold text-[#1b4df0] uppercase tracking-wider mb-2 block">Core Values</span>
+        <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 mb-8 tracking-tight">
+          What Sets Us Apart
+        </h2>
 
-    <!-- SECTION 4: Let's Get Started -->
-    <section class="space-y-6 pt-4">
-      <h2 class="text-2xl md:text-3xl font-extrabold tracking-tight text-[#2b0b3c]">
-        Let's Get Started
-      </h2>
-      
-      <p class="text-slate-600 text-base md:text-lg leading-relaxed">
-        We're here to help you land your next job with less stress and more confidence.
-      </p>
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-5 sm:gap-6">
+          
+          <!-- Feature 1 -->
+          <div class="p-5 sm:p-6 rounded-2xl bg-[#fafafc] border border-slate-100 hover:border-slate-200 transition-all">
+            <div class="w-10 h-10 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center mb-3">
+              <span class="material-icons text-xl">verified_user</span>
+            </div>
+            <h3 class="text-base font-bold text-slate-900 mb-1.5">100% ATS Optimized</h3>
+            <p class="text-xs sm:text-sm text-slate-500 leading-relaxed">
+              Every template is recruiter-tested to pass Applicant Tracking Systems with machine-readable vector typography.
+            </p>
+          </div>
 
-      <div>
-        <button 
-          (click)="startBuilding()"
-          class="inline-flex items-center gap-2.5 px-8 py-4 bg-[#2b0b3c] hover:bg-[#1a0626] text-white text-base font-bold rounded-2xl shadow-xl shadow-indigo-950/15 hover:shadow-2xl hover:scale-[1.02] active:scale-95 transition-all cursor-pointer"
-        >
-          <span class="text-amber-300 text-lg">👉</span>
-          <span>Start Building Your Resume</span>
-        </button>
+          <!-- Feature 2 -->
+          <div class="p-5 sm:p-6 rounded-2xl bg-[#fafafc] border border-slate-100 hover:border-slate-200 transition-all">
+            <div class="w-10 h-10 rounded-xl bg-blue-50 text-[#1b4df0] flex items-center justify-center mb-3">
+              <span class="material-icons text-xl">auto_awesome</span>
+            </div>
+            <h3 class="text-base font-bold text-slate-900 mb-1.5">AI Writing Assistant</h3>
+            <p class="text-xs sm:text-sm text-slate-500 leading-relaxed">
+              Generate role-specific bullet points with strong action verbs and quantified impact in seconds.
+            </p>
+          </div>
+
+          <!-- Feature 3 -->
+          <div class="p-5 sm:p-6 rounded-2xl bg-[#fafafc] border border-slate-100 hover:border-slate-200 transition-all">
+            <div class="w-10 h-10 rounded-xl bg-indigo-50 text-indigo-600 flex items-center justify-center mb-3">
+              <span class="material-icons text-xl">money_off</span>
+            </div>
+            <h3 class="text-base font-bold text-slate-900 mb-1.5">Transparent & Honest</h3>
+            <p class="text-xs sm:text-sm text-slate-500 leading-relaxed">
+              No hidden download traps, no watermarks, and no surprise paywalls. Free means genuinely free.
+            </p>
+          </div>
+
+          <!-- Feature 4 -->
+          <div class="p-5 sm:p-6 rounded-2xl bg-[#fafafc] border border-slate-100 hover:border-slate-200 transition-all">
+            <div class="w-10 h-10 rounded-xl bg-purple-50 text-purple-600 flex items-center justify-center mb-3">
+              <span class="material-icons text-xl">style</span>
+            </div>
+            <h3 class="text-base font-bold text-slate-900 mb-1.5">40+ Expert Templates</h3>
+            <p class="text-xs sm:text-sm text-slate-500 leading-relaxed">
+              From creative and modern to corporate and executive formats suited for every career level.
+            </p>
+          </div>
+
+        </div>
       </div>
 
-      <p class="text-sm font-medium text-slate-400 italic">
-        It's free, fast, and yours to keep.
-      </p>
-    </section>
+      <!-- SECTION: REVIEWED BY THE COMMUNITY (Pixel-Perfect from Reference Image) -->
+      <div class="py-4 sm:py-8">
+        
+        <!-- Header Row with Title, Ratings, and Round Nav Buttons -->
+        <div class="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-8">
+          <div>
+            <h2 class="text-3xl sm:text-4xl md:text-5xl font-bold text-slate-900 tracking-tight">
+              Reviewed by the community.
+            </h2>
+            
+            <div class="flex flex-wrap items-center gap-2 sm:gap-3 mt-3">
+              <!-- Solid Blue Stars -->
+              <div class="flex items-center text-[#1b4df0] gap-0.5 text-base sm:text-lg">
+                <span>★</span><span>★</span><span>★</span><span>★</span><span>★</span>
+              </div>
+              <div class="text-xs sm:text-sm font-bold text-slate-900">
+                4.8 <span class="font-normal text-slate-500">out of 5</span>
+              </div>
+              <a (click)="showAllReviewsModal.set(true)" class="text-xs sm:text-sm text-slate-500 underline underline-offset-2 hover:text-slate-900 transition-colors cursor-pointer">
+                based on 48,027 reviews
+              </a>
+            </div>
+          </div>
 
-    <!-- SECTION 5: Interested in Partnering? -->
-    <section class="space-y-4 pt-6 border-t border-slate-200/80">
-      <h2 class="text-2xl md:text-3xl font-extrabold tracking-tight text-[#2b0b3c]">
-        Interested in Partnering?
-      </h2>
-      
-      <p class="text-slate-600 text-base md:text-lg leading-relaxed">
-        Are you a career coach, business influencer, university, job board, or platform looking to support job seekers? We're always open to meaningful collaborations.
-      </p>
+          <!-- Previous / Next Round Arrows -->
+          <div class="flex items-center gap-3 self-end md:self-auto">
+            <!-- Previous Button (Lavender) -->
+            <button 
+              (click)="prevReviewPage()"
+              aria-label="Previous reviews"
+              class="w-11 h-11 rounded-full bg-[#d9dcfd] text-[#1b4df0] hover:bg-[#c7ccfd] active:scale-95 flex items-center justify-center transition-all cursor-pointer shadow-2xs">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"></path>
+              </svg>
+            </button>
 
-      <div class="flex items-center gap-2 text-base font-medium text-slate-700 pt-1">
-        <span class="material-icons text-slate-400 text-lg">mail_outline</span>
-        <span>Reach out to <a href="mailto:contact@glowcv.com" class="text-indigo-600 font-bold underline underline-offset-4 hover:text-indigo-800 transition-colors">contact&#64;glowcv.com</a></span>
+            <!-- Next Button (Vibrant Blue) -->
+            <button 
+              (click)="nextReviewPage()"
+              aria-label="Next reviews"
+              class="w-11 h-11 rounded-full bg-[#1b4df0] text-white hover:bg-[#153ec7] active:scale-95 flex items-center justify-center transition-all cursor-pointer shadow-sm">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M9 5l7 7-7 7"></path>
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        <!-- 3x2 Grid of 6 Review Cards -->
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5 sm:gap-6">
+          @for (review of allReviewPages[reviewPage()]; track review.name) {
+            <div class="bg-white rounded-2xl p-6 sm:p-7 border border-slate-100 shadow-[0_2px_14px_rgba(0,0,0,0.03)] hover:shadow-md hover:border-slate-200 transition-all flex flex-col justify-between min-h-[170px]">
+              <div>
+                <!-- Author Header -->
+                <div class="flex items-center gap-3.5 mb-4">
+                  <img 
+                    [src]="review.avatar" 
+                    [alt]="review.name" 
+                    class="w-11 h-11 rounded-full object-cover border border-slate-100 shadow-2xs flex-shrink-0"
+                    loading="lazy" />
+                  <div>
+                    <h3 class="text-sm sm:text-base font-bold text-slate-900 tracking-tight leading-tight">
+                      {{ review.name }}
+                    </h3>
+                    <p class="text-xs text-slate-400 font-normal mt-0.5">
+                      {{ review.role }}
+                    </p>
+                  </div>
+                </div>
+
+                <!-- Review Text -->
+                <p class="text-xs sm:text-sm text-slate-600 leading-relaxed font-normal">
+                  {{ review.quote }}
+                </p>
+              </div>
+            </div>
+          }
+        </div>
+
+        <!-- See all reviews Button -->
+        <div class="text-center mt-10">
+          <button 
+            (click)="showAllReviewsModal.set(true)"
+            class="inline-flex items-center gap-2 px-6 py-2.5 rounded-xl border border-slate-900 bg-white hover:bg-slate-900 hover:text-white text-slate-900 text-xs sm:text-sm font-semibold transition-all shadow-2xs cursor-pointer">
+            <span>See all reviews</span>
+            <span class="font-bold">&rsaquo;</span>
+          </button>
+        </div>
+
       </div>
-    </section>
+
+      <!-- Card 3: Frequently Asked Questions (Interactive Accordion) -->
+      <div class="bg-white rounded-3xl border border-slate-100 shadow-sm p-6 sm:p-10 md:p-12">
+        <span class="text-[11px] font-bold text-[#1b4df0] uppercase tracking-wider mb-2 block">FAQ</span>
+        <h2 class="text-2xl sm:text-3xl font-bold text-slate-900 mb-6 tracking-tight">
+          Frequently Asked Questions
+        </h2>
+
+        <div class="space-y-3">
+          @for (faq of faqs; track $index) {
+            <div class="border border-slate-200/80 rounded-2xl overflow-hidden transition-colors">
+              <button 
+                type="button"
+                (click)="toggleFaq($index)"
+                class="w-full flex items-center justify-between p-4 sm:p-5 text-left font-semibold text-sm sm:text-base text-slate-900 hover:bg-slate-50 transition-colors cursor-pointer select-none">
+                <span>{{ faq.q }}</span>
+                <svg 
+                  class="w-4 h-4 text-slate-400 transition-transform duration-200 flex-shrink-0 ml-4"
+                  [ngClass]="openFaqIndex() === $index ? 'rotate-180 text-[#1b4df0]' : ''"
+                  fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"></path>
+                </svg>
+              </button>
+
+              @if (openFaqIndex() === $index) {
+                <div class="px-4 sm:px-5 pb-4 sm:pb-5 text-xs sm:text-sm text-slate-600 leading-relaxed font-normal">
+                  {{ faq.a }}
+                </div>
+              }
+            </div>
+          }
+        </div>
+      </div>
+
+      <!-- Card 4: Contact & Partnerships -->
+      <div class="bg-white rounded-3xl border border-slate-100 shadow-sm p-6 sm:p-10 flex flex-col sm:flex-row items-center justify-between gap-6">
+        <div>
+          <h3 class="text-lg sm:text-xl font-bold text-slate-900 mb-1">
+            Have questions or interested in partnering?
+          </h3>
+          <p class="text-xs sm:text-sm text-slate-500">
+            We're always open to collaboration with universities, career advisors, and creators.
+          </p>
+        </div>
+
+        <a 
+          routerLink="/contact"
+          class="flex-shrink-0 px-5 py-2.5 rounded-xl border border-slate-900 text-slate-900 hover:bg-slate-900 hover:text-white text-xs sm:text-sm font-semibold transition-all shadow-2xs cursor-pointer">
+          Contact Us
+        </a>
+      </div>
+
+      <!-- Bottom Call To Action Banner -->
+      <div class="rounded-3xl bg-[#5964f6] text-white p-8 sm:p-12 text-center space-y-5 shadow-xl">
+        <h2 class="about-serif-title text-2xl sm:text-4xl font-normal tracking-tight">
+          Ready to Take Your Career to the Next Level?
+        </h2>
+        <p class="text-xs sm:text-sm md:text-base text-blue-100 max-w-lg mx-auto font-normal">
+          Create your professional, ATS-optimized resume in minutes with expert templates and AI assistance.
+        </p>
+
+        <div class="pt-2">
+          <button 
+            (click)="startBuilding()"
+            class="bg-white text-[#1b4df0] hover:bg-blue-50 active:scale-95 px-7 py-3.5 rounded-xl font-bold text-sm sm:text-base shadow-md transition-all cursor-pointer inline-flex items-center gap-2">
+            <span>+ Start Creating Free</span>
+          </button>
+        </div>
+      </div>
+
+    </div>
 
   </div>
 
+  <!-- All Reviews Modal -->
+  @if (showAllReviewsModal()) {
+    <div class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-slate-900/60 backdrop-blur-xs animate-modal-enter">
+      <div class="bg-white rounded-3xl max-w-3xl w-full max-h-[85vh] flex flex-col shadow-2xl border border-slate-100 overflow-hidden">
+        
+        <!-- Modal Header -->
+        <div class="p-6 border-b border-slate-100 flex items-center justify-between">
+          <div>
+            <h3 class="text-xl font-bold text-slate-900">Community Reviews</h3>
+            <div class="flex items-center gap-2 text-xs text-slate-500 mt-1">
+              <span class="text-[#1b4df0] font-bold">★★★★★</span>
+              <span>4.8 / 5 rating from 48,027+ career builders worldwide</span>
+            </div>
+          </div>
+          <button 
+            (click)="showAllReviewsModal.set(false)"
+            class="w-8 h-8 rounded-full bg-slate-100 hover:bg-slate-200 text-slate-600 flex items-center justify-center cursor-pointer transition-colors">
+            ✕
+          </button>
+        </div>
+
+        <!-- Reviews Scrollable List -->
+        <div class="p-6 overflow-y-auto space-y-4 max-h-[60vh]">
+          @for (page of allReviewPages; track $index) {
+            @for (review of page; track review.name) {
+              <div class="p-4 rounded-xl bg-slate-50 border border-slate-100 flex items-start gap-4">
+                <img [src]="review.avatar" [alt]="review.name" class="w-10 h-10 rounded-full object-cover flex-shrink-0" />
+                <div class="flex-1">
+                  <div class="flex items-center justify-between">
+                    <h4 class="text-sm font-bold text-slate-900">{{ review.name }}</h4>
+                    <span class="text-[#1b4df0] text-xs">★★★★★</span>
+                  </div>
+                  <p class="text-xs text-slate-400 mb-2">{{ review.role }}</p>
+                  <p class="text-xs sm:text-sm text-slate-600">{{ review.quote }}</p>
+                </div>
+              </div>
+            }
+          }
+        </div>
+
+        <!-- Modal Footer -->
+        <div class="p-4 bg-slate-50 border-t border-slate-100 text-right">
+          <button 
+            (click)="showAllReviewsModal.set(false)"
+            class="px-5 py-2 rounded-xl bg-[#1b4df0] text-white text-xs font-semibold hover:bg-blue-700 transition-all cursor-pointer">
+            Close
+          </button>
+        </div>
+      </div>
+    </div>
+  }
 </div>
