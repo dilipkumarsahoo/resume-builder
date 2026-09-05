@@ -1,60 +1,503 @@
-<section class="relative pt-24 md:pt-28 pb-8 md:pb-12 overflow-hidden">
-  <!-- Subtle background gradient -->
-  <div class="absolute top-0 left-1/2 -translate-x-1/2 w-[1000px] h-[600px] opacity-30 pointer-events-none"
-    style="background: radial-gradient(circle, rgba(0,200,150,0.15) 0%, rgba(255,255,255,0) 70%);"></div>
+<section class="relative pt-20 sm:pt-24 md:pt-28 pb-20 md:pb-28 overflow-hidden bg-[#fafafc]">
+  <!-- Decorative Abstract Background Curved Squiggles (matching image) -->
+  <div class="absolute inset-0 pointer-events-none overflow-hidden select-none">
+    <!-- Left Squiggle Line -->
+    <svg class="absolute -top-10 -left-12 sm:left-4 w-[420px] h-[720px] opacity-40 text-slate-300" viewBox="0 0 400 700" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M 60 40 C 20 120 180 180 160 280 C 140 380 20 420 80 520 C 140 620 320 640 280 720" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" fill="none" />
+    </svg>
 
-  <div class="max-w-7xl mx-auto px-6 grid md:grid-cols-2 gap-12 items-center relative z-10">
-    <div #heroText class="flex flex-col items-start">
-      <div
-        class="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-bg-light text-sm font-medium text-gray-600 mb-6 hero-item">
-        <span class="w-2 h-2 rounded-full bg-accent"></span>
-        AI-Powered Builder
-      </div>
-      <h1 class="text-5xl md:text-7xl font-bold tracking-tight text-text-main leading-[1.1] mb-6 hero-item">
-        Build a CV That <br />
-        <span class="text-transparent bg-clip-text bg-gradient-to-r from-accent to-accent-secondary">Gets You
-          Hired</span>
+    <!-- Right Squiggle Line -->
+    <svg class="absolute top-8 -right-16 sm:right-0 w-[450px] h-[760px] opacity-40 text-slate-300" viewBox="0 0 400 750" fill="none" xmlns="http://www.w3.org/2000/svg">
+      <path d="M 320 60 C 360 180 260 240 280 340 C 300 440 380 480 340 580 C 300 680 140 700 80 760" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" fill="none" />
+    </svg>
+
+    <!-- Soft Ambient Light Glow -->
+    <div class="absolute top-1/4 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[700px] h-[400px] bg-gradient-to-b from-blue-50/50 to-transparent rounded-full blur-3xl -z-10"></div>
+  </div>
+
+  <div class="max-w-6xl mx-auto px-4 sm:px-6 relative z-10">
+    
+    <!-- Hero Header & Call to Actions -->
+    <div #heroContent class="flex flex-col items-center text-center max-w-3xl mx-auto mb-10 md:mb-14">
+      
+      <!-- Main Serif Headline -->
+      <h1 class="hero-anim hero-serif-title text-4xl sm:text-6xl md:text-[68px] lg:text-[72px] font-normal text-[#111827] leading-[1.12] tracking-tight mb-5 md:mb-6">
+        Take Your Career<br class="hidden sm:inline" />
+        Search To The Next Level.
       </h1>
-      <p class="text-lg md:text-xl text-gray-500 mb-8 max-w-lg hero-item">
-        Create a professional, ATS-friendly CV in minutes. Stand out from the crowd with expert-designed templates and
-        AI suggestions.
+
+      <!-- Subtitle Description -->
+      <p class="hero-anim text-sm sm:text-base md:text-[17px] text-[#525866] leading-relaxed max-w-2xl mx-auto mb-8 font-normal">
+        Use professional field-tested resume templates that follow the exact 'resume rules' employers look for. Easy to use and done within minutes – try now for free!
       </p>
-      <div class="flex flex-col sm:flex-row items-center gap-4 hero-item w-full sm:w-auto">
-        <button (click)="cvService.openOnboarding()"
-          class="w-full sm:w-auto bg-accent text-white px-8 py-4 rounded-full text-lg font-medium hover:bg-emerald-500 transition-all shadow-lg shadow-accent/30 hover:shadow-xl hover:shadow-accent/40 hover:-translate-y-1 active:translate-y-0">
-          Create Your CV
+
+      <!-- CTA Buttons -->
+      <div class="hero-anim flex flex-row items-center justify-center gap-3.5">
+        <button 
+          (click)="cvService.openOnboarding()"
+          class="bg-[#1b4df0] hover:bg-[#1541d4] active:bg-[#0f34b3] text-white px-6 sm:px-7 py-3 sm:py-3.5 rounded-xl font-medium text-sm sm:text-base shadow-sm hover:shadow-md transition-all duration-200 flex items-center justify-center gap-2 cursor-pointer transform hover:-translate-y-0.5">
+          <span class="text-base font-bold">+</span>
+          <span>Start Creating</span>
         </button>
-        <button (click)="cvService.openOnboarding()"
-          class="w-full sm:w-auto bg-white text-text-main border border-gray-200 px-8 py-4 rounded-full text-lg font-medium hover:bg-gray-50 transition-all hover:-translate-y-1 active:translate-y-0">
-          Upgrade CV
-        </button>
+
+        <a 
+          routerLink="/login"
+          class="bg-[#eef2fe] hover:bg-[#e2e8fc] active:bg-[#d5dffa] text-[#3353b8] px-6 sm:px-7 py-3 sm:py-3.5 rounded-xl font-medium text-sm sm:text-base transition-all duration-200 cursor-pointer text-center transform hover:-translate-y-0.5">
+          Log In
+        </a>
       </div>
+
     </div>
 
-    <div #heroImage class="relative md:translate-y-0 md:translate-x-12">
-      <!-- CV Mockup -->
-      <div
-        class="relative w-full max-w-md mx-auto aspect-[1/1.4] bg-[#0f172a] rounded-2xl shadow-2xl border border-slate-800/80 overflow-hidden">
-        <div class="absolute inset-0 bg-[#0f172a] overflow-hidden">
-          <div class="absolute top-0 left-0 origin-top-left pointer-events-none"
-            style="transform: scale(0.42); width: 238.1%; height: 238.1%;">
-            <app-cv-preview templateOverride="startup" [isPreview]="true">
-            </app-cv-preview>
+    <!-- Browser Window & Dashboard Mockup -->
+    <div #heroMockup class="hero-mockup-container relative max-w-5xl mx-auto mt-4">
+      
+      <!-- Outer Browser Chrome Frame -->
+      <div class="rounded-2xl bg-[#1e2023] p-1 sm:p-1.5 shadow-[0_20px_60px_-15px_rgba(15,23,42,0.35)] border border-slate-700/60 overflow-hidden">
+        
+        <!-- Browser Header Bar (Dark Mac Chrome Style) -->
+        <div class="h-9 sm:h-10 px-3 sm:px-4 bg-[#282b30] rounded-t-xl flex items-center justify-between select-none text-slate-400 text-xs">
+          
+          <!-- Left: Window & Nav Buttons -->
+          <div class="flex items-center gap-3 sm:gap-4">
+            <div class="flex items-center gap-1.5">
+              <span class="w-2.5 h-2.5 rounded-full bg-[#ef4444]/80"></span>
+              <span class="w-2.5 h-2.5 rounded-full bg-[#f59e0b]/80"></span>
+              <span class="w-2.5 h-2.5 rounded-full bg-[#10b981]/80"></span>
+            </div>
+            <div class="hidden sm:flex items-center gap-2 text-slate-400 ml-1">
+              <span class="cursor-pointer hover:text-white">&lsaquo;</span>
+              <span class="cursor-pointer hover:text-white">&rsaquo;</span>
+            </div>
+          </div>
+
+          <!-- Center: URL Address Bar Capsule -->
+          <div class="flex items-center justify-center gap-2 bg-[#1b1d20] border border-slate-700/50 px-4 py-1 rounded-md text-[11px] sm:text-xs text-slate-300 font-normal min-w-[160px] sm:min-w-[240px]">
+            <svg class="w-3 h-3 text-slate-400" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M5 9V7a5 5 0 0110 0v2a2 2 0 012 2v5a2 2 0 01-2 2H5a2 2 0 01-2-2v-5a2 2 0 012-2zm8-2v2H7V7a3 3 0 016 0z" clip-rule="evenodd" />
+            </svg>
+            <span class="text-slate-300 font-mono tracking-tight">resume.builder</span>
+            <span class="text-slate-500 text-[10px] ml-1 cursor-pointer hover:text-slate-300">↻</span>
+          </div>
+
+          <!-- Right: Browser Action Icons -->
+          <div class="flex items-center gap-2.5 sm:gap-3 text-slate-400 text-xs">
+            <span class="cursor-pointer hover:text-white hidden sm:inline">&uarr;</span>
+            <span class="cursor-pointer hover:text-white font-bold">+</span>
+            <span class="cursor-pointer hover:text-white hidden sm:inline">&#9633;</span>
           </div>
         </div>
-        <!-- UI Overlays -->
-        <div
-          class="absolute top-4 right-4 bg-white/95 backdrop-blur-sm px-3 py-1.5 rounded-full shadow-sm border border-gray-100 flex items-center gap-2">
-          <span class="material-icons text-accent text-sm">check_circle</span>
-          <span class="text-xs font-semibold text-slate-800">ATS Optimized</span>
+
+        <!-- Inside Browser Window Content (White Modern Dashboard) -->
+        <div class="bg-white rounded-b-xl overflow-hidden border-t border-slate-200/50 text-[#1e293b]">
+          
+          <!-- App Topbar Inside Browser -->
+          <div class="h-12 sm:h-14 px-4 sm:px-6 border-b border-slate-100 flex items-center justify-between bg-white">
+            
+            <!-- Left App Logo -->
+            <div class="flex items-center gap-2 select-none">
+              <div class="w-6 h-6 flex items-center justify-center">
+                <svg viewBox="0 0 32 32" class="w-5 h-5 text-[#2563eb]" fill="currentColor">
+                  <path d="M6 10 C 10 6, 16 6, 20 10 L 14 16 C 12 14, 8 14, 6 16 Z" fill="#4338ca"/>
+                  <path d="M12 16 C 16 12, 22 12, 26 16 L 20 22 C 18 20, 14 20, 12 22 Z" fill="#2563eb"/>
+                  <path d="M18 22 C 22 18, 28 18, 32 22 L 26 28 C 24 26, 20 26, 18 28 Z" fill="#60a5fa"/>
+                </svg>
+              </div>
+              <span class="font-bold text-sm sm:text-base tracking-tight text-slate-900">Builder.io</span>
+            </div>
+
+            <!-- Center Greeting -->
+            <div class="hidden md:flex items-center gap-1.5 text-xs lg:text-sm">
+              <span class="font-bold text-slate-900">👋 Welcome, Martin!</span>
+              <span class="text-slate-400 font-normal">What do you want to create today.</span>
+            </div>
+
+            <!-- Right App Controls -->
+            <div class="flex items-center gap-2.5 sm:gap-3">
+              <button class="w-7 h-7 rounded-full text-slate-400 hover:text-slate-600 hover:bg-slate-50 flex items-center justify-center transition-colors">
+                <span class="material-icons text-base">search</span>
+              </button>
+              <button class="relative w-7 h-7 rounded-full text-slate-400 hover:text-slate-600 hover:bg-slate-50 flex items-center justify-center transition-colors">
+                <span class="material-icons text-base">notifications_none</span>
+                <span class="absolute top-1 right-1 w-1.5 h-1.5 rounded-full bg-blue-600"></span>
+              </button>
+              <button (click)="cvService.openOnboarding()" class="bg-[#1b4df0] hover:bg-[#1541d4] text-white px-3 sm:px-3.5 py-1.5 rounded-lg text-xs font-semibold flex items-center gap-1 shadow-xs cursor-pointer">
+                <span>+</span>
+                <span>Create New</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- App Main Body: Sidebar + Main Content -->
+          <div class="flex min-h-[380px] sm:min-h-[440px] bg-[#fcfcfd]">
+            
+            <!-- Left Sidebar Navigation -->
+            <div class="hidden md:flex flex-col justify-between w-48 lg:w-52 border-r border-slate-100 bg-white p-3.5">
+              
+              <!-- Top Menu Links -->
+              <div class="space-y-1">
+                <div class="flex items-center gap-2.5 px-3 py-2 rounded-xl bg-slate-100/80 font-bold text-xs text-slate-900 cursor-pointer">
+                  <span class="material-icons text-sm text-slate-800">grid_view</span>
+                  <span>Dashboard</span>
+                </div>
+                <div class="flex items-center gap-2.5 px-3 py-2 rounded-xl font-medium text-xs text-slate-500 hover:text-slate-800 hover:bg-slate-50 cursor-pointer transition-colors">
+                  <span class="material-icons text-sm text-slate-400">layers</span>
+                  <span>Templates</span>
+                </div>
+                <div class="flex items-center gap-2.5 px-3 py-2 rounded-xl font-medium text-xs text-slate-500 hover:text-slate-800 hover:bg-slate-50 cursor-pointer transition-colors">
+                  <span class="material-icons text-sm text-slate-400">work_outline</span>
+                  <span>Jobs</span>
+                </div>
+                <div class="flex items-center gap-2.5 px-3 py-2 rounded-xl font-medium text-xs text-slate-500 hover:text-slate-800 hover:bg-slate-50 cursor-pointer transition-colors">
+                  <span class="material-icons text-sm text-slate-400">description</span>
+                  <span>Job Applications</span>
+                </div>
+              </div>
+
+              <!-- Bottom Sidebar Links -->
+              <div class="space-y-1 pt-4 border-t border-slate-100">
+                <div class="flex items-center gap-2.5 px-3 py-1.5 rounded-xl font-medium text-xs text-slate-500 hover:text-slate-800 cursor-pointer">
+                  <span class="material-icons text-sm text-slate-400">settings</span>
+                  <span>Settings</span>
+                </div>
+                <div class="flex items-center gap-2.5 px-3 py-1.5 rounded-xl font-medium text-xs text-slate-500 hover:text-slate-800 cursor-pointer">
+                  <span class="material-icons text-sm text-slate-400">help_outline</span>
+                  <span>Help & support</span>
+                </div>
+                <div class="flex items-center gap-2.5 px-3 py-2 pt-3">
+                  <div class="w-7 h-7 rounded-full bg-amber-100 text-amber-700 flex items-center justify-center font-bold text-xs border border-amber-200">
+                    ME
+                  </div>
+                  <div class="overflow-hidden">
+                    <p class="text-xs font-semibold text-slate-800 truncate">Martin Edwards</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+
+            <!-- Main Dashboard Canvas -->
+            <div class="flex-1 p-3.5 sm:p-5 lg:p-6 overflow-hidden flex flex-col justify-between">
+              
+              <!-- Section 1: Resume & Cover Letters Tab Header -->
+              <div>
+                <div class="flex items-center justify-between pb-3 border-b border-slate-100 mb-4">
+                  <div class="flex items-center gap-6 text-xs sm:text-sm font-semibold">
+                    <button (click)="setTab('resume')" class="pb-1 transition-colors relative cursor-pointer" [ngClass]="activeTab === 'resume' ? 'text-slate-900 border-b-2 border-slate-900 font-bold' : 'text-slate-400 hover:text-slate-600'">
+                      Resume
+                    </button>
+                    <button (click)="setTab('coverLetter')" class="pb-1 transition-colors relative cursor-pointer" [ngClass]="activeTab === 'coverLetter' ? 'text-slate-900 border-b-2 border-slate-900 font-bold' : 'text-slate-400 hover:text-slate-600'">
+                      Cover Letters
+                    </button>
+                  </div>
+
+                  <button (click)="cvService.openResumeTemplates()" class="text-[11px] sm:text-xs font-medium text-slate-600 hover:text-slate-900 border border-slate-200 hover:border-slate-300 rounded-lg px-2.5 py-1 bg-white transition-colors cursor-pointer flex items-center gap-1">
+                    <span>View All</span>
+                    <span class="text-[10px]">&rsaquo;</span>
+                  </button>
+                </div>
+
+                <!-- 4 Resume Cards Grid / Row -->
+                <div class="grid grid-cols-2 sm:grid-cols-4 gap-2.5 sm:gap-3.5">
+                  
+                  <!-- Card 1: Martin's Resume (Yellow Header Accent) -->
+                  <div (click)="cvService.openOnboarding()" class="group cursor-pointer">
+                    <div class="aspect-[1/1.3] bg-white rounded-lg border border-slate-200/90 shadow-2xs group-hover:border-blue-400 group-hover:shadow-md transition-all overflow-hidden p-2 flex flex-col justify-between relative">
+                      <!-- Yellow Top Header Accent -->
+                      <div class="h-2 w-7 bg-amber-400 rounded-xs mb-1"></div>
+                      <div class="flex items-center gap-1.5 mb-1.5">
+                        <div class="w-4 h-4 rounded-full bg-slate-300 overflow-hidden flex-shrink-0">
+                          <div class="w-full h-full bg-gradient-to-tr from-amber-400 to-amber-200"></div>
+                        </div>
+                        <div class="space-y-0.5 w-full">
+                          <div class="h-1 bg-slate-700 rounded-xs w-3/4"></div>
+                          <div class="h-0.5 bg-slate-300 rounded-xs w-1/2"></div>
+                        </div>
+                      </div>
+                      <!-- Mock resume body lines -->
+                      <div class="space-y-1.5 flex-1">
+                        <div class="h-0.5 bg-slate-200 rounded-xs w-full"></div>
+                        <div class="h-0.5 bg-slate-200 rounded-xs w-5/6"></div>
+                        <div class="h-0.5 bg-slate-200 rounded-xs w-4/6"></div>
+                        <div class="pt-1 flex gap-1">
+                          <div class="w-1/2 space-y-1">
+                            <div class="h-0.5 bg-amber-400 rounded-xs w-3/4"></div>
+                            <div class="h-0.5 bg-slate-200 rounded-xs w-full"></div>
+                            <div class="h-0.5 bg-slate-200 rounded-xs w-4/5"></div>
+                          </div>
+                          <div class="w-1/2 space-y-0.5 pt-1">
+                            <div class="h-1 bg-slate-800 rounded-xs w-full"></div>
+                            <div class="h-1 bg-slate-800 rounded-xs w-4/5"></div>
+                            <div class="h-1 bg-slate-800 rounded-xs w-3/5"></div>
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="mt-1.5 flex items-start justify-between">
+                      <div>
+                        <p class="text-[11px] font-bold text-slate-900 group-hover:text-blue-600 transition-colors truncate">Martin's Resume</p>
+                        <p class="text-[9px] text-slate-400">Last Updated 2 days ago</p>
+                      </div>
+                      <span class="text-slate-400 text-xs font-bold leading-none">&#8942;</span>
+                    </div>
+                  </div>
+
+                  <!-- Card 2: Minimalist Resume -->
+                  <div (click)="cvService.openOnboarding()" class="group cursor-pointer">
+                    <div class="aspect-[1/1.3] bg-white rounded-lg border border-slate-200/90 shadow-2xs group-hover:border-blue-400 group-hover:shadow-md transition-all overflow-hidden p-2 flex flex-col items-center relative">
+                      <div class="w-4 h-4 rounded-full bg-slate-200 mb-1"></div>
+                      <div class="h-1 bg-slate-700 rounded-xs w-1/2 mb-2"></div>
+                      <div class="space-y-1 w-full">
+                        <div class="h-0.5 bg-slate-300 rounded-xs w-1/3 mb-1"></div>
+                        <div class="h-0.5 bg-slate-200 rounded-xs w-full"></div>
+                        <div class="h-0.5 bg-slate-200 rounded-xs w-5/6"></div>
+                        <div class="h-0.5 bg-slate-300 rounded-xs w-1/3 mt-2 mb-1"></div>
+                        <div class="h-0.5 bg-slate-200 rounded-xs w-full"></div>
+                        <div class="h-0.5 bg-slate-200 rounded-xs w-4/5"></div>
+                      </div>
+                    </div>
+                    <div class="mt-1.5 flex items-start justify-between">
+                      <div>
+                        <p class="text-[11px] font-bold text-slate-900 group-hover:text-blue-600 transition-colors truncate">Untitled</p>
+                        <p class="text-[9px] text-slate-400">Last Updated 2 days ago</p>
+                      </div>
+                      <span class="text-slate-400 text-xs font-bold leading-none">&#8942;</span>
+                    </div>
+                  </div>
+
+                  <!-- Card 3: Bold Header Resume ("JOHN SURNAME") -->
+                  <div (click)="cvService.openOnboarding()" class="group cursor-pointer">
+                    <div class="aspect-[1/1.3] bg-white rounded-lg border border-slate-200/90 shadow-2xs group-hover:border-blue-400 group-hover:shadow-md transition-all overflow-hidden p-2 flex flex-col justify-between relative">
+                      <div>
+                        <div class="bg-amber-300 text-[6px] font-black text-slate-900 px-1 py-0.5 inline-block leading-tight rounded-xs mb-1">
+                          JOHN<br/>SURNAME
+                        </div>
+                        <div class="grid grid-cols-2 gap-1 mt-1">
+                          <div class="space-y-0.5">
+                            <div class="h-0.5 bg-slate-700 rounded-xs w-full"></div>
+                            <div class="h-0.5 bg-slate-200 rounded-xs w-full"></div>
+                            <div class="h-0.5 bg-slate-200 rounded-xs w-4/5"></div>
+                          </div>
+                          <div class="space-y-0.5">
+                            <div class="h-0.5 bg-slate-700 rounded-xs w-full"></div>
+                            <div class="h-0.5 bg-slate-200 rounded-xs w-full"></div>
+                            <div class="h-0.5 bg-slate-200 rounded-xs w-4/5"></div>
+                          </div>
+                        </div>
+                      </div>
+                      <div class="space-y-0.5 pt-1">
+                        <div class="h-0.5 bg-slate-300 rounded-xs w-1/3"></div>
+                        <div class="h-0.5 bg-slate-200 rounded-xs w-full"></div>
+                      </div>
+                    </div>
+                    <div class="mt-1.5 flex items-start justify-between">
+                      <div>
+                        <p class="text-[11px] font-bold text-slate-900 group-hover:text-blue-600 transition-colors truncate">Untitled</p>
+                        <p class="text-[9px] text-slate-400">Last Updated 2 days ago</p>
+                      </div>
+                      <span class="text-slate-400 text-xs font-bold leading-none">&#8942;</span>
+                    </div>
+                  </div>
+
+                  <!-- Card 4: Modern ATS Clean Template -->
+                  <div (click)="cvService.openOnboarding()" class="group cursor-pointer">
+                    <div class="aspect-[1/1.3] bg-white rounded-lg border border-slate-200/90 shadow-2xs group-hover:border-blue-400 group-hover:shadow-md transition-all overflow-hidden p-2 flex flex-col justify-between relative">
+                      <div class="space-y-1">
+                        <div class="flex items-center gap-1">
+                          <div class="w-3 h-3 rounded-full bg-slate-300"></div>
+                          <div class="h-1 bg-slate-700 rounded-xs w-1/2"></div>
+                        </div>
+                        <div class="h-0.5 bg-slate-200 rounded-xs w-full mt-1"></div>
+                        <div class="h-0.5 bg-slate-200 rounded-xs w-4/5"></div>
+                        <div class="h-0.5 bg-slate-300 rounded-xs w-1/3 mt-2"></div>
+                        <div class="h-0.5 bg-slate-200 rounded-xs w-full"></div>
+                        <div class="h-0.5 bg-slate-200 rounded-xs w-5/6"></div>
+                      </div>
+                      <div class="h-0.5 bg-slate-100 rounded-xs w-full"></div>
+                    </div>
+                    <div class="mt-1.5 flex items-start justify-between">
+                      <div>
+                        <p class="text-[11px] font-bold text-slate-900 group-hover:text-blue-600 transition-colors truncate">Untitled</p>
+                        <p class="text-[9px] text-slate-400">Last Updated 2 days ago</p>
+                      </div>
+                      <span class="text-slate-400 text-xs font-bold leading-none">&#8942;</span>
+                    </div>
+                  </div>
+
+                </div>
+              </div>
+
+              <!-- Section 2: Trending Jobs & Promo Application Card -->
+              <div class="mt-5 pt-4 border-t border-slate-100 grid grid-cols-1 lg:grid-cols-12 gap-3.5">
+                
+                <!-- Trending Jobs List (Left / 7 cols) -->
+                <div class="lg:col-span-7">
+                  <div class="flex items-center justify-between mb-2.5">
+                    <span class="font-bold text-xs text-slate-900">Trending Jobs</span>
+                    <div class="flex items-center gap-1 text-slate-600">
+                      <button class="w-4 h-4 rounded-full border border-slate-200 flex items-center justify-center text-[10px] hover:bg-slate-50">&lsaquo;</button>
+                      <button class="w-4 h-4 rounded-full bg-slate-900 text-white flex items-center justify-center text-[10px]">&rsaquo;</button>
+                    </div>
+                  </div>
+
+                  <!-- Jobs Grid -->
+                  <div class="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                    
+                    <!-- Job 1 -->
+                    <div class="flex items-center justify-between p-2 rounded-lg bg-white border border-slate-100 hover:border-slate-200 transition-all shadow-2xs">
+                      <div class="flex items-center gap-2">
+                        <div class="w-5 h-5 rounded-full bg-red-600 text-white flex items-center justify-center font-bold text-[9px]">A</div>
+                        <div>
+                          <p class="text-[10px] font-bold text-slate-800 leading-tight">Sales Engineer</p>
+                          <p class="text-[8px] text-slate-400 leading-tight">Adobe Technologies</p>
+                        </div>
+                      </div>
+                      <button class="text-[9px] font-semibold text-blue-600 hover:underline">Apply</button>
+                    </div>
+
+                    <!-- Job 2 -->
+                    <div class="flex items-center justify-between p-2 rounded-lg bg-white border border-slate-100 hover:border-slate-200 transition-all shadow-2xs">
+                      <div class="flex items-center gap-2">
+                        <div class="w-5 h-5 rounded-full bg-blue-500 text-white flex items-center justify-center font-bold text-[8px]">&#9670;</div>
+                        <div>
+                          <p class="text-[10px] font-bold text-slate-800 leading-tight">SEO Executive</p>
+                          <p class="text-[8px] text-slate-400 leading-tight">Dropbox Inc.</p>
+                        </div>
+                      </div>
+                      <button class="text-[9px] font-semibold text-blue-600 hover:underline">Apply</button>
+                    </div>
+
+                    <!-- Job 3 -->
+                    <div class="flex items-center justify-between p-2 rounded-lg bg-white border border-slate-100 hover:border-slate-200 transition-all shadow-2xs">
+                      <div class="flex items-center gap-2">
+                        <div class="w-5 h-5 rounded-full bg-slate-900 text-white flex items-center justify-center font-bold text-[9px]">a</div>
+                        <div>
+                          <p class="text-[10px] font-bold text-slate-800 leading-tight">Sales Engineer</p>
+                          <p class="text-[8px] text-slate-400 leading-tight">Adobe Technologies</p>
+                        </div>
+                      </div>
+                      <button class="text-[9px] font-semibold text-blue-600 hover:underline">Apply</button>
+                    </div>
+
+                    <!-- Job 4 -->
+                    <div class="flex items-center justify-between p-2 rounded-lg bg-white border border-slate-100 hover:border-slate-200 transition-all shadow-2xs">
+                      <div class="flex items-center gap-2">
+                        <div class="w-5 h-5 rounded-full bg-red-600 text-white flex items-center justify-center font-bold text-[9px]">A</div>
+                        <div>
+                          <p class="text-[10px] font-bold text-slate-800 leading-tight">SEO Executive</p>
+                          <p class="text-[8px] text-slate-400 leading-tight">Dropbox Inc.</p>
+                        </div>
+                      </div>
+                      <button class="text-[9px] font-semibold text-blue-600 hover:underline">Apply</button>
+                    </div>
+
+                    <!-- Job 5 -->
+                    <div class="flex items-center justify-between p-2 rounded-lg bg-white border border-slate-100 hover:border-slate-200 transition-all shadow-2xs">
+                      <div class="flex items-center gap-2">
+                        <div class="w-5 h-5 rounded-full bg-teal-600 text-white flex items-center justify-center font-bold text-[9px]">&#9632;</div>
+                        <div>
+                          <p class="text-[10px] font-bold text-slate-800 leading-tight">Senior UX/UI Designer</p>
+                          <p class="text-[8px] text-slate-400 leading-tight">Apple</p>
+                        </div>
+                      </div>
+                      <button class="text-[9px] font-semibold text-blue-600 hover:underline">Apply</button>
+                    </div>
+
+                    <!-- Job 6 -->
+                    <div class="flex items-center justify-between p-2 rounded-lg bg-white border border-slate-100 hover:border-slate-200 transition-all shadow-2xs">
+                      <div class="flex items-center gap-2">
+                        <div class="w-5 h-5 rounded-full bg-blue-500 text-white flex items-center justify-center font-bold text-[8px]">&#9670;</div>
+                        <div>
+                          <p class="text-[10px] font-bold text-slate-800 leading-tight">SEO Executive</p>
+                          <p class="text-[8px] text-slate-400 leading-tight">Dropbox Inc.</p>
+                        </div>
+                      </div>
+                      <button class="text-[9px] font-semibold text-blue-600 hover:underline">Apply</button>
+                    </div>
+
+                  </div>
+                </div>
+
+                <!-- Job Application Promo Card (Right / 5 cols) -->
+                <div class="lg:col-span-5 hidden sm:flex flex-col items-center justify-center text-center p-3.5 bg-white border border-slate-200/80 rounded-xl shadow-2xs">
+                  <div class="w-12 h-10 mb-2 flex items-center justify-center">
+                    <div class="relative">
+                      <div class="w-10 h-7 bg-amber-100 border border-amber-300 rounded-sm flex items-center justify-center">
+                        <div class="w-6 h-0.5 bg-amber-400 mb-1"></div>
+                      </div>
+                      <div class="absolute -bottom-1 -right-1.5 w-5 h-5 rounded-full bg-slate-900 border-2 border-white flex items-center justify-center text-white">
+                        <span class="material-icons text-[10px]">search</span>
+                      </div>
+                    </div>
+                  </div>
+                  <h4 class="text-xs font-bold text-slate-900 mb-0.5">Create your own job application</h4>
+                  <p class="text-[10px] text-slate-500 leading-tight">Save time job hunting & get more out of it.</p>
+                </div>
+
+              </div>
+
+            </div>
+
+          </div>
+
         </div>
+
       </div>
 
+      <!-- Floating Overlapping Popout Card (Bottom-Left from the image) -->
+      <div class="absolute -left-3 sm:-left-6 bottom-4 sm:bottom-8 z-30 bg-white rounded-2xl p-3.5 sm:p-4 shadow-[0_20px_45px_rgba(0,0,0,0.16)] border border-slate-100 w-56 sm:w-64 animate-modal-enter">
+        
+        <div class="flex items-center justify-between mb-3">
+          <span class="font-bold text-xs sm:text-sm text-slate-900">Trending Jobs</span>
+          <div class="flex items-center gap-1 text-slate-700">
+            <button class="w-5 h-5 rounded-full border border-slate-200 flex items-center justify-center text-xs hover:bg-slate-50">&lsaquo;</button>
+            <button class="w-5 h-5 rounded-full bg-slate-900 text-white flex items-center justify-center text-xs">&rsaquo;</button>
+          </div>
+        </div>
 
-      <!-- Decorative elements -->
-      <div
-        class="absolute -z-10 top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[120%] h-[120%] bg-gradient-to-tr from-bg-light to-white rounded-full blur-3xl">
+        <div class="space-y-2.5">
+          <!-- Floating Item 1 -->
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <div class="w-6 h-6 rounded-full bg-red-600 text-white flex items-center justify-center font-bold text-[10px] shadow-xs">
+                A
+              </div>
+              <div>
+                <p class="text-[11px] font-bold text-slate-900 leading-tight">Sales Engineer</p>
+                <p class="text-[9px] text-slate-400 leading-tight">Adobe Technologies</p>
+              </div>
+            </div>
+            <button (click)="cvService.openOnboarding()" class="text-[11px] font-semibold text-blue-600 hover:text-blue-700 cursor-pointer">
+              Apply
+            </button>
+          </div>
+
+          <!-- Floating Item 2 -->
+          <div class="flex items-center justify-between">
+            <div class="flex items-center gap-2">
+              <div class="w-6 h-6 rounded-full bg-blue-500 text-white flex items-center justify-center font-bold text-[10px] shadow-xs">
+                &#9670;
+              </div>
+              <div>
+                <p class="text-[11px] font-bold text-slate-900 leading-tight">SEO Executive</p>
+                <p class="text-[9px] text-slate-400 leading-tight">Dropbox Inc.</p>
+              </div>
+            </div>
+            <button (click)="cvService.openOnboarding()" class="text-[11px] font-semibold text-blue-600 hover:text-blue-700 cursor-pointer">
+              Apply
+            </button>
+          </div>
+        </div>
+
+        <div class="pt-3 mt-2.5 border-t border-slate-100 text-center">
+          <button (click)="cvService.openOnboarding()" class="text-[11px] font-semibold text-slate-700 hover:text-blue-600 transition-colors inline-flex items-center gap-1 cursor-pointer">
+            <span>View All Jobs</span>
+            <span class="text-[10px]">&rsaquo;</span>
+          </button>
+        </div>
+
       </div>
+
     </div>
+
   </div>
 </section>

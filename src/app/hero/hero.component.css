@@ -1,1 +1,27 @@
-/* Hero styles */
+.hero-serif-title {
+  font-family: 'Lora', 'Playfair Display', 'EB Garamond', Georgia, serif;
+  letter-spacing: -0.025em;
+}
+
+.hero-anim {
+  opacity: 1;
+  transition: opacity 0.6s cubic-bezier(0.22, 1, 0.36, 1), transform 0.6s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.hero-mockup-container {
+  opacity: 1;
+  transition: opacity 0.8s cubic-bezier(0.22, 1, 0.36, 1), transform 0.8s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+/* Custom scrollbar inside browser mockup if needed */
+.mockup-scroll::-webkit-scrollbar {
+  height: 4px;
+  width: 4px;
+}
+.mockup-scroll::-webkit-scrollbar-track {
+  background: transparent;
+}
+.mockup-scroll::-webkit-scrollbar-thumb {
+  background: rgba(0, 0, 0, 0.1);
+  border-radius: 4px;
+}
