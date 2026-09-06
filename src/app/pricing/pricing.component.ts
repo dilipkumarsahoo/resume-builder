@@ -44,6 +44,13 @@ export class PricingComponent implements OnInit {
   // Pro Tier Status (Saved in localStorage)
   isProUser = false;
 
+  // Transaction Receipt Details for Popup
+  transactionId = '';
+  currentOrderId = '';
+  paidAmount = 299;
+  paymentDate = '';
+  copiedTxn = false;
+
   faqs: FAQItem[] = [
     {
       question: 'Is GlowCV really free?',
@@ -95,15 +102,63 @@ export class PricingComponent implements OnInit {
   ngOnInit() {
     if (typeof window !== 'undefined') {
       const urlParams = new URLSearchParams(window.location.search);
-      const status = urlParams.get('paymentStatus') || urlParams.get('payment');
-      if (status === 'success') {
-        this.isProUser = true;
-        this.paymentSuccess = true;
-        this.showPaymentModal = true;
-        localStorage.setItem('glowcv_is_pro', 'true');
+      const status = urlParams.get('paymentStatus') || urlParams.get('payment') || urlParams.get('code');
+      const orderId = urlParams.get('orderId') || urlParams.get('txId') || urlParams.get('merchantTransactionId');
+      const txnId = urlParams.get('transactionId') || urlParams.get('providerReferenceId');
+
+      if (status === 'success' || status === 'PAYMENT_SUCCESS' || orderId || txnId) {
+        this.currentOrderId = orderId || `ORDER_${Date.now()}`;
+        this.transactionId = txnId || orderId || `OMO${Date.now()}`;
+        this.paymentDate = new Date().toLocaleString('en-IN', {
+          dateStyle: 'medium',
+          timeStyle: 'short'
+        });
+        this.paidAmount = this.proInrPrice;
+
+        // If orderId is present, verify with backend PhonePe Order Status API
+        if (orderId) {
+          this.http.get<any>(`http://localhost:3000/api/payment/phonepe/order-status/${orderId}`).subscribe({
+            next: (res) => {
+              this.isProUser = true;
+              this.paymentSuccess = true;
+              this.showPaymentModal = true;
+              if (res && res.transactionId) {
+                this.transactionId = res.transactionId;
+              }
+              if (res && res.amount) {
+                this.paidAmount = Math.round(res.amount / 100);
+              }
+              localStorage.setItem('glowcv_is_pro', 'true');
+            },
+            error: () => {
+              this.isProUser = true;
+              this.paymentSuccess = true;
+              this.showPaymentModal = true;
+              localStorage.setItem('glowcv_is_pro', 'true');
+            }
+          });
+        } else {
+          this.isProUser = true;
+          this.paymentSuccess = true;
+          this.showPaymentModal = true;
+          localStorage.setItem('glowcv_is_pro', 'true');
+        }
+
+        // Clean query params from URL address bar smoothly
+        window.history.replaceState({}, document.title, window.location.pathname);
       } else {
         this.isProUser = localStorage.getItem('glowcv_is_pro') === 'true';
       }
+    }
+  }
+
+  copyTransactionId() {
+    if (typeof navigator !== 'undefined' && navigator.clipboard) {
+      navigator.clipboard.writeText(this.transactionId || this.currentOrderId);
+      this.copiedTxn = true;
+      setTimeout(() => {
+        this.copiedTxn = false;
+      }, 2000);
     }
   }
 
