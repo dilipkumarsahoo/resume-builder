@@ -1,0 +1,8 @@
+/* Smooth scroll inside terms page */
+html {
+  scroll-behavior: smooth;
+}
+
+.prose-terms h2 {
+  scroll-margin-top: 100px;
+}

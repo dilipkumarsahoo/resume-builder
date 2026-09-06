@@ -1,0 +1,8 @@
+/* Smooth scroll inside privacy page */
+html {
+  scroll-behavior: smooth;
+}
+
+.prose-privacy h2 {
+  scroll-margin-top: 100px;
+}

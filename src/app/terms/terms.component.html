@@ -1,0 +1,320 @@
+<div class="min-h-screen bg-[#fafafc] font-sans text-slate-800 pt-24 sm:pt-28 pb-20 px-4 sm:px-6 lg:px-8">
+  <div class="max-w-6xl mx-auto">
+
+    <!-- Top Navigation Breadcrumb & Switcher -->
+    <div class="flex flex-wrap items-center justify-between gap-4 mb-8">
+      <a routerLink="/" class="inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-[#1b4df0] hover:text-blue-700 transition-colors cursor-pointer">
+        <span class="text-sm font-bold">&lsaquo;</span>
+        <span>Back to Home</span>
+      </a>
+
+      <!-- Quick Document Switcher -->
+      <div class="inline-flex items-center p-1 rounded-xl bg-slate-100 border border-slate-200/80 text-xs font-semibold">
+        <a routerLink="/terms" class="px-3.5 py-1.5 rounded-lg bg-white text-slate-900 shadow-2xs font-bold transition-all">
+          Terms & Conditions
+        </a>
+        <a routerLink="/privacy" class="px-3.5 py-1.5 rounded-lg text-slate-500 hover:text-slate-900 transition-all">
+          Privacy Policy
+        </a>
+      </div>
+    </div>
+
+    <!-- Header Section -->
+    <div class="text-center max-w-3xl mx-auto mb-12 sm:mb-16">
+      <div class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-blue-50 border border-blue-100 text-xs font-bold text-[#1b4df0] uppercase tracking-wider mb-4 shadow-2xs">
+        <span class="material-icons text-sm">gavel</span>
+        <span>Legal Agreement</span>
+      </div>
+
+      <h1 class="font-serif text-4xl sm:text-5xl font-normal text-slate-900 tracking-tight leading-tight mb-4">
+        Terms & Conditions
+      </h1>
+      
+      <p class="text-sm sm:text-base text-slate-500 max-w-xl mx-auto font-normal leading-relaxed">
+        Please read these terms carefully before using GlowCV. By accessing or using our platform, you agree to be bound by these terms.
+      </p>
+
+      <div class="mt-4 inline-flex items-center gap-2 text-xs font-medium text-slate-400">
+        <span class="material-icons text-sm text-slate-400">event</span>
+        <span>Last updated: {{ lastUpdated }}</span>
+      </div>
+    </div>
+
+    <!-- Main Content Layout (Sidebar TOC + Document Body) -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
+      
+      <!-- Sticky Sidebar Table of Contents (4 Cols) -->
+      <div class="hidden lg:block lg:col-span-4 sticky top-28 space-y-4">
+        <div class="bg-white rounded-3xl p-6 border border-slate-200/80 shadow-2xs">
+          <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-4 flex items-center gap-2">
+            <span class="material-icons text-sm text-[#1b4df0]">format_list_bulleted</span>
+            <span>Table of Contents</span>
+          </h3>
+
+          <nav class="space-y-1 text-xs font-medium">
+            <button 
+              type="button"
+              (click)="scrollToSection('acceptance')"
+              class="w-full text-left px-3 py-2 rounded-xl transition-all cursor-pointer flex items-center justify-between"
+              [ngClass]="activeSection() === 'acceptance' ? 'bg-blue-50 text-[#1b4df0] font-bold' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'">
+              <span>1. Acceptance of Terms</span>
+              <span class="text-[10px] opacity-60">01</span>
+            </button>
+
+            <button 
+              type="button"
+              (click)="scrollToSection('services')"
+              class="w-full text-left px-3 py-2 rounded-xl transition-all cursor-pointer flex items-center justify-between"
+              [ngClass]="activeSection() === 'services' ? 'bg-blue-50 text-[#1b4df0] font-bold' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'">
+              <span>2. Description of Services & Plans</span>
+              <span class="text-[10px] opacity-60">02</span>
+            </button>
+
+            <button 
+              type="button"
+              (click)="scrollToSection('accounts')"
+              class="w-full text-left px-3 py-2 rounded-xl transition-all cursor-pointer flex items-center justify-between"
+              [ngClass]="activeSection() === 'accounts' ? 'bg-blue-50 text-[#1b4df0] font-bold' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'">
+              <span>3. User Accounts & Security</span>
+              <span class="text-[10px] opacity-60">03</span>
+            </button>
+
+            <button 
+              type="button"
+              (click)="scrollToSection('billing')"
+              class="w-full text-left px-3 py-2 rounded-xl transition-all cursor-pointer flex items-center justify-between"
+              [ngClass]="activeSection() === 'billing' ? 'bg-blue-50 text-[#1b4df0] font-bold' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'">
+              <span>4. Subscriptions & Refunds</span>
+              <span class="text-[10px] opacity-60">04</span>
+            </button>
+
+            <button 
+              type="button"
+              (click)="scrollToSection('ownership')"
+              class="w-full text-left px-3 py-2 rounded-xl transition-all cursor-pointer flex items-center justify-between"
+              [ngClass]="activeSection() === 'ownership' ? 'bg-blue-50 text-[#1b4df0] font-bold' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'">
+              <span>5. Intellectual Property & Content</span>
+              <span class="text-[10px] opacity-60">05</span>
+            </button>
+
+            <button 
+              type="button"
+              (click)="scrollToSection('ai-features')"
+              class="w-full text-left px-3 py-2 rounded-xl transition-all cursor-pointer flex items-center justify-between"
+              [ngClass]="activeSection() === 'ai-features' ? 'bg-blue-50 text-[#1b4df0] font-bold' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'">
+              <span>6. AI-Assisted Features</span>
+              <span class="text-[10px] opacity-60">06</span>
+            </button>
+
+            <button 
+              type="button"
+              (click)="scrollToSection('acceptable-use')"
+              class="w-full text-left px-3 py-2 rounded-xl transition-all cursor-pointer flex items-center justify-between"
+              [ngClass]="activeSection() === 'acceptable-use' ? 'bg-blue-50 text-[#1b4df0] font-bold' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'">
+              <span>7. Acceptable Use Policy</span>
+              <span class="text-[10px] opacity-60">07</span>
+            </button>
+
+            <button 
+              type="button"
+              (click)="scrollToSection('liability')"
+              class="w-full text-left px-3 py-2 rounded-xl transition-all cursor-pointer flex items-center justify-between"
+              [ngClass]="activeSection() === 'liability' ? 'bg-blue-50 text-[#1b4df0] font-bold' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'">
+              <span>8. Limitation of Liability</span>
+              <span class="text-[10px] opacity-60">08</span>
+            </button>
+
+            <button 
+              type="button"
+              (click)="scrollToSection('contact-terms')"
+              class="w-full text-left px-3 py-2 rounded-xl transition-all cursor-pointer flex items-center justify-between"
+              [ngClass]="activeSection() === 'contact-terms' ? 'bg-blue-50 text-[#1b4df0] font-bold' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'">
+              <span>9. Governing Law & Contact</span>
+              <span class="text-[10px] opacity-60">09</span>
+            </button>
+          </nav>
+        </div>
+
+        <!-- Need Help Card -->
+        <div class="bg-gradient-to-br from-blue-50 to-indigo-50/50 rounded-3xl p-6 border border-blue-100 space-y-3">
+          <div class="w-8 h-8 rounded-xl bg-[#1b4df0] text-white flex items-center justify-center shadow-xs">
+            <span class="material-icons text-base">support_agent</span>
+          </div>
+          <h4 class="text-sm font-bold text-slate-900">Have Questions?</h4>
+          <p class="text-xs text-slate-600 leading-relaxed">
+            Our legal and customer support team is available 24/7 to address any questions regarding our terms.
+          </p>
+          <a routerLink="/contact" class="inline-flex items-center gap-1.5 text-xs font-bold text-[#1b4df0] hover:text-blue-800 transition-colors">
+            <span>Contact Support</span>
+            <span class="text-sm">&rsaquo;</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Main Document Body (8 Cols) -->
+      <div class="lg:col-span-8 bg-white rounded-3xl border border-slate-200/80 shadow-sm p-6 sm:p-10 lg:p-12 space-y-10 prose-terms">
+        
+        <!-- Summary Alert Box -->
+        <div class="p-5 rounded-2xl bg-slate-50 border border-slate-200/80 flex items-start gap-3.5">
+          <span class="material-icons text-blue-600 text-xl flex-shrink-0 mt-0.5">verified_user</span>
+          <div class="text-xs sm:text-sm text-slate-600 space-y-1 leading-relaxed">
+            <strong class="text-slate-900 font-bold block">Quick Summary</strong>
+            <p>
+              You own all the content you create (your resumes and letters). We provide the tools, AI, and templates to help you succeed. Your first resume is 100% free with unlimited exports, and Pro plans come with a 14-day money-back guarantee.
+            </p>
+          </div>
+        </div>
+
+        <!-- Section 1 -->
+        <section id="acceptance" class="space-y-3 pt-2">
+          <div class="flex items-center gap-3">
+            <span class="w-7 h-7 rounded-lg bg-blue-50 text-[#1b4df0] font-bold text-xs flex items-center justify-center">1</span>
+            <h2 class="text-lg sm:text-xl font-bold text-slate-900">Acceptance of Terms</h2>
+          </div>
+          <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+            By creating an account, accessing, or using the services provided by GlowCV ("we", "our", or "us"), you agree to comply with and be bound by these Terms & Conditions ("Terms"). If you do not agree to all terms and conditions, you must not access or use the platform.
+          </p>
+          <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+            We reserve the right to modify these Terms at any time. When modifications occur, we will update the "Last Updated" date at the top of this document. Your continued use of GlowCV following any modifications indicates your acceptance of the updated Terms.
+          </p>
+        </section>
+
+        <!-- Section 2 -->
+        <section id="services" class="space-y-3 pt-4 border-t border-slate-100">
+          <div class="flex items-center gap-3">
+            <span class="w-7 h-7 rounded-lg bg-blue-50 text-[#1b4df0] font-bold text-xs flex items-center justify-center">2</span>
+            <h2 class="text-lg sm:text-xl font-bold text-slate-900">Description of Services & Plans</h2>
+          </div>
+          <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+            GlowCV provides cloud-based digital resume and CV creation, cover letter generation, ATS (Applicant Tracking System) scoring, resume import parsers, and job tracking tools.
+          </p>
+          <ul class="space-y-2 text-xs sm:text-sm text-slate-600 list-disc list-inside pl-2">
+            <li><strong class="text-slate-800">Free Tier:</strong> Enables users to build, edit, customize, and export 1 complete resume and 1 cover letter in high-resolution PDF format with 0 watermarks and full template access.</li>
+            <li><strong class="text-slate-800">Pro Tier:</strong> Unlocks unlimited resumes, cover letters, AI-driven bullet point enhancements, PDF resume import autofill, job application board, and priority support.</li>
+          </ul>
+        </section>
+
+        <!-- Section 3 -->
+        <section id="accounts" class="space-y-3 pt-4 border-t border-slate-100">
+          <div class="flex items-center gap-3">
+            <span class="w-7 h-7 rounded-lg bg-blue-50 text-[#1b4df0] font-bold text-xs flex items-center justify-center">3</span>
+            <h2 class="text-lg sm:text-xl font-bold text-slate-900">User Accounts & Security</h2>
+          </div>
+          <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+            To access certain features, you must register for an account with a valid email address and password. You are responsible for safeguarding your credentials and for all activities occurring under your account.
+          </p>
+          <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+            You agree to notify us immediately of any unauthorized use or security breaches. GlowCV cannot and will not be liable for any loss or damage arising from your failure to safeguard your account.
+          </p>
+        </section>
+
+        <!-- Section 4 -->
+        <section id="billing" class="space-y-3 pt-4 border-t border-slate-100">
+          <div class="flex items-center gap-3">
+            <span class="w-7 h-7 rounded-lg bg-blue-50 text-[#1b4df0] font-bold text-xs flex items-center justify-center">4</span>
+            <h2 class="text-lg sm:text-xl font-bold text-slate-900">Subscriptions, Payments & Refund Policy</h2>
+          </div>
+          <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+            Pro subscriptions are billed on a recurring monthly or annual billing cycle. Payments are securely processed via authorized payment gateways (including PhonePe Payment Gateway).
+          </p>
+          <div class="p-4 rounded-xl bg-emerald-50/70 border border-emerald-200/80 text-xs sm:text-sm text-emerald-900 space-y-1.5">
+            <strong class="font-bold flex items-center gap-1.5 text-emerald-800">
+              <span class="material-icons text-base">verified</span>
+              14-Day 100% Money-Back Guarantee
+            </strong>
+            <p class="text-emerald-700">
+              If you are not satisfied with GlowCV Pro, contact our support team at support&#64;glowcv.com within 14 days of your initial purchase for a full, unconditional refund.
+            </p>
+          </div>
+          <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+            You may cancel your subscription at any time through your account settings or by contacting support. Upon cancellation, you will retain Pro access until the conclusion of your current paid billing period.
+          </p>
+        </section>
+
+        <!-- Section 5 -->
+        <section id="ownership" class="space-y-3 pt-4 border-t border-slate-100">
+          <div class="flex items-center gap-3">
+            <span class="w-7 h-7 rounded-lg bg-blue-50 text-[#1b4df0] font-bold text-xs flex items-center justify-center">5</span>
+            <h2 class="text-lg sm:text-xl font-bold text-slate-900">Intellectual Property & Content Ownership</h2>
+          </div>
+          <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+            <strong class="text-slate-800">Your Content:</strong> You retain 100% ownership, copyright, and intellectual property rights over all personal information, resume content, work experience, and cover letters you enter or generate on GlowCV.
+          </p>
+          <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+            <strong class="text-slate-800">Our Platform:</strong> GlowCV retains all rights, title, and interest in and to the platform, including its software, UI designs, resume layout templates, graphics, and brand trademarks.
+          </p>
+        </section>
+
+        <!-- Section 6 -->
+        <section id="ai-features" class="space-y-3 pt-4 border-t border-slate-100">
+          <div class="flex items-center gap-3">
+            <span class="w-7 h-7 rounded-lg bg-blue-50 text-[#1b4df0] font-bold text-xs flex items-center justify-center">6</span>
+            <h2 class="text-lg sm:text-xl font-bold text-slate-900">AI-Assisted Features & Accuracy</h2>
+          </div>
+          <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+            GlowCV utilizes artificial intelligence to suggest bullet points, rewrite summaries, and analyze ATS keyword matches. While we strive for optimal accuracy, AI suggestions are provided as recommendations. You are solely responsible for reviewing and verifying the accuracy and truthfulness of all information before submitting resumes to prospective employers.
+          </p>
+        </section>
+
+        <!-- Section 7 -->
+        <section id="acceptable-use" class="space-y-3 pt-4 border-t border-slate-100">
+          <div class="flex items-center gap-3">
+            <span class="w-7 h-7 rounded-lg bg-blue-50 text-[#1b4df0] font-bold text-xs flex items-center justify-center">7</span>
+            <h2 class="text-lg sm:text-xl font-bold text-slate-900">Acceptable Use Policy</h2>
+          </div>
+          <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+            You agree not to misuse the platform, including but not limited to:
+          </p>
+          <ul class="space-y-1.5 text-xs sm:text-sm text-slate-600 list-disc list-inside pl-2">
+            <li>Reverse engineering, scraping, decompiling, or disassembling platform code.</li>
+            <li>Using automated bots or crawlers to harvest user data or service templates.</li>
+            <li>Uploading malicious code, viruses, or attempting unauthorized database access.</li>
+            <li>Submitting false, defamatory, infringing, or unlawful content.</li>
+          </ul>
+        </section>
+
+        <!-- Section 8 -->
+        <section id="liability" class="space-y-3 pt-4 border-t border-slate-100">
+          <div class="flex items-center gap-3">
+            <span class="w-7 h-7 rounded-lg bg-blue-50 text-[#1b4df0] font-bold text-xs flex items-center justify-center">8</span>
+            <h2 class="text-lg sm:text-xl font-bold text-slate-900">Limitation of Liability & Disclaimers</h2>
+          </div>
+          <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+            GlowCV provides resume building tools on an "as-is" and "as-available" basis without guarantees of specific employment or job interview outcomes. In no event shall GlowCV, its directors, or affiliates be liable for indirect, incidental, or consequential damages resulting from platform usage.
+          </p>
+        </section>
+
+        <!-- Section 9 -->
+        <section id="contact-terms" class="space-y-3 pt-4 border-t border-slate-100">
+          <div class="flex items-center gap-3">
+            <span class="w-7 h-7 rounded-lg bg-blue-50 text-[#1b4df0] font-bold text-xs flex items-center justify-center">9</span>
+            <h2 class="text-lg sm:text-xl font-bold text-slate-900">Governing Law & Contact Information</h2>
+          </div>
+          <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+            These Terms shall be governed by and construed in accordance with applicable laws. Any dispute arising under these Terms shall be resolved in the competent courts of jurisdiction.
+          </p>
+          <div class="pt-2 text-xs sm:text-sm text-slate-700">
+            <p class="font-semibold text-slate-900">GlowCV Legal & Compliance</p>
+            <p>Email: legal&#64;glowcv.com / support&#64;glowcv.com</p>
+            <p>Address: Tech Hub Center, Bangalore, India</p>
+          </div>
+        </section>
+
+        <!-- Bottom Action CTA -->
+        <div class="pt-6 border-t border-slate-100 flex flex-wrap items-center justify-between gap-4">
+          <a routerLink="/privacy" class="text-xs sm:text-sm font-bold text-[#1b4df0] hover:text-blue-700 flex items-center gap-1.5 transition-colors">
+            <span>Read Privacy Policy</span>
+            <span>&rarr;</span>
+          </a>
+
+          <a routerLink="/contact" class="px-5 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold transition-all shadow-2xs">
+            Contact Support
+          </a>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+</div>

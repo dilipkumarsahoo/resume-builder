@@ -9,6 +9,8 @@ import { PricingComponent } from './pricing/pricing.component';
 import { AboutComponent } from './about/about.component';
 import { ContactComponent } from './contact/contact.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { TermsComponent } from './terms/terms.component';
+import { PrivacyComponent } from './privacy/privacy.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -21,6 +23,10 @@ export const routes: Routes = [
   { path: 'cover-letter', component: CoverLetterComponent },
   { path: 'pricing', component: PricingComponent },
   { path: 'about', component: AboutComponent },
-  { path: 'contact', component: ContactComponent }
+  { path: 'contact', component: ContactComponent },
+  { path: 'terms', component: TermsComponent },
+  { path: 'terms-and-conditions', redirectTo: '/terms' },
+  { path: 'privacy', component: PrivacyComponent },
+  { path: 'privacy-policy', redirectTo: '/privacy' }
 ];
 

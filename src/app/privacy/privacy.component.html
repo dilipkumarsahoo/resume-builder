@@ -1,0 +1,299 @@
+<div class="min-h-screen bg-[#fafafc] font-sans text-slate-800 pt-24 sm:pt-28 pb-20 px-4 sm:px-6 lg:px-8">
+  <div class="max-w-6xl mx-auto">
+
+    <!-- Top Navigation Breadcrumb & Switcher -->
+    <div class="flex flex-wrap items-center justify-between gap-4 mb-8">
+      <a routerLink="/" class="inline-flex items-center gap-1.5 text-xs sm:text-sm font-semibold text-[#1b4df0] hover:text-blue-700 transition-colors cursor-pointer">
+        <span class="text-sm font-bold">&lsaquo;</span>
+        <span>Back to Home</span>
+      </a>
+
+      <!-- Quick Document Switcher -->
+      <div class="inline-flex items-center p-1 rounded-xl bg-slate-100 border border-slate-200/80 text-xs font-semibold">
+        <a routerLink="/terms" class="px-3.5 py-1.5 rounded-lg text-slate-500 hover:text-slate-900 transition-all">
+          Terms & Conditions
+        </a>
+        <a routerLink="/privacy" class="px-3.5 py-1.5 rounded-lg bg-white text-slate-900 shadow-2xs font-bold transition-all">
+          Privacy Policy
+        </a>
+      </div>
+    </div>
+
+    <!-- Header Section -->
+    <div class="text-center max-w-3xl mx-auto mb-12 sm:mb-16">
+      <div class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-emerald-50 border border-emerald-100 text-xs font-bold text-emerald-700 uppercase tracking-wider mb-4 shadow-2xs">
+        <span class="material-icons text-sm">security</span>
+        <span>Data Privacy & Security</span>
+      </div>
+
+      <h1 class="font-serif text-4xl sm:text-5xl font-normal text-slate-900 tracking-tight leading-tight mb-4">
+        Privacy Policy
+      </h1>
+      
+      <p class="text-sm sm:text-base text-slate-500 max-w-xl mx-auto font-normal leading-relaxed">
+        Your privacy is sacred. Learn how GlowCV collects, encrypts, uses, and protects your personal and resume data.
+      </p>
+
+      <div class="mt-4 inline-flex items-center gap-2 text-xs font-medium text-slate-400">
+        <span class="material-icons text-sm text-slate-400">event</span>
+        <span>Last updated: {{ lastUpdated }}</span>
+      </div>
+    </div>
+
+    <!-- Main Content Layout (Sidebar TOC + Document Body) -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-start">
+      
+      <!-- Sticky Sidebar Table of Contents (4 Cols) -->
+      <div class="hidden lg:block lg:col-span-4 sticky top-28 space-y-4">
+        <div class="bg-white rounded-3xl p-6 border border-slate-200/80 shadow-2xs">
+          <h3 class="text-xs font-bold uppercase tracking-wider text-slate-400 mb-4 flex items-center gap-2">
+            <span class="material-icons text-sm text-emerald-600">format_list_bulleted</span>
+            <span>Table of Contents</span>
+          </h3>
+
+          <nav class="space-y-1 text-xs font-medium">
+            <button 
+              type="button"
+              (click)="scrollToSection('intro')"
+              class="w-full text-left px-3 py-2 rounded-xl transition-all cursor-pointer flex items-center justify-between"
+              [ngClass]="activeSection() === 'intro' ? 'bg-emerald-50 text-emerald-700 font-bold' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'">
+              <span>1. Introduction & Core Promise</span>
+              <span class="text-[10px] opacity-60">01</span>
+            </button>
+
+            <button 
+              type="button"
+              (click)="scrollToSection('collection')"
+              class="w-full text-left px-3 py-2 rounded-xl transition-all cursor-pointer flex items-center justify-between"
+              [ngClass]="activeSection() === 'collection' ? 'bg-emerald-50 text-emerald-700 font-bold' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'">
+              <span>2. Information We Collect</span>
+              <span class="text-[10px] opacity-60">02</span>
+            </button>
+
+            <button 
+              type="button"
+              (click)="scrollToSection('usage')"
+              class="w-full text-left px-3 py-2 rounded-xl transition-all cursor-pointer flex items-center justify-between"
+              [ngClass]="activeSection() === 'usage' ? 'bg-emerald-50 text-emerald-700 font-bold' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'">
+              <span>3. How We Use Your Data</span>
+              <span class="text-[10px] opacity-60">03</span>
+            </button>
+
+            <button 
+              type="button"
+              (click)="scrollToSection('no-sell')"
+              class="w-full text-left px-3 py-2 rounded-xl transition-all cursor-pointer flex items-center justify-between"
+              [ngClass]="activeSection() === 'no-sell' ? 'bg-emerald-50 text-emerald-700 font-bold' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'">
+              <span>4. We Never Sell Your Data</span>
+              <span class="text-[10px] opacity-60">04</span>
+            </button>
+
+            <button 
+              type="button"
+              (click)="scrollToSection('third-parties')"
+              class="w-full text-left px-3 py-2 rounded-xl transition-all cursor-pointer flex items-center justify-between"
+              [ngClass]="activeSection() === 'third-parties' ? 'bg-emerald-50 text-emerald-700 font-bold' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'">
+              <span>5. Third Parties & Payments</span>
+              <span class="text-[10px] opacity-60">05</span>
+            </button>
+
+            <button 
+              type="button"
+              (click)="scrollToSection('security')"
+              class="w-full text-left px-3 py-2 rounded-xl transition-all cursor-pointer flex items-center justify-between"
+              [ngClass]="activeSection() === 'security' ? 'bg-emerald-50 text-emerald-700 font-bold' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'">
+              <span>6. Data Security & Encryption</span>
+              <span class="text-[10px] opacity-60">06</span>
+            </button>
+
+            <button 
+              type="button"
+              (click)="scrollToSection('rights')"
+              class="w-full text-left px-3 py-2 rounded-xl transition-all cursor-pointer flex items-center justify-between"
+              [ngClass]="activeSection() === 'rights' ? 'bg-emerald-50 text-emerald-700 font-bold' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'">
+              <span>7. Your Rights & Data Export</span>
+              <span class="text-[10px] opacity-60">07</span>
+            </button>
+
+            <button 
+              type="button"
+              (click)="scrollToSection('contact-privacy')"
+              class="w-full text-left px-3 py-2 rounded-xl transition-all cursor-pointer flex items-center justify-between"
+              [ngClass]="activeSection() === 'contact-privacy' ? 'bg-emerald-50 text-emerald-700 font-bold' : 'text-slate-600 hover:bg-slate-50 hover:text-slate-900'">
+              <span>8. Privacy Inquiries</span>
+              <span class="text-[10px] opacity-60">08</span>
+            </button>
+          </nav>
+        </div>
+
+        <!-- Privacy Badge Card -->
+        <div class="bg-gradient-to-br from-emerald-50 to-teal-50/50 rounded-3xl p-6 border border-emerald-100 space-y-3">
+          <div class="w-8 h-8 rounded-xl bg-emerald-600 text-white flex items-center justify-center shadow-xs">
+            <span class="material-icons text-base">lock</span>
+          </div>
+          <h4 class="text-sm font-bold text-slate-900">Your Data Is Private</h4>
+          <p class="text-xs text-slate-600 leading-relaxed">
+            We employ bank-grade 256-bit TLS encryption across all resumes, profiles, and data transmissions.
+          </p>
+          <a routerLink="/contact" class="inline-flex items-center gap-1.5 text-xs font-bold text-emerald-700 hover:text-emerald-900 transition-colors">
+            <span>Privacy Questions? Contact Us</span>
+            <span class="text-sm">&rsaquo;</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- Main Document Body (8 Cols) -->
+      <div class="lg:col-span-8 bg-white rounded-3xl border border-slate-200/80 shadow-sm p-6 sm:p-10 lg:p-12 space-y-10 prose-privacy">
+        
+        <!-- Privacy Core Commitments Banner -->
+        <div class="p-5 rounded-2xl bg-emerald-50/70 border border-emerald-200/80 flex items-start gap-3.5">
+          <span class="material-icons text-emerald-600 text-xl flex-shrink-0 mt-0.5">verified</span>
+          <div class="text-xs sm:text-sm text-slate-700 space-y-1 leading-relaxed">
+            <strong class="text-emerald-950 font-bold block">Our 3 Core Privacy Commitments</strong>
+            <ul class="space-y-1 text-slate-600">
+              <li>1. <strong>Zero Data Selling:</strong> We will never sell, rent, or trade your resumes or contact info to recruiters or advertisers.</li>
+              <li>2. <strong>You Own Your Content:</strong> You retain complete ownership and deletion rights over your resumes.</li>
+              <li>3. <strong>Bank-Grade Encryption:</strong> All stored documents and transmissions are encrypted using industry-standard protocols.</li>
+            </ul>
+          </div>
+        </div>
+
+        <!-- Section 1 -->
+        <section id="intro" class="space-y-3 pt-2">
+          <div class="flex items-center gap-3">
+            <span class="w-7 h-7 rounded-lg bg-emerald-50 text-emerald-700 font-bold text-xs flex items-center justify-center">1</span>
+            <h2 class="text-lg sm:text-xl font-bold text-slate-900">Introduction & Core Promise</h2>
+          </div>
+          <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+            At GlowCV, we believe your career journey and personal resume data are strictly private. This Privacy Policy describes how GlowCV ("we", "us", or "our") collects, uses, protects, and handles your information when you visit our website, utilize our resume builder, or interact with our services.
+          </p>
+        </section>
+
+        <!-- Section 2 -->
+        <section id="collection" class="space-y-3 pt-4 border-t border-slate-100">
+          <div class="flex items-center gap-3">
+            <span class="w-7 h-7 rounded-lg bg-emerald-50 text-emerald-700 font-bold text-xs flex items-center justify-center">2</span>
+            <h2 class="text-lg sm:text-xl font-bold text-slate-900">Information We Collect</h2>
+          </div>
+          <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+            We collect only the information necessary to deliver resume creation and career management services:
+          </p>
+          <ul class="space-y-2 text-xs sm:text-sm text-slate-600 list-disc list-inside pl-2">
+            <li><strong class="text-slate-800">Account Credentials:</strong> Full name, email address, encrypted authentication tokens.</li>
+            <li><strong class="text-slate-800">Resume & Career Data:</strong> Employment history, education, skills, contact numbers, summary statements, projects, and portfolio links entered into our editor.</li>
+            <li><strong class="text-slate-800">Payment Information:</strong> When upgrading to Pro, payments are processed directly by PhonePe Gateway. GlowCV does not store raw credit card numbers or UPI PINs.</li>
+            <li><strong class="text-slate-800">Usage Analytics & Device Data:</strong> Browser type, IP address, page interactions, and diagnostic metrics to optimize site performance.</li>
+          </ul>
+        </section>
+
+        <!-- Section 3 -->
+        <section id="usage" class="space-y-3 pt-4 border-t border-slate-100">
+          <div class="flex items-center gap-3">
+            <span class="w-7 h-7 rounded-lg bg-emerald-50 text-emerald-700 font-bold text-xs flex items-center justify-center">3</span>
+            <h2 class="text-lg sm:text-xl font-bold text-slate-900">How We Use Your Data</h2>
+          </div>
+          <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+            We use your data solely for the following purposes:
+          </p>
+          <ul class="space-y-1.5 text-xs sm:text-sm text-slate-600 list-disc list-inside pl-2">
+            <li>Rendering, formatting, and generating PDF resumes and matching cover letters.</li>
+            <li>Powering AI-assisted bullet point suggestions, grammar improvements, and ATS keyword matching.</li>
+            <li>Processing subscription upgrades and managing Pro account benefits.</li>
+            <li>Providing responsive customer support and resolving technical queries.</li>
+            <li>Detecting and preventing fraud, unauthorized access, and security threats.</li>
+          </ul>
+        </section>
+
+        <!-- Section 4 -->
+        <section id="no-sell" class="space-y-3 pt-4 border-t border-slate-100">
+          <div class="flex items-center gap-3">
+            <span class="w-7 h-7 rounded-lg bg-emerald-50 text-emerald-700 font-bold text-xs flex items-center justify-center">4</span>
+            <h2 class="text-lg sm:text-xl font-bold text-slate-900">We Never Sell Your Data</h2>
+          </div>
+          <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+            GlowCV does <strong class="text-slate-900">NOT</strong> sell, rent, monetize, or disclose your resume data, contact information, or job application histories to third-party data brokers, marketers, or advertisers. Your career data belongs solely to you.
+          </p>
+        </section>
+
+        <!-- Section 5 -->
+        <section id="third-parties" class="space-y-3 pt-4 border-t border-slate-100">
+          <div class="flex items-center gap-3">
+            <span class="w-7 h-7 rounded-lg bg-emerald-50 text-emerald-700 font-bold text-xs flex items-center justify-center">5</span>
+            <h2 class="text-lg sm:text-xl font-bold text-slate-900">Third-Party Service Providers</h2>
+          </div>
+          <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+            To provide reliable service, we integrate with trusted third-party cloud infrastructure partners under strict confidentiality agreements:
+          </p>
+          <ul class="space-y-1.5 text-xs sm:text-sm text-slate-600 list-disc list-inside pl-2">
+            <li><strong class="text-slate-800">PhonePe Payment Gateway:</strong> For PCI-DSS compliant secure subscription processing.</li>
+            <li><strong class="text-slate-800">Cloud Hosting & Database:</strong> High-availability servers with automated backups and encrypted databases.</li>
+            <li><strong class="text-slate-800">AI Infrastructure:</strong> Enterprise-grade AI APIs that do not use your personal resume data for general model training.</li>
+          </ul>
+        </section>
+
+        <!-- Section 6 -->
+        <section id="security" class="space-y-3 pt-4 border-t border-slate-100">
+          <div class="flex items-center gap-3">
+            <span class="w-7 h-7 rounded-lg bg-emerald-50 text-emerald-700 font-bold text-xs flex items-center justify-center">6</span>
+            <h2 class="text-lg sm:text-xl font-bold text-slate-900">Data Security & Encryption</h2>
+          </div>
+          <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+            We implement robust organizational and technical safeguards:
+          </p>
+          <ul class="space-y-1.5 text-xs sm:text-sm text-slate-600 list-disc list-inside pl-2">
+            <li>256-bit SSL / TLS encryption for all data in transit across browser and API endpoints.</li>
+            <li>Encrypted databases at rest to prevent unauthorized data access.</li>
+            <li>Continuous security monitoring and automated vulnerability audits.</li>
+          </ul>
+        </section>
+
+        <!-- Section 7 -->
+        <section id="rights" class="space-y-3 pt-4 border-t border-slate-100">
+          <div class="flex items-center gap-3">
+            <span class="w-7 h-7 rounded-lg bg-emerald-50 text-emerald-700 font-bold text-xs flex items-center justify-center">7</span>
+            <h2 class="text-lg sm:text-xl font-bold text-slate-900">Your Rights & Data Portability</h2>
+          </div>
+          <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+            You maintain full control over your data:
+          </p>
+          <ul class="space-y-1.5 text-xs sm:text-sm text-slate-600 list-disc list-inside pl-2">
+            <li><strong class="text-slate-800">Export & Download:</strong> Export your resumes in PDF or plain format anytime without restrictions.</li>
+            <li><strong class="text-slate-800">Edit & Update:</strong> Modify your personal and professional profile details directly in the editor.</li>
+            <li><strong class="text-slate-800">Delete Account & Data:</strong> Request permanent deletion of your account and all associated documents by contacting support.</li>
+          </ul>
+        </section>
+
+        <!-- Section 8 -->
+        <section id="contact-privacy" class="space-y-3 pt-4 border-t border-slate-100">
+          <div class="flex items-center gap-3">
+            <span class="w-7 h-7 rounded-lg bg-emerald-50 text-emerald-700 font-bold text-xs flex items-center justify-center">8</span>
+            <h2 class="text-lg sm:text-xl font-bold text-slate-900">Privacy Inquiries & Data Protection</h2>
+          </div>
+          <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">
+            If you have questions, concerns, or requests regarding this Privacy Policy or our data handling practices, please contact our Data Protection Officer:
+          </p>
+          <div class="pt-2 text-xs sm:text-sm text-slate-700">
+            <p class="font-semibold text-slate-900">GlowCV Data Protection Officer</p>
+            <p>Email: privacy&#64;glowcv.com / support&#64;glowcv.com</p>
+            <p>Address: Tech Hub Center, Bangalore, India</p>
+          </div>
+        </section>
+
+        <!-- Bottom Action CTA -->
+        <div class="pt-6 border-t border-slate-100 flex flex-wrap items-center justify-between gap-4">
+          <a routerLink="/terms" class="text-xs sm:text-sm font-bold text-[#1b4df0] hover:text-blue-700 flex items-center gap-1.5 transition-colors">
+            <span>Read Terms & Conditions</span>
+            <span>&rarr;</span>
+          </a>
+
+          <a routerLink="/contact" class="px-5 py-2.5 rounded-xl bg-slate-900 hover:bg-slate-800 text-white text-xs font-bold transition-all shadow-2xs">
+            Contact Privacy Officer
+          </a>
+        </div>
+
+      </div>
+
+    </div>
+
+  </div>
+</div>
