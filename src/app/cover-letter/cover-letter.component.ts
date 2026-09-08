@@ -40,7 +40,9 @@ export class CoverLetterComponent implements OnInit {
 
   // Form Fields
   fullName = '';
+  userName = 'Dilip Sahoo';
   email = '';
+  userEmail = 'mailme.dilipsahu4@gmail.com';
   phone = '';
   location = '';
   
@@ -319,8 +321,10 @@ export class CoverLetterComponent implements OnInit {
   loadResumeData() {
     const resume = this.cvService.cvData();
     if (resume) {
-      this.fullName = resume.fullName || '';
-      this.email = resume.email || '';
+      this.fullName = resume.fullName || this.userName;
+      this.userName = resume.fullName || this.userName;
+      this.email = resume.email || this.userEmail;
+      this.userEmail = resume.email || this.userEmail;
       this.phone = resume.phone || '';
       this.location = resume.location || '';
     }
@@ -441,167 +445,330 @@ export class CoverLetterComponent implements OnInit {
         format: 'a4'
       });
 
-      const margin = 20;
       const pageWidth = doc.internal.pageSize.getWidth();
-      const maxLineWidth = pageWidth - (margin * 2);
+      const pageHeight = doc.internal.pageSize.getHeight();
+      const template = this.selectedTemplate || 'modern';
+      const name = this.fullName || 'Dilip Sahoo';
+      const userEmail = this.email || 'mailme.dilipsahu4@gmail.com';
+      const userPhone = this.phone || '+91 98765 43210';
+      const userLoc = this.location || 'Bangalore, India';
+      const role = this.jobTitle || 'Software Engineer';
+      const company = this.companyName || 'Technology Innovations';
 
-      let y = 25;
+      if (template === 'executive') {
+        doc.setFillColor(15, 23, 42);
+        doc.rect(0, 0, pageWidth, 35, 'F');
 
-      // --- HEADER RENDERING BASED ON TEMPLATE ---
-      if (this.selectedTemplate === 'modern') {
-        doc.setFillColor(99, 102, 241); // indigo-600
-        doc.rect(0, 0, pageWidth, 5, 'F');
-        
-        doc.setFont('Helvetica', 'bold');
-        doc.setFontSize(22);
-        doc.setTextColor(17, 24, 39);
-        doc.text(this.fullName || 'Your Name', margin, y);
-
-        doc.setFont('Helvetica', 'normal');
-        doc.setFontSize(10);
-        doc.setTextColor(75, 85, 99);
-        y += 7;
-        doc.text(`${this.email}  |  ${this.phone}  |  ${this.location}`, margin, y);
-        y += 5;
-        doc.setDrawColor(229, 231, 235);
-        doc.line(margin, y, pageWidth - margin, y);
-        y += 12;
-
-      } else if (this.selectedTemplate === 'elegant') {
-        doc.setFont('Times', 'italic');
-        doc.setFontSize(26);
-        doc.setTextColor(17, 24, 39);
-        const nameWidth = doc.getTextWidth(this.fullName || 'Your Name');
-        doc.text(this.fullName || 'Your Name', (pageWidth - nameWidth) / 2, y);
-
-        doc.setFont('Times', 'normal');
-        doc.setFontSize(10);
-        doc.setTextColor(75, 85, 99);
-        y += 8;
-        const contactText = `${this.email}  •  ${this.phone}  •  ${this.location}`;
-        const contactWidth = doc.getTextWidth(contactText);
-        doc.text(contactText, (pageWidth - contactWidth) / 2, y);
-        y += 6;
-        doc.setDrawColor(75, 85, 99);
-        doc.line(margin, y, pageWidth - margin, y);
-        y += 12;
-
-      } else if (this.selectedTemplate === 'creative') {
-        doc.setFont('Helvetica', 'bold');
-        doc.setFontSize(24);
-        doc.setTextColor(99, 102, 241);
-        doc.text(this.fullName || 'Your Name', margin, y);
-
-        doc.setFont('Helvetica', 'normal');
-        doc.setFontSize(10);
-        doc.setTextColor(75, 85, 99);
-        y += 8;
-        doc.text(`${this.email}   •   ${this.phone}   •   ${this.location}`, margin, y);
-        
-        y += 4;
-        doc.setDrawColor(99, 102, 241);
-        doc.setLineWidth(1);
-        doc.line(margin, y, pageWidth - margin, y);
-        y += 12;
-
-      } else if (this.selectedTemplate === 'executive') {
-        doc.setFillColor(30, 41, 59); // slate-800 banner
-        doc.rect(0, 0, pageWidth, 26, 'F');
-        
-        doc.setFont('Helvetica', 'bold');
-        doc.setFontSize(22);
-        doc.setTextColor(255, 255, 255);
-        doc.text(this.fullName || 'Your Name', margin, 17);
-
-        doc.setFont('Helvetica', 'normal');
-        doc.setFontSize(9.5);
-        doc.setTextColor(203, 213, 225);
-        y = 36;
-        doc.text(`${this.email}   |   ${this.phone}   |   ${this.location}`, margin, y);
-        y += 5;
-        doc.setDrawColor(226, 232, 240);
-        doc.line(margin, y, pageWidth - margin, y);
-        y += 12;
-
-      } else if (this.selectedTemplate === 'tech') {
-        doc.setFillColor(16, 185, 129); // emerald-500 top bar
-        doc.rect(0, 0, pageWidth, 5, 'F');
-
-        doc.setFont('Helvetica', 'bold');
-        doc.setFontSize(22);
-        doc.setTextColor(17, 24, 39);
-        doc.text(this.fullName || 'Your Name', margin, y);
-
-        doc.setFont('Helvetica', 'normal');
-        doc.setFontSize(9.5);
-        doc.setTextColor(16, 185, 129);
-        y += 7;
-        doc.text(`${this.email}  //  ${this.phone}  //  ${this.location}`, margin, y);
-        y += 5;
-        doc.setDrawColor(229, 231, 235);
-        doc.line(margin, y, pageWidth - margin, y);
-        y += 12;
-
-      } else {
-        // Minimal layout
         doc.setFont('Helvetica', 'bold');
         doc.setFontSize(20);
-        doc.setTextColor(17, 24, 39);
-        doc.text(this.fullName || 'Your Name', margin, y);
+        doc.setTextColor(255, 255, 255);
+        doc.text(name.toUpperCase(), 20, 18);
+
+        doc.setFontSize(8.5);
+        doc.setTextColor(245, 158, 11);
+        doc.text('SENIOR EXECUTIVE LEADER', 20, 26);
 
         doc.setFont('Helvetica', 'normal');
-        doc.setFontSize(9.5);
-        doc.setTextColor(75, 85, 99);
-        y += 6;
-        doc.text(this.email, margin, y);
-        y += 5;
-        doc.text(this.phone, margin, y);
-        y += 5;
-        doc.text(this.location, margin, y);
+        doc.setFontSize(8);
+        doc.setTextColor(203, 213, 225);
+        doc.text(`${userEmail}   |   ${userPhone}   |   ${userLoc}`, pageWidth - 20, 22, { align: 'right' });
+
+        doc.setFillColor(245, 158, 11);
+        doc.rect(0, 35, pageWidth, 1.5, 'F');
+
+        let y = 48;
+        doc.setFont('Helvetica', 'bold');
+        doc.setFontSize(8.5);
+        doc.setTextColor(71, 85, 105);
+        doc.text(this.currentDate, 20, y);
+
+        doc.setFillColor(241, 245, 249);
+        doc.roundedRect(pageWidth - 52, y - 5, 32, 7, 2, 2, 'F');
+        doc.setFontSize(7);
+        doc.setTextColor(15, 23, 42);
+        doc.text('CONFIDENTIAL', pageWidth - 36, y - 0.5, { align: 'center' });
+
         y += 12;
+        doc.setFont('Helvetica', 'normal');
+        doc.setFontSize(10);
+        doc.setTextColor(30, 41, 59);
+
+        const textLines = doc.splitTextToSize(this.coverLetterText, pageWidth - 40);
+        for (let i = 0; i < textLines.length; i++) {
+          if (y > pageHeight - 25) {
+            doc.addPage();
+            y = 25;
+          }
+          doc.text(textLines[i], 20, y);
+          y += 6;
+        }
+
+      } else if (template === 'tech') {
+        doc.setFillColor(16, 185, 129);
+        doc.rect(0, 0, pageWidth, 3, 'F');
+
+        doc.setFillColor(15, 23, 42);
+        doc.rect(0, 3, pageWidth, 28, 'F');
+
+        doc.setFont('Courier', 'bold');
+        doc.setFontSize(16);
+        doc.setTextColor(255, 255, 255);
+        doc.text(`<${name.replace(/\s+/g, '_')}/>`, 20, 17);
+
+        doc.setFontSize(9);
+        doc.setTextColor(52, 211, 153);
+        doc.text(`// ${role}`, 20, 24);
+
+        doc.setFont('Courier', 'normal');
+        doc.setFontSize(8);
+        doc.setTextColor(148, 163, 184);
+        doc.text(`${userEmail}   |   github.com/profile`, pageWidth - 20, 20, { align: 'right' });
+
+        let y = 42;
+        doc.setFillColor(241, 245, 249);
+        doc.rect(20, y - 4, pageWidth - 40, 8, 'F');
+        doc.setFont('Courier', 'normal');
+        doc.setFontSize(8);
+        doc.setTextColor(100, 116, 139);
+        doc.text(`DATE: ${this.currentDate}`, 24, y + 1.5);
+        doc.setTextColor(5, 150, 105);
+        doc.setFont('Courier', 'bold');
+        doc.text('[COVER_LETTER.MD]', pageWidth - 24, y + 1.5, { align: 'right' });
+
+        y += 14;
+        doc.setFont('Helvetica', 'normal');
+        doc.setFontSize(10);
+        doc.setTextColor(30, 41, 59);
+
+        const textLines = doc.splitTextToSize(this.coverLetterText, pageWidth - 40);
+        for (let i = 0; i < textLines.length; i++) {
+          if (y > pageHeight - 25) {
+            doc.addPage();
+            y = 25;
+          }
+          doc.text(textLines[i], 20, y);
+          y += 6;
+        }
+
+      } else if (template === 'creative') {
+        const sidebarWidth = 48;
+        doc.setFillColor(109, 40, 217);
+        doc.rect(0, 0, sidebarWidth, pageHeight, 'F');
+
+        doc.setFillColor(255, 255, 255);
+        doc.roundedRect(12, 16, 24, 24, 4, 4, 'F');
+        doc.setFont('Helvetica', 'bold');
+        doc.setFontSize(14);
+        doc.setTextColor(109, 40, 217);
+        const initials = name.split(' ').map(n => n[0]).slice(0, 2).join('').toUpperCase();
+        doc.text(initials, 24, 32, { align: 'center' });
+
+        doc.setFont('Helvetica', 'bold');
+        doc.setFontSize(7);
+        doc.setTextColor(233, 213, 255);
+        doc.text('CONTACT', 8, 52);
+
+        doc.setFont('Helvetica', 'normal');
+        doc.setFontSize(7.5);
+        doc.setTextColor(255, 255, 255);
+        const emailLines = doc.splitTextToSize(userEmail, sidebarWidth - 16);
+        doc.text(emailLines, 8, 58);
+        doc.text(userPhone, 8, 68);
+        doc.text(userLoc, 8, 74);
+
+        doc.setFont('Helvetica', 'bold');
+        doc.setFontSize(7);
+        doc.setTextColor(233, 213, 255);
+        doc.text('SKILLS', 8, 90);
+
+        doc.setFont('Helvetica', 'normal');
+        doc.setFontSize(7.5);
+        doc.setTextColor(255, 255, 255);
+        doc.text('• Full Stack\n• Architecture\n• UI/UX Design\n• Performance', 8, 96);
+
+        const contentX = sidebarWidth + 14;
+        const contentWidth = pageWidth - contentX - 16;
+        let y = 24;
+
+        doc.setFont('Helvetica', 'bold');
+        doc.setFontSize(18);
+        doc.setTextColor(109, 40, 217);
+        doc.text(name, contentX, y);
+
+        y += 6;
+        doc.setFontSize(9);
+        doc.setTextColor(100, 116, 139);
+        doc.text(role, contentX, y);
+
+        y += 4;
+        doc.setDrawColor(243, 232, 255);
+        doc.line(contentX, y, contentX + contentWidth, y);
+
+        y += 10;
+        doc.setFontSize(8.5);
+        doc.setTextColor(148, 163, 184);
+        doc.text(this.currentDate, contentX, y);
+
+        y += 8;
+        doc.setFont('Helvetica', 'normal');
+        doc.setFontSize(9.5);
+        doc.setTextColor(30, 41, 59);
+
+        const textLines = doc.splitTextToSize(this.coverLetterText, contentWidth);
+        for (let i = 0; i < textLines.length; i++) {
+          if (y > pageHeight - 20) {
+            doc.addPage();
+            doc.setFillColor(109, 40, 217);
+            doc.rect(0, 0, sidebarWidth, pageHeight, 'F');
+            y = 25;
+          }
+          doc.text(textLines[i], contentX, y);
+          y += 5.8;
+        }
+
+      } else if (template === 'elegant') {
+        let y = 25;
+        doc.setFont('Times', 'italic');
+        doc.setFontSize(22);
+        doc.setTextColor(15, 23, 42);
+        doc.text(name, pageWidth / 2, y, { align: 'center' });
+
+        y += 7;
+        doc.setFont('Helvetica', 'normal');
+        doc.setFontSize(7.5);
+        doc.setTextColor(100, 116, 139);
+        doc.text(`•  ${role.toUpperCase()}  •`, pageWidth / 2, y, { align: 'center' });
+
+        y += 4.5;
+        doc.setFontSize(7.5);
+        doc.text(`${userEmail}   •   ${userPhone}   •   ${userLoc}`, pageWidth / 2, y, { align: 'center' });
+
+        y += 4;
+        doc.setDrawColor(203, 213, 225);
+        doc.line(30, y, pageWidth - 30, y);
+        doc.line(30, y + 1, pageWidth - 30, y + 1);
+
+        y += 12;
+        doc.setFont('Times', 'italic');
+        doc.setFontSize(9);
+        doc.setTextColor(100, 116, 139);
+        doc.text(this.currentDate, 25, y);
+
+        y += 8;
+        doc.setFont('Times', 'normal');
+        doc.setFontSize(10.5);
+        doc.setTextColor(30, 41, 59);
+
+        const textLines = doc.splitTextToSize(this.coverLetterText, pageWidth - 50);
+        for (let i = 0; i < textLines.length; i++) {
+          if (y > pageHeight - 25) {
+            doc.addPage();
+            y = 25;
+          }
+          doc.text(textLines[i], 25, y);
+          y += 6.2;
+        }
+
+      } else if (template === 'minimal') {
+        let y = 25;
+        doc.setFont('Helvetica', 'bold');
+        doc.setFontSize(18);
+        doc.setTextColor(15, 23, 42);
+        doc.text(name, 20, y);
+
+        doc.setFont('Helvetica', 'normal');
+        doc.setFontSize(8.5);
+        doc.setTextColor(100, 116, 139);
+        doc.text(role, 20, y + 6);
+
+        doc.setFontSize(7.5);
+        doc.text(`${userEmail}\n${userPhone}\n${userLoc}`, pageWidth - 20, y - 1, { align: 'right' });
+
+        y += 14;
+        doc.setDrawColor(226, 232, 240);
+        doc.line(20, y, pageWidth - 20, y);
+
+        y += 10;
+        doc.setFontSize(8.5);
+        doc.setTextColor(100, 116, 139);
+        doc.text(this.currentDate, 20, y);
+
+        y += 8;
+        doc.setFont('Helvetica', 'normal');
+        doc.setFontSize(10);
+        doc.setTextColor(30, 41, 59);
+
+        const textLines = doc.splitTextToSize(this.coverLetterText, pageWidth - 40);
+        for (let i = 0; i < textLines.length; i++) {
+          if (y > pageHeight - 25) {
+            doc.addPage();
+            y = 25;
+          }
+          doc.text(textLines[i], 20, y);
+          y += 6;
+        }
+
+      } else {
+        doc.setFillColor(37, 99, 235);
+        doc.rect(0, 0, pageWidth, 4.5, 'F');
+
+        doc.setFillColor(37, 99, 235);
+        doc.roundedRect(20, 14, 16, 16, 3, 3, 'F');
+        doc.setFont('Helvetica', 'bold');
+        doc.setFontSize(10);
+        doc.setTextColor(255, 255, 255);
+        const initials = name.split(' ').map(n => n[0]).slice(0, 2).join('').toUpperCase();
+        doc.text(initials, 28, 24.5, { align: 'center' });
+
+        doc.setFont('Helvetica', 'bold');
+        doc.setFontSize(16);
+        doc.setTextColor(15, 23, 42);
+        doc.text(name, 42, 21);
+
+        doc.setFont('Helvetica', 'normal');
+        doc.setFontSize(8.5);
+        doc.setTextColor(37, 99, 235);
+        doc.text(role, 42, 27);
+
+        doc.setFontSize(8);
+        doc.setTextColor(100, 116, 139);
+        doc.text(`${userEmail}   |   ${userPhone}   |   ${userLoc}`, pageWidth - 20, 24, { align: 'right' });
+
+        let y = 36;
+        doc.setDrawColor(241, 245, 249);
+        doc.line(20, y, pageWidth - 20, y);
+
+        y += 6;
+        doc.setFillColor(239, 246, 255);
+        doc.roundedRect(20, y, pageWidth - 40, 8, 2, 2, 'F');
+        doc.setFillColor(37, 99, 235);
+        doc.rect(20, y, 2.5, 8, 'F');
+
+        doc.setFont('Helvetica', 'bold');
+        doc.setFontSize(8);
+        doc.setTextColor(30, 41, 59);
+        doc.text(`RE: ${role} Position at ${company}`, 26, y + 5.5);
+        doc.setFont('Helvetica', 'normal');
+        doc.setTextColor(37, 99, 235);
+        doc.text(this.currentDate, pageWidth - 26, y + 5.5, { align: 'right' });
+
+        y += 16;
+        doc.setFont('Helvetica', 'normal');
+        doc.setFontSize(10);
+        doc.setTextColor(30, 41, 59);
+
+        const textLines = doc.splitTextToSize(this.coverLetterText, pageWidth - 40);
+        for (let i = 0; i < textLines.length; i++) {
+          if (y > pageHeight - 25) {
+            doc.addPage();
+            y = 25;
+          }
+          doc.text(textLines[i], 20, y);
+          y += 6;
+        }
       }
 
-      // --- DATE & RECIPIENT ---
-      const currentDate = new Date().toLocaleDateString('en-US', {
-        month: 'long',
-        day: 'numeric',
-        year: 'numeric'
-      });
-      doc.setFont(this.selectedTemplate === 'elegant' ? 'Times' : 'Helvetica', 'normal');
-      doc.setFontSize(10);
-      doc.setTextColor(17, 24, 39);
-      doc.text(currentDate, margin, y);
-      y += 8;
-
-      if (this.hiringManager || this.companyName) {
-        doc.setFont(this.selectedTemplate === 'elegant' ? 'Times' : 'Helvetica', 'bold');
-        if (this.hiringManager) {
-          doc.text(this.hiringManager, margin, y);
-          y += 5;
-        }
-        if (this.companyName) {
-          doc.text(this.companyName, margin, y);
-          y += 5;
-        }
-        y += 5;
-      }
-
-      // --- BODY ---
-      doc.setFont(this.selectedTemplate === 'elegant' ? 'Times' : 'Helvetica', 'normal');
-      doc.setFontSize(10.5);
-      const textLines = doc.splitTextToSize(this.coverLetterText || 'Cover Letter body goes here...', maxLineWidth);
-      const lineHeight = 6.5;
-
-      for (let i = 0; i < textLines.length; i++) {
-        if (y > 275) {
-          doc.addPage();
-          y = 20;
-        }
-        doc.text(textLines[i], margin, y);
-        y += lineHeight;
-      }
-
-      const filename = `${(this.fullName || 'User').replace(/\s+/g, '_')}_Cover_Letter.pdf`;
+      const filename = `${name.replace(/\s+/g, '_')}_${template.toUpperCase()}_Cover_Letter.pdf`;
       doc.save(filename);
     } catch (e) {
       console.error('Error downloading Cover Letter PDF', e);

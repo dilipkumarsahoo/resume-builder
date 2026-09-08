@@ -110,6 +110,7 @@ export class OnboardingComponent {
 
   selectTemplate(id: TemplateType) {
     this.selectedTemplateId.set(id);
+    this.cvService.selectedTemplate.set(id);
   }
 
   useTemplate(id: TemplateType) {

@@ -37,6 +37,20 @@
             class="absolute top-full left-1/2 -translate-x-1/2 pt-2 z-50 animate-modal-enter w-64">
             <div class="bg-white rounded-2xl p-2 shadow-xl border border-slate-100 ring-1 ring-slate-900/5">
 
+              <!-- 0. Dashboard -->
+              <button (click)="openDashboard()"
+                class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-left hover:bg-slate-50 group/item transition-colors cursor-pointer">
+                <div
+                  class="w-8 h-8 rounded-lg bg-slate-100 text-slate-700 flex items-center justify-center group-hover/item:bg-slate-900 group-hover/item:text-white transition-colors">
+                  <span class="material-icons text-lg">home</span>
+                </div>
+                <div>
+                  <p class="text-sm font-semibold text-slate-800 group-hover/item:text-blue-600 transition-colors">
+                    My Dashboard</p>
+                  <p class="text-[11px] text-slate-400">Overview, documents & jobs</p>
+                </div>
+              </button>
+
               <!-- 1. Resume Templates -->
               <button (click)="openResumeTemplates()"
                 class="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-left hover:bg-slate-50 group/item transition-colors cursor-pointer">

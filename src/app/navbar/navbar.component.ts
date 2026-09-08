@@ -104,6 +104,11 @@ export class NavbarComponent implements OnInit {
     this.router.navigate(['/cover-letter'], { queryParams: { tab: 'jobs' } });
   }
 
+  openDashboard() {
+    this.closeMobileMenu();
+    this.router.navigate(['/dashboard']);
+  }
+
   openGetStarted() {
     this.closeMobileMenu();
     this.cvService.openOnboarding();

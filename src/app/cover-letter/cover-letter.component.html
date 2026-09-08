@@ -1,11 +1,13 @@
 <div class="min-h-screen bg-[#f8fafc] flex font-sans text-slate-800">
-  
+
   <!-- FlowCV Sidebar -->
-  <aside class="w-64 bg-[#f1f5f9]/80 border-r border-slate-200/80 flex flex-col justify-between p-6 flex-shrink-0 hidden md:flex min-h-screen sticky top-0 h-screen">
+  <aside
+    class="w-64 bg-[#f1f5f9]/80 border-r border-slate-200/80 flex flex-col justify-between p-6 flex-shrink-0 hidden md:flex min-h-screen sticky top-0 h-screen">
     <div class="space-y-8">
       <!-- Logo -->
       <div class="flex items-center gap-3 px-2 cursor-pointer" (click)="close()">
-        <div class="w-9 h-9 rounded-xl bg-gradient-to-tr from-indigo-600 via-indigo-500 to-purple-500 flex items-center justify-center text-white shadow-md shadow-indigo-200">
+        <div
+          class="w-9 h-9 rounded-xl bg-gradient-to-tr from-indigo-600 via-indigo-500 to-purple-500 flex items-center justify-center text-white shadow-md shadow-indigo-200">
           <span class="material-icons text-xl">description</span>
         </div>
         <div class="flex flex-col">
@@ -16,38 +18,42 @@
 
       <!-- Navigation Links -->
       <nav class="space-y-2">
+        <!-- Dashboard Tab -->
+        <button routerLink="/dashboard"
+          class="w-full flex items-center gap-3 px-4 py-3 rounded-xl font-bold text-sm text-slate-600 hover:bg-slate-200/60 transition-all cursor-pointer group">
+          <span class="material-icons text-slate-400 group-hover:text-indigo-600">home</span>
+          <span>Dashboard</span>
+        </button>
+
         <!-- Resume Tab -->
-        <button 
-          (click)="switchToResumeSection()"
+        <button (click)="switchToResumeSection()"
           [class]="activeTabSection === 'resume'
             ? 'w-full flex items-center gap-3 px-4 py-3 rounded-xl font-bold text-sm bg-white text-indigo-600 shadow-sm border border-slate-200/60 transition-all cursor-pointer'
-            : 'w-full flex items-center gap-3 px-4 py-3 rounded-xl font-bold text-sm text-slate-600 hover:bg-slate-200/60 transition-all cursor-pointer group'"
-        >
-          <span class="material-icons" [class]="activeTabSection === 'resume' ? 'text-indigo-600' : 'text-slate-400 group-hover:text-indigo-600'">badge</span>
+            : 'w-full flex items-center gap-3 px-4 py-3 rounded-xl font-bold text-sm text-slate-600 hover:bg-slate-200/60 transition-all cursor-pointer group'">
+          <span class="material-icons"
+            [class]="activeTabSection === 'resume' ? 'text-indigo-600' : 'text-slate-400 group-hover:text-indigo-600'">badge</span>
           <span>Resume</span>
           <span *ngIf="activeTabSection === 'resume'" class="ml-auto w-2 h-2 rounded-full bg-indigo-600"></span>
         </button>
 
         <!-- Cover Letter Tab -->
-        <button 
-          (click)="switchToCoverLetterSection()"
+        <button (click)="switchToCoverLetterSection()"
           [class]="activeTabSection === 'cover-letter'
             ? 'w-full flex items-center gap-3 px-4 py-3 rounded-xl font-bold text-sm bg-white text-indigo-600 shadow-sm border border-slate-200/60 transition-all cursor-pointer'
-            : 'w-full flex items-center gap-3 px-4 py-3 rounded-xl font-bold text-sm text-slate-600 hover:bg-slate-200/60 transition-all cursor-pointer group'"
-        >
-          <span class="material-icons" [class]="activeTabSection === 'cover-letter' ? 'text-indigo-600' : 'text-slate-400 group-hover:text-indigo-600'">article</span>
+            : 'w-full flex items-center gap-3 px-4 py-3 rounded-xl font-bold text-sm text-slate-600 hover:bg-slate-200/60 transition-all cursor-pointer group'">
+          <span class="material-icons"
+            [class]="activeTabSection === 'cover-letter' ? 'text-indigo-600' : 'text-slate-400 group-hover:text-indigo-600'">article</span>
           <span>Cover Letter</span>
           <span *ngIf="activeTabSection === 'cover-letter'" class="ml-auto w-2 h-2 rounded-full bg-indigo-600"></span>
         </button>
 
         <!-- Job Tracker Tab -->
-        <button 
-          (click)="switchToJobTrackerSection()"
+        <button (click)="switchToJobTrackerSection()"
           [class]="activeTabSection === 'jobs'
             ? 'w-full flex items-center gap-3 px-4 py-3 rounded-xl font-bold text-sm bg-white text-indigo-600 shadow-sm border border-slate-200/60 transition-all cursor-pointer'
-            : 'w-full flex items-center gap-3 px-4 py-3 rounded-xl font-bold text-sm text-slate-600 hover:bg-slate-200/60 transition-all cursor-pointer group'"
-        >
-          <span class="material-icons" [class]="activeTabSection === 'jobs' ? 'text-indigo-600' : 'text-slate-400 group-hover:text-indigo-600'">work_outline</span>
+            : 'w-full flex items-center gap-3 px-4 py-3 rounded-xl font-bold text-sm text-slate-600 hover:bg-slate-200/60 transition-all cursor-pointer group'">
+          <span class="material-icons"
+            [class]="activeTabSection === 'jobs' ? 'text-indigo-600' : 'text-slate-400 group-hover:text-indigo-600'">work_outline</span>
           <span>Job Tracker</span>
           <span *ngIf="activeTabSection === 'jobs'" class="ml-auto w-2 h-2 rounded-full bg-indigo-600"></span>
         </button>
@@ -56,16 +62,12 @@
 
     <!-- Sidebar Bottom Auth Buttons -->
     <div class="space-y-3 pt-6 border-t border-slate-200/80">
-      <button 
-        routerLink="/login"
-        class="w-full py-2.5 px-4 bg-white border border-slate-300 rounded-xl font-bold text-slate-700 text-sm hover:bg-slate-50 transition-all shadow-sm cursor-pointer"
-      >
+      <button routerLink="/login"
+        class="w-full py-2.5 px-4 bg-white border border-slate-300 rounded-xl font-bold text-slate-700 text-sm hover:bg-slate-50 transition-all shadow-sm cursor-pointer">
         Login
       </button>
-      <button 
-        routerLink="/signup"
-        class="w-full py-2.5 px-4 bg-slate-900 text-white rounded-xl font-bold text-sm hover:bg-slate-800 transition-all shadow-sm cursor-pointer"
-      >
+      <button routerLink="/signup"
+        class="w-full py-2.5 px-4 bg-slate-900 text-white rounded-xl font-bold text-sm hover:bg-slate-800 transition-all shadow-sm cursor-pointer">
         Signup
       </button>
     </div>
@@ -73,19 +75,18 @@
 
   <!-- Main Content Wrapper -->
   <main class="flex-1 flex flex-col min-w-0 min-h-screen">
-    
+
     <!-- RESUME TEMPLATES SELECTION GALLERY VIEW -->
-    <div *ngIf="activeTabSection === 'resume'" class="flex-1 flex flex-col p-6 sm:p-10 lg:p-14 max-w-7xl mx-auto w-full">
+    <div *ngIf="activeTabSection === 'resume'"
+      class="flex-1 flex flex-col p-6 sm:p-10 lg:p-14 max-w-7xl mx-auto w-full">
       <!-- Top Title & Subtitle Section -->
       <div class="space-y-2 mb-10">
         <div class="flex items-center justify-between">
           <h1 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
             Start building your resume
           </h1>
-          <button 
-            (click)="startBlankResume()"
-            class="hidden sm:flex items-center gap-2 px-5 py-2.5 border-2 border-slate-800 text-slate-900 font-bold text-sm rounded-xl hover:bg-slate-900 hover:text-white transition-all shadow-sm cursor-pointer"
-          >
+          <button (click)="startBlankResume()"
+            class="hidden sm:flex items-center gap-2 px-5 py-2.5 border-2 border-slate-800 text-slate-900 font-bold text-sm rounded-xl hover:bg-slate-900 hover:text-white transition-all shadow-sm cursor-pointer">
             <span class="material-icons text-base">add</span>
             Start blank / AI prompt
           </button>
@@ -98,21 +99,16 @@
       <!-- Filter Pills Row -->
       <div class="flex flex-wrap items-center justify-between gap-4 mb-10">
         <div class="flex items-center gap-2 overflow-x-auto pb-2 no-scrollbar">
-          <button 
-            *ngFor="let cat of resumeCategories"
-            (click)="filterResumeCategory(cat)"
+          <button *ngFor="let cat of resumeCategories" (click)="filterResumeCategory(cat)"
             [class]="selectedResumeCategory === cat 
               ? 'px-6 py-2.5 bg-slate-900 text-white font-bold text-sm rounded-full shadow-md transition-all cursor-pointer' 
-              : 'px-6 py-2.5 bg-white text-slate-600 hover:text-slate-900 font-semibold text-sm rounded-full border border-slate-200 hover:border-slate-300 transition-all cursor-pointer'"
-          >
+              : 'px-6 py-2.5 bg-white text-slate-600 hover:text-slate-900 font-semibold text-sm rounded-full border border-slate-200 hover:border-slate-300 transition-all cursor-pointer'">
             {{ cat }}
           </button>
         </div>
 
-        <button 
-          (click)="startBlankResume()"
-          class="sm:hidden w-full flex items-center justify-center gap-2 py-3 bg-slate-900 text-white font-bold text-sm rounded-xl shadow-md cursor-pointer"
-        >
+        <button (click)="startBlankResume()"
+          class="sm:hidden w-full flex items-center justify-center gap-2 py-3 bg-slate-900 text-white font-bold text-sm rounded-xl shadow-md cursor-pointer">
           <span class="material-icons text-base">add</span>
           Start blank / AI prompt
         </button>
@@ -120,31 +116,32 @@
 
       <!-- Resume Templates Grid -->
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-        <div 
-          *ngFor="let template of filteredResumeTemplates"
-          (click)="selectResumeTemplateAndStart(template.id)"
-          class="group bg-white rounded-2xl border-2 transition-all duration-300 overflow-hidden cursor-pointer flex flex-col shadow-sm hover:shadow-xl hover:-translate-y-1 relative border-slate-200 hover:border-indigo-600"
-        >
+        <div *ngFor="let template of filteredResumeTemplates" (click)="selectResumeTemplateAndStart(template.id)"
+          class="group bg-white rounded-2xl border-2 transition-all duration-300 overflow-hidden cursor-pointer flex flex-col shadow-sm hover:shadow-xl hover:-translate-y-1 relative border-slate-200 hover:border-indigo-600">
           <!-- Badge overlay -->
           <div *ngIf="template.badge" class="absolute top-4 left-4 z-10">
-            <span class="px-3 py-1 bg-indigo-600 text-white text-[10px] font-black uppercase tracking-wider rounded-full shadow-md">
+            <span
+              class="px-3 py-1 bg-indigo-600 text-white text-[10px] font-black uppercase tracking-wider rounded-full shadow-md">
               {{ template.badge }}
             </span>
           </div>
 
           <!-- Document Visual Miniature Preview Container -->
-          <div class="aspect-[1/1.35] bg-slate-100/70 p-4 flex flex-col relative overflow-hidden border-b border-slate-100 group-hover:bg-slate-100 transition-colors">
-            <div class="w-full h-full bg-white shadow-md rounded-xl overflow-hidden relative select-none pointer-events-none">
-              <div class="absolute top-0 left-0 origin-top-left" style="transform: scale(0.36); width: 278%; height: 278%;">
+          <div
+            class="aspect-[1/1.35] bg-slate-100/70 p-4 flex flex-col relative overflow-hidden border-b border-slate-100 group-hover:bg-slate-100 transition-colors">
+            <div
+              class="w-full h-full bg-white shadow-md rounded-xl overflow-hidden relative select-none pointer-events-none">
+              <div class="absolute top-0 left-0 origin-top-left"
+                style="transform: scale(0.36); width: 278%; height: 278%;">
                 <app-cv-preview [templateOverride]="template.id" [isPreview]="true"></app-cv-preview>
               </div>
             </div>
 
             <!-- Hover overlay button -->
-            <div class="absolute inset-0 bg-slate-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center backdrop-blur-[2px]">
-              <button 
-                class="px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-bold text-sm shadow-xl transition-all transform hover:scale-105"
-              >
+            <div
+              class="absolute inset-0 bg-slate-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center backdrop-blur-[2px]">
+              <button
+                class="px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-bold text-sm shadow-xl transition-all transform hover:scale-105">
                 Use Template
               </button>
             </div>
@@ -156,7 +153,8 @@
               <h3 class="font-bold text-slate-900 text-base group-hover:text-indigo-600 transition-colors">
                 {{ template.name }}
               </h3>
-              <span class="text-[10px] font-bold px-2.5 py-0.5 bg-slate-100 text-slate-600 rounded-md uppercase tracking-wider">
+              <span
+                class="text-[10px] font-bold px-2.5 py-0.5 bg-slate-100 text-slate-600 rounded-md uppercase tracking-wider">
                 {{ template.category }}
               </span>
             </div>
@@ -178,10 +176,8 @@
               Organize, track, and manage your job applications across every stage.
             </p>
           </div>
-          <button 
-            (click)="openAddJobModal()"
-            class="flex items-center justify-center gap-2 px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-sm rounded-xl transition-all shadow-md shadow-indigo-200 cursor-pointer"
-          >
+          <button (click)="openAddJobModal()"
+            class="flex items-center justify-center gap-2 px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white font-bold text-sm rounded-xl transition-all shadow-md shadow-indigo-200 cursor-pointer">
             <span class="material-icons text-base">add</span>
             New Application
           </button>
@@ -212,19 +208,13 @@
       <div class="flex flex-col sm:flex-row items-center justify-between gap-4 mb-6">
         <div class="relative w-full sm:w-80">
           <span class="material-icons absolute left-3.5 top-1/2 -translate-y-1/2 text-slate-400 text-sm">search</span>
-          <input 
-            type="text" 
-            [(ngModel)]="jobSearchQuery" 
-            placeholder="Search role or company..." 
-            class="w-full pl-10 pr-4 py-2.5 bg-white border border-slate-200 rounded-xl text-sm text-slate-800 outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 transition-all shadow-xs"
-          />
+          <input type="text" [(ngModel)]="jobSearchQuery" placeholder="Search role or company..."
+            class="w-full pl-10 pr-4 py-2.5 bg-white border border-slate-200 rounded-xl text-sm text-slate-800 outline-none focus:border-indigo-500 focus:ring-2 focus:ring-indigo-100 transition-all shadow-xs" />
         </div>
 
         <div class="flex items-center gap-3 w-full sm:w-auto">
-          <select 
-            [(ngModel)]="selectedJobStatusFilter"
-            class="w-full sm:w-auto px-4 py-2.5 bg-white border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 outline-none focus:border-indigo-500 shadow-xs"
-          >
+          <select [(ngModel)]="selectedJobStatusFilter"
+            class="w-full sm:w-auto px-4 py-2.5 bg-white border border-slate-200 rounded-xl text-sm font-semibold text-slate-700 outline-none focus:border-indigo-500 shadow-xs">
             <option value="All Statuses">All Statuses</option>
             <option value="Bookmarked">Bookmarked</option>
             <option value="Applied">Applied</option>
@@ -240,7 +230,8 @@
         <div class="overflow-x-auto">
           <table class="w-full text-left border-collapse">
             <thead>
-              <tr class="bg-slate-50/70 border-b border-slate-100 text-[11px] font-black text-slate-400 uppercase tracking-wider">
+              <tr
+                class="bg-slate-50/70 border-b border-slate-100 text-[11px] font-black text-slate-400 uppercase tracking-wider">
                 <th class="p-4 pl-6">Job Position</th>
                 <th class="p-4">Company</th>
                 <th class="p-4">Status</th>
@@ -258,16 +249,12 @@
                   {{ job.company }}
                 </td>
                 <td class="p-4">
-                  <select 
-                    [ngModel]="job.status" 
-                    (ngModelChange)="updateJobStatus(job, $event)"
+                  <select [ngModel]="job.status" (ngModelChange)="updateJobStatus(job, $event)"
                     class="px-3 py-1 text-xs font-bold rounded-lg border border-slate-200 bg-white text-slate-700 outline-none cursor-pointer"
                     [class.text-blue-700]="job.status === 'Bookmarked'"
                     [class.text-amber-700]="job.status === 'Applied'"
                     [class.text-purple-700]="job.status === 'Interviewing'"
-                    [class.text-emerald-700]="job.status === 'Offer'"
-                    [class.text-rose-700]="job.status === 'Rejected'"
-                  >
+                    [class.text-emerald-700]="job.status === 'Offer'" [class.text-rose-700]="job.status === 'Rejected'">
                     <option value="Bookmarked">Bookmarked</option>
                     <option value="Applied">Applied</option>
                     <option value="Interviewing">Interviewing</option>
@@ -282,11 +269,9 @@
                   {{ job.dateSaved }}
                 </td>
                 <td class="p-4 text-right pr-6">
-                  <button 
-                    (click)="deleteJob(i)"
+                  <button (click)="deleteJob(i)"
                     class="p-1.5 text-slate-400 hover:text-rose-600 hover:bg-rose-50 rounded-lg transition-colors cursor-pointer"
-                    title="Delete Application"
-                  >
+                    title="Delete Application">
                     <span class="material-icons text-base">delete_outline</span>
                   </button>
                 </td>
@@ -307,456 +292,682 @@
     <ng-container *ngIf="activeTabSection === 'cover-letter'">
       <!-- VIEW 1: FLOWCV-STYLE TEMPLATE SELECTION GALLERY -->
       <div *ngIf="viewMode === 'select'" class="flex-1 flex flex-col p-6 sm:p-10 lg:p-14 max-w-7xl mx-auto w-full">
-      
-      <!-- Top Title & Subtitle Section -->
-      <div class="space-y-2 mb-10">
-        <div class="flex items-center justify-between">
-          <h1 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
-            Start building your cover letter
-          </h1>
-          <button 
-            (click)="switchToBuilder()"
-            class="hidden sm:flex items-center gap-2 px-5 py-2.5 border-2 border-slate-800 text-slate-900 font-bold text-sm rounded-xl hover:bg-slate-900 hover:text-white transition-all shadow-sm cursor-pointer"
-          >
+
+        <!-- Top Title & Subtitle Section -->
+        <div class="space-y-2 mb-10">
+          <div class="flex items-center justify-between">
+            <h1 class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
+              Start building your cover letter
+            </h1>
+            <button (click)="switchToBuilder()"
+              class="hidden sm:flex items-center gap-2 px-5 py-2.5 border-2 border-slate-800 text-slate-900 font-bold text-sm rounded-xl hover:bg-slate-900 hover:text-white transition-all shadow-sm cursor-pointer">
+              <span class="material-icons text-base">add</span>
+              Start blank / AI prompt
+            </button>
+          </div>
+          <p class="text-slate-500 text-base sm:text-lg">
+            Choose a design you like. You can customize or switch it later.
+          </p>
+        </div>
+
+        <!-- Filter Pills Row -->
+        <div class="flex flex-wrap items-center justify-between gap-4 mb-10">
+          <div class="flex items-center gap-2 overflow-x-auto pb-2 no-scrollbar">
+            <button *ngFor="let cat of categories" (click)="filterCategory(cat)"
+              [class]="selectedCategory === cat 
+              ? 'px-6 py-2.5 bg-slate-900 text-white font-bold text-sm rounded-full shadow-md transition-all cursor-pointer' 
+              : 'px-6 py-2.5 bg-white text-slate-600 hover:text-slate-900 font-semibold text-sm rounded-full border border-slate-200 hover:border-slate-300 transition-all cursor-pointer'">
+              {{ cat }}
+            </button>
+          </div>
+
+          <button (click)="switchToBuilder()"
+            class="sm:hidden w-full flex items-center justify-center gap-2 py-3 bg-slate-900 text-white font-bold text-sm rounded-xl shadow-md cursor-pointer">
             <span class="material-icons text-base">add</span>
             Start blank / AI prompt
           </button>
         </div>
-        <p class="text-slate-500 text-base sm:text-lg">
-          Choose a design you like. You can customize or switch it later.
-        </p>
-      </div>
 
-      <!-- Filter Pills Row -->
-      <div class="flex flex-wrap items-center justify-between gap-4 mb-10">
-        <div class="flex items-center gap-2 overflow-x-auto pb-2 no-scrollbar">
-          <button 
-            *ngFor="let cat of categories"
-            (click)="filterCategory(cat)"
-            [class]="selectedCategory === cat 
-              ? 'px-6 py-2.5 bg-slate-900 text-white font-bold text-sm rounded-full shadow-md transition-all cursor-pointer' 
-              : 'px-6 py-2.5 bg-white text-slate-600 hover:text-slate-900 font-semibold text-sm rounded-full border border-slate-200 hover:border-slate-300 transition-all cursor-pointer'"
-          >
-            {{ cat }}
-          </button>
-        </div>
-
-        <button 
-          (click)="switchToBuilder()"
-          class="sm:hidden w-full flex items-center justify-center gap-2 py-3 bg-slate-900 text-white font-bold text-sm rounded-xl shadow-md cursor-pointer"
-        >
-          <span class="material-icons text-base">add</span>
-          Start blank / AI prompt
-        </button>
-      </div>
-
-      <!-- Template Cards Grid -->
-      <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
-        <div 
-          *ngFor="let template of filteredTemplates"
-          (click)="selectTemplateAndStart(template.id)"
-          class="group bg-white rounded-2xl border-2 transition-all duration-300 overflow-hidden cursor-pointer flex flex-col shadow-sm hover:shadow-xl hover:-translate-y-1 relative"
-          [class.border-indigo-600]="selectedTemplate === template.id"
-          [class.border-slate-200]="selectedTemplate !== template.id"
-        >
-          <!-- Badge overlay -->
-          <div *ngIf="template.badge" class="absolute top-4 left-4 z-10">
-            <span class="px-3 py-1 bg-indigo-600 text-white text-[10px] font-black uppercase tracking-wider rounded-full shadow-md">
-              {{ template.badge }}
-            </span>
-          </div>
-
-          <!-- Active checkmark badge -->
-          <div *ngIf="selectedTemplate === template.id" class="absolute top-4 right-4 z-10 w-8 h-8 rounded-full bg-emerald-500 text-white flex items-center justify-center shadow-lg animate-bounce">
-            <span class="material-icons text-sm">check</span>
-          </div>
-
-          <!-- Document Visual Miniature Preview Container -->
-          <div class="aspect-[1/1.35] bg-slate-100/70 p-6 flex flex-col relative overflow-hidden border-b border-slate-100 group-hover:bg-slate-100 transition-colors">
-            
-            <!-- Miniature Cover Letter Render Card -->
-            <div 
-              class="w-full h-full bg-white shadow-md rounded border border-slate-200/70 p-6 flex flex-col text-[9px] leading-snug overflow-hidden select-none pointer-events-none transition-transform duration-300 group-hover:scale-[1.02]"
-              [class]="'template-' + template.id"
-            >
-              <!-- HEADER STYLES ACCORDING TO TEMPLATE -->
-              
-              <!-- Modern Header -->
-              <div *ngIf="template.id === 'modern'" class="mb-4">
-                <div class="h-1 bg-indigo-600 -mx-6 -mt-6 mb-3"></div>
-                <h2 class="font-bold text-xs text-slate-900 tracking-tight">{{ fullName || 'Alex Johnson' }}</h2>
-                <p class="text-[8px] text-slate-500 mt-0.5">alex.johnson@example.com  |  +1 (555) 123-4567  |  San Francisco, CA</p>
-                <div class="h-[1px] bg-slate-200 mt-2"></div>
-              </div>
-
-              <!-- Elegant Serif Header -->
-              <div *ngIf="template.id === 'elegant'" class="mb-4 text-center font-serif">
-                <h2 class="font-normal italic text-sm text-slate-900">{{ fullName || 'Alex Johnson' }}</h2>
-                <p class="text-[8px] text-slate-500 mt-0.5 uppercase tracking-widest">alex.johnson@example.com  •  San Francisco, CA</p>
-                <div class="h-[1px] bg-slate-300 mt-2"></div>
-              </div>
-
-              <!-- Creative Header -->
-              <div *ngIf="template.id === 'creative'" class="mb-4">
-                <h2 class="font-black text-xs text-indigo-600">{{ fullName || 'Alex Johnson' }}</h2>
-                <p class="text-[8px] text-slate-500 mt-0.5 font-medium">alex.johnson@example.com   •   +1 (555) 123-4567</p>
-                <div class="h-[2px] bg-indigo-600 mt-2 rounded-full"></div>
-              </div>
-
-              <!-- Minimal Header -->
-              <div *ngIf="template.id === 'minimal'" class="mb-4">
-                <h2 class="font-bold text-xs text-slate-900">{{ fullName || 'Alex Johnson' }}</h2>
-                <p class="text-[8px] text-slate-500 mt-1">alex.johnson@example.com • +1 (555) 123-4567</p>
-              </div>
-
-              <!-- Executive Header -->
-              <div *ngIf="template.id === 'executive'" class="mb-4 -mx-6 -mt-6 bg-slate-800 p-4 text-white">
-                <h2 class="font-bold text-xs">{{ fullName || 'Alex Johnson' }}</h2>
-                <p class="text-[8px] text-slate-300 mt-0.5">alex.johnson@example.com  |  Senior Executive</p>
-              </div>
-
-              <!-- Tech Header -->
-              <div *ngIf="template.id === 'tech'" class="mb-4">
-                <div class="h-1 bg-emerald-500 -mx-6 -mt-6 mb-3"></div>
-                <h2 class="font-bold text-xs text-slate-900">{{ fullName || 'Alex Johnson' }}</h2>
-                <p class="text-[8px] text-emerald-600 font-mono mt-0.5">alex.johnson@example.com  //  Software Architect</p>
-                <div class="h-[1px] bg-slate-200 mt-2"></div>
-              </div>
-
-              <!-- Document Body Skeleton Simulation -->
-              <div class="space-y-2 text-slate-600 text-[8px] flex-1">
-                <p class="font-bold text-slate-800">{{ currentDate }}</p>
-                <p class="font-bold text-slate-800 mb-2">Dear Hiring Manager,</p>
-                <p>I am writing to express my strong interest in joining your team. With over 5 years of experience delivering scalable software applications, I bring proven expertise in modern development practices...</p>
-                <p class="hidden sm:block">Throughout my career, I have consistently driven technical innovation, collaborating with cross-functional teams to build high-performance products that solve real customer problems...</p>
-                <div class="pt-3">
-                  <p>Sincerely,</p>
-                  <p class="font-bold text-slate-900 mt-2">{{ fullName || 'Alex Johnson' }}</p>
-                </div>
-              </div>
+        <!-- Template Cards Grid -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div *ngFor="let template of filteredTemplates" (click)="selectTemplateAndStart(template.id)"
+            class="group bg-white rounded-2xl border-2 transition-all duration-300 overflow-hidden cursor-pointer flex flex-col shadow-sm hover:shadow-xl hover:-translate-y-1 relative"
+            [class.border-indigo-600]="selectedTemplate === template.id"
+            [class.border-slate-200]="selectedTemplate !== template.id">
+            <!-- Badge overlay -->
+            <div *ngIf="template.badge" class="absolute top-4 left-4 z-10">
+              <span
+                class="px-3 py-1 bg-indigo-600 text-white text-[10px] font-black uppercase tracking-wider rounded-full shadow-md">
+                {{ template.badge }}
+              </span>
             </div>
 
-            <!-- Hover overlay button -->
-            <div class="absolute inset-0 bg-slate-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center backdrop-blur-[2px]">
-              <button 
-                (click)="selectTemplateAndStart(template.id); $event.stopPropagation()"
-                class="px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-bold text-sm shadow-xl transition-all transform hover:scale-105"
-              >
-                Use Template
-              </button>
+            <!-- Active checkmark badge -->
+            <div *ngIf="selectedTemplate === template.id"
+              class="absolute top-4 right-4 z-10 w-8 h-8 rounded-full bg-emerald-500 text-white flex items-center justify-center shadow-lg animate-bounce">
+              <span class="material-icons text-sm">check</span>
             </div>
 
-          </div>
+            <!-- Document Visual Miniature Preview Container -->
+            <div
+              class="aspect-[1/1.35] bg-slate-100/70 p-6 flex flex-col relative overflow-hidden border-b border-slate-100 group-hover:bg-slate-100 transition-colors">
 
-          <!-- Card Description Footer -->
-          <div class="p-5 flex flex-col justify-between flex-1 bg-white">
-            <div>
-              <div class="flex items-center justify-between mb-1">
-                <h3 class="font-bold text-slate-900 text-base group-hover:text-indigo-600 transition-colors">
-                  {{ template.name }}
-                </h3>
-                <span class="text-[10px] font-bold px-2.5 py-0.5 bg-slate-100 text-slate-600 rounded-md uppercase tracking-wider">
-                  {{ template.category }}
-                </span>
+              <!-- Miniature Cover Letter Render Card -->
+              <div
+                class="w-full h-full bg-white shadow-md rounded-xl border border-slate-200/70 p-5 flex flex-col text-[8px] leading-snug overflow-hidden select-none pointer-events-none transition-transform duration-300 group-hover:scale-[1.02]"
+                [class]="'template-' + template.id">
+                <!-- 1. Minimal Template -->
+                <div *ngIf="template.id === 'minimal'"
+                  class="h-full flex flex-col justify-between text-slate-800 font-sans">
+                  <div>
+                    <div class="flex items-start justify-between border-b border-slate-200 pb-2 mb-2">
+                      <div>
+                        <h2 class="font-bold text-[10px] text-slate-900 tracking-tight">{{ fullName || 'DILIP SAHOO' }}
+                        </h2>
+                        <p class="text-[6.5px] text-slate-500 font-medium">Software Engineer & UI Developer</p>
+                      </div>
+                      <div class="text-[6px] text-slate-400 text-right space-y-0.5">
+                        <p>{{ userEmail || 'mailme.dilipsahu4@gmail.com' }}</p>
+                        <p>+91 98765 43210</p>
+                        <p>Bangalore, India</p>
+                      </div>
+                    </div>
+
+                    <div class="text-[6px] text-slate-400 mb-1.5">
+                      <p class="font-semibold text-slate-600">{{ currentDate }}</p>
+                      <p class="text-slate-500 mt-0.5">Hiring Team • Tech Innovations Inc.</p>
+                    </div>
+
+                    <div class="space-y-1.5 text-[6.8px] text-slate-600 leading-relaxed">
+                      <p class="font-bold text-slate-900 text-[7.5px]">Dear Hiring Manager,</p>
+                      <p>I am writing to express my enthusiasm for the Senior Developer role. With 5+ years building
+                        scalable web applications and high-performance user interfaces, I am eager to contribute to your
+                        engineering goals.</p>
+                      <p class="hidden sm:block">In my previous position, I led frontend architectural upgrades that
+                        reduced load times by 42% and accelerated feature delivery. I specialize in clean modular code,
+                        intuitive UX, and cross-functional team collaboration.</p>
+                      <p>I welcome the opportunity to discuss how my skill set aligns with your upcoming projects.</p>
+                    </div>
+                  </div>
+
+                  <div class="pt-2 border-t border-slate-100 flex items-center justify-between">
+                    <div>
+                      <p class="text-[6px] text-slate-500">Sincerely,</p>
+                      <p class="font-bold text-[7.5px] text-slate-900 mt-0.5">{{ fullName || 'DILIP SAHOO' }}</p>
+                    </div>
+                    <span
+                      class="text-[6px] px-1.5 py-0.5 rounded bg-slate-100 text-slate-400 font-mono">minimal.fmt</span>
+                  </div>
+                </div>
+
+                <!-- 2. Modern Template -->
+                <div *ngIf="template.id === 'modern'"
+                  class="h-full flex flex-col justify-between text-slate-800 font-sans -m-5 p-4 bg-white relative">
+                  <div class="h-1.5 bg-gradient-to-r from-blue-600 to-indigo-600 -mx-4 -mt-4 mb-3"></div>
+                  <div class="flex-1 flex flex-col justify-between">
+                    <div>
+                      <div class="flex items-center justify-between pb-2 border-b border-blue-50 mb-2">
+                        <div class="flex items-center gap-2">
+                          <div
+                            class="w-6 h-6 rounded-lg bg-blue-600 text-white font-black text-[9px] flex items-center justify-center shadow-2xs">
+                            {{ (fullName || 'DS').slice(0, 2).toUpperCase() }}
+                          </div>
+                          <div>
+                            <h2 class="font-extrabold text-[10px] text-slate-900 leading-tight">{{ fullName || 'DILIP
+                              SAHOO' }}</h2>
+                            <p class="text-[6.5px] font-semibold text-blue-600">Full Stack Engineer</p>
+                          </div>
+                        </div>
+                        <div class="text-[6px] text-slate-400 text-right leading-tight">
+                          <p class="font-medium text-slate-600">{{ userEmail || 'mailme.dilipsahu4@gmail.com' }}</p>
+                          <p>+91 98765 43210</p>
+                        </div>
+                      </div>
+
+                      <div
+                        class="bg-blue-50/60 rounded-lg p-1.5 border-l-2 border-blue-600 mb-2 text-[6.5px] text-slate-600">
+                        <span class="font-bold text-slate-800">RE:</span> Senior Frontend Engineer Position • <span
+                          class="text-blue-700 font-semibold">{{ currentDate }}</span>
+                      </div>
+
+                      <div class="space-y-1.5 text-[6.8px] text-slate-600 leading-relaxed">
+                        <p class="font-bold text-slate-800">Dear Hiring Manager,</p>
+                        <p>I am excited to apply for the Senior Frontend Engineer opening at your company. Having spent
+                          the last 5 years scaling modern responsive applications, I am confident in delivering
+                          immediate technical value.</p>
+                        <p class="hidden sm:block">My background encompasses designing robust UI component libraries,
+                          optimizing client-side performance, and driving end-to-end user experience enhancements across
+                          complex web platforms.</p>
+                        <p>Thank you for your consideration. I look forward to speaking soon.</p>
+                      </div>
+                    </div>
+
+                    <div class="pt-2 flex items-end justify-between border-t border-slate-100 mt-1">
+                      <div>
+                        <p class="text-[6px] text-slate-500">Best regards,</p>
+                        <p class="font-bold text-[7.5px] text-blue-600 mt-0.5">{{ fullName || 'DILIP SAHOO' }}</p>
+                      </div>
+                      <div class="w-12 h-3 border-b-2 border-blue-200 opacity-60"></div>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- 3. Elegant Serif Template -->
+                <div *ngIf="template.id === 'elegant'"
+                  class="h-full flex flex-col justify-between text-slate-800 font-serif -m-5 p-4 bg-[#fdfbf7]">
+                  <div>
+                    <div class="text-center pb-2 mb-2 border-b border-slate-300/80">
+                      <h2 class="font-normal italic text-[12px] text-slate-900 tracking-wide">{{ fullName || 'DILIP
+                        SAHOO' }}</h2>
+                      <p class="text-[6px] tracking-widest text-slate-500 uppercase font-sans mt-0.5">LEAD SOFTWARE
+                        ARCHITECT</p>
+                      <div class="flex items-center justify-center gap-1.5 text-[6px] text-slate-400 font-sans mt-1">
+                        <span>{{ userEmail || 'mailme.dilipsahu4@gmail.com' }}</span>
+                        <span>•</span>
+                        <span>+91 98765 43210</span>
+                        <span>•</span>
+                        <span>Bangalore</span>
+                      </div>
+                    </div>
+
+                    <div class="text-[6.5px] text-slate-500 italic mb-2">
+                      <p>{{ currentDate }}</p>
+                      <p class="text-slate-700 font-normal">To the Executive Hiring Board</p>
+                    </div>
+
+                    <div class="space-y-1.5 text-[6.8px] text-slate-700 leading-relaxed text-justify">
+                      <p class="font-semibold text-slate-900">Dear Selection Committee,</p>
+                      <p>It is with great pleasure that I submit my application for the Lead Engineering role. Over the
+                        past several years, I have dedicated myself to mastering resilient software architectures and
+                        mentoring high-velocity development teams.</p>
+                      <p class="hidden sm:block">My career has been defined by an unwavering dedication to design
+                        fidelity, system reliability, and cross-functional leadership.</p>
+                    </div>
+                  </div>
+
+                  <div class="pt-2 border-t border-slate-200/80 flex items-center justify-between">
+                    <div>
+                      <p class="text-[6px] italic text-slate-500">Respectfully yours,</p>
+                      <p class="font-bold text-[8px] italic text-slate-900 mt-0.5">{{ fullName || 'DILIP SAHOO' }}</p>
+                    </div>
+                    <div
+                      class="w-7 h-7 rounded-full border border-amber-800/20 flex items-center justify-center text-[5.5px] font-sans font-bold text-amber-900/60 uppercase">
+                      SEAL
+                    </div>
+                  </div>
+                </div>
+
+                <!-- 4. Creative Template (Sidebar split) -->
+                <div *ngIf="template.id === 'creative'"
+                  class="h-full flex text-slate-800 font-sans -m-5 overflow-hidden">
+                  <!-- Left Purple Column -->
+                  <div
+                    class="w-20 bg-gradient-to-b from-purple-700 to-indigo-800 text-white p-2.5 flex flex-col justify-between shrink-0">
+                    <div class="space-y-2.5">
+                      <div
+                        class="w-7 h-7 rounded-xl bg-white/20 backdrop-blur-xs flex items-center justify-center font-black text-[9px] text-white shadow-inner">
+                        {{ (fullName || 'DS').slice(0, 2).toUpperCase() }}
+                      </div>
+                      <div class="space-y-0.5 text-[6px] text-purple-200">
+                        <p class="font-bold text-white uppercase tracking-wider text-[5.5px]">Contact</p>
+                        <p class="break-all">{{ userEmail || 'mailme.dilipsahu4@gmail.com' }}</p>
+                        <p>+91 9876543210</p>
+                        <p>Bangalore, IN</p>
+                      </div>
+                      <div class="space-y-0.5 text-[6px]">
+                        <p class="font-bold text-white uppercase tracking-wider text-[5.5px]">Skills</p>
+                        <div class="flex flex-wrap gap-0.5">
+                          <span class="px-1 py-0.5 bg-white/20 rounded text-[5px] text-white">React</span>
+                          <span class="px-1 py-0.5 bg-white/20 rounded text-[5px] text-white">Angular</span>
+                          <span class="px-1 py-0.5 bg-white/20 rounded text-[5px] text-white">Node</span>
+                        </div>
+                      </div>
+                    </div>
+                    <div class="text-[5.5px] text-purple-300 font-mono">
+                      PORTFOLIO.V3
+                    </div>
+                  </div>
+
+                  <!-- Right Content Area -->
+                  <div class="flex-1 bg-white p-3 flex flex-col justify-between">
+                    <div>
+                      <div class="pb-1.5 border-b border-purple-100 mb-2">
+                        <h2 class="font-black text-[10px] text-purple-700 tracking-tight">{{ fullName || 'DILIP SAHOO'
+                          }}</h2>
+                        <p class="text-[6.5px] text-slate-500 font-semibold">Creative Technologist</p>
+                      </div>
+
+                      <div class="text-[6px] text-slate-400 mb-1.5 flex justify-between">
+                        <span>{{ currentDate }}</span>
+                        <span class="font-semibold text-purple-600">Application</span>
+                      </div>
+
+                      <div class="space-y-1 text-[6.5px] text-slate-600 leading-relaxed">
+                        <p class="font-bold text-slate-800">Hi Recruiting Team,</p>
+                        <p>I build products at the intersection of creative design and solid engineering. With strong
+                          expertise in modern frontends, I transform ambitious ideas into polished digital realities.
+                        </p>
+                        <p class="hidden sm:block">From micro-interactions to complex data dashboards, I create user
+                          experiences that delight users and drive real business results.</p>
+                      </div>
+                    </div>
+
+                    <div class="pt-1.5 border-t border-purple-50">
+                      <p class="text-[6px] text-slate-400">Warm regards,</p>
+                      <p class="font-bold text-[7.5px] text-purple-700 mt-0.5">{{ fullName || 'DILIP SAHOO' }}</p>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- 5. Executive Template (Dark Header) -->
+                <div *ngIf="template.id === 'executive'"
+                  class="h-full flex flex-col justify-between text-slate-800 font-sans -m-5 bg-white">
+                  <!-- Top Dark Slate Header -->
+                  <div class="bg-slate-900 text-white p-3 pb-2.5">
+                    <div class="flex items-center justify-between">
+                      <div>
+                        <h2 class="font-black text-[10px] tracking-wide text-white">{{ fullName || 'DILIP SAHOO' }}</h2>
+                        <p class="text-[6px] text-amber-400 font-bold uppercase tracking-wider mt-0.5">SENIOR
+                          ENGINEERING LEADER</p>
+                      </div>
+                      <div class="text-right text-[6px] text-slate-300 leading-tight">
+                        <p>{{ userEmail || 'mailme.dilipsahu4@gmail.com' }}</p>
+                        <p>+91 98765 43210</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Body Content -->
+                  <div class="p-3 flex-1 flex flex-col justify-between">
+                    <div>
+                      <div
+                        class="flex items-center justify-between text-[6.5px] text-slate-500 mb-1.5 pb-1 border-b border-slate-200">
+                        <span class="font-bold text-slate-700">{{ currentDate }}</span>
+                        <span
+                          class="text-slate-900 font-bold uppercase text-[5.5px] bg-slate-100 px-1 py-0.5 rounded">CONFIDENTIAL</span>
+                      </div>
+
+                      <div class="space-y-1 text-[6.5px] text-slate-600 leading-relaxed">
+                        <p class="font-bold text-slate-900 text-[7px]">Dear Members of the Board,</p>
+                        <p>I am writing to express my candidacy for the Executive Leadership role. With a proven record
+                          of leading engineering organizations and driving multimillion-dollar transformations, I
+                          deliver decisive results.</p>
+                        <div class="space-y-0.5 my-1 pl-1 text-[6px] text-slate-700 font-medium">
+                          <p>• Scaled distributed engineering org to 50+ engineers</p>
+                          <p>• Accelerated throughput by 3x & reduced cloud costs</p>
+                        </div>
+                        <p class="hidden sm:block">I look forward to discussing how my strategic leadership will
+                          accelerate your growth.</p>
+                      </div>
+                    </div>
+
+                    <div class="pt-1.5 border-t border-slate-200 flex items-center justify-between">
+                      <div>
+                        <p class="text-[6px] text-slate-500 uppercase font-semibold">Sincerely,</p>
+                        <p class="font-bold text-[7.5px] text-slate-900 mt-0.5">{{ fullName || 'DILIP SAHOO' }}</p>
+                      </div>
+                      <span class="text-[5.5px] text-slate-400 italic">Executive Portfolio</span>
+                    </div>
+                  </div>
+                </div>
+
+                <!-- 6. Tech Template (Terminal & Code theme) -->
+                <div *ngIf="template.id === 'tech'"
+                  class="h-full flex flex-col justify-between text-slate-800 font-sans -m-5 bg-white">
+                  <!-- Top Tech Emerald Strip -->
+                  <div class="bg-slate-900 text-white p-2.5 border-b-2 border-emerald-500">
+                    <div class="flex items-center justify-between">
+                      <div class="flex items-center gap-1.5">
+                        <div class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></div>
+                        <div>
+                          <h2 class="font-bold text-[9.5px] text-white font-mono leading-tight">{{ '<' + (fullName
+                              || 'DILIP_SAHOO' ) + '/>' }}</h2>
+                              <p class="text-[6px] text-emerald-400 font-mono mt-0.5">// Senior Software Engineer</p>
+                        </div>
+                      </div>
+                      <div class="text-right text-[6px] font-mono text-slate-400 leading-tight">
+                        <p>{{ userEmail || 'mailme.dilipsahu4@gmail.com' }}</p>
+                        <p>github.com/dilip</p>
+                      </div>
+                    </div>
+                  </div>
+
+                  <!-- Body -->
+                  <div class="p-3 flex-1 flex flex-col justify-between">
+                    <div>
+                      <div
+                        class="flex items-center justify-between text-[6px] font-mono text-slate-500 mb-1.5 bg-slate-50 p-1 rounded border border-slate-200">
+                        <span>DATE: {{ currentDate }}</span>
+                        <span class="text-emerald-700 font-bold">[COVER_LETTER.MD]</span>
+                      </div>
+
+                      <div class="space-y-1 text-[6.5px] text-slate-700 leading-relaxed font-sans">
+                        <p class="font-bold text-slate-900 font-mono text-[7px]">const greeting = "Dear Engineering
+                          Team";</p>
+                        <p>I am excited to submit my profile for the Senior Software Engineer position. I bring over 5
+                          years of experience building high-throughput services, distributed web clients, and automated
+                          CI/CD pipelines.</p>
+                        <p class="hidden sm:block">My core competencies center around modern frameworks, TypeScript,
+                          cloud architecture, and optimizing web performance for scale.</p>
+                      </div>
+                    </div>
+
+                    <div class="pt-1.5 border-t border-slate-200 flex items-center justify-between font-mono">
+                      <div>
+                        <p class="text-[6px] text-emerald-600 font-bold">return candidate.hire();</p>
+                        <p class="font-bold text-[7.5px] text-slate-900 mt-0.5">{{ fullName || 'Dilip Sahoo' }}</p>
+                      </div>
+                      <span class="text-[5.5px] text-slate-400">v2.4.0</span>
+                    </div>
+                  </div>
+                </div>
               </div>
-              <p class="text-xs text-slate-500 leading-relaxed mt-1">
-                {{ template.desc }}
-              </p>
-            </div>
-          </div>
 
-        </div>
-      </div>
-
-    </div>
-
-    <!-- VIEW 2: COVER LETTER BUILDER & EDITOR VIEW -->
-    <div *ngIf="viewMode === 'builder'" class="flex-1 flex flex-col h-screen overflow-hidden">
-      
-      <!-- Top Action Bar -->
-      <div class="h-16 bg-white border-b border-slate-200 flex items-center justify-between px-6 flex-shrink-0 sticky top-0 z-20 shadow-sm">
-        <div class="flex items-center gap-4">
-          <button 
-            (click)="switchToSelector()" 
-            class="px-3.5 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer"
-          >
-            <span class="material-icons text-sm">arrow_back</span>
-            Back to Templates
-          </button>
-
-          <div class="h-5 w-[1px] bg-slate-200"></div>
-
-          <div class="flex items-center gap-2">
-            <span class="text-base font-bold text-slate-900">Cover Letter</span>
-            <span class="px-2 py-0.5 text-[10px] font-black bg-indigo-50 text-indigo-600 rounded-full uppercase tracking-wider">Editor</span>
-          </div>
-        </div>
-
-        <!-- Right Side Template Switcher & PDF Export -->
-        <div class="flex items-center gap-4">
-          <div class="relative hidden sm:flex items-center gap-2">
-            <label class="text-xs font-bold text-slate-500">Template:</label>
-            <select 
-              [(ngModel)]="selectedTemplate" 
-              (change)="saveDraft()"
-              class="bg-white border border-slate-300 rounded-xl px-3 py-1.5 text-xs font-bold text-slate-700 min-w-[160px] focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 cursor-pointer"
-            >
-              <option *ngFor="let item of templates" [value]="item.id">
-                {{ item.name }} ({{ item.category }})
-              </option>
-            </select>
-          </div>
-
-          <button 
-            (click)="downloadPDF()" 
-            [disabled]="isDownloading || !coverLetterText"
-            class="bg-indigo-600 text-white px-5 py-2 rounded-xl text-xs font-bold hover:bg-indigo-700 transition-all flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed shadow-md shadow-indigo-100 cursor-pointer"
-          >
-            <span class="material-icons text-sm" *ngIf="!isDownloading">download</span>
-            <span class="material-icons text-sm animate-spin" *ngIf="isDownloading">refresh</span>
-            {{ isDownloading ? 'Exporting...' : 'Export PDF' }}
-          </button>
-        </div>
-      </div>
-
-      <!-- Split Screen Builder Body -->
-      <div class="flex-1 flex overflow-hidden h-[calc(100vh-64px)]">
-        
-        <!-- Left Pane: Inputs & AI Editor -->
-        <div class="w-full md:w-[45%] lg:w-[40%] border-r border-slate-200 bg-white z-10 shadow-[4px_0_24px_rgba(0,0,0,0.02)] overflow-y-auto flex flex-col no-scrollbar">
-          
-          <!-- Tabs: Details vs Edit -->
-          <div class="flex border-b border-slate-100 flex-shrink-0">
-            <button 
-              (click)="activeTab = 'details'"
-              class="flex-1 py-4 text-xs font-bold text-center border-b-2 transition-colors cursor-pointer"
-              [class.border-indigo-600]="activeTab === 'details'"
-              [class.text-indigo-600]="activeTab === 'details'"
-              [class.border-transparent]="activeTab !== 'details'"
-              [class.text-slate-500]="activeTab !== 'details'"
-            >
-              1. Job Details
-            </button>
-            <button 
-              (click)="activeTab = 'edit'"
-              [disabled]="!coverLetterText"
-              class="flex-1 py-4 text-xs font-bold text-center border-b-2 transition-colors cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed"
-              [class.border-indigo-600]="activeTab === 'edit'"
-              [class.text-indigo-600]="activeTab === 'edit'"
-              [class.border-transparent]="activeTab !== 'edit'"
-              [class.text-slate-500]="activeTab !== 'edit'"
-            >
-              2. Edit & Review
-            </button>
-          </div>
-
-          <!-- Tab Content Area -->
-          <div class="p-8 flex-1 flex flex-col gap-6">
-            
-            <!-- Tab 1: DETAILS FORM -->
-            <div *ngIf="activeTab === 'details'" class="space-y-6">
-              
-              <!-- Profile Card -->
-              <div class="bg-slate-50 border border-slate-200/80 rounded-2xl p-5 space-y-4">
-                <h4 class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Personal Info (from Resume)</h4>
-                <div class="grid grid-cols-2 gap-4">
-                  <div class="space-y-1">
-                    <label class="text-[10px] font-bold text-slate-500 uppercase">Full Name</label>
-                    <input type="text" [(ngModel)]="fullName" class="w-full px-3 py-1.5 bg-white border border-slate-200 rounded-lg text-xs outline-none focus:ring-1 focus:ring-indigo-500 font-medium">
-                  </div>
-                  <div class="space-y-1">
-                    <label class="text-[10px] font-bold text-slate-500 uppercase">Email</label>
-                    <input type="text" [(ngModel)]="email" class="w-full px-3 py-1.5 bg-white border border-slate-200 rounded-lg text-xs outline-none focus:ring-1 focus:ring-indigo-500 font-medium">
-                  </div>
-                  <div class="space-y-1">
-                    <label class="text-[10px] font-bold text-slate-500 uppercase">Phone</label>
-                    <input type="text" [(ngModel)]="phone" class="w-full px-3 py-1.5 bg-white border border-slate-200 rounded-lg text-xs outline-none focus:ring-1 focus:ring-indigo-500 font-medium">
-                  </div>
-                  <div class="space-y-1">
-                    <label class="text-[10px] font-bold text-slate-500 uppercase">Location</label>
-                    <input type="text" [(ngModel)]="location" class="w-full px-3 py-1.5 bg-white border border-slate-200 rounded-lg text-xs outline-none focus:ring-1 focus:ring-indigo-500 font-medium">
-                  </div>
-                </div>
-              </div>
-
-              <!-- Target Job Information -->
-              <div class="space-y-4">
-                <h4 class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Target Job Information</h4>
-                
-                <div class="space-y-1.5">
-                  <label class="text-xs font-bold text-slate-700">Target Job Title *</label>
-                  <input 
-                    type="text" 
-                    [(ngModel)]="jobTitle" 
-                    placeholder="e.g. Senior Software Engineer"
-                    class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-indigo-500/10 focus:border-indigo-500 font-medium"
-                  />
-                </div>
-
-                <div class="space-y-1.5">
-                  <label class="text-xs font-bold text-slate-700">Company Name *</label>
-                  <input 
-                    type="text" 
-                    [(ngModel)]="companyName" 
-                    placeholder="e.g. Google"
-                    class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-indigo-500/10 focus:border-indigo-500 font-medium"
-                  />
-                </div>
-
-                <div class="space-y-1.5">
-                  <label class="text-xs font-bold text-slate-700">Hiring Manager Name (Optional)</label>
-                  <input 
-                    type="text" 
-                    [(ngModel)]="hiringManager" 
-                    placeholder="e.g. Jane Doe"
-                    class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-indigo-500/10 focus:border-indigo-500 font-medium"
-                  />
-                </div>
-
-                <div class="space-y-1.5">
-                  <label class="text-xs font-bold text-slate-700">Job Description / Keywords (Optional)</label>
-                  <textarea 
-                    [(ngModel)]="jobDescription" 
-                    placeholder="Paste key responsibilities or instructions to tailor your Cover Letter..."
-                    class="w-full h-32 p-4 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-indigo-500/10 focus:border-indigo-500 resize-none font-medium"
-                  ></textarea>
-                </div>
-              </div>
-
-              <!-- Generate Button -->
-              <button 
-                (click)="generateCoverLetter()" 
-                [disabled]="isGenerating || !jobTitle.trim() || !companyName.trim()"
-                class="w-full py-4 bg-indigo-600 hover:bg-indigo-700 disabled:opacity-50 text-white rounded-xl font-bold text-sm shadow-lg shadow-indigo-100 transition-all flex items-center justify-center gap-2 cursor-pointer"
-              >
-                <span class="material-icons text-base" *ngIf="!isGenerating">psychology</span>
-                <span class="material-icons text-base animate-spin" *ngIf="isGenerating">refresh</span>
-                {{ isGenerating ? 'Generating Draft...' : 'Generate with Gemini AI' }}
-              </button>
-            </div>
-
-            <!-- Tab 2: RAW TEXT EDITOR -->
-            <div *ngIf="activeTab === 'edit'" class="flex-1 flex flex-col gap-4 min-h-0">
-              <div class="flex items-center justify-between">
-                <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Edit Cover Letter Text</span>
-                
-                <button 
-                  (click)="copyToClipboard()" 
-                  class="text-xs text-indigo-600 hover:text-indigo-800 font-bold flex items-center gap-1 cursor-pointer"
-                >
-                  <span class="material-icons text-xs">{{ copySuccess ? 'check' : 'content_copy' }}</span>
-                  {{ copySuccess ? 'Copied!' : 'Copy' }}
+              <!-- Hover overlay button -->
+              <div
+                class="absolute inset-0 bg-slate-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center backdrop-blur-[2px]">
+                <button (click)="selectTemplateAndStart(template.id); $event.stopPropagation()"
+                  class="px-6 py-3 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-bold text-sm shadow-xl transition-all transform hover:scale-105">
+                  Use Template
                 </button>
               </div>
 
-              <textarea 
-                [(ngModel)]="coverLetterText"
-                (ngModelChange)="saveDraft()"
-                class="w-full flex-1 p-5 border border-slate-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-indigo-500/10 focus:border-indigo-500 font-mono text-xs leading-relaxed resize-none bg-slate-50/30"
-                placeholder="Edit Cover Letter content here..."
-              ></textarea>
+            </div>
 
-              <button 
-                (click)="activeTab = 'details'" 
-                class="py-3 border border-slate-200 text-slate-600 rounded-xl text-xs font-bold hover:bg-slate-50 transition-colors cursor-pointer"
-              >
-                ← Back to Job Details
+            <!-- Card Description Footer -->
+            <div class="p-5 flex flex-col justify-between flex-1 bg-white">
+              <div>
+                <div class="flex items-center justify-between mb-1">
+                  <h3 class="font-bold text-slate-900 text-base group-hover:text-indigo-600 transition-colors">
+                    {{ template.name }}
+                  </h3>
+                  <span
+                    class="text-[10px] font-bold px-2.5 py-0.5 bg-slate-100 text-slate-600 rounded-md uppercase tracking-wider">
+                    {{ template.category }}
+                  </span>
+                </div>
+                <p class="text-xs text-slate-500 leading-relaxed mt-1">
+                  {{ template.desc }}
+                </p>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div>
+
+      <!-- VIEW 2: COVER LETTER BUILDER & EDITOR VIEW -->
+      <div *ngIf="viewMode === 'builder'" class="flex-1 flex flex-col h-screen overflow-hidden">
+
+        <!-- Top Action Bar -->
+        <div
+          class="h-16 bg-white border-b border-slate-200 flex items-center justify-between px-6 flex-shrink-0 sticky top-0 z-20 shadow-sm">
+          <div class="flex items-center gap-4">
+            <button (click)="switchToSelector()"
+              class="px-3.5 py-1.5 bg-slate-100 hover:bg-slate-200 text-slate-700 rounded-xl text-xs font-bold transition-all flex items-center gap-1.5 cursor-pointer">
+              <span class="material-icons text-sm">arrow_back</span>
+              Back to Templates
+            </button>
+
+            <div class="h-5 w-[1px] bg-slate-200"></div>
+
+            <div class="flex items-center gap-2">
+              <span class="text-base font-bold text-slate-900">Cover Letter</span>
+              <span
+                class="px-2 py-0.5 text-[10px] font-black bg-indigo-50 text-indigo-600 rounded-full uppercase tracking-wider">Editor</span>
+            </div>
+          </div>
+
+          <!-- Right Side Template Switcher & PDF Export -->
+          <div class="flex items-center gap-4">
+            <div class="relative hidden sm:flex items-center gap-2">
+              <label class="text-xs font-bold text-slate-500">Template:</label>
+              <select [(ngModel)]="selectedTemplate" (change)="saveDraft()"
+                class="bg-white border border-slate-300 rounded-xl px-3 py-1.5 text-xs font-bold text-slate-700 min-w-[160px] focus:outline-none focus:ring-2 focus:ring-indigo-500/20 focus:border-indigo-500 cursor-pointer">
+                <option *ngFor="let item of templates" [value]="item.id">
+                  {{ item.name }} ({{ item.category }})
+                </option>
+              </select>
+            </div>
+
+            <button (click)="downloadPDF()" [disabled]="isDownloading || !coverLetterText"
+              class="bg-indigo-600 text-white px-5 py-2 rounded-xl text-xs font-bold hover:bg-indigo-700 transition-all flex items-center gap-2 disabled:opacity-50 disabled:cursor-not-allowed shadow-md shadow-indigo-100 cursor-pointer">
+              <span class="material-icons text-sm" *ngIf="!isDownloading">download</span>
+              <span class="material-icons text-sm animate-spin" *ngIf="isDownloading">refresh</span>
+              {{ isDownloading ? 'Exporting...' : 'Export PDF' }}
+            </button>
+          </div>
+        </div>
+
+        <!-- Split Screen Builder Body -->
+        <div class="flex-1 flex overflow-hidden h-[calc(100vh-64px)]">
+
+          <!-- Left Pane: Inputs & AI Editor -->
+          <div
+            class="w-full md:w-[45%] lg:w-[40%] border-r border-slate-200 bg-white z-10 shadow-[4px_0_24px_rgba(0,0,0,0.02)] overflow-y-auto flex flex-col no-scrollbar">
+
+            <!-- Tabs: Details vs Edit -->
+            <div class="flex border-b border-slate-100 flex-shrink-0">
+              <button (click)="activeTab = 'details'"
+                class="flex-1 py-4 text-xs font-bold text-center border-b-2 transition-colors cursor-pointer"
+                [class.border-indigo-600]="activeTab === 'details'" [class.text-indigo-600]="activeTab === 'details'"
+                [class.border-transparent]="activeTab !== 'details'" [class.text-slate-500]="activeTab !== 'details'">
+                1. Job Details
               </button>
+              <button (click)="activeTab = 'edit'" [disabled]="!coverLetterText"
+                class="flex-1 py-4 text-xs font-bold text-center border-b-2 transition-colors cursor-pointer disabled:opacity-40 disabled:cursor-not-allowed"
+                [class.border-indigo-600]="activeTab === 'edit'" [class.text-indigo-600]="activeTab === 'edit'"
+                [class.border-transparent]="activeTab !== 'edit'" [class.text-slate-500]="activeTab !== 'edit'">
+                2. Edit & Review
+              </button>
+            </div>
+
+            <!-- Tab Content Area -->
+            <div class="p-8 flex-1 flex flex-col gap-6">
+
+              <!-- Tab 1: DETAILS FORM -->
+              <div *ngIf="activeTab === 'details'" class="space-y-6">
+
+                <!-- Profile Card -->
+                <div class="bg-slate-50 border border-slate-200/80 rounded-2xl p-5 space-y-4">
+                  <h4 class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Personal Info (from
+                    Resume)</h4>
+                  <div class="grid grid-cols-2 gap-4">
+                    <div class="space-y-1">
+                      <label class="text-[10px] font-bold text-slate-500 uppercase">Full Name</label>
+                      <input type="text" [(ngModel)]="fullName"
+                        class="w-full px-3 py-1.5 bg-white border border-slate-200 rounded-lg text-xs outline-none focus:ring-1 focus:ring-indigo-500 font-medium">
+                    </div>
+                    <div class="space-y-1">
+                      <label class="text-[10px] font-bold text-slate-500 uppercase">Email</label>
+                      <input type="text" [(ngModel)]="email"
+                        class="w-full px-3 py-1.5 bg-white border border-slate-200 rounded-lg text-xs outline-none focus:ring-1 focus:ring-indigo-500 font-medium">
+                    </div>
+                    <div class="space-y-1">
+                      <label class="text-[10px] font-bold text-slate-500 uppercase">Phone</label>
+                      <input type="text" [(ngModel)]="phone"
+                        class="w-full px-3 py-1.5 bg-white border border-slate-200 rounded-lg text-xs outline-none focus:ring-1 focus:ring-indigo-500 font-medium">
+                    </div>
+                    <div class="space-y-1">
+                      <label class="text-[10px] font-bold text-slate-500 uppercase">Location</label>
+                      <input type="text" [(ngModel)]="location"
+                        class="w-full px-3 py-1.5 bg-white border border-slate-200 rounded-lg text-xs outline-none focus:ring-1 focus:ring-indigo-500 font-medium">
+                    </div>
+                  </div>
+                </div>
+
+                <!-- Target Job Information -->
+                <div class="space-y-4">
+                  <h4 class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Target Job Information
+                  </h4>
+
+                  <div class="space-y-1.5">
+                    <label class="text-xs font-bold text-slate-700">Target Job Title *</label>
+                    <input type="text" [(ngModel)]="jobTitle" placeholder="e.g. Senior Software Engineer"
+                      class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-indigo-500/10 focus:border-indigo-500 font-medium" />
+                  </div>
+
+                  <div class="space-y-1.5">
+                    <label class="text-xs font-bold text-slate-700">Company Name *</label>
+                    <input type="text" [(ngModel)]="companyName" placeholder="e.g. Google"
+                      class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-indigo-500/10 focus:border-indigo-500 font-medium" />
+                  </div>
+
+                  <div class="space-y-1.5">
+                    <label class="text-xs font-bold text-slate-700">Hiring Manager Name (Optional)</label>
+                    <input type="text" [(ngModel)]="hiringManager" placeholder="e.g. Jane Doe"
+                      class="w-full px-4 py-2.5 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-indigo-500/10 focus:border-indigo-500 font-medium" />
+                  </div>
+
+                  <div class="space-y-1.5">
+                    <label class="text-xs font-bold text-slate-700">Job Description / Keywords (Optional)</label>
+                    <textarea [(ngModel)]="jobDescription"
+                      placeholder="Paste key responsibilities or instructions to tailor your Cover Letter..."
+                      class="w-full h-32 p-4 bg-slate-50 border border-slate-200 rounded-xl text-xs focus:outline-none focus:ring-2 focus:ring-indigo-500/10 focus:border-indigo-500 resize-none font-medium"></textarea>
+                  </div>
+                </div>
+
+                <!-- Generate Button -->
+                <button (click)="generateCoverLetter()"
+                  [disabled]="isGenerating || !jobTitle.trim() || !companyName.trim()"
+                  class="w-full py-4 bg-indigo-600 hover:bg-indigo-700 disabled:opacity-50 text-white rounded-xl font-bold text-sm shadow-lg shadow-indigo-100 transition-all flex items-center justify-center gap-2 cursor-pointer">
+                  <span class="material-icons text-base" *ngIf="!isGenerating">psychology</span>
+                  <span class="material-icons text-base animate-spin" *ngIf="isGenerating">refresh</span>
+                  {{ isGenerating ? 'Generating Draft...' : 'Generate with Gemini AI' }}
+                </button>
+              </div>
+
+              <!-- Tab 2: RAW TEXT EDITOR -->
+              <div *ngIf="activeTab === 'edit'" class="flex-1 flex flex-col gap-4 min-h-0">
+                <div class="flex items-center justify-between">
+                  <span class="text-[10px] font-black text-slate-400 uppercase tracking-widest">Edit Cover Letter
+                    Text</span>
+
+                  <button (click)="copyToClipboard()"
+                    class="text-xs text-indigo-600 hover:text-indigo-800 font-bold flex items-center gap-1 cursor-pointer">
+                    <span class="material-icons text-xs">{{ copySuccess ? 'check' : 'content_copy' }}</span>
+                    {{ copySuccess ? 'Copied!' : 'Copy' }}
+                  </button>
+                </div>
+
+                <textarea [(ngModel)]="coverLetterText" (ngModelChange)="saveDraft()"
+                  class="w-full flex-1 p-5 border border-slate-200 rounded-2xl focus:outline-none focus:ring-2 focus:ring-indigo-500/10 focus:border-indigo-500 font-mono text-xs leading-relaxed resize-none bg-slate-50/30"
+                  placeholder="Edit Cover Letter content here..."></textarea>
+
+                <button (click)="activeTab = 'details'"
+                  class="py-3 border border-slate-200 text-slate-600 rounded-xl text-xs font-bold hover:bg-slate-50 transition-colors cursor-pointer">
+                  ← Back to Job Details
+                </button>
+              </div>
+
             </div>
 
           </div>
 
-        </div>
+          <!-- Right Pane: Real-Time Preview -->
+          <div
+            class="hidden md:flex flex-1 bg-slate-100/70 p-10 overflow-y-auto items-start justify-center no-scrollbar">
 
-        <!-- Right Pane: Real-Time Preview -->
-        <div class="hidden md:flex flex-1 bg-slate-100/70 p-10 overflow-y-auto items-start justify-center no-scrollbar">
-          
-          <!-- A4 Aspect Ratio paper container -->
-          <div 
-            class="w-full max-w-[680px] aspect-[1/1.414] bg-white shadow-xl rounded-sm border border-slate-200/80 flex flex-col relative overflow-hidden transition-all duration-300 hover:shadow-2xl select-text"
-            [class]="'template-' + selectedTemplate"
-          >
-            
-            <!-- MODERN TEMPLATE HEADER -->
-            <div *ngIf="selectedTemplate === 'modern'" class="flex-shrink-0">
-              <div class="h-1.5 bg-indigo-600 w-full"></div>
-              <div class="p-10 pb-4 border-b border-slate-100">
-                <h1 class="text-3xl font-black text-slate-900 leading-none tracking-tight">{{ fullName || 'Your Name' }}</h1>
-                <p class="text-xs text-slate-500 mt-2 font-medium">
-                  {{ email || 'email@example.com' }}  |  {{ phone || '+1 (555) 000-0000' }}  |  {{ location || 'City, State' }}
+            <!-- A4 Aspect Ratio paper container -->
+            <div
+              class="w-full max-w-[680px] aspect-[1/1.414] bg-white shadow-xl rounded-sm border border-slate-200/80 flex flex-col relative overflow-hidden transition-all duration-300 hover:shadow-2xl select-text"
+              [class]="'template-' + selectedTemplate">
+
+              <!-- MODERN TEMPLATE HEADER -->
+              <div *ngIf="selectedTemplate === 'modern'" class="flex-shrink-0">
+                <div class="h-1.5 bg-indigo-600 w-full"></div>
+                <div class="p-10 pb-4 border-b border-slate-100">
+                  <h1 class="text-3xl font-black text-slate-900 leading-none tracking-tight">{{ fullName || 'Your Name'
+                    }}</h1>
+                  <p class="text-xs text-slate-500 mt-2 font-medium">
+                    {{ email || 'email@example.com' }} | {{ phone || '+1 (555) 000-0000' }} | {{ location || 'City,
+                    State' }}
+                  </p>
+                </div>
+              </div>
+
+              <!-- ELEGANT TEMPLATE HEADER -->
+              <div *ngIf="selectedTemplate === 'elegant'"
+                class="flex-shrink-0 p-10 pb-4 text-center border-b border-slate-200 font-serif">
+                <h1 class="text-4xl font-normal italic text-slate-900 tracking-wide">{{ fullName || 'Your Name' }}</h1>
+                <p class="text-xs text-slate-600 mt-3 tracking-widest uppercase">
+                  {{ email || 'email@example.com' }} • {{ phone || '+1 (555) 000-0000' }} • {{ location || 'City, State'
+                  }}
                 </p>
               </div>
-            </div>
 
-            <!-- ELEGANT TEMPLATE HEADER -->
-            <div *ngIf="selectedTemplate === 'elegant'" class="flex-shrink-0 p-10 pb-4 text-center border-b border-slate-200 font-serif">
-              <h1 class="text-4xl font-normal italic text-slate-900 tracking-wide">{{ fullName || 'Your Name' }}</h1>
-              <p class="text-xs text-slate-600 mt-3 tracking-widest uppercase">
-                {{ email || 'email@example.com' }}  •  {{ phone || '+1 (555) 000-0000' }}  •  {{ location || 'City, State' }}
-              </p>
-            </div>
-
-            <!-- CREATIVE TEMPLATE HEADER -->
-            <div *ngIf="selectedTemplate === 'creative'" class="flex-shrink-0 p-10 pb-4">
-              <h1 class="text-3xl font-black text-indigo-600 leading-none tracking-tight">{{ fullName || 'Your Name' }}</h1>
-              <p class="text-xs text-slate-500 mt-2 font-semibold tracking-wider">
-                {{ email || 'email@example.com' }}   •   {{ phone || '+1 (555) 000-0000' }}   •   {{ location || 'City, State' }}
-              </p>
-              <div class="h-0.5 bg-indigo-600 w-full mt-4 rounded-full"></div>
-            </div>
-
-            <!-- MINIMAL TEMPLATE HEADER -->
-            <div *ngIf="selectedTemplate === 'minimal'" class="flex-shrink-0 p-10 pb-4">
-              <h1 class="text-2xl font-bold text-slate-900 leading-none tracking-tight">{{ fullName || 'Your Name' }}</h1>
-              <div class="text-[11px] text-slate-500 mt-3 space-y-1 font-medium">
-                <p>{{ email || 'email@example.com' }}</p>
-                <p>{{ phone || '+1 (555) 000-0000' }}</p>
-                <p>{{ location || 'City, State' }}</p>
+              <!-- CREATIVE TEMPLATE HEADER -->
+              <div *ngIf="selectedTemplate === 'creative'" class="flex-shrink-0 p-10 pb-4">
+                <h1 class="text-3xl font-black text-indigo-600 leading-none tracking-tight">{{ fullName || 'Your Name'
+                  }}</h1>
+                <p class="text-xs text-slate-500 mt-2 font-semibold tracking-wider">
+                  {{ email || 'email@example.com' }} • {{ phone || '+1 (555) 000-0000' }} • {{ location || 'City, State'
+                  }}
+                </p>
+                <div class="h-0.5 bg-indigo-600 w-full mt-4 rounded-full"></div>
               </div>
-            </div>
 
-            <!-- EXECUTIVE TEMPLATE HEADER -->
-            <div *ngIf="selectedTemplate === 'executive'" class="flex-shrink-0 bg-slate-800 text-white p-10 pb-6">
-              <h1 class="text-3xl font-bold tracking-tight">{{ fullName || 'Your Name' }}</h1>
-              <p class="text-xs text-slate-300 mt-2 font-medium">
-                {{ email || 'email@example.com' }}   |   {{ phone || '+1 (555) 000-0000' }}   |   {{ location || 'City, State' }}
-              </p>
-            </div>
+              <!-- MINIMAL TEMPLATE HEADER -->
+              <div *ngIf="selectedTemplate === 'minimal'" class="flex-shrink-0 p-10 pb-4">
+                <h1 class="text-2xl font-bold text-slate-900 leading-none tracking-tight">{{ fullName || 'Your Name' }}
+                </h1>
+                <div class="text-[11px] text-slate-500 mt-3 space-y-1 font-medium">
+                  <p>{{ email || 'email@example.com' }}</p>
+                  <p>{{ phone || '+1 (555) 000-0000' }}</p>
+                  <p>{{ location || 'City, State' }}</p>
+                </div>
+              </div>
 
-            <!-- TECH TEMPLATE HEADER -->
-            <div *ngIf="selectedTemplate === 'tech'" class="flex-shrink-0">
-              <div class="h-1.5 bg-emerald-500 w-full"></div>
-              <div class="p-10 pb-4 border-b border-slate-200">
-                <h1 class="text-3xl font-bold text-slate-900 leading-none tracking-tight">{{ fullName || 'Your Name' }}</h1>
-                <p class="text-xs text-emerald-600 font-mono mt-2 font-semibold">
-                  {{ email || 'email@example.com' }}  //  {{ phone || '+1 (555) 000-0000' }}  //  {{ location || 'City, State' }}
+              <!-- EXECUTIVE TEMPLATE HEADER -->
+              <div *ngIf="selectedTemplate === 'executive'" class="flex-shrink-0 bg-slate-800 text-white p-10 pb-6">
+                <h1 class="text-3xl font-bold tracking-tight">{{ fullName || 'Your Name' }}</h1>
+                <p class="text-xs text-slate-300 mt-2 font-medium">
+                  {{ email || 'email@example.com' }} | {{ phone || '+1 (555) 000-0000' }} | {{ location || 'City, State'
+                  }}
                 </p>
               </div>
-            </div>
 
-            <!-- Document Content Section -->
-            <div class="p-10 pt-6 flex-1 flex flex-col text-slate-800 text-[13px] leading-relaxed overflow-y-auto no-scrollbar font-sans" [class.font-serif]="selectedTemplate === 'elegant'">
-              
-              <!-- Date -->
-              <div class="mb-4">
-                {{ currentDate }}
+              <!-- TECH TEMPLATE HEADER -->
+              <div *ngIf="selectedTemplate === 'tech'" class="flex-shrink-0">
+                <div class="h-1.5 bg-emerald-500 w-full"></div>
+                <div class="p-10 pb-4 border-b border-slate-200">
+                  <h1 class="text-3xl font-bold text-slate-900 leading-none tracking-tight">{{ fullName || 'Your Name'
+                    }}</h1>
+                  <p class="text-xs text-emerald-600 font-mono mt-2 font-semibold">
+                    {{ email || 'email@example.com' }} // {{ phone || '+1 (555) 000-0000' }} // {{ location || 'City,
+                    State' }}
+                  </p>
+                </div>
               </div>
 
-              <!-- Recipient -->
-              <div class="mb-6 font-bold" *ngIf="hiringManager || companyName">
-                <p *ngIf="hiringManager">{{ hiringManager }}</p>
-                <p *ngIf="companyName">{{ companyName }}</p>
-              </div>
+              <!-- Document Content Section -->
+              <div
+                class="p-10 pt-6 flex-1 flex flex-col text-slate-800 text-[13px] leading-relaxed overflow-y-auto no-scrollbar font-sans"
+                [class.font-serif]="selectedTemplate === 'elegant'">
 
-              <!-- Letter Body -->
-              <div class="whitespace-pre-wrap flex-1 min-h-[200px]">
-                {{ coverLetterText || 'Your generated Cover Letter will appear here...' }}
-              </div>
+                <!-- Date -->
+                <div class="mb-4">
+                  {{ currentDate }}
+                </div>
 
-              <!-- Signature -->
-              <div class="mt-8">
-                <p>Sincerely,</p>
-                <p class="mt-6 font-bold">{{ fullName || 'Your Name' }}</p>
+                <!-- Recipient -->
+                <div class="mb-6 font-bold" *ngIf="hiringManager || companyName">
+                  <p *ngIf="hiringManager">{{ hiringManager }}</p>
+                  <p *ngIf="companyName">{{ companyName }}</p>
+                </div>
+
+                <!-- Letter Body -->
+                <div class="whitespace-pre-wrap flex-1 min-h-[200px]">
+                  {{ coverLetterText || 'Your generated Cover Letter will appear here...' }}
+                </div>
+
+                <!-- Signature -->
+                <div class="mt-8">
+                  <p>Sincerely,</p>
+                  <p class="mt-6 font-bold">{{ fullName || 'Your Name' }}</p>
+                </div>
+
               </div>
 
             </div>
@@ -766,35 +977,40 @@
         </div>
 
       </div>
-
-    </div>
     </ng-container>
 
   </main>
 
   <!-- ADD JOB MODAL -->
-  <div *ngIf="showAddJobModal" class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4">
-    <div class="bg-white rounded-3xl max-w-md w-full p-8 shadow-2xl border border-slate-200 animate-modal-enter space-y-6">
+  <div *ngIf="showAddJobModal"
+    class="fixed inset-0 z-50 bg-slate-900/60 backdrop-blur-xs flex items-center justify-center p-4">
+    <div
+      class="bg-white rounded-3xl max-w-md w-full p-8 shadow-2xl border border-slate-200 animate-modal-enter space-y-6">
       <div class="flex items-center justify-between">
         <h3 class="text-xl font-extrabold text-slate-900">New Job Application</h3>
-        <button (click)="closeAddJobModal()" class="text-slate-400 hover:text-slate-700 text-xl font-bold cursor-pointer">✕</button>
+        <button (click)="closeAddJobModal()"
+          class="text-slate-400 hover:text-slate-700 text-xl font-bold cursor-pointer">✕</button>
       </div>
 
       <div class="space-y-4">
         <div>
-          <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Job Title / Position *</label>
-          <input type="text" [(ngModel)]="newJobPosition" placeholder="e.g. Senior Software Engineer" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm outline-none focus:border-indigo-500 focus:bg-white transition-all">
+          <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Job Title / Position
+            *</label>
+          <input type="text" [(ngModel)]="newJobPosition" placeholder="e.g. Senior Software Engineer"
+            class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm outline-none focus:border-indigo-500 focus:bg-white transition-all">
         </div>
 
         <div>
           <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Company Name *</label>
-          <input type="text" [(ngModel)]="newJobCompany" placeholder="e.g. Google, Spotify, Stripe" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm outline-none focus:border-indigo-500 focus:bg-white transition-all">
+          <input type="text" [(ngModel)]="newJobCompany" placeholder="e.g. Google, Spotify, Stripe"
+            class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm outline-none focus:border-indigo-500 focus:bg-white transition-all">
         </div>
 
         <div class="grid grid-cols-2 gap-4">
           <div>
             <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Job Type</label>
-            <select [(ngModel)]="newJobType" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm outline-none focus:border-indigo-500 focus:bg-white">
+            <select [(ngModel)]="newJobType"
+              class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm outline-none focus:border-indigo-500 focus:bg-white">
               <option value="Full-time">Full-time</option>
               <option value="Part-time">Part-time</option>
               <option value="Contract">Contract</option>
@@ -805,7 +1021,8 @@
 
           <div>
             <label class="block text-xs font-bold text-slate-700 uppercase tracking-wider mb-1.5">Status</label>
-            <select [(ngModel)]="newJobStatus" class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm outline-none focus:border-indigo-500 focus:bg-white">
+            <select [(ngModel)]="newJobStatus"
+              class="w-full px-4 py-3 bg-slate-50 border border-slate-200 rounded-xl text-sm outline-none focus:border-indigo-500 focus:bg-white">
               <option value="Bookmarked">Bookmarked</option>
               <option value="Applied">Applied</option>
               <option value="Interviewing">Interviewing</option>
@@ -817,10 +1034,12 @@
       </div>
 
       <div class="flex items-center gap-3 pt-4 border-t border-slate-100">
-        <button (click)="closeAddJobModal()" class="flex-1 py-3 px-4 border border-slate-200 rounded-xl font-bold text-sm text-slate-600 hover:bg-slate-50 cursor-pointer transition-colors">
+        <button (click)="closeAddJobModal()"
+          class="flex-1 py-3 px-4 border border-slate-200 rounded-xl font-bold text-sm text-slate-600 hover:bg-slate-50 cursor-pointer transition-colors">
           Cancel
         </button>
-        <button (click)="addJob()" class="flex-1 py-3 px-4 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-bold text-sm shadow-md shadow-indigo-200 cursor-pointer transition-all">
+        <button (click)="addJob()"
+          class="flex-1 py-3 px-4 bg-indigo-600 hover:bg-indigo-700 text-white rounded-xl font-bold text-sm shadow-md shadow-indigo-200 cursor-pointer transition-all">
           Save Job
         </button>
       </div>
@@ -828,4 +1047,3 @@
   </div>
 
 </div>
-

@@ -42,7 +42,7 @@ export class LoginComponent {
           if (response.data?.accessToken) {
             this.authService.saveToken(response.data.accessToken);
           }
-          this.router.navigate(['/cover-letter']);
+          this.router.navigate(['/dashboard']);
         },
         error: (error) => {
           console.error('Login error', error);

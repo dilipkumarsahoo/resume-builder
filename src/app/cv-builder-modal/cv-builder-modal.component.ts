@@ -56,10 +56,17 @@ export class CvBuilderModalComponent {
 
     this.isDownloading = true;
     try {
-      const element = document.getElementById('cv-preview-content');
-      if (!element) return;
+      // Find the active main resume preview canvas
+      const element = document.getElementById('cv-preview-content') || document.querySelector('.cv-preview-content:not(.is-preview)') as HTMLElement;
+      if (!element) {
+        console.error('Resume preview canvas element not found');
+        return;
+      }
 
-      const imgData = await htmlToImage.toPng(element, {
+      // Small delay to ensure all dynamic fonts/CSS variables are rendered
+      await new Promise(r => setTimeout(r, 100));
+
+      const imgData = await htmlToImage.toPng(element as HTMLElement, {
         quality: 1,
         pixelRatio: 2,
         backgroundColor: '#ffffff'

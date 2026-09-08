@@ -31,7 +31,8 @@ export class App {
       url.includes('/login') ||
       url.includes('/forgot-password') ||
       url.includes('/cv-builder') ||
-      url.includes('/cover-letter')
+      url.includes('/cover-letter') ||
+      url.includes('/dashboard')
     );
   }
 

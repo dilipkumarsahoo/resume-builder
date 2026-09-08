@@ -20,66 +20,66 @@
    ========================================================================== */
 
 /* 1. Global Font Application */
-#cv-preview-content,
-#cv-preview-content * {
+.cv-preview-content,
+.cv-preview-content * {
   font-family: var(--custom-font, 'Inter', sans-serif);
 }
 
 /* 2. Dynamic Accent Color Overrides */
-#cv-preview-content .text-accent {
+.cv-preview-content .text-accent {
   color: var(--accent, #10b981) !important;
 }
 
-#cv-preview-content .bg-accent {
+.cv-preview-content .bg-accent {
   background-color: var(--accent, #10b981) !important;
 }
 
-#cv-preview-content .border-accent {
+.cv-preview-content .border-accent {
   border-color: var(--accent, #10b981) !important;
 }
 
-#cv-preview-content .border-t-accent {
+.cv-preview-content .border-t-accent {
   border-top-color: var(--accent, #10b981) !important;
 }
 
-#cv-preview-content .border-b-accent {
+.cv-preview-content .border-b-accent {
   border-bottom-color: var(--accent, #10b981) !important;
 }
 
-#cv-preview-content .border-l-accent {
+.cv-preview-content .border-l-accent {
   border-left-color: var(--accent, #10b981) !important;
 }
 
-#cv-preview-content .ring-accent {
+.cv-preview-content .ring-accent {
   --tw-ring-color: var(--accent, #10b981) !important;
 }
 
 /* 3. Heading Text Transforms */
-#cv-preview-content.heading-uppercase h1,
-#cv-preview-content.heading-uppercase h2,
-#cv-preview-content.heading-uppercase h3 {
+.cv-preview-content.heading-uppercase h1,
+.cv-preview-content.heading-uppercase h2,
+.cv-preview-content.heading-uppercase h3 {
   text-transform: uppercase !important;
 }
 
-#cv-preview-content.heading-capitalize h1,
-#cv-preview-content.heading-capitalize h2,
-#cv-preview-content.heading-capitalize h3 {
+.cv-preview-content.heading-capitalize h1,
+.cv-preview-content.heading-capitalize h2,
+.cv-preview-content.heading-capitalize h3 {
   text-transform: capitalize !important;
 }
 
-#cv-preview-content.heading-none h1,
-#cv-preview-content.heading-none h2,
-#cv-preview-content.heading-none h3 {
+.cv-preview-content.heading-none h1,
+.cv-preview-content.heading-none h2,
+.cv-preview-content.heading-none h3 {
   text-transform: none !important;
 }
 
 /* 4. Heading Styles */
-#cv-preview-content.heading-style-underlined h2 {
+.cv-preview-content.heading-style-underlined h2 {
   border-bottom: 2px solid var(--accent, #10b981) !important;
   padding-bottom: 3px !important;
 }
 
-#cv-preview-content.heading-style-pill h2 {
+.cv-preview-content.heading-style-pill h2 {
   background-color: var(--accent, #10b981) !important;
   color: #ffffff !important;
   padding: 3px 10px !important;
@@ -87,89 +87,89 @@
   display: inline-block !important;
 }
 
-#cv-preview-content.heading-style-accent-left h2 {
+.cv-preview-content.heading-style-accent-left h2 {
   border-left: 4px solid var(--accent, #10b981) !important;
   padding-left: 8px !important;
 }
 
 /* 5. Precise Font Sizing (FlowCV Stepped Sizing Engine) */
-#cv-preview-content {
+.cv-preview-content {
   font-size: var(--base-font-size, 10.5pt);
 }
 
-#cv-preview-content p,
-#cv-preview-content span,
-#cv-preview-content li {
+.cv-preview-content p,
+.cv-preview-content span,
+.cv-preview-content li {
   font-size: inherit;
 }
 
-#cv-preview-content h1 {
+.cv-preview-content h1 {
   font-size: var(--name-font-size, 21.5pt) !important;
   font-family: var(--name-font, inherit) !important;
 }
 
-#cv-preview-content h2 {
+.cv-preview-content h2 {
   font-size: var(--headings-font-size, 13.5pt) !important;
 }
 
-#cv-preview-content h3 {
+.cv-preview-content h3 {
   font-size: var(--entry-header-font-size, 10.5pt) !important;
 }
 
 /* 6. Spacing, Line Height & Margins */
-#cv-preview-content {
+.cv-preview-content {
   line-height: var(--line-height, 1.15);
 }
 
-#cv-preview-content .space-y-4 > * + * {
+.cv-preview-content .space-y-4 > * + * {
   margin-top: calc(var(--element-spacing, 12px) * 0.75) !important;
 }
 
-#cv-preview-content .space-y-6 > * + * {
+.cv-preview-content .space-y-6 > * + * {
   margin-top: var(--element-spacing, 16px) !important;
 }
 
-#cv-preview-content .gap-6 {
+.cv-preview-content .gap-6 {
   gap: var(--element-spacing, 16px) !important;
 }
 
-#cv-preview-content .gap-8 {
+.cv-preview-content .gap-8 {
   gap: calc(var(--element-spacing, 16px) * 1.25) !important;
 }
 
-#cv-preview-content .gap-4 {
+.cv-preview-content .gap-4 {
   gap: calc(var(--element-spacing, 12px) * 0.75) !important;
 }
 
 /* 7. Section Spacing Overrides */
-#cv-preview-content.spacing-compact .space-y-4 > * + * {
+.cv-preview-content.spacing-compact .space-y-4 > * + * {
   margin-top: 0.5rem !important;
 }
-#cv-preview-content.spacing-compact .space-y-6 > * + * {
+.cv-preview-content.spacing-compact .space-y-6 > * + * {
   margin-top: 0.75rem !important;
 }
-#cv-preview-content.spacing-compact .p-8 {
+.cv-preview-content.spacing-compact .p-8 {
   padding: 1.25rem !important;
 }
 
-#cv-preview-content.spacing-spacious .space-y-4 > * + * {
+.cv-preview-content.spacing-spacious .space-y-4 > * + * {
   margin-top: 1.4rem !important;
 }
-#cv-preview-content.spacing-spacious .space-y-6 > * + * {
+.cv-preview-content.spacing-spacious .space-y-6 > * + * {
   margin-top: 1.85rem !important;
 }
-#cv-preview-content.spacing-spacious .p-8 {
+.cv-preview-content.spacing-spacious .p-8 {
   padding: 2.5rem !important;
 }
 
 /* 8. Photo Shapes */
-#cv-preview-content.photo-shape-circle img {
+.cv-preview-content.photo-shape-circle img {
   border-radius: 9999px !important;
 }
-#cv-preview-content.photo-shape-rounded img {
+.cv-preview-content.photo-shape-rounded img {
   border-radius: 12px !important;
 }
-#cv-preview-content.photo-shape-square img {
+.cv-preview-content.photo-shape-square img {
   border-radius: 0px !important;
 }
 
@@ -189,56 +189,56 @@
 /* 10. Columns Layout Controls (One, Two, Mix) */
 
 /* Columns - ONE (Full width single column stacked) */
-#cv-preview-content.columns-one .flex.h-full {
+.cv-preview-content.columns-one .flex.h-full {
   flex-direction: column !important;
 }
-#cv-preview-content.columns-one .w-1\/3,
-#cv-preview-content.columns-one .w-2\/3,
-#cv-preview-content.columns-one .w-1\/4,
-#cv-preview-content.columns-one .w-3\/4 {
+.cv-preview-content.columns-one .w-1\/3,
+.cv-preview-content.columns-one .w-2\/3,
+.cv-preview-content.columns-one .w-1\/4,
+.cv-preview-content.columns-one .w-3\/4 {
   width: 100% !important;
 }
-#cv-preview-content.columns-one .flex.gap-8,
-#cv-preview-content.columns-one .flex.gap-6 {
+.cv-preview-content.columns-one .flex.gap-8,
+.cv-preview-content.columns-one .flex.gap-6 {
   flex-direction: column !important;
 }
 
 /* Columns - TWO (Balanced Two Column Multi-Section View) */
-#cv-preview-content.columns-two .minimal-template,
-#cv-preview-content.columns-two .professional-template > div:last-child {
+.cv-preview-content.columns-two .minimal-template,
+.cv-preview-content.columns-two .professional-template > div:last-child {
   display: flex !important;
   flex-direction: row !important;
   flex-wrap: wrap !important;
 }
-#cv-preview-content.columns-two .minimal-template > div,
-#cv-preview-content.columns-two .professional-template > div > div {
+.cv-preview-content.columns-two .minimal-template > div,
+.cv-preview-content.columns-two .professional-template > div > div {
   width: 50% !important;
   box-sizing: border-box !important;
 }
-#cv-preview-content.columns-two [data-section="header"],
-#cv-preview-content.columns-two [data-section="summary"] {
+.cv-preview-content.columns-two [data-section="header"],
+.cv-preview-content.columns-two [data-section="summary"] {
   width: 100% !important;
 }
 
 /* Columns - MIX (Mixed Spans: Full width Header/Summary + 2-Column Details) */
-#cv-preview-content.columns-mix .minimal-template,
-#cv-preview-content.columns-mix .professional-template > div:last-child {
+.cv-preview-content.columns-mix .minimal-template,
+.cv-preview-content.columns-mix .professional-template > div:last-child {
   display: flex !important;
   flex-direction: row !important;
   flex-wrap: wrap !important;
 }
-#cv-preview-content.columns-mix [data-section="header"],
-#cv-preview-content.columns-mix [data-section="summary"] {
+.cv-preview-content.columns-mix [data-section="header"],
+.cv-preview-content.columns-mix [data-section="summary"] {
   width: 100% !important;
 }
-#cv-preview-content.columns-mix [data-section="experience"] {
+.cv-preview-content.columns-mix [data-section="experience"] {
   width: 58% !important;
   box-sizing: border-box !important;
   padding-right: 1rem !important;
 }
-#cv-preview-content.columns-mix [data-section="education"],
-#cv-preview-content.columns-mix [data-section="skills"],
-#cv-preview-content.columns-mix [data-section="projects"] {
+.cv-preview-content.columns-mix [data-section="education"],
+.cv-preview-content.columns-mix [data-section="skills"],
+.cv-preview-content.columns-mix [data-section="projects"] {
   width: 42% !important;
   box-sizing: border-box !important;
 }
@@ -277,7 +277,7 @@
 }
 
 /* Page Guide seam for continuous A4 layout */
-#cv-preview-content {
+.cv-preview-content {
   box-sizing: border-box;
 }
 
@@ -286,7 +286,7 @@
 }
 
 @media print {
-  #cv-preview-content {
+  .cv-preview-content {
     box-shadow: none !important;
     border: none !important;
     width: 210mm !important;
@@ -313,36 +313,36 @@
    TEMPLATE BACKGROUNDS & PREVIEW MODE STYLES
    ========================================================================== */
 
-#cv-preview-content.startup-template {
+.cv-preview-content.startup-template {
   background-color: #0f172a !important;
   color: #cbd5e1 !important;
 }
 
-#cv-preview-content.tech-template {
+.cv-preview-content.tech-template {
   background-color: #f8fafc;
 }
 
-#cv-preview-content.elegant-template {
+.cv-preview-content.elegant-template {
   background-color: #fdfcfb;
 }
 
-#cv-preview-content.bubble-template {
+.cv-preview-content.bubble-template {
   background-color: #f8fafc;
 }
 
-#cv-preview-content.fresher-template {
+.cv-preview-content.fresher-template {
   background-color: #f9fafb;
 }
 
 /* Ensure template direct child fills full container height */
-#cv-preview-content > div:first-child {
+.cv-preview-content > div:first-child {
   flex: 1 1 auto;
   width: 100%;
   min-height: 100%;
 }
 
 /* Isolated Preview Mode (Hero, Carousel, Onboarding cards) */
-#cv-preview-content.is-preview {
+.cv-preview-content.is-preview {
   box-shadow: none !important;
   border: none !important;
   height: 100% !important;
@@ -350,14 +350,14 @@
   overflow: hidden !important;
 }
 
-#cv-preview-content.is-preview * {
+.cv-preview-content.is-preview * {
   user-select: none !important;
 }
 
-#cv-preview-content.is-preview [data-section] {
+.cv-preview-content.is-preview [data-section] {
   order: initial !important;
 }
 
-#cv-preview-content.is-preview .overflow-y-auto {
+.cv-preview-content.is-preview .overflow-y-auto {
   overflow-y: hidden !important;
 }

@@ -11,7 +11,7 @@ import { CvBuilderService, TemplateType } from '../cv-builder.service';
 })
 export class CvPreviewComponent {
   cvService = inject(CvBuilderService);
-  @Input() templateOverride?: TemplateType;
+  @Input() templateOverride?: TemplateType | string;
   @Input() isPreview: boolean = false;
 
   // Professional Dummy Data for Previews
