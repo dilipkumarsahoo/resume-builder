@@ -13,6 +13,8 @@ import { TermsComponent } from './terms/terms.component';
 import { PrivacyComponent } from './privacy/privacy.component';
 
 import { DashboardComponent } from './dashboard/dashboard.component';
+import { AdminDashboardComponent } from './admin/admin-dashboard/admin-dashboard.component';
+import { adminGuard } from './guards/admin.guard';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -30,6 +32,8 @@ export const routes: Routes = [
   { path: 'terms', component: TermsComponent },
   { path: 'terms-and-conditions', redirectTo: '/terms' },
   { path: 'privacy', component: PrivacyComponent },
-  { path: 'privacy-policy', redirectTo: '/privacy' }
+  { path: 'privacy-policy', redirectTo: '/privacy' },
+  { path: 'admin/dashboard', component: AdminDashboardComponent, canActivate: [adminGuard] },
+  { path: 'admin', component: AdminDashboardComponent, canActivate: [adminGuard] }
 ];
 

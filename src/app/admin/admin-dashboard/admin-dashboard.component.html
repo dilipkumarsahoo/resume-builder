@@ -1,0 +1,881 @@
+<div class="min-h-screen bg-[#fafafc] text-slate-800 flex flex-col font-sans antialiased selection:bg-blue-100 selection:text-blue-900">
+  
+  <!-- Top Admin Bar -->
+  <header class="bg-white/95 backdrop-blur-md border-b border-slate-200/80 sticky top-0 z-30 px-4 sm:px-8 py-3.5 flex items-center justify-between shadow-xs">
+    <div class="flex items-center gap-3">
+      <a routerLink="/" class="flex items-center gap-2.5 group cursor-pointer select-none">
+        <div class="w-8 h-8 flex items-center justify-center">
+          <svg viewBox="0 0 32 32" class="w-7 h-7 text-[#2563eb]" fill="currentColor">
+            <path d="M6 10 C 10 6, 16 6, 20 10 L 14 16 C 12 14, 8 14, 6 16 Z" fill="#4338ca" />
+            <path d="M12 16 C 16 12, 22 12, 26 16 L 20 22 C 18 20, 14 20, 12 22 Z" fill="#2563eb" />
+            <path d="M18 22 C 22 18, 28 18, 32 22 L 26 28 C 24 26, 20 26, 18 28 Z" fill="#60a5fa" />
+          </svg>
+        </div>
+        <span class="text-xl font-bold tracking-tight text-slate-900">GlowCV</span>
+      </a>
+      
+      <span class="px-2.5 py-0.5 rounded-full bg-blue-50 text-[#1b4df0] text-[10px] font-black uppercase tracking-wider border border-blue-200/70 shadow-2xs">
+        Admin Portal
+      </span>
+    </div>
+
+    <!-- Right Controls -->
+    <div class="flex items-center gap-3">
+      <!-- Admin Pill -->
+      <div class="hidden sm:flex items-center gap-2 px-3.5 py-1.5 rounded-full bg-slate-100/90 border border-slate-200/80 text-xs text-slate-700 font-medium shadow-2xs">
+        <span class="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+        <span class="font-mono text-xs">{{ adminService.currentAdmin()?.email || 'admin@glowcv.ai' }}</span>
+      </div>
+
+      <!-- Return to main site -->
+      <a routerLink="/" target="_blank" class="hidden md:inline-flex items-center gap-1.5 text-xs font-semibold text-slate-600 hover:text-[#1b4df0] px-3 py-1.5 rounded-xl hover:bg-slate-100 transition-colors">
+        <span class="material-icons text-sm">open_in_new</span>
+        <span>View Site</span>
+      </a>
+
+      <!-- Logout Button -->
+      <button 
+        (click)="logout()" 
+        class="px-3.5 py-1.5 rounded-xl bg-slate-100 hover:bg-rose-50 hover:text-rose-600 text-slate-700 text-xs font-bold border border-slate-200/80 hover:border-rose-200 transition-all cursor-pointer flex items-center gap-1.5 shadow-2xs">
+        <span class="material-icons text-sm">logout</span>
+        <span>Logout</span>
+      </button>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <div class="flex-1 max-w-7xl w-full mx-auto px-4 sm:px-6 lg:px-8 py-8 space-y-8">
+    
+    <!-- Toast Notification -->
+    @if (actionFeedback()) {
+      <div class="fixed top-20 right-6 z-50 p-4 rounded-2xl bg-slate-900 text-white shadow-2xl border border-slate-700 text-xs font-semibold flex items-center gap-2.5 animate-modal-enter">
+        <span class="material-icons text-emerald-400 text-base">check_circle</span>
+        <span>{{ actionFeedback() }}</span>
+      </div>
+    }
+
+    <!-- Tab Navigation Bar -->
+    <div class="bg-white p-1.5 rounded-2xl border border-slate-200/80 shadow-xs inline-flex flex-wrap gap-1.5">
+      <button 
+        (click)="setTab('overview')"
+        class="px-4 py-2.5 rounded-xl text-xs sm:text-sm transition-all cursor-pointer flex items-center gap-2"
+        [ngClass]="currentTab() === 'overview' ? 'bg-[#1b4df0] text-white font-bold shadow-md shadow-blue-500/20' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100/80 font-semibold'">
+        <span class="material-icons text-base">dashboard</span>
+        <span>Overview & Stats</span>
+      </button>
+
+      <button 
+        (click)="setTab('users')"
+        class="px-4 py-2.5 rounded-xl text-xs sm:text-sm transition-all cursor-pointer flex items-center gap-2"
+        [ngClass]="currentTab() === 'users' ? 'bg-[#1b4df0] text-white font-bold shadow-md shadow-blue-500/20' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100/80 font-semibold'">
+        <span class="material-icons text-base">people</span>
+        <span>User Accounts ({{ userTotalCount }})</span>
+      </button>
+
+      <button 
+        (click)="setTab('payments')"
+        class="px-4 py-2.5 rounded-xl text-xs sm:text-sm transition-all cursor-pointer flex items-center gap-2"
+        [ngClass]="currentTab() === 'payments' ? 'bg-[#1b4df0] text-white font-bold shadow-md shadow-blue-500/20' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100/80 font-semibold'">
+        <span class="material-icons text-base">payments</span>
+        <span>PhonePe Ledger ({{ paymentTotalCount }})</span>
+      </button>
+
+      <button 
+        (click)="setTab('contacts')"
+        class="px-4 py-2.5 rounded-xl text-xs sm:text-sm transition-all cursor-pointer flex items-center gap-2 relative"
+        [ngClass]="currentTab() === 'contacts' ? 'bg-[#1b4df0] text-white font-bold shadow-md shadow-blue-500/20' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100/80 font-semibold'">
+        <span class="material-icons text-base">mail</span>
+        <span>Contact Inquiries ({{ contactTotalCount }})</span>
+        @if (stats()?.unreadContacts && (stats()?.unreadContacts || 0) > 0) {
+          <span class="px-1.5 py-0.2 rounded-full text-[10px] font-extrabold bg-rose-500 text-white animate-pulse">
+            {{ stats()?.unreadContacts }}
+          </span>
+        }
+      </button>
+
+      <button 
+        (click)="setTab('settings')"
+        class="px-4 py-2.5 rounded-xl text-xs sm:text-sm transition-all cursor-pointer flex items-center gap-2"
+        [ngClass]="currentTab() === 'settings' ? 'bg-[#1b4df0] text-white font-bold shadow-md shadow-blue-500/20' : 'text-slate-600 hover:text-slate-900 hover:bg-slate-100/80 font-semibold'">
+        <span class="material-icons text-base">settings</span>
+        <span>System & Credentials</span>
+      </button>
+    </div>
+
+    <!-- TAB 1: OVERVIEW & STATS -->
+    @if (currentTab() === 'overview') {
+      <div class="space-y-8 animate-modal-enter">
+        
+        <!-- KPI Metrics Grid -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
+          
+          <!-- Metric 1: Total Users -->
+          <div class="bg-white rounded-3xl p-6 border border-slate-200/80 shadow-xs hover:shadow-md hover:border-slate-300 transition-all">
+            <div class="flex items-center justify-between text-slate-500 mb-3">
+              <span class="text-xs font-bold uppercase tracking-wider text-slate-500">Total Registered</span>
+              <div class="w-10 h-10 rounded-2xl bg-blue-50 text-[#1b4df0] flex items-center justify-center shadow-2xs">
+                <span class="material-icons text-xl">people</span>
+              </div>
+            </div>
+            <div class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
+              {{ stats()?.totalUsers || 0 }}
+            </div>
+            <p class="text-xs text-slate-500 font-medium mt-2">
+              <span class="font-bold text-slate-700">{{ stats()?.freeUsers || 0 }}</span> free • <span class="font-bold text-[#1b4df0]">{{ stats()?.proUsers || 0 }}</span> pro
+            </p>
+          </div>
+
+          <!-- Metric 2: Pro Subscribers -->
+          <div class="bg-white rounded-3xl p-6 border border-slate-200/80 shadow-xs hover:shadow-md hover:border-slate-300 transition-all">
+            <div class="flex items-center justify-between text-slate-500 mb-3">
+              <span class="text-xs font-bold uppercase tracking-wider text-slate-500">Pro Members</span>
+              <div class="w-10 h-10 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center shadow-2xs">
+                <span class="material-icons text-xl">star</span>
+              </div>
+            </div>
+            <div class="text-3xl sm:text-4xl font-extrabold text-emerald-600 tracking-tight">
+              {{ stats()?.proUsers || 0 }}
+            </div>
+            <div class="flex items-center gap-2 mt-2">
+              <span class="text-xs text-slate-500 font-medium">Conversion rate:</span>
+              <span class="px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 text-xs font-bold border border-emerald-200/60">
+                {{ stats()?.conversionRate || '0%' }}
+              </span>
+            </div>
+          </div>
+
+          <!-- Metric 3: Total Revenue -->
+          <div class="bg-white rounded-3xl p-6 border border-slate-200/80 shadow-xs hover:shadow-md hover:border-slate-300 transition-all">
+            <div class="flex items-center justify-between text-slate-500 mb-3">
+              <span class="text-xs font-bold uppercase tracking-wider text-slate-500">Total Revenue</span>
+              <div class="w-10 h-10 rounded-2xl bg-indigo-50 text-indigo-600 flex items-center justify-center shadow-2xs">
+                <span class="material-icons text-xl">currency_rupee</span>
+              </div>
+            </div>
+            <div class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
+              ₹{{ (stats()?.totalRevenueInr || 0) | number }}
+            </div>
+            <p class="text-xs text-slate-500 font-medium mt-2 flex items-center gap-1">
+              <span class="w-1.5 h-1.5 rounded-full bg-emerald-500"></span>
+              <span>{{ stats()?.successfulPaymentsCount || 0 }} verified paid orders</span>
+            </p>
+          </div>
+
+          <!-- Metric 4: Contact Inquiries -->
+          <div class="bg-white rounded-3xl p-6 border border-slate-200/80 shadow-xs hover:shadow-md hover:border-slate-300 transition-all cursor-pointer" (click)="setTab('contacts')">
+            <div class="flex items-center justify-between text-slate-500 mb-3">
+              <span class="text-xs font-bold uppercase tracking-wider text-slate-500">Contact Inquiries</span>
+              <div class="w-10 h-10 rounded-2xl bg-amber-50 text-amber-600 flex items-center justify-center shadow-2xs">
+                <span class="material-icons text-xl">mail</span>
+              </div>
+            </div>
+            <div class="text-3xl sm:text-4xl font-extrabold text-slate-900 tracking-tight">
+              {{ stats()?.totalContacts || 0 }}
+            </div>
+            <p class="text-xs text-slate-500 font-medium mt-2">
+              <span class="font-bold text-amber-600">{{ stats()?.unreadContacts || 0 }} unread</span> messages
+            </p>
+          </div>
+
+        </div>
+
+        <!-- Two Column Recent Activity -->
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8">
+          
+          <!-- Recent Users -->
+          <div class="bg-white rounded-3xl p-6 sm:p-7 border border-slate-200/80 shadow-xs">
+            <div class="flex items-center justify-between mb-5">
+              <h3 class="text-sm font-bold text-slate-900 flex items-center gap-2.5">
+                <div class="w-7 h-7 rounded-xl bg-blue-50 text-[#1b4df0] flex items-center justify-center">
+                  <span class="material-icons text-base">person_add</span>
+                </div>
+                <span>Recent Registrations</span>
+              </h3>
+              <button (click)="setTab('users')" class="text-xs font-bold text-[#1b4df0] hover:underline cursor-pointer flex items-center gap-0.5">
+                <span>View all</span>
+                <span class="material-icons text-sm">chevron_right</span>
+              </button>
+            </div>
+
+            <div class="space-y-2.5">
+              @for (user of stats()?.recentUsers || []; track user.id) {
+                <div class="p-3.5 rounded-2xl bg-[#f8fafc] border border-slate-100 hover:border-slate-200 flex items-center justify-between text-xs transition-colors">
+                  <div>
+                    <p class="font-mono font-bold text-slate-800">{{ user.email }}</p>
+                    <p class="text-[10px] text-slate-400 mt-0.5">{{ user.createdAt | date:'medium' }}</p>
+                  </div>
+                  <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider"
+                    [ngClass]="user.isPro ? 'bg-emerald-50 text-emerald-700 border border-emerald-200/60' : 'bg-slate-100 text-slate-600'">
+                    {{ user.isPro ? 'PRO' : 'FREE' }}
+                  </span>
+                </div>
+              } @empty {
+                <div class="text-center py-8 text-slate-400 text-xs">
+                  No recent users found.
+                </div>
+              }
+            </div>
+          </div>
+
+          <!-- Recent Payments -->
+          <div class="bg-white rounded-3xl p-6 sm:p-7 border border-slate-200/80 shadow-xs">
+            <div class="flex items-center justify-between mb-5">
+              <h3 class="text-sm font-bold text-slate-900 flex items-center gap-2.5">
+                <div class="w-7 h-7 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center">
+                  <span class="material-icons text-base">account_balance_wallet</span>
+                </div>
+                <span>Recent Transactions</span>
+              </h3>
+              <button (click)="setTab('payments')" class="text-xs font-bold text-[#1b4df0] hover:underline cursor-pointer flex items-center gap-0.5">
+                <span>View all</span>
+                <span class="material-icons text-sm">chevron_right</span>
+              </button>
+            </div>
+
+            <div class="space-y-2.5">
+              @for (payment of stats()?.recentPayments || []; track payment.id) {
+                <div class="p-3.5 rounded-2xl bg-[#f8fafc] border border-slate-100 hover:border-slate-200 flex items-center justify-between text-xs transition-colors">
+                  <div>
+                    <p class="font-mono font-bold text-slate-900">₹{{ payment.amount / 100 }}</p>
+                    <p class="text-[10px] text-slate-400 font-mono mt-0.5">{{ payment.merchantOrderId }}</p>
+                  </div>
+                  <div class="text-right">
+                    <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider"
+                      [ngClass]="payment.status === 'SUCCESS' ? 'bg-emerald-50 text-emerald-700 border border-emerald-200/60' : (payment.status === 'PENDING' ? 'bg-amber-50 text-amber-700 border border-amber-200/60' : 'bg-rose-50 text-rose-700 border border-rose-200/60')">
+                      {{ payment.status }}
+                    </span>
+                    <p class="text-[10px] text-slate-400 mt-1">{{ payment.createdAt | date:'shortTime' }}</p>
+                  </div>
+                </div>
+              } @empty {
+                <div class="text-center py-8 text-slate-400 text-xs">
+                  No recent transactions.
+                </div>
+              }
+            </div>
+          </div>
+
+        </div>
+
+      </div>
+    }
+
+    <!-- TAB 2: USER MANAGEMENT -->
+    @if (currentTab() === 'users') {
+      <div class="space-y-6 animate-modal-enter">
+        
+        <!-- Search & Filter Controls -->
+        <div class="bg-white p-4 sm:p-5 rounded-3xl border border-slate-200/80 shadow-xs flex flex-col sm:flex-row items-center justify-between gap-4">
+          <!-- Search Box -->
+          <div class="relative w-full sm:w-80">
+            <span class="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-slate-400">
+              <span class="material-icons text-base">search</span>
+            </span>
+            <input 
+              type="text" 
+              [(ngModel)]="userSearch"
+              (keyup.enter)="onUserSearch()"
+              placeholder="Search user email..."
+              class="w-full pl-9 pr-8 py-2.5 rounded-xl bg-slate-50 border border-slate-200 text-slate-900 placeholder-slate-400 text-xs font-medium focus:bg-white focus:outline-none focus:border-[#1b4df0] focus:ring-2 focus:ring-blue-100 transition-all" />
+            
+            @if (userSearch) {
+              <button 
+                (click)="userSearch = ''; onUserSearch()"
+                class="absolute inset-y-0 right-0 pr-3 flex items-center text-slate-400 hover:text-slate-700">
+                ✕
+              </button>
+            }
+          </div>
+
+          <!-- Filter Pills -->
+          <div class="flex items-center gap-2">
+            <button 
+              (click)="onProFilterChange('')"
+              class="px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer"
+              [ngClass]="userProFilter === '' ? 'bg-[#1b4df0] text-white shadow-xs' : 'bg-slate-100 text-slate-600 hover:bg-slate-200/70'">
+              All Users
+            </button>
+            <button 
+              (click)="onProFilterChange('true')"
+              class="px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer"
+              [ngClass]="userProFilter === 'true' ? 'bg-emerald-600 text-white shadow-xs' : 'bg-slate-100 text-slate-600 hover:bg-slate-200/70'">
+              Pro Only
+            </button>
+            <button 
+              (click)="onProFilterChange('false')"
+              class="px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer"
+              [ngClass]="userProFilter === 'false' ? 'bg-slate-800 text-white shadow-xs' : 'bg-slate-100 text-slate-600 hover:bg-slate-200/70'">
+              Free Only
+            </button>
+          </div>
+        </div>
+
+        <!-- Users Table -->
+        <div class="bg-white rounded-3xl border border-slate-200/80 shadow-xs overflow-hidden">
+          <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse text-xs">
+              <thead>
+                <tr class="border-b border-slate-200/80 bg-slate-50/80 text-slate-500 font-bold uppercase tracking-wider text-[11px]">
+                  <th class="p-4 sm:px-6">ID</th>
+                  <th class="p-4 sm:px-6">Email</th>
+                  <th class="p-4 sm:px-6">Role</th>
+                  <th class="p-4 sm:px-6">Subscription</th>
+                  <th class="p-4 sm:px-6">Registered</th>
+                  <th class="p-4 sm:px-6 text-right">Actions</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-100 font-medium">
+                @for (user of users(); track user.id) {
+                  <tr class="hover:bg-slate-50/70 transition-colors">
+                    <td class="p-4 sm:px-6 font-mono text-slate-500">#{{ user.id }}</td>
+                    <td class="p-4 sm:px-6 font-mono font-bold text-slate-900">{{ user.email }}</td>
+                    <td class="p-4 sm:px-6">
+                      <span class="px-2.5 py-0.5 rounded-full text-[10px] font-black uppercase tracking-wider"
+                        [ngClass]="user.role === 'ADMIN' ? 'bg-blue-50 text-[#1b4df0] border border-blue-200/70' : 'bg-slate-100 text-slate-600'">
+                        {{ user.role }}
+                      </span>
+                    </td>
+                    <td class="p-4 sm:px-6">
+                      <button 
+                        (click)="toggleProStatus(user)"
+                        class="px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-wider transition-all cursor-pointer flex items-center gap-1.5 shadow-2xs"
+                        [ngClass]="user.isPro ? 'bg-emerald-50 text-emerald-700 border border-emerald-200/70 hover:bg-emerald-100/70' : 'bg-slate-100 text-slate-600 border border-slate-200 hover:bg-slate-200/70'"
+                        title="Click to toggle Pro status">
+                        <span class="w-1.5 h-1.5 rounded-full" [ngClass]="user.isPro ? 'bg-emerald-500' : 'bg-slate-400'"></span>
+                        <span>{{ user.isPro ? 'PRO ACTIVE' : 'FREE' }}</span>
+                      </button>
+                    </td>
+                    <td class="p-4 sm:px-6 text-slate-500">{{ user.createdAt | date:'mediumDate' }}</td>
+                    <td class="p-4 sm:px-6 text-right space-x-2">
+                      <button 
+                        (click)="confirmDeleteUser(user)"
+                        class="p-2 rounded-xl bg-rose-50 hover:bg-rose-100 text-rose-600 transition-colors cursor-pointer"
+                        title="Delete User">
+                        <span class="material-icons text-base">delete</span>
+                      </button>
+                    </td>
+                  </tr>
+                } @empty {
+                  <tr>
+                    <td colspan="6" class="p-12 text-center text-slate-400">
+                      No users match your current search/filter.
+                    </td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Pagination Bar -->
+          <div class="p-4 sm:px-6 bg-slate-50/80 border-t border-slate-200/80 flex items-center justify-between text-xs text-slate-600 font-medium">
+            <span>Showing Page {{ userPage }} of {{ userTotalPages }} ({{ userTotalCount }} total users)</span>
+            <div class="flex items-center gap-2">
+              <button 
+                (click)="prevUserPage()" 
+                [disabled]="userPage <= 1"
+                class="px-3.5 py-1.5 rounded-xl bg-white hover:bg-slate-100 text-slate-700 border border-slate-200/80 disabled:opacity-40 disabled:cursor-not-allowed shadow-2xs font-semibold">
+                &lsaquo; Prev
+              </button>
+              <button 
+                (click)="nextUserPage()" 
+                [disabled]="userPage >= userTotalPages"
+                class="px-3.5 py-1.5 rounded-xl bg-white hover:bg-slate-100 text-slate-700 border border-slate-200/80 disabled:opacity-40 disabled:cursor-not-allowed shadow-2xs font-semibold">
+                Next &rsaquo;
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    }
+
+    <!-- TAB 3: PAYMENTS LEDGER -->
+    @if (currentTab() === 'payments') {
+      <div class="space-y-6 animate-modal-enter">
+        
+        <!-- Status Filter Bar -->
+        <div class="bg-white p-4 sm:p-5 rounded-3xl border border-slate-200/80 shadow-xs flex flex-wrap items-center justify-between gap-4">
+          <div class="flex items-center gap-2">
+            <span class="text-xs font-bold text-slate-500 uppercase tracking-wider mr-2">Status:</span>
+            <button 
+              (click)="onPaymentStatusChange('ALL')"
+              class="px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer"
+              [ngClass]="paymentStatusFilter === 'ALL' ? 'bg-[#1b4df0] text-white shadow-xs' : 'bg-slate-100 text-slate-600 hover:bg-slate-200/70'">
+              All ({{ paymentTotalCount }})
+            </button>
+            <button 
+              (click)="onPaymentStatusChange('SUCCESS')"
+              class="px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer"
+              [ngClass]="paymentStatusFilter === 'SUCCESS' ? 'bg-emerald-600 text-white shadow-xs' : 'bg-slate-100 text-slate-600 hover:bg-slate-200/70'">
+              Success
+            </button>
+            <button 
+              (click)="onPaymentStatusChange('PENDING')"
+              class="px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer"
+              [ngClass]="paymentStatusFilter === 'PENDING' ? 'bg-amber-500 text-white shadow-xs' : 'bg-slate-100 text-slate-600 hover:bg-slate-200/70'">
+              Pending
+            </button>
+            <button 
+              (click)="onPaymentStatusChange('FAILED')"
+              class="px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer"
+              [ngClass]="paymentStatusFilter === 'FAILED' ? 'bg-rose-600 text-white shadow-xs' : 'bg-slate-100 text-slate-600 hover:bg-slate-200/70'">
+              Failed
+            </button>
+          </div>
+
+          <button 
+            (click)="loadPayments()" 
+            class="px-3.5 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold flex items-center gap-1.5 transition-colors cursor-pointer border border-slate-200/70">
+            <span class="material-icons text-sm" [ngClass]="isLoadingPayments() ? 'animate-spin' : ''">refresh</span>
+            <span>Refresh Ledger</span>
+          </button>
+        </div>
+
+        <!-- Payments Table -->
+        <div class="bg-white rounded-3xl border border-slate-200/80 shadow-xs overflow-hidden">
+          <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse text-xs">
+              <thead>
+                <tr class="border-b border-slate-200/80 bg-slate-50/80 text-slate-500 font-bold uppercase tracking-wider text-[11px]">
+                  <th class="p-4 sm:px-6">Order ID</th>
+                  <th class="p-4 sm:px-6">User</th>
+                  <th class="p-4 sm:px-6">Amount</th>
+                  <th class="p-4 sm:px-6">Plan</th>
+                  <th class="p-4 sm:px-6">PhonePe Reference</th>
+                  <th class="p-4 sm:px-6">Status</th>
+                  <th class="p-4 sm:px-6">Date</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-100 font-medium">
+                @for (payment of payments(); track payment.id) {
+                  <tr class="hover:bg-slate-50/70 transition-colors">
+                    <td class="p-4 sm:px-6 font-mono text-slate-700">
+                      <div class="flex items-center gap-2">
+                        <span class="truncate max-w-[140px] font-bold">{{ payment.merchantOrderId }}</span>
+                        <button 
+                          (click)="copyToClipboard(payment.merchantOrderId)"
+                          class="text-slate-400 hover:text-[#1b4df0] p-1 transition-colors"
+                          title="Copy Order ID">
+                          <span class="material-icons text-xs">
+                            {{ copiedId() === payment.merchantOrderId ? 'check' : 'content_copy' }}
+                          </span>
+                        </button>
+                      </div>
+                    </td>
+                    <td class="p-4 sm:px-6 font-mono font-bold text-slate-900">
+                      {{ payment.user?.email || 'Guest User' }}
+                    </td>
+                    <td class="p-4 sm:px-6 font-mono font-extrabold text-slate-900">
+                      ₹{{ payment.amount / 100 }}
+                    </td>
+                    <td class="p-4 sm:px-6 text-slate-700 font-bold">{{ payment.plan }}</td>
+                    <td class="p-4 sm:px-6 font-mono text-slate-500 text-[11px]">
+                      {{ payment.phonepeTransactionId || '—' }}
+                    </td>
+                    <td class="p-4 sm:px-6">
+                      <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider inline-flex items-center gap-1"
+                        [ngClass]="payment.status === 'SUCCESS' ? 'bg-emerald-50 text-emerald-700 border border-emerald-200/60' : (payment.status === 'PENDING' ? 'bg-amber-50 text-amber-700 border border-amber-200/60' : 'bg-rose-50 text-rose-700 border border-rose-200/60')">
+                        <span class="w-1.5 h-1.5 rounded-full" [ngClass]="payment.status === 'SUCCESS' ? 'bg-emerald-500' : (payment.status === 'PENDING' ? 'bg-amber-500' : 'bg-rose-500')"></span>
+                        <span>{{ payment.status }}</span>
+                      </span>
+                    </td>
+                    <td class="p-4 sm:px-6 text-slate-500">{{ payment.createdAt | date:'medium' }}</td>
+                  </tr>
+                } @empty {
+                  <tr>
+                    <td colspan="7" class="p-12 text-center text-slate-400">
+                      No payment records found under this status.
+                    </td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Pagination Bar -->
+          <div class="p-4 sm:px-6 bg-slate-50/80 border-t border-slate-200/80 flex items-center justify-between text-xs text-slate-600 font-medium">
+            <span>Showing Page {{ paymentPage }} of {{ paymentTotalPages }} ({{ paymentTotalCount }} total payments)</span>
+            <div class="flex items-center gap-2">
+              <button 
+                (click)="prevPaymentPage()" 
+                [disabled]="paymentPage <= 1"
+                class="px-3.5 py-1.5 rounded-xl bg-white hover:bg-slate-100 text-slate-700 border border-slate-200/80 disabled:opacity-40 disabled:cursor-not-allowed shadow-2xs font-semibold">
+                &lsaquo; Prev
+              </button>
+              <button 
+                (click)="nextPaymentPage()" 
+                [disabled]="paymentPage >= paymentTotalPages"
+                class="px-3.5 py-1.5 rounded-xl bg-white hover:bg-slate-100 text-slate-700 border border-slate-200/80 disabled:opacity-40 disabled:cursor-not-allowed shadow-2xs font-semibold">
+                Next &rsaquo;
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    }
+
+    <!-- TAB 4: CONTACT INQUIRIES -->
+    @if (currentTab() === 'contacts') {
+      <div class="space-y-6 animate-modal-enter">
+        
+        <!-- Status Filter & Refresh Bar -->
+        <div class="bg-white p-4 sm:p-5 rounded-3xl border border-slate-200/80 shadow-xs flex flex-wrap items-center justify-between gap-4">
+          <div class="flex items-center gap-2">
+            <span class="text-xs font-bold text-slate-500 uppercase tracking-wider mr-2">Filter:</span>
+            <button 
+              (click)="onContactStatusChange('ALL')"
+              class="px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer"
+              [ngClass]="contactStatusFilter === 'ALL' ? 'bg-[#1b4df0] text-white shadow-xs' : 'bg-slate-100 text-slate-600 hover:bg-slate-200/70'">
+              All ({{ contactTotalCount }})
+            </button>
+            <button 
+              (click)="onContactStatusChange('UNREAD')"
+              class="px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer"
+              [ngClass]="contactStatusFilter === 'UNREAD' ? 'bg-amber-500 text-white shadow-xs' : 'bg-slate-100 text-slate-600 hover:bg-slate-200/70'">
+              Unread
+            </button>
+            <button 
+              (click)="onContactStatusChange('READ')"
+              class="px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer"
+              [ngClass]="contactStatusFilter === 'READ' ? 'bg-blue-600 text-white shadow-xs' : 'bg-slate-100 text-slate-600 hover:bg-slate-200/70'">
+              Read
+            </button>
+            <button 
+              (click)="onContactStatusChange('REPLIED')"
+              class="px-3.5 py-1.5 rounded-xl text-xs font-bold transition-all cursor-pointer"
+              [ngClass]="contactStatusFilter === 'REPLIED' ? 'bg-emerald-600 text-white shadow-xs' : 'bg-slate-100 text-slate-600 hover:bg-slate-200/70'">
+              Replied
+            </button>
+          </div>
+
+          <button 
+            (click)="loadContacts()" 
+            class="px-3.5 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold flex items-center gap-1.5 transition-colors cursor-pointer border border-slate-200/70">
+            <span class="material-icons text-sm" [ngClass]="isLoadingContacts() ? 'animate-spin' : ''">refresh</span>
+            <span>Refresh Messages</span>
+          </button>
+        </div>
+
+        <!-- Contacts Table -->
+        <div class="bg-white rounded-3xl border border-slate-200/80 shadow-xs overflow-hidden">
+          <div class="overflow-x-auto">
+            <table class="w-full text-left border-collapse text-xs">
+              <thead>
+                <tr class="border-b border-slate-200/80 bg-slate-50/80 text-slate-500 font-bold uppercase tracking-wider text-[11px]">
+                  <th class="p-4 sm:px-6">Sender Name</th>
+                  <th class="p-4 sm:px-6">Email</th>
+                  <th class="p-4 sm:px-6">Subject</th>
+                  <th class="p-4 sm:px-6">Status</th>
+                  <th class="p-4 sm:px-6">Received</th>
+                  <th class="p-4 sm:px-6 text-right">Actions</th>
+                </tr>
+              </thead>
+              <tbody class="divide-y divide-slate-100 font-medium">
+                @for (contact of contacts(); track contact.id) {
+                  <tr class="hover:bg-slate-50/70 transition-colors cursor-pointer" (click)="openContactModal(contact)">
+                    <td class="p-4 sm:px-6 font-bold text-slate-900">
+                      <div class="flex items-center gap-2">
+                        @if (contact.status === 'UNREAD') {
+                          <span class="w-2 h-2 rounded-full bg-amber-500 animate-pulse"></span>
+                        }
+                        <span>{{ contact.name }}</span>
+                      </div>
+                    </td>
+                    <td class="p-4 sm:px-6 font-mono text-slate-700">{{ contact.email }}</td>
+                    <td class="p-4 sm:px-6 text-slate-800 font-semibold max-w-[220px] truncate">
+                      {{ contact.subject || 'General Inquiry' }}
+                    </td>
+                    <td class="p-4 sm:px-6">
+                      <span class="px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider inline-flex items-center gap-1"
+                        [ngClass]="contact.status === 'UNREAD' ? 'bg-amber-50 text-amber-700 border border-amber-200/60' : (contact.status === 'READ' ? 'bg-blue-50 text-[#1b4df0] border border-blue-200/60' : 'bg-emerald-50 text-emerald-700 border border-emerald-200/60')">
+                        {{ contact.status }}
+                      </span>
+                    </td>
+                    <td class="p-4 sm:px-6 text-slate-500">{{ contact.createdAt | date:'medium' }}</td>
+                    <td class="p-4 sm:px-6 text-right space-x-2" (click)="$event.stopPropagation()">
+                      <button 
+                        (click)="openContactModal(contact)"
+                        class="p-2 rounded-xl bg-blue-50 hover:bg-blue-100 text-[#1b4df0] transition-colors cursor-pointer"
+                        title="Read message">
+                        <span class="material-icons text-base">visibility</span>
+                      </button>
+                      <button 
+                        (click)="confirmDeleteContact(contact)"
+                        class="p-2 rounded-xl bg-rose-50 hover:bg-rose-100 text-rose-600 transition-colors cursor-pointer"
+                        title="Delete Inquiry">
+                        <span class="material-icons text-base">delete</span>
+                      </button>
+                    </td>
+                  </tr>
+                } @empty {
+                  <tr>
+                    <td colspan="6" class="p-12 text-center text-slate-400">
+                      No contact messages found under this filter.
+                    </td>
+                  </tr>
+                }
+              </tbody>
+            </table>
+          </div>
+
+          <!-- Pagination Bar -->
+          <div class="p-4 sm:px-6 bg-slate-50/80 border-t border-slate-200/80 flex items-center justify-between text-xs text-slate-600 font-medium">
+            <span>Showing Page {{ contactPage }} of {{ contactTotalPages }} ({{ contactTotalCount }} total messages)</span>
+            <div class="flex items-center gap-2">
+              <button 
+                (click)="prevContactPage()" 
+                [disabled]="contactPage <= 1"
+                class="px-3.5 py-1.5 rounded-xl bg-white hover:bg-slate-100 text-slate-700 border border-slate-200/80 disabled:opacity-40 disabled:cursor-not-allowed shadow-2xs font-semibold">
+                &lsaquo; Prev
+              </button>
+              <button 
+                (click)="nextContactPage()" 
+                [disabled]="contactPage >= contactTotalPages"
+                class="px-3.5 py-1.5 rounded-xl bg-white hover:bg-slate-100 text-slate-700 border border-slate-200/80 disabled:opacity-40 disabled:cursor-not-allowed shadow-2xs font-semibold">
+                Next &rsaquo;
+              </button>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    }
+
+    <!-- TAB 5: SYSTEM & CREDENTIALS -->
+    @if (currentTab() === 'settings') {
+      <div class="max-w-3xl space-y-6 animate-modal-enter">
+        
+        <!-- Admin Account Info Card -->
+        <div class="bg-white rounded-3xl p-6 sm:p-7 border border-slate-200/80 shadow-xs space-y-4">
+          <div class="flex items-center gap-2.5">
+            <div class="w-8 h-8 rounded-xl bg-blue-50 text-[#1b4df0] flex items-center justify-center">
+              <span class="material-icons text-lg">admin_panel_settings</span>
+            </div>
+            <h3 class="text-sm font-bold text-slate-900 uppercase tracking-wider">
+              Active Administrator Session
+            </h3>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs">
+            <div class="p-4 rounded-2xl bg-[#f8fafc] border border-slate-100 space-y-1">
+              <span class="text-slate-400 font-medium">Admin Email:</span>
+              <p class="font-mono font-bold text-slate-900">{{ adminService.currentAdmin()?.email || 'admin@glowcv.ai' }}</p>
+            </div>
+
+            <div class="p-4 rounded-2xl bg-[#f8fafc] border border-slate-100 space-y-1">
+              <span class="text-slate-400 font-medium">Access Role:</span>
+              <p class="font-bold text-[#1b4df0]">SUPER_ADMINISTRATOR</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- Default Credentials Documentation -->
+        <div class="bg-white rounded-3xl p-6 sm:p-7 border border-slate-200/80 shadow-xs space-y-4">
+          <div class="flex items-center gap-2.5">
+            <div class="w-8 h-8 rounded-xl bg-amber-50 text-amber-600 flex items-center justify-center">
+              <span class="material-icons text-lg">key</span>
+            </div>
+            <h3 class="text-sm font-bold text-slate-900 uppercase tracking-wider">
+              System Admin Credentials
+            </h3>
+          </div>
+          
+          <p class="text-xs text-slate-500 leading-relaxed font-medium">
+            The database automatically provisions the following default credentials. You can update the password in the database or via environment variables (<code class="bg-slate-100 text-[#1b4df0] px-1.5 py-0.5 rounded-md font-mono">ADMIN_PASSWORD</code>).
+          </p>
+
+          <div class="p-5 rounded-2xl bg-slate-900 text-slate-100 font-mono text-xs space-y-2 border border-slate-800 shadow-sm">
+            <p><span class="text-slate-400">Standard Login URL:</span> <span class="text-blue-400">http://localhost:4200/login</span></p>
+            <p><span class="text-slate-400">Admin Email:</span> <span class="text-white font-bold">admin@glowcv.ai</span></p>
+            <p><span class="text-slate-400">Admin Password:</span> <span class="text-white font-bold">Admin@12345</span></p>
+          </div>
+        </div>
+
+        <!-- Server & Gateway Health -->
+        <div class="bg-white rounded-3xl p-6 sm:p-7 border border-slate-200/80 shadow-xs space-y-4">
+          <div class="flex items-center gap-2.5">
+            <div class="w-8 h-8 rounded-xl bg-emerald-50 text-emerald-600 flex items-center justify-center">
+              <span class="material-icons text-lg">dns</span>
+            </div>
+            <h3 class="text-sm font-bold text-slate-900 uppercase tracking-wider">
+              System Integrations Status
+            </h3>
+          </div>
+
+          <div class="space-y-3 text-xs">
+            <div class="flex items-center justify-between p-3.5 rounded-2xl bg-[#f8fafc] border border-slate-100">
+              <div class="flex items-center gap-2.5">
+                <span class="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                <span class="font-bold text-slate-800">Backend Node.js API</span>
+              </div>
+              <span class="text-emerald-700 font-bold bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200/60">ONLINE (Port 3000)</span>
+            </div>
+
+            <div class="flex items-center justify-between p-3.5 rounded-2xl bg-[#f8fafc] border border-slate-100">
+              <div class="flex items-center gap-2.5">
+                <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+                <span class="font-bold text-slate-800">MySQL Database (Prisma)</span>
+              </div>
+              <span class="text-emerald-700 font-bold bg-emerald-50 px-2.5 py-0.5 rounded-full border border-emerald-200/60">CONNECTED</span>
+            </div>
+
+            <div class="flex items-center justify-between p-3.5 rounded-2xl bg-[#f8fafc] border border-slate-100">
+              <div class="flex items-center gap-2.5">
+                <span class="w-2.5 h-2.5 rounded-full bg-blue-500"></span>
+                <span class="font-bold text-slate-800">PhonePe Payment Gateway</span>
+              </div>
+              <span class="text-[#1b4df0] font-bold bg-blue-50 px-2.5 py-0.5 rounded-full border border-blue-200/60">MERCURY ACTIVE</span>
+            </div>
+          </div>
+        </div>
+
+      </div>
+    }
+
+  </div>
+
+  <!-- Contact Message Detail Modal -->
+  @if (selectedContact()) {
+    <div class="fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-xs flex items-center justify-center p-4">
+      <div class="bg-white rounded-3xl max-w-xl w-full p-6 sm:p-8 border border-slate-200/80 shadow-2xl space-y-5 animate-modal-enter">
+        
+        <div class="flex items-center justify-between border-b border-slate-100 pb-4">
+          <div class="flex items-center gap-3">
+            <div class="w-10 h-10 rounded-2xl bg-blue-50 text-[#1b4df0] flex items-center justify-center">
+              <span class="material-icons text-xl">mail</span>
+            </div>
+            <div>
+              <h3 class="text-base font-bold text-slate-900">{{ selectedContact()?.name }}</h3>
+              <p class="text-xs font-mono text-slate-500">{{ selectedContact()?.email }}</p>
+            </div>
+          </div>
+          
+          <button (click)="closeContactModal()" class="p-1.5 rounded-xl text-slate-400 hover:text-slate-700 hover:bg-slate-100 transition-colors">
+            <span class="material-icons text-xl">close</span>
+          </button>
+        </div>
+
+        <div class="space-y-3">
+          <div class="flex items-center justify-between text-xs">
+            <span class="text-slate-400 font-medium">Subject:</span>
+            <span class="font-bold text-slate-800">{{ selectedContact()?.subject || 'General Inquiry' }}</span>
+          </div>
+
+          <div class="flex items-center justify-between text-xs">
+            <span class="text-slate-400 font-medium">Received Date:</span>
+            <span class="text-slate-600">{{ selectedContact()?.createdAt | date:'medium' }}</span>
+          </div>
+
+          <div class="space-y-1.5 pt-2">
+            <span class="text-xs text-slate-400 font-medium">Message Body:</span>
+            <div class="p-4 rounded-2xl bg-[#f8fafc] border border-slate-200/80 text-slate-800 text-xs sm:text-sm leading-relaxed whitespace-pre-wrap">
+              {{ selectedContact()?.message }}
+            </div>
+          </div>
+        </div>
+
+        <!-- Status and Reply Actions -->
+        <div class="flex flex-wrap items-center justify-between gap-3 pt-4 border-t border-slate-100">
+          <div class="flex items-center gap-2">
+            <span class="text-xs text-slate-500 font-semibold">Status:</span>
+            <button 
+              (click)="updateContactStatus(selectedContact()!.id, 'READ')"
+              class="px-2.5 py-1 rounded-lg text-xs font-bold transition-colors cursor-pointer"
+              [ngClass]="selectedContact()?.status === 'READ' ? 'bg-blue-600 text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'">
+              Read
+            </button>
+            <button 
+              (click)="updateContactStatus(selectedContact()!.id, 'REPLIED')"
+              class="px-2.5 py-1 rounded-lg text-xs font-bold transition-colors cursor-pointer"
+              [ngClass]="selectedContact()?.status === 'REPLIED' ? 'bg-emerald-600 text-white' : 'bg-slate-100 text-slate-600 hover:bg-slate-200'">
+              Replied
+            </button>
+          </div>
+
+          <div class="flex items-center gap-2">
+            <a 
+              [href]="'mailto:' + selectedContact()?.email + '?subject=Re: ' + (selectedContact()?.subject || 'GlowCV Inquiry')"
+              (click)="updateContactStatus(selectedContact()!.id, 'REPLIED')"
+              class="px-4 py-2 rounded-xl bg-[#1b4df0] hover:bg-blue-700 text-white text-xs font-bold shadow-xs transition-all flex items-center gap-1.5">
+              <span class="material-icons text-sm">reply</span>
+              <span>Reply via Email</span>
+            </a>
+          </div>
+        </div>
+
+      </div>
+    </div>
+  }
+
+  <!-- Delete Contact Confirmation Modal -->
+  @if (contactToDelete()) {
+    <div class="fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-xs flex items-center justify-center p-4">
+      <div class="bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 border border-slate-200/80 shadow-2xl space-y-5 animate-modal-enter">
+        <div class="w-12 h-12 rounded-2xl bg-rose-50 text-rose-600 flex items-center justify-center font-bold">
+          <span class="material-icons text-2xl">delete</span>
+        </div>
+
+        <div>
+          <h3 class="text-lg font-bold text-slate-900">Delete Contact Inquiry?</h3>
+          <p class="text-xs text-slate-500 mt-1 leading-relaxed">
+            Are you sure you want to permanently delete the message from <strong class="text-slate-800">{{ contactToDelete()?.name }}</strong> ({{ contactToDelete()?.email }})?
+          </p>
+        </div>
+
+        <div class="flex items-center justify-end gap-3 pt-2">
+          <button 
+            (click)="cancelDeleteContact()"
+            class="px-4 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition-colors cursor-pointer">
+            Cancel
+          </button>
+          <button 
+            (click)="executeDeleteContact()"
+            [disabled]="isDeletingContact()"
+            class="px-4 py-2.5 rounded-xl bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold shadow-lg shadow-rose-600/20 transition-all cursor-pointer flex items-center gap-1.5">
+            @if (isDeletingContact()) {
+              <span class="material-icons text-sm animate-spin">refresh</span>
+            }
+            <span>Confirm Delete</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  }
+
+  <!-- User Deletion Confirmation Modal -->
+  @if (userToDelete()) {
+    <div class="fixed inset-0 z-50 bg-slate-900/40 backdrop-blur-xs flex items-center justify-center p-4">
+      <div class="bg-white rounded-3xl max-w-md w-full p-6 sm:p-8 border border-slate-200/80 shadow-2xl space-y-5 animate-modal-enter">
+        <div class="w-12 h-12 rounded-2xl bg-rose-50 text-rose-600 flex items-center justify-center font-bold">
+          <span class="material-icons text-2xl">warning</span>
+        </div>
+
+        <div>
+          <h3 class="text-lg font-bold text-slate-900">Delete User Account?</h3>
+          <p class="text-xs text-slate-500 mt-1 leading-relaxed">
+            Are you sure you want to permanently delete <strong class="text-slate-800">{{ userToDelete()?.email }}</strong>? This will remove all their payment records and resumes.
+          </p>
+        </div>
+
+        <div class="flex items-center justify-end gap-3 pt-2">
+          <button 
+            (click)="cancelDelete()"
+            class="px-4 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-bold transition-colors cursor-pointer">
+            Cancel
+          </button>
+          <button 
+            (click)="executeDeleteUser()"
+            [disabled]="isDeletingUser()"
+            class="px-4 py-2.5 rounded-xl bg-rose-600 hover:bg-rose-700 text-white text-xs font-bold shadow-lg shadow-rose-600/20 transition-all cursor-pointer flex items-center gap-1.5">
+            @if (isDeletingUser()) {
+              <span class="material-icons text-sm animate-spin">refresh</span>
+            }
+            <span>Confirm Delete</span>
+          </button>
+        </div>
+      </div>
+    </div>
+  }
+
+</div>

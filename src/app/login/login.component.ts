@@ -42,7 +42,16 @@ export class LoginComponent {
           if (response.data?.accessToken) {
             this.authService.saveToken(response.data.accessToken);
           }
-          this.router.navigate(['/dashboard']);
+          if (response.data?.user) {
+            this.authService.saveUser(response.data.user);
+          }
+
+          const user = response.data?.user;
+          if (user?.role === 'ADMIN') {
+            this.router.navigate(['/admin/dashboard']);
+          } else {
+            this.router.navigate(['/dashboard']);
+          }
         },
         error: (error) => {
           console.error('Login error', error);
