@@ -92,7 +92,9 @@ export class CvBuilderService {
   selectedTemplate = signal<TemplateType>('modern');
   isImprovingSummary = signal(false);
   isParsing = signal(false);
+  parsingStatus = signal<'idle' | 'analyzing' | 'extracting'>('idle');
   parseError = signal<string | null>(null);
+  importSuccessMessage = signal<string | null>(null);
 
   defaultCustomization: CustomizationSettings = {
     language: 'English (UK)',
@@ -260,6 +262,7 @@ export class CvBuilderService {
     if (template) {
       this.selectedTemplate.set(template);
     }
+    this.closeOnboarding();
     this.router.navigate(['/cv-builder']);
   }
 
@@ -275,6 +278,15 @@ export class CvBuilderService {
     this.onboardingStep.set(4);
     this.hideOnboardingSteps.set(true);
     document.body.style.overflow = 'hidden';
+  }
+
+  openImportResume() {
+    this.isOnboardingOpen.set(true);
+    this.onboardingStep.set(2);
+    this.hideOnboardingSteps.set(true);
+    if (typeof document !== 'undefined') {
+      document.body.style.overflow = 'hidden';
+    }
   }
 
   closeOnboarding() {
@@ -403,26 +415,92 @@ Return only the finished cover letter.`;
 
 
   uploadAndParseResume(file: File, onSuccess?: () => void) {
+    // 1. File Validation
+    const MAX_SIZE = 5 * 1024 * 1024; // 5MB
+    if (file.size > MAX_SIZE) {
+      this.parseError.set('File size exceeds 5MB limit. Please upload a smaller file.');
+      return;
+    }
+
+    const extension = file.name ? file.name.split('.').pop()?.toLowerCase() : '';
+    const allowedExtensions = ['pdf', 'doc', 'docx'];
+    if (!extension || !allowedExtensions.includes(extension)) {
+      this.parseError.set('Invalid file type. Please upload a PDF, DOC, or DOCX document.');
+      return;
+    }
+
     this.isParsing.set(true);
     this.parseError.set(null);
-    
+    this.importSuccessMessage.set(null);
+    this.parsingStatus.set('analyzing');
+
+    // Progress timer for UI feedback
+    const extractionTimer = setTimeout(() => {
+      if (this.isParsing()) {
+        this.parsingStatus.set('extracting');
+      }
+    }, 1200);
+
     const formData = new FormData();
     formData.append('resume', file);
-    
-    this.http.post<any>('http://localhost:3000/api/parser/upload', formData).subscribe({
+
+    this.http.post<any>('http://localhost:3000/api/resume/parse', formData).subscribe({
       next: (res) => {
+        clearTimeout(extractionTimer);
         if (res && res.data) {
-          this.updateData(res.data);
+          const raw = res.data;
+
+          const mappedData: Partial<CVData> = {
+            fullName: raw.personal?.fullName || raw.fullName || '',
+            email: raw.personal?.email || raw.email || '',
+            phone: raw.personal?.phone || raw.phone || '',
+            location: raw.personal?.location || raw.location || '',
+            jobTitle: raw.experience?.[0]?.jobTitle || raw.jobTitle || '',
+            summary: raw.summary || '',
+            skills: Array.isArray(raw.skills) ? raw.skills : [],
+            experience: Array.isArray(raw.experience) && raw.experience.length > 0
+              ? raw.experience.map((exp: any, index: number) => ({
+                  id: `${Date.now()}_exp_${index}`,
+                  company: exp.company || '',
+                  role: exp.jobTitle || exp.role || '',
+                  startDate: exp.startDate || '',
+                  endDate: exp.endDate || '',
+                  description: exp.description || ''
+                }))
+              : [],
+            education: Array.isArray(raw.education) && raw.education.length > 0
+              ? raw.education.map((edu: any, index: number) => ({
+                  id: `${Date.now()}_edu_${index}`,
+                  institution: edu.institution || '',
+                  degree: edu.degree + (edu.fieldOfStudy ? ' in ' + edu.fieldOfStudy : ''),
+                  year: edu.endDate || edu.startDate || edu.year || ''
+                }))
+              : [],
+            projects: Array.isArray(raw.projects) && raw.projects.length > 0
+              ? raw.projects.map((proj: any, index: number) => ({
+                  id: `${Date.now()}_proj_${index}`,
+                  name: proj.name || '',
+                  description: proj.description + (proj.technologies && proj.technologies.length ? ` (Tech: ${proj.technologies.join(', ')})` : '')
+                }))
+              : []
+          };
+
+          this.updateData(mappedData);
+          this.importSuccessMessage.set("Resume imported successfully! We've filled your resume with the information from your uploaded file. Please review the details before continuing.");
+
           if (onSuccess) {
             onSuccess();
           }
         }
         this.isParsing.set(false);
+        this.parsingStatus.set('idle');
       },
       error: (err) => {
+        clearTimeout(extractionTimer);
         console.error('Failed to parse resume:', err);
-        this.parseError.set(err?.error?.message || 'Failed to parse resume. Please try again.');
+        this.parseError.set(err?.error?.message || 'Failed to parse resume. Please ensure the file is not corrupted or password-protected.');
         this.isParsing.set(false);
+        this.parsingStatus.set('idle');
       }
     });
   }
@@ -441,7 +519,19 @@ Return only the finished cover letter.`;
     try {
       const saved = localStorage.getItem('cv_builder_data');
       if (saved) {
-        this.cvData.set(JSON.parse(saved));
+        const parsed = JSON.parse(saved);
+        if (parsed && typeof parsed === 'object') {
+          // If fullName contains pagination artifacts, reset it to clean default
+          if (
+            !parsed.fullName ||
+            /^[-–—\s*#_]*\d+\s*(?:of|\/)\s*\d+[-–—\s*#_]*$/i.test(parsed.fullName) ||
+            /^[-–—=_]{2,}$/.test(parsed.fullName) ||
+            parsed.fullName.trim() === '-- 1 of 2 --'
+          ) {
+            parsed.fullName = this.defaultData.fullName;
+          }
+          this.cvData.set({ ...this.defaultData, ...parsed });
+        }
       }
     } catch (e) {
       console.error('Failed to load from local storage', e);

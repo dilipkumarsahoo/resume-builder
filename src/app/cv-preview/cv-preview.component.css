@@ -1,9 +1,19 @@
 /* CV Preview Styles */
 
 :host {
-  display: block;
+  display: flex;
+  flex-direction: column;
+  flex: 1 1 auto;
   width: 100%;
   min-height: 100%;
+}
+
+.cv-preview-content {
+  width: 100%;
+  min-height: 100%;
+  flex: 1 1 auto;
+  display: flex;
+  flex-direction: column;
 }
 
 .no-scrollbar::-webkit-scrollbar {
@@ -188,19 +198,11 @@
 
 /* 10. Columns Layout Controls (One, Two, Mix) */
 
-/* Columns - ONE (Full width single column stacked) */
-.cv-preview-content.columns-one .flex.h-full {
-  flex-direction: column !important;
-}
-.cv-preview-content.columns-one .w-1\/3,
-.cv-preview-content.columns-one .w-2\/3,
-.cv-preview-content.columns-one .w-1\/4,
-.cv-preview-content.columns-one .w-3\/4 {
+/* Columns - ONE (Applied to single column linear templates) */
+.cv-preview-content.columns-one .minimal-template > div,
+.cv-preview-content.columns-one .classic-ats-template > div,
+.cv-preview-content.columns-one .professional-template > div > div {
   width: 100% !important;
-}
-.cv-preview-content.columns-one .flex.gap-8,
-.cv-preview-content.columns-one .flex.gap-6 {
-  flex-direction: column !important;
 }
 
 /* Columns - TWO (Balanced Two Column Multi-Section View) */

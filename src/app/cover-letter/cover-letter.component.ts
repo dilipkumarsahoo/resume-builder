@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterModule, ActivatedRoute } from '@angular/router';
 import { CvBuilderService, TemplateType } from '../cv-builder.service';
+import { AuthService } from '../services/auth.service';
 import { CvPreviewComponent } from '../cv-preview/cv-preview.component';
 import { jsPDF } from 'jspdf';
 
@@ -32,6 +33,7 @@ export interface ResumeTemplateItem {
 })
 export class CoverLetterComponent implements OnInit {
   public cvService = inject(CvBuilderService);
+  private authService = inject(AuthService);
   private router = inject(Router);
   private route = inject(ActivatedRoute);
 
@@ -309,6 +311,14 @@ export class CoverLetterComponent implements OnInit {
 
   startBlankResume() {
     this.cvService.openModal('modern');
+  }
+
+  importExistingResume() {
+    if (!this.authService.getToken()) {
+      this.router.navigate(['/login']);
+      return;
+    }
+    this.cvService.openImportResume();
   }
 
   get filteredTemplates(): TemplateItem[] {

@@ -147,16 +147,22 @@
 
           <!-- Drag & Drop Zone -->
           <div (dragover)="onDragOver($event)" (dragleave)="onDragLeave($event)" (drop)="onDrop($event)"
-            (click)="fileInput.click()" [class.border-accent]="isDragging || cvService.isParsing()"
+            (click)="!cvService.isParsing() && fileInput.click()" [class.border-accent]="isDragging || cvService.isParsing()"
             [class.bg-accent/5]="isDragging"
+            [class.opacity-90]="cvService.isParsing()"
+            [class.cursor-not-allowed]="cvService.isParsing()"
             class="mt-5 border-2 border-dashed border-gray-200 hover:border-accent/40 rounded-xl p-6 text-center cursor-pointer transition-all duration-200 group relative bg-gray-50/30">
-            <input #fileInput type="file" (change)="onFileSelected($event)" accept=".pdf,.doc,.docx" class="hidden">
+            <input #fileInput type="file" (change)="onFileSelected($event)" accept=".pdf,.doc,.docx" [disabled]="cvService.isParsing()" class="hidden">
 
             @if (cvService.isParsing()) {
-            <div class="flex flex-col items-center justify-center py-2">
+            <div class="flex flex-col items-center justify-center py-4 space-y-2">
               <div class="w-10 h-10 border-3 border-accent border-t-transparent rounded-full animate-spin"></div>
-              <p class="text-sm font-semibold text-gray-700 mt-3 animate-pulse">Extracting resume fields...</p>
-              <p class="text-xs text-gray-400 mt-1">Parsing PDF/DOCX sections & mapping form inputs</p>
+              <p class="text-sm font-bold text-gray-800 animate-pulse">
+                Analyzing your resume...
+              </p>
+              <p class="text-xs text-gray-500 font-medium">
+                Extracting your information and filling in the form.
+              </p>
             </div>
             } @else {
             <div
@@ -188,7 +194,7 @@
           }
         </div>
         <div class="text-center mt-6">
-          <button (click)="nextStep()"
+          <button (click)="skipToForm()"
             class="text-slate-400 font-bold hover:text-[#334155] underline transition-all cursor-pointer">Skip for
             now</button>
         </div>

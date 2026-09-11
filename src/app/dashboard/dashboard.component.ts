@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterModule, ActivatedRoute } from '@angular/router';
 import { CvBuilderService, TemplateType } from '../cv-builder.service';
+import { AuthService } from '../services/auth.service';
 import { CvPreviewComponent } from '../cv-preview/cv-preview.component';
 import { jsPDF } from 'jspdf';
 
@@ -57,6 +58,7 @@ export interface TrendingJob {
 })
 export class DashboardComponent implements OnInit {
   public cvService = inject(CvBuilderService);
+  public authService = inject(AuthService);
   private router = inject(Router);
   private route = inject(ActivatedRoute);
   private cdr = inject(ChangeDetectorRef);
@@ -502,6 +504,14 @@ export class DashboardComponent implements OnInit {
 
   startBlankResume() {
     this.cvService.openModal('modern');
+  }
+
+  importExistingResume() {
+    if (!this.authService.getToken()) {
+      this.router.navigate(['/login']);
+      return;
+    }
+    this.cvService.openImportResume();
   }
 
   // --- COVER LETTER METHODS ---

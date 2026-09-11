@@ -238,6 +238,30 @@ export class CvPreviewComponent {
     return (c.footerPageNumbers || c.showPageNumbers) ? '1 / 1' : '';
   }
 
+  formatDateRange(start?: string, end?: string): string {
+    const s = start?.trim();
+    const e = end?.trim();
+    if (s && e) return `${s} - ${e}`;
+    if (s) return s;
+    if (e) return e;
+    return '';
+  }
+
+  hasValidExperience(expList?: any[]): boolean {
+    if (!expList || !expList.length) return false;
+    return expList.some(e => Boolean(e.role?.trim() || e.company?.trim() || e.description?.trim()));
+  }
+
+  hasValidEducation(eduList?: any[]): boolean {
+    if (!eduList || !eduList.length) return false;
+    return eduList.some(e => Boolean(e.degree?.trim() || e.institution?.trim()));
+  }
+
+  hasValidProjects(projList?: any[]): boolean {
+    if (!projList || !projList.length) return false;
+    return projList.some(p => Boolean(p.name?.trim() || p.description?.trim()));
+  }
+
   private formatFooterText(template: string): string {
     if (!template) return '';
     const d = this.displayData;

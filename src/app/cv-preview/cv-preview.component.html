@@ -24,9 +24,9 @@
 
   @if (currentTemplate() === 'modern') {
   <!-- Modern Template -->
-  <div class="flex h-full">
+  <div class="flex flex-1 w-full min-h-full">
     <!-- Left Sidebar -->
-    <div class="w-1/3 bg-gray-900 text-white p-8 flex flex-col gap-8">
+    <div class="w-1/3 bg-gray-900 text-white p-8 flex flex-col gap-8 min-h-full">
       <div>
         <h1 class="text-3xl font-bold tracking-tight mb-1">{{ displayData.fullName || 'Your Name' }}</h1>
         <p class="text-accent font-medium">{{ displayData.jobTitle || 'Job Title' }}</p>
@@ -57,7 +57,7 @@
     </div>
 
     <!-- Right Content -->
-    <div class="w-2/3 p-8 flex flex-col gap-6">
+    <div class="w-2/3 p-8 flex flex-col gap-6 flex-1">
       @if (displayData.summary) {
       <div data-section="summary">
         <h2 class="text-lg font-bold text-gray-900 mb-2 border-b border-gray-200 pb-1">Profile</h2>
@@ -65,50 +65,58 @@
       </div>
       }
 
-      @if (displayData.experience.length > 0) {
+      @if (hasValidExperience(displayData.experience)) {
       <div data-section="experience">
         <h2 class="text-lg font-bold text-gray-900 mb-4 border-b border-gray-200 pb-1">Experience</h2>
         <div class="space-y-4">
           @for (exp of displayData.experience; track exp.id) {
+          @if (exp.role || exp.company || exp.description) {
           <div>
             <div class="flex justify-between items-baseline mb-1">
               <h3 class="font-bold text-gray-800">{{ exp.role }}</h3>
-              <span class="text-xs text-gray-500 font-medium">{{ exp.startDate }} - {{ exp.endDate }}</span>
+              @if (formatDateRange(exp.startDate, exp.endDate)) {
+              <span class="text-xs text-gray-500 font-medium">{{ formatDateRange(exp.startDate, exp.endDate) }}</span>
+              }
             </div>
-            <p class="text-sm text-accent font-medium mb-2">{{ exp.company }}</p>
-            <p class="text-sm text-gray-600 leading-relaxed">{{ exp.description }}</p>
+            @if (exp.company) { <p class="text-sm text-accent font-medium mb-2">{{ exp.company }}</p> }
+            @if (exp.description) { <p class="text-sm text-gray-600 leading-relaxed">{{ exp.description }}</p> }
           </div>
+          }
           }
         </div>
       </div>
       }
 
-      @if (displayData.education.length > 0) {
+      @if (hasValidEducation(displayData.education)) {
       <div data-section="education">
         <h2 class="text-lg font-bold text-gray-900 mb-4 border-b border-gray-200 pb-1">Education</h2>
         <div class="space-y-4">
           @for (edu of displayData.education; track edu.id) {
+          @if (edu.degree || edu.institution) {
           <div>
             <div class="flex justify-between items-baseline mb-1">
               <h3 class="font-bold text-gray-800">{{ edu.degree }}</h3>
-              <span class="text-xs text-gray-500 font-medium">{{ edu.year }}</span>
+              @if (edu.year) { <span class="text-xs text-gray-500 font-medium">{{ edu.year }}</span> }
             </div>
-            <p class="text-sm text-gray-600">{{ edu.institution }}</p>
+            @if (edu.institution) { <p class="text-sm text-gray-600">{{ edu.institution }}</p> }
           </div>
+          }
           }
         </div>
       </div>
       }
 
-      @if (displayData.projects.length > 0) {
+      @if (hasValidProjects(displayData.projects)) {
       <div data-section="projects">
         <h2 class="text-lg font-bold text-gray-900 mb-4 border-b border-gray-200 pb-1">Projects</h2>
         <div class="space-y-4">
           @for (proj of displayData.projects; track proj.id) {
+          @if (proj.name || proj.description) {
           <div>
             <h3 class="font-bold text-gray-800 mb-1">{{ proj.name }}</h3>
-            <p class="text-sm text-gray-600 leading-relaxed">{{ proj.description }}</p>
+            @if (proj.description) { <p class="text-sm text-gray-600 leading-relaxed">{{ proj.description }}</p> }
           </div>
+          }
           }
         </div>
       </div>
@@ -119,7 +127,7 @@
 
   @if (currentTemplate() === 'minimal') {
   <!-- Minimal Template -->
-  <div class="p-10 flex flex-col gap-6 h-full minimal-template">
+  <div class="p-10 flex flex-col gap-6 flex-1 w-full min-h-full minimal-template">
     <div data-section="header" class="text-center border-b border-gray-200 pb-6">
       <h1 class="text-4xl font-light tracking-tight text-gray-900 mb-2">{{ displayData.fullName || 'Your Name' }}</h1>
       <p class="text-lg text-gray-600 mb-3">{{ displayData.jobTitle || 'Job Title' }}</p>
@@ -566,9 +574,9 @@
 
   @if (currentTemplate() === 'bold') {
   <!-- Bold Template (Accent Sidebar) -->
-  <div class="h-full flex bold-template overflow-y-auto no-scrollbar">
+  <div class="flex-1 w-full min-h-full flex bold-template">
     <!-- Accent Sidebar -->
-    <div class="w-1/3 bg-accent p-8 text-white flex flex-col gap-8">
+    <div class="w-1/3 bg-accent p-8 text-white flex flex-col gap-8 min-h-full">
       <div class="mb-4">
         <h1 class="text-4xl font-black uppercase tracking-tighter leading-none mb-2">{{ displayData.fullName || 'Your
           Name' }}</h1>

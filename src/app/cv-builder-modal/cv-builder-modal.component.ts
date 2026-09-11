@@ -24,7 +24,7 @@ export class CvBuilderModalComponent {
   cvService = inject(CvBuilderService);
   template = this.cvService.selectedTemplate;
   isDownloading = false;
-  activeTab = signal<'overview' | 'content' | 'customize' | 'ai-tools'>('customize');
+  activeTab = signal<'overview' | 'content' | 'customize' | 'ai-tools'>('content');
   showOptionsMenu = signal(false);
 
   @ViewChild('modalContent') modalContent?: ElementRef;

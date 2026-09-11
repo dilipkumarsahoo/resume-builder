@@ -69,18 +69,20 @@ export class OnboardingComponent {
   }
 
   onFileSelected(event: Event) {
+    if (this.cvService.isParsing()) return;
     const input = event.target as HTMLInputElement;
     if (input.files && input.files.length > 0) {
-      this.cvService.uploadAndParseResume(input.files[0], () => {
-        this.nextStep();
-      });
+      const file = input.files[0];
+      this.handleFileUpload(file);
     }
   }
 
   onDragOver(event: DragEvent) {
     event.preventDefault();
     event.stopPropagation();
-    this.isDragging = true;
+    if (!this.cvService.isParsing()) {
+      this.isDragging = true;
+    }
   }
 
   onDragLeave(event: DragEvent) {
@@ -93,12 +95,18 @@ export class OnboardingComponent {
     event.preventDefault();
     event.stopPropagation();
     this.isDragging = false;
+    if (this.cvService.isParsing()) return;
 
     if (event.dataTransfer && event.dataTransfer.files && event.dataTransfer.files.length > 0) {
-      this.cvService.uploadAndParseResume(event.dataTransfer.files[0], () => {
-        this.nextStep();
-      });
+      const file = event.dataTransfer.files[0];
+      this.handleFileUpload(file);
     }
+  }
+
+  handleFileUpload(file: File) {
+    this.cvService.uploadAndParseResume(file, () => {
+      this.skipToForm();
+    });
   }
 
   nextStep() {
