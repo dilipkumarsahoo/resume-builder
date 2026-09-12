@@ -3,6 +3,7 @@ import { CommonModule, isPlatformBrowser } from '@angular/common';
 import { Router, RouterLink, NavigationEnd } from '@angular/router';
 import { filter } from 'rxjs/operators';
 import { CvBuilderService } from '../cv-builder.service';
+import { AuthService } from '../services/auth.service';
 
 @Component({
   selector: 'app-navbar',
@@ -13,6 +14,7 @@ import { CvBuilderService } from '../cv-builder.service';
 })
 export class NavbarComponent implements OnInit {
   cvService = inject(CvBuilderService);
+  authService = inject(AuthService);
   private router = inject(Router);
   private platformId = inject(PLATFORM_ID);
   private cdr = inject(ChangeDetectorRef);
@@ -101,16 +103,30 @@ export class NavbarComponent implements OnInit {
 
   openJobTracker() {
     this.closeMobileMenu();
+    if (!this.authService.isLoggedIn()) {
+      this.router.navigate(['/login'], { queryParams: { returnUrl: '/dashboard?tab=jobs' } });
+      return;
+    }
     this.router.navigate(['/cover-letter'], { queryParams: { tab: 'jobs' } });
   }
 
   openDashboard() {
     this.closeMobileMenu();
+    if (!this.authService.isLoggedIn()) {
+      this.router.navigate(['/login'], { queryParams: { returnUrl: '/dashboard' } });
+      return;
+    }
     this.router.navigate(['/dashboard']);
   }
 
   openGetStarted() {
     this.closeMobileMenu();
     this.cvService.openOnboarding();
+  }
+
+  logout() {
+    this.closeMobileMenu();
+    this.authService.logout();
+    this.router.navigate(['/login']);
   }
 }

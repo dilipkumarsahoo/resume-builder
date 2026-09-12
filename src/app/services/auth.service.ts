@@ -78,7 +78,7 @@ export class AuthService {
   }
 
   isLoggedIn(): boolean {
-    return !!this.getToken() && !!this.getUser();
+    return !!this.getToken();
   }
 
   logout() {
@@ -87,6 +87,7 @@ export class AuthService {
       localStorage.removeItem('glowcv_user');
       localStorage.removeItem('glowcv_admin_token');
       localStorage.removeItem('glowcv_admin_data');
+      localStorage.removeItem('glowcv_is_pro');
     }
     this.currentUser.set(null);
   }

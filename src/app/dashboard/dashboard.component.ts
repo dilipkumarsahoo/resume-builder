@@ -100,8 +100,8 @@ export class DashboardComponent implements OnInit {
 
   // User Profile
   isProUser = false;
-  userName = 'DILIP SAHOO';
-  userEmail = 'mailme.dilipsahu4@gmail.com';
+  userName = '';
+  userEmail = '';
   userAvatar = 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?w=160&auto=format&fit=crop&q=80';
 
   // --- RESUME TEMPLATES GALLERY STATE ---
@@ -439,11 +439,21 @@ export class DashboardComponent implements OnInit {
     if (typeof window !== 'undefined') {
       this.isProUser = localStorage.getItem('glowcv_is_pro') === 'true';
       
+      const loggedUser = this.authService.getUser();
+      if (this.authService.isLoggedIn() && loggedUser && loggedUser.email) {
+        this.userEmail = loggedUser.email;
+        const namePart = loggedUser.email.split('@')[0];
+        this.userName = (loggedUser as any).fullName || (loggedUser as any).name || namePart.toUpperCase();
+      } else {
+        this.userName = '';
+        this.userEmail = '';
+      }
+
       const cv = this.cvService.cvData();
-      if (cv && cv.fullName && cv.fullName !== 'John Doe') {
+      if (this.authService.isLoggedIn() && cv && cv.fullName && cv.fullName !== 'John Doe') {
         this.userName = cv.fullName;
       }
-      if (cv && cv.email && cv.email !== 'john.doe@example.com') {
+      if (this.authService.isLoggedIn() && cv && cv.email && cv.email !== 'john.doe@example.com') {
         this.userEmail = cv.email;
       }
 
@@ -453,27 +463,52 @@ export class DashboardComponent implements OnInit {
 
       // Read query params if any
       this.route.queryParams.subscribe(params => {
-        if (params['tab'] === 'resume') {
+        const tab = params['tab'];
+        if (tab === 'resume') {
           this.activeNav.set('resume');
-        } else if (params['tab'] === 'cover-letter') {
+        } else if (tab === 'cover-letter') {
           this.activeNav.set('cover-letter');
-        } else if (params['tab'] === 'jobs' || params['tab'] === 'job-tracker') {
+        } else if (tab === 'jobs' || tab === 'job-tracker') {
+          if (!this.authService.isLoggedIn()) {
+            this.router.navigate(['/login'], { queryParams: { returnUrl: '/dashboard?tab=jobs' } });
+            return;
+          }
           this.activeNav.set('jobs');
-        } else if (params['tab'] === 'dashboard') {
+        } else {
+          // Default tab is 'dashboard'
+          if (!this.authService.isLoggedIn()) {
+            this.router.navigate(['/login'], { queryParams: { returnUrl: '/dashboard' } });
+            return;
+          }
           this.activeNav.set('dashboard');
         }
       });
     }
   }
 
+  logout() {
+    this.authService.logout();
+    this.userName = '';
+    this.userEmail = '';
+    this.showToast('Logged out successfully');
+    this.cdr.markForCheck();
+    setTimeout(() => {
+      this.router.navigate(['/login']);
+    }, 150);
+  }
+
   get userFirstName(): string {
-    return this.userName.split(' ')[0] || 'DILIP';
+    return this.userName.split(' ')[0] || 'User';
   }
 
   setNav(tab: 'dashboard' | 'resume' | 'cover-letter' | 'jobs', event?: Event) {
     if (event) {
       event.preventDefault();
       event.stopPropagation();
+    }
+    if ((tab === 'dashboard' || tab === 'jobs') && !this.authService.isLoggedIn()) {
+      this.router.navigate(['/login'], { queryParams: { returnUrl: `/dashboard?tab=${tab}` } });
+      return;
     }
     this.activeNav.set(tab);
     this.mobileSidebarOpen.set(false);

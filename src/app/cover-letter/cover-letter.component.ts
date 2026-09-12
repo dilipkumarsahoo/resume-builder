@@ -33,7 +33,7 @@ export interface ResumeTemplateItem {
 })
 export class CoverLetterComponent implements OnInit {
   public cvService = inject(CvBuilderService);
-  private authService = inject(AuthService);
+  public authService = inject(AuthService);
   private router = inject(Router);
   private route = inject(ActivatedRoute);
 
@@ -165,6 +165,13 @@ export class CoverLetterComponent implements OnInit {
       year: 'numeric'
     });
 
+    const loggedUser = this.authService.getUser();
+    if (loggedUser && loggedUser.email) {
+      this.userEmail = loggedUser.email;
+      const namePart = loggedUser.email.split('@')[0];
+      this.userName = (loggedUser as any).fullName || (loggedUser as any).name || namePart.toUpperCase();
+    }
+
     this.route.queryParams.subscribe(params => {
       if (params['tab'] === 'resume') {
         this.activeTabSection = 'resume';
@@ -178,6 +185,11 @@ export class CoverLetterComponent implements OnInit {
     this.loadResumeData();
     this.loadDraft();
     this.loadJobs();
+  }
+
+  logout() {
+    this.authService.logout();
+    this.router.navigate(['/login']);
   }
 
   loadJobs() {

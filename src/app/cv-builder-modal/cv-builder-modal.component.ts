@@ -45,6 +45,12 @@ export class CvBuilderModalComponent {
     this.router.navigate(['/cover-letter'], { queryParams: { tab: 'resume' } });
   }
 
+  logout() {
+    this.showOptionsMenu.set(false);
+    this.authService.logout();
+    this.router.navigate(['/login']);
+  }
+
   async downloadPDF() {
     if (!isPlatformBrowser(this.platformId)) return;
 

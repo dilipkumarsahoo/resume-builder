@@ -15,13 +15,14 @@ import { PrivacyComponent } from './privacy/privacy.component';
 import { DashboardComponent } from './dashboard/dashboard.component';
 import { AdminDashboardComponent } from './admin/admin-dashboard/admin-dashboard.component';
 import { adminGuard } from './guards/admin.guard';
+import { authGuard } from './guards/auth.guard';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignupComponent },
   { path: 'forgot-password', component: ForgotPasswordComponent },
-  { path: 'dashboard', component: DashboardComponent },
+  { path: 'dashboard', component: DashboardComponent, canActivate: [authGuard] },
   { path: 'cv-builder', component: CvBuilderModalComponent },
   { path: 'saved-jobs', redirectTo: '/dashboard?tab=jobs' },
   { path: 'cover-letter', redirectTo: '/dashboard?tab=cover-letter' },

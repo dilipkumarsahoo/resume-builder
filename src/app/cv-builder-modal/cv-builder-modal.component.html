@@ -103,8 +103,13 @@
           </button>
           <div class="h-px bg-slate-100 my-1"></div>
           <button (click)="close(); showOptionsMenu.set(false)"
-            class="w-full text-left px-4 py-2 hover:bg-red-50 text-red-600 flex items-center gap-2">
-            <span class="material-icons text-sm">close</span> Exit Builder
+            class="w-full text-left px-4 py-2 hover:bg-slate-50 text-slate-700 flex items-center gap-2">
+            <span class="material-icons text-sm text-slate-400">close</span> Exit Builder
+          </button>
+          <div class="h-px bg-slate-100 my-1"></div>
+          <button (click)="logout()"
+            class="w-full text-left px-4 py-2 hover:bg-rose-50 text-rose-600 flex items-center gap-2">
+            <span class="material-icons text-sm text-rose-500">logout</span> Log out
           </button>
         </div>
       </div>

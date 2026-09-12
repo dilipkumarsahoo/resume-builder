@@ -60,16 +60,39 @@
       </nav>
     </div>
 
-    <!-- Sidebar Bottom Auth Buttons -->
+    <!-- Sidebar Bottom Auth Buttons / User Profile -->
     <div class="space-y-3 pt-6 border-t border-slate-200/80">
-      <button routerLink="/login"
-        class="w-full py-2.5 px-4 bg-white border border-slate-300 rounded-xl font-bold text-slate-700 text-sm hover:bg-slate-50 transition-all shadow-sm cursor-pointer">
-        Login
-      </button>
-      <button routerLink="/signup"
-        class="w-full py-2.5 px-4 bg-slate-900 text-white rounded-xl font-bold text-sm hover:bg-slate-800 transition-all shadow-sm cursor-pointer">
-        Signup
-      </button>
+      <ng-container *ngIf="!authService.isLoggedIn()">
+        <button routerLink="/login"
+          class="w-full py-2.5 px-4 bg-white border border-slate-300 rounded-xl font-bold text-slate-700 text-sm hover:bg-slate-50 transition-all shadow-sm cursor-pointer">
+          Login
+        </button>
+        <button routerLink="/signup"
+          class="w-full py-2.5 px-4 bg-slate-900 text-white rounded-xl font-bold text-sm hover:bg-slate-800 transition-all shadow-sm cursor-pointer">
+          Signup
+        </button>
+      </ng-container>
+
+      <ng-container *ngIf="authService.isLoggedIn()">
+        <!-- Logged in User Card -->
+        <div class="p-2.5 bg-white/90 rounded-2xl border border-slate-200/80 shadow-xs space-y-2.5">
+          <div class="flex items-center gap-2.5 min-w-0">
+            <div
+              class="w-9 h-9 rounded-full overflow-hidden flex-shrink-0 bg-indigo-50 border border-indigo-100 flex items-center justify-center text-indigo-600 font-bold text-xs">
+              <span class="material-icons text-base">person</span>
+            </div>
+            <div class="overflow-hidden min-w-0 flex-1">
+              <h4 class="text-xs font-bold text-slate-900 truncate leading-tight">{{ userName }}</h4>
+              <p class="text-[11px] text-slate-400 truncate leading-tight">{{ userEmail }}</p>
+            </div>
+          </div>
+          <button type="button" (click)="logout()"
+            class="w-full py-2 px-3 bg-rose-50 hover:bg-rose-100 text-rose-600 border border-rose-100 rounded-xl text-xs font-bold transition-all flex items-center justify-center gap-1.5 cursor-pointer">
+            <span class="material-icons text-sm">logout</span>
+            <span>Log out</span>
+          </button>
+        </div>
+      </ng-container>
     </div>
   </aside>
 
