@@ -42,9 +42,9 @@ export class CoverLetterComponent implements OnInit {
 
   // Form Fields
   fullName = '';
-  userName = 'Dilip Sahoo';
+  userName = '';
   email = '';
-  userEmail = 'mailme.dilipsahu4@gmail.com';
+  userEmail = '';
   phone = '';
   location = '';
   
@@ -166,10 +166,15 @@ export class CoverLetterComponent implements OnInit {
     });
 
     const loggedUser = this.authService.getUser();
-    if (loggedUser && loggedUser.email) {
-      this.userEmail = loggedUser.email;
-      const namePart = loggedUser.email.split('@')[0];
-      this.userName = (loggedUser as any).fullName || (loggedUser as any).name || namePart.toUpperCase();
+    const savedName = typeof window !== 'undefined' ? localStorage.getItem('glowcv_user_name') : null;
+    const savedEmail = typeof window !== 'undefined' ? localStorage.getItem('glowcv_user_email') : null;
+
+    if (this.authService.isLoggedIn() && loggedUser) {
+      this.userEmail = savedEmail || loggedUser.email || '';
+      this.userName = savedName || loggedUser.fullName || loggedUser.name || (loggedUser.email ? loggedUser.email.split('@')[0].toUpperCase() : 'User');
+    } else {
+      this.userName = '';
+      this.userEmail = '';
     }
 
     this.route.queryParams.subscribe(params => {
@@ -343,10 +348,8 @@ export class CoverLetterComponent implements OnInit {
   loadResumeData() {
     const resume = this.cvService.cvData();
     if (resume) {
-      this.fullName = resume.fullName || this.userName;
-      this.userName = resume.fullName || this.userName;
-      this.email = resume.email || this.userEmail;
-      this.userEmail = resume.email || this.userEmail;
+      this.fullName = this.userName || resume.fullName || '';
+      this.email = this.userEmail || resume.email || '';
       this.phone = resume.phone || '';
       this.location = resume.location || '';
     }

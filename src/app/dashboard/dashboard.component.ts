@@ -440,21 +440,15 @@ export class DashboardComponent implements OnInit {
       this.isProUser = localStorage.getItem('glowcv_is_pro') === 'true';
       
       const loggedUser = this.authService.getUser();
-      if (this.authService.isLoggedIn() && loggedUser && loggedUser.email) {
-        this.userEmail = loggedUser.email;
-        const namePart = loggedUser.email.split('@')[0];
-        this.userName = (loggedUser as any).fullName || (loggedUser as any).name || namePart.toUpperCase();
+      const savedName = localStorage.getItem('glowcv_user_name');
+      const savedEmail = localStorage.getItem('glowcv_user_email');
+
+      if (this.authService.isLoggedIn() && loggedUser) {
+        this.userEmail = savedEmail || loggedUser.email || '';
+        this.userName = savedName || loggedUser.fullName || loggedUser.name || (loggedUser.email ? loggedUser.email.split('@')[0].toUpperCase() : 'User');
       } else {
         this.userName = '';
         this.userEmail = '';
-      }
-
-      const cv = this.cvService.cvData();
-      if (this.authService.isLoggedIn() && cv && cv.fullName && cv.fullName !== 'John Doe') {
-        this.userName = cv.fullName;
-      }
-      if (this.authService.isLoggedIn() && cv && cv.email && cv.email !== 'john.doe@example.com') {
-        this.userEmail = cv.email;
       }
 
       this.loadJobs();
@@ -484,6 +478,30 @@ export class DashboardComponent implements OnInit {
         }
       });
     }
+  }
+
+  saveAccountSettings() {
+    if (typeof window !== 'undefined') {
+      const user = this.authService.getUser() || { id: 1, email: this.userEmail, role: 'USER' as const };
+      const updatedUser = {
+        ...user,
+        fullName: this.userName,
+        name: this.userName,
+        email: this.userEmail
+      };
+      this.authService.saveUser(updatedUser);
+      localStorage.setItem('glowcv_user_name', this.userName);
+      localStorage.setItem('glowcv_user_email', this.userEmail);
+
+      this.cvService.cvData.update(current => ({
+        ...current,
+        fullName: this.userName,
+        email: this.userEmail
+      }));
+    }
+    this.showSettingsModal.set(false);
+    this.showToast('Settings saved successfully!');
+    this.cdr.markForCheck();
   }
 
   logout() {

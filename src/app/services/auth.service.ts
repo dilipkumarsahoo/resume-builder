@@ -5,6 +5,8 @@ import { Observable } from 'rxjs';
 export interface AuthUser {
   id: number;
   email: string;
+  fullName?: string;
+  name?: string;
   role: 'USER' | 'ADMIN';
   isPro?: boolean;
   createdAt?: string;
@@ -85,6 +87,8 @@ export class AuthService {
     if (typeof window !== 'undefined') {
       localStorage.removeItem('token');
       localStorage.removeItem('glowcv_user');
+      localStorage.removeItem('glowcv_user_name');
+      localStorage.removeItem('glowcv_user_email');
       localStorage.removeItem('glowcv_admin_token');
       localStorage.removeItem('glowcv_admin_data');
       localStorage.removeItem('glowcv_is_pro');
