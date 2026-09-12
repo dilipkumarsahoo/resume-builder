@@ -560,10 +560,6 @@ export class DashboardComponent implements OnInit {
   }
 
   importExistingResume() {
-    if (!this.authService.getToken()) {
-      this.router.navigate(['/login']);
-      return;
-    }
     this.cvService.openImportResume();
   }
 

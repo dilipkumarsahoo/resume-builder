@@ -93,12 +93,12 @@ export class NavbarComponent implements OnInit {
 
   openResumeTemplates() {
     this.closeMobileMenu();
-    this.router.navigate(['/cover-letter'], { queryParams: { tab: 'resume' } });
+    this.router.navigate(['/dashboard'], { queryParams: { tab: 'resume' } });
   }
 
   openCoverLetter() {
     this.closeMobileMenu();
-    this.router.navigate(['/cover-letter'], { queryParams: { tab: 'cover-letter' } });
+    this.router.navigate(['/dashboard'], { queryParams: { tab: 'cover-letter' } });
   }
 
   openJobTracker() {
@@ -107,7 +107,7 @@ export class NavbarComponent implements OnInit {
       this.router.navigate(['/login'], { queryParams: { returnUrl: '/dashboard?tab=jobs' } });
       return;
     }
-    this.router.navigate(['/cover-letter'], { queryParams: { tab: 'jobs' } });
+    this.router.navigate(['/dashboard'], { queryParams: { tab: 'jobs' } });
   }
 
   openDashboard() {
@@ -121,7 +121,7 @@ export class NavbarComponent implements OnInit {
 
   openGetStarted() {
     this.closeMobileMenu();
-    this.cvService.openOnboarding();
+    this.router.navigate(['/dashboard'], { queryParams: { tab: 'resume' } });
   }
 
   logout() {

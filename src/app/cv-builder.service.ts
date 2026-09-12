@@ -267,17 +267,13 @@ export class CvBuilderService {
   }
 
   openOnboarding() {
-    this.isOnboardingOpen.set(true);
-    this.onboardingStep.set(1);
-    this.hideOnboardingSteps.set(false);
-    document.body.style.overflow = 'hidden';
+    this.closeOnboarding();
+    this.router.navigate(['/dashboard'], { queryParams: { tab: 'resume' } });
   }
 
   openResumeTemplates() {
-    this.isOnboardingOpen.set(true);
-    this.onboardingStep.set(4);
-    this.hideOnboardingSteps.set(true);
-    document.body.style.overflow = 'hidden';
+    this.closeOnboarding();
+    this.router.navigate(['/dashboard'], { queryParams: { tab: 'resume' } });
   }
 
   openImportResume() {
@@ -292,11 +288,13 @@ export class CvBuilderService {
   closeOnboarding() {
     this.isOnboardingOpen.set(false);
     this.hideOnboardingSteps.set(false);
-    document.body.style.overflow = 'auto';
+    if (typeof document !== 'undefined') {
+      document.body.style.overflow = 'auto';
+    }
   }
 
   closeModal() {
-    this.router.navigate(['/cover-letter'], { queryParams: { tab: 'resume' } });
+    this.router.navigate(['/dashboard'], { queryParams: { tab: 'resume' } });
   }
 
   updateData(newData: Partial<CVData>) {
