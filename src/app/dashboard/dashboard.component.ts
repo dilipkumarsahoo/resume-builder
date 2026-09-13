@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { Router, RouterModule, ActivatedRoute } from '@angular/router';
 import { CvBuilderService, TemplateType } from '../cv-builder.service';
 import { AuthService } from '../services/auth.service';
+import { JobService, TrackedJob } from '../services/job.service';
 import { CvPreviewComponent } from '../cv-preview/cv-preview.component';
 import { jsPDF } from 'jspdf';
 
@@ -59,6 +60,7 @@ export interface TrendingJob {
 export class DashboardComponent implements OnInit {
   public cvService = inject(CvBuilderService);
   public authService = inject(AuthService);
+  public jobService = inject(JobService);
   private router = inject(Router);
   private route = inject(ActivatedRoute);
   private cdr = inject(ChangeDetectorRef);
@@ -1053,6 +1055,29 @@ ${this.email || this.userEmail} | ${this.phone || '+1 (555) 019-2834'}`;
 
   // --- JOB TRACKER METHODS ---
   loadJobs() {
+    if (this.authService.isLoggedIn()) {
+      this.jobService.getJobs().subscribe({
+        next: (res) => {
+          if (res && res.data) {
+            this.jobs = res.data;
+            if (typeof window !== 'undefined') {
+              localStorage.setItem('saved_jobs', JSON.stringify(this.jobs));
+            }
+          } else {
+            this.loadJobsFromLocal();
+          }
+        },
+        error: (err) => {
+          console.error('Failed to fetch jobs from DB:', err);
+          this.loadJobsFromLocal();
+        }
+      });
+    } else {
+      this.loadJobsFromLocal();
+    }
+  }
+
+  loadJobsFromLocal() {
     if (typeof window !== 'undefined') {
       const saved = localStorage.getItem('saved_jobs');
       if (saved) {
@@ -1070,7 +1095,7 @@ ${this.email || this.userEmail} | ${this.phone || '+1 (555) 019-2834'}`;
             dateSaved: 'May 13, 2026',
             dateApplied: null,
             type: 'Full-time',
-            resume: 'Monica\'s Resume',
+            resume: "Monica's Resume",
             notes: 'High priority application'
           },
           {
@@ -1131,27 +1156,66 @@ ${this.email || this.userEmail} | ${this.phone || '+1 (555) 019-2834'}`;
 
   addJob() {
     if (!this.newJobPosition.trim() || !this.newJobCompany.trim()) return;
-    const newJob = {
+    const newJobData: any = {
       position: this.newJobPosition.trim(),
       company: this.newJobCompany.trim(),
       status: this.newJobStatus,
       dateSaved: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
       dateApplied: this.newJobStatus === 'Applied' ? new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : null,
       type: this.newJobType,
-      resume: 'Monica\'s Resume',
+      resume: "Monica's Resume",
       notes: ''
     };
-    this.jobs.unshift(newJob);
-    this.saveJobs();
+
+    if (this.authService.isLoggedIn()) {
+      this.jobService.addJob(newJobData).subscribe({
+        next: (res) => {
+          if (res && res.data) {
+            this.jobs.unshift(res.data);
+          } else {
+            this.jobs.unshift(newJobData);
+          }
+          this.saveJobs();
+          this.showToast(`Added "${newJobData.position}" at ${newJobData.company} to tracker!`);
+        },
+        error: (err) => {
+          console.error('Error adding job to DB:', err);
+          this.jobs.unshift(newJobData);
+          this.saveJobs();
+          this.showToast(`Added "${newJobData.position}" at ${newJobData.company} to tracker!`);
+        }
+      });
+    } else {
+      this.jobs.unshift(newJobData);
+      this.saveJobs();
+      this.showToast(`Added "${newJobData.position}" at ${newJobData.company} to tracker!`);
+    }
+
     this.showAddJobModal = false;
-    this.showToast(`Added "${newJob.position}" at ${newJob.company} to tracker!`);
   }
 
   deleteJob(index: number) {
     if (confirm('Are you sure you want to delete this job application?')) {
-      const deleted = this.jobs.splice(index, 1);
-      this.saveJobs();
-      this.showToast(`Removed application for ${deleted[0]?.company || 'job'}.`);
+      const jobToDelete = this.jobs[index];
+      if (jobToDelete && jobToDelete.id && this.authService.isLoggedIn()) {
+        this.jobService.deleteJob(jobToDelete.id).subscribe({
+          next: () => {
+            this.jobs.splice(index, 1);
+            this.saveJobs();
+            this.showToast(`Removed application for ${jobToDelete.company || 'job'}.`);
+          },
+          error: (err) => {
+            console.error('Error deleting job from DB:', err);
+            this.jobs.splice(index, 1);
+            this.saveJobs();
+            this.showToast(`Removed application for ${jobToDelete.company || 'job'}.`);
+          }
+        });
+      } else {
+        const deleted = this.jobs.splice(index, 1);
+        this.saveJobs();
+        this.showToast(`Removed application for ${deleted[0]?.company || 'job'}.`);
+      }
     }
   }
 
@@ -1161,7 +1225,23 @@ ${this.email || this.userEmail} | ${this.phone || '+1 (555) 019-2834'}`;
       job.dateApplied = new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
     }
     this.saveJobs();
-    this.showToast(`Updated status to "${newStatus}"`);
+
+    if (job.id && this.authService.isLoggedIn()) {
+      this.jobService.updateJob(job.id, {
+        status: job.status,
+        dateApplied: job.dateApplied
+      }).subscribe({
+        next: () => {
+          this.showToast(`Updated status to "${newStatus}"`);
+        },
+        error: (err) => {
+          console.error('Error updating job status in DB:', err);
+          this.showToast(`Updated status to "${newStatus}"`);
+        }
+      });
+    } else {
+      this.showToast(`Updated status to "${newStatus}"`);
+    }
   }
 
   // --- DASHBOARD OVERVIEW METHODS ---
@@ -1231,17 +1311,36 @@ ${this.email || this.userEmail} | ${this.phone || '+1 (555) 019-2834'}`;
     
     const exists = this.jobs.some((j: any) => j.company === job.company && j.position === job.role);
     if (!exists) {
-      this.jobs.unshift({
+      const newJobData = {
         position: job.role,
         company: job.company,
         status: 'Applied',
         dateSaved: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
         dateApplied: new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }),
         type: job.type,
-        resume: 'Monica\'s Resume',
+        resume: "Monica's Resume",
         notes: `Applied via Dashboard on ${new Date().toLocaleDateString()}`
-      });
-      this.saveJobs();
+      };
+
+      if (this.authService.isLoggedIn()) {
+        this.jobService.addJob(newJobData).subscribe({
+          next: (res) => {
+            if (res && res.data) {
+              this.jobs.unshift(res.data);
+            } else {
+              this.jobs.unshift(newJobData);
+            }
+            this.saveJobs();
+          },
+          error: () => {
+            this.jobs.unshift(newJobData);
+            this.saveJobs();
+          }
+        });
+      } else {
+        this.jobs.unshift(newJobData);
+        this.saveJobs();
+      }
     }
 
     this.showToast(`Applied to ${job.company}! Added to Job Tracker.`);

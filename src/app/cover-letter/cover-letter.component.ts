@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { Router, RouterModule, ActivatedRoute } from '@angular/router';
 import { CvBuilderService, TemplateType } from '../cv-builder.service';
 import { AuthService } from '../services/auth.service';
+import { JobService, TrackedJob } from '../services/job.service';
 import { CvPreviewComponent } from '../cv-preview/cv-preview.component';
 import { jsPDF } from 'jspdf';
 
@@ -34,6 +35,7 @@ export interface ResumeTemplateItem {
 export class CoverLetterComponent implements OnInit {
   public cvService = inject(CvBuilderService);
   public authService = inject(AuthService);
+  public jobService = inject(JobService);
   private router = inject(Router);
   private route = inject(ActivatedRoute);
 
@@ -198,10 +200,36 @@ export class CoverLetterComponent implements OnInit {
   }
 
   loadJobs() {
+    if (this.authService.isLoggedIn()) {
+      this.jobService.getJobs().subscribe({
+        next: (res) => {
+          if (res && res.data) {
+            this.jobs = res.data;
+            if (typeof window !== 'undefined') {
+              localStorage.setItem('saved_jobs', JSON.stringify(this.jobs));
+            }
+          } else {
+            this.loadJobsFromLocal();
+          }
+        },
+        error: () => {
+          this.loadJobsFromLocal();
+        }
+      });
+    } else {
+      this.loadJobsFromLocal();
+    }
+  }
+
+  loadJobsFromLocal() {
     if (typeof window !== 'undefined') {
       const saved = localStorage.getItem('saved_jobs');
       if (saved) {
-        this.jobs = JSON.parse(saved);
+        try {
+          this.jobs = JSON.parse(saved);
+        } catch {
+          this.jobs = [];
+        }
       } else {
         this.jobs = [
           {
@@ -263,7 +291,7 @@ export class CoverLetterComponent implements OnInit {
 
   addJob() {
     if (!this.newJobPosition.trim() || !this.newJobCompany.trim()) return;
-    const newJob = {
+    const newJobData: any = {
       position: this.newJobPosition.trim(),
       company: this.newJobCompany.trim(),
       status: this.newJobStatus,
@@ -271,18 +299,49 @@ export class CoverLetterComponent implements OnInit {
       dateApplied: this.newJobStatus === 'Applied' ? new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }) : null,
       type: this.newJobType,
       resume: null,
-      coverLetter: null,
       notes: ''
     };
-    this.jobs.push(newJob);
-    this.saveJobs();
+
+    if (this.authService.isLoggedIn()) {
+      this.jobService.addJob(newJobData).subscribe({
+        next: (res) => {
+          if (res && res.data) {
+            this.jobs.unshift(res.data);
+          } else {
+            this.jobs.unshift(newJobData);
+          }
+          this.saveJobs();
+        },
+        error: () => {
+          this.jobs.unshift(newJobData);
+          this.saveJobs();
+        }
+      });
+    } else {
+      this.jobs.unshift(newJobData);
+      this.saveJobs();
+    }
     this.showAddJobModal = false;
   }
 
   deleteJob(index: number) {
     if (confirm('Are you sure you want to delete this job application?')) {
-      this.jobs.splice(index, 1);
-      this.saveJobs();
+      const jobToDelete = this.jobs[index];
+      if (jobToDelete && jobToDelete.id && this.authService.isLoggedIn()) {
+        this.jobService.deleteJob(jobToDelete.id).subscribe({
+          next: () => {
+            this.jobs.splice(index, 1);
+            this.saveJobs();
+          },
+          error: () => {
+            this.jobs.splice(index, 1);
+            this.saveJobs();
+          }
+        });
+      } else {
+        this.jobs.splice(index, 1);
+        this.saveJobs();
+      }
     }
   }
 
@@ -292,6 +351,13 @@ export class CoverLetterComponent implements OnInit {
       job.dateApplied = new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' });
     }
     this.saveJobs();
+
+    if (job.id && this.authService.isLoggedIn()) {
+      this.jobService.updateJob(job.id, {
+        status: job.status,
+        dateApplied: job.dateApplied
+      }).subscribe();
+    }
   }
 
   get filteredResumeTemplates(): ResumeTemplateItem[] {
