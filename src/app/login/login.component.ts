@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink, Router } from '@angular/router';
+import { RouterLink, Router, ActivatedRoute } from '@angular/router';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../services/auth.service';
 
@@ -20,7 +20,8 @@ export class LoginComponent {
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) {
     this.loginForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -50,7 +51,18 @@ export class LoginComponent {
           if (user?.role === 'ADMIN') {
             this.router.navigate(['/admin/dashboard']);
           } else {
-            this.router.navigate(['/dashboard']);
+            const returnUrl = this.route.snapshot.queryParams['returnUrl'];
+            const pay = this.route.snapshot.queryParams['pay'];
+            const plan = this.route.snapshot.queryParams['plan'];
+
+            if (returnUrl) {
+              const queryParams: any = {};
+              if (pay) queryParams.pay = pay;
+              if (plan) queryParams.plan = plan;
+              this.router.navigate([returnUrl], { queryParams });
+            } else {
+              this.router.navigate(['/dashboard']);
+            }
           }
         },
         error: (error) => {

@@ -1,6 +1,6 @@
 import { Component } from '@angular/core';
 import { CommonModule } from '@angular/common';
-import { RouterLink, Router } from '@angular/router';
+import { RouterLink, Router, ActivatedRoute } from '@angular/router';
 import { ReactiveFormsModule, FormBuilder, FormGroup, Validators } from '@angular/forms';
 import { AuthService } from '../services/auth.service';
 
@@ -19,7 +19,8 @@ export class SignupComponent {
   constructor(
     private fb: FormBuilder,
     private authService: AuthService,
-    private router: Router
+    private router: Router,
+    private route: ActivatedRoute
   ) {
     this.signupForm = this.fb.group({
       email: ['', [Validators.required, Validators.email]],
@@ -34,7 +35,9 @@ export class SignupComponent {
       this.authService.signup(this.signupForm.value).subscribe({
         next: (response) => {
           console.log('Signup success', response);
-          this.router.navigate(['/login']);
+          this.router.navigate(['/login'], {
+            queryParams: this.route.snapshot.queryParams
+          });
         },
         error: (error) => {
           console.error('Signup error', error);

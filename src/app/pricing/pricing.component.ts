@@ -4,6 +4,7 @@ import { FormsModule } from '@angular/forms';
 import { Router, RouterModule } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { CvBuilderService } from '../cv-builder.service';
+import { AuthService } from '../services/auth.service';
 
 export interface FAQItem {
   question: string;
@@ -21,6 +22,7 @@ export interface FAQItem {
 export class PricingComponent implements OnInit {
   private router = inject(Router);
   private http = inject(HttpClient);
+  private authService = inject(AuthService);
   public cvService = inject(CvBuilderService);
 
   // Billing Cycle Toggle (Yearly = true, Monthly = false)
@@ -102,6 +104,14 @@ export class PricingComponent implements OnInit {
   ngOnInit() {
     if (typeof window !== 'undefined') {
       const urlParams = new URLSearchParams(window.location.search);
+      const planParam = urlParams.get('plan');
+      if (planParam === 'monthly') {
+        this.isYearly = false;
+      } else if (planParam === 'yearly') {
+        this.isYearly = true;
+      }
+
+      const autoPay = urlParams.get('pay') === 'true';
       const status = urlParams.get('paymentStatus') || urlParams.get('payment') || urlParams.get('code');
       const orderId = urlParams.get('orderId') || urlParams.get('txId') || urlParams.get('merchantTransactionId');
       const txnId = urlParams.get('transactionId') || urlParams.get('providerReferenceId');
@@ -148,6 +158,14 @@ export class PricingComponent implements OnInit {
         window.history.replaceState({}, document.title, window.location.pathname);
       } else {
         this.isProUser = localStorage.getItem('glowcv_is_pro') === 'true';
+
+        // Auto trigger PhonePe gateway after returning from login
+        if (autoPay && this.authService.isLoggedIn() && !this.isProUser) {
+          window.history.replaceState({}, document.title, window.location.pathname);
+          setTimeout(() => {
+            this.initiatePhonePeGateway();
+          }, 200);
+        }
       }
     }
   }
@@ -189,6 +207,16 @@ export class PricingComponent implements OnInit {
   }
 
   openPhonePeCheckout() {
+    if (!this.authService.isLoggedIn()) {
+      this.router.navigate(['/login'], {
+        queryParams: {
+          returnUrl: '/pricing',
+          pay: 'true',
+          plan: this.isYearly ? 'yearly' : 'monthly'
+        }
+      });
+      return;
+    }
     this.showPaymentModal = true;
     this.paymentSuccess = false;
     this.timerSeconds = 234;
@@ -217,13 +245,25 @@ export class PricingComponent implements OnInit {
   }
 
   initiatePhonePeGateway() {
+    if (!this.authService.isLoggedIn()) {
+      this.router.navigate(['/login'], {
+        queryParams: {
+          returnUrl: '/pricing',
+          pay: 'true',
+          plan: this.isYearly ? 'yearly' : 'monthly'
+        }
+      });
+      return;
+    }
     this.isProcessingPayment = true;
     const amount = this.proInrPrice;
 
+    const loggedUser = this.authService.getUser();
     const payload = {
       amount: amount,
       plan: this.isYearly ? 'Pro Yearly' : 'Pro Monthly',
-      phone: this.mobileNumber || '9999999999'
+      phone: this.mobileNumber || '9999999999',
+      email: loggedUser?.email || undefined
     };
 
     // Real API call to PhonePe Payment Gateway Backend Route
