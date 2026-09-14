@@ -87,21 +87,44 @@ export class CvBuilderModalComponent {
 
       const pdfWidth = pdf.internal.pageSize.getWidth();
       const pdfPageHeight = pdf.internal.pageSize.getHeight();
+
+      // Determine the actual content bottom to avoid generating blank pages for trailing container whitespace
+      const elementRect = element.getBoundingClientRect();
+      let maxContentBottom = 0;
+      const contentNodes = element.querySelectorAll('div[data-section], h1, h2, h3, p, ul, span, .space-y-4, .space-y-6');
+      contentNodes.forEach(node => {
+        const rect = node.getBoundingClientRect();
+        if (rect.bottom > maxContentBottom && (rect.width > 0 || rect.height > 0)) {
+          maxContentBottom = rect.bottom;
+        }
+      });
+
+      // Calculate the real content height in mm
+      const actualContentPx = maxContentBottom > elementRect.top
+        ? (maxContentBottom - elementRect.top)
+        : element.offsetHeight;
+      const contentPdfHeight = (actualContentPx * pdfWidth) / element.offsetWidth;
       const totalPdfHeight = (element.offsetHeight * pdfWidth) / element.offsetWidth;
 
-      let heightLeft = totalPdfHeight;
-      let position = 0;
+      // If the actual content comfortably fits on 1 page (within page height + small 10mm margin), strictly output 1 page
+      if (contentPdfHeight <= pdfPageHeight + 10) {
+        pdf.addImage(imgData, 'PNG', 0, 0, pdfWidth, Math.min(totalPdfHeight, pdfPageHeight), undefined, 'FAST');
+      } else {
+        // Multi-page content
+        let heightLeft = contentPdfHeight;
+        let position = 0;
 
-      // Add Page 1
-      pdf.addImage(imgData, 'PNG', 0, position, pdfWidth, totalPdfHeight, undefined, 'FAST');
-      heightLeft -= pdfPageHeight;
-
-      // Add Page 2+ if content overflows
-      while (heightLeft > 2) {
-        position -= pdfPageHeight;
-        pdf.addPage();
+        // Add Page 1
         pdf.addImage(imgData, 'PNG', 0, position, pdfWidth, totalPdfHeight, undefined, 'FAST');
         heightLeft -= pdfPageHeight;
+
+        // Add subsequent pages only if substantial real content overflows (> 20mm)
+        while (heightLeft > 20) {
+          position -= pdfPageHeight;
+          pdf.addPage();
+          pdf.addImage(imgData, 'PNG', 0, position, pdfWidth, totalPdfHeight, undefined, 'FAST');
+          heightLeft -= pdfPageHeight;
+        }
       }
 
       const fileName = (this.cvService.cvData().fullName || 'My_Resume').trim().replace(/\s+/g, '_');
