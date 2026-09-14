@@ -7,23 +7,25 @@
 
     <!-- Brand Logo -->
     <a (click)="navigateTo('/')" class="flex items-center gap-2.5 group cursor-pointer select-none">
-      <div
-        class="w-9 h-9 rounded-xl bg-gradient-to-tr from-emerald-500 to-teal-600 p-0.5 shadow-sm shadow-emerald-500/20 group-hover:scale-105 transition-transform duration-200">
-        <div class="w-full h-full bg-white rounded-[10px] overflow-hidden flex items-center justify-center p-1">
-          <img src="../assets/logo.png" alt="GlowCV Logo" class="w-full h-full object-contain" />
-        </div>
+      <div class="w-8 h-8 flex items-center justify-center">
+        <svg viewBox="0 0 32 32" class="w-7 h-7" fill="currentColor">
+          <path d="M6 10 C 10 6, 16 6, 20 10 L 14 16 C 12 14, 8 14, 6 16 Z" fill="#4338ca" />
+          <path d="M12 16 C 16 12, 22 12, 26 16 L 20 22 C 18 20, 14 20, 12 22 Z" fill="#2563eb" />
+          <path d="M18 22 C 22 18, 28 18, 32 22 L 26 28 C 24 26, 20 26, 18 28 Z" fill="#60a5fa" />
+        </svg>
       </div>
       <div class="flex items-center gap-1.5">
         <span
-          class="text-xl font-extrabold tracking-tight text-slate-900 group-hover:text-emerald-600 transition-colors">
+          class="text-xl font-bold tracking-tight text-slate-900 group-hover:text-blue-600 transition-colors">
           GlowCV
         </span>
         <span
-          class="text-[10px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded-md bg-emerald-100 text-emerald-700 font-mono">
+          class="text-[10px] font-bold uppercase tracking-wider px-1.5 py-0.5 rounded-md bg-blue-100 text-blue-700 font-mono">
           AI
         </span>
       </div>
     </a>
+
 
     <!-- Center Navigation or Steps Indicator -->
     @if (!cvService.hideOnboardingSteps()) {
