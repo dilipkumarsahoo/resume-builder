@@ -9,6 +9,7 @@ import { PricingComponent } from './pricing/pricing.component';
 import { AboutComponent } from './about/about.component';
 import { ContactComponent } from './contact/contact.component';
 import { ForgotPasswordComponent } from './forgot-password/forgot-password.component';
+import { ResetPasswordComponent } from './reset-password/reset-password.component';
 import { TermsComponent } from './terms/terms.component';
 import { PrivacyComponent } from './privacy/privacy.component';
 
@@ -22,7 +23,9 @@ export const routes: Routes = [
   { path: 'login', component: LoginComponent },
   { path: 'signup', component: SignupComponent },
   { path: 'forgot-password', component: ForgotPasswordComponent },
+  { path: 'reset-password', component: ResetPasswordComponent },
   { path: 'dashboard', component: DashboardComponent, canActivate: [authGuard] },
+
   { path: 'cv-builder', component: CvBuilderModalComponent },
   { path: 'saved-jobs', redirectTo: '/dashboard?tab=jobs' },
   { path: 'cover-letter', redirectTo: '/dashboard?tab=cover-letter' },
