@@ -1,6 +1,6 @@
 import { Component, ElementRef, AfterViewInit, ViewChild, inject, PLATFORM_ID } from '@angular/core';
 import { isPlatformBrowser, CommonModule } from '@angular/common';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { animate, stagger } from 'motion';
 import { CvBuilderService } from '../cv-builder.service';
 
@@ -13,6 +13,7 @@ import { CvBuilderService } from '../cv-builder.service';
 })
 export class HeroComponent implements AfterViewInit {
   private platformId = inject(PLATFORM_ID);
+  private router = inject(Router);
   cvService = inject(CvBuilderService);
   @ViewChild('heroContent') heroContent!: ElementRef;
   @ViewChild('heroMockup') heroMockup!: ElementRef;
@@ -44,5 +45,13 @@ export class HeroComponent implements AfterViewInit {
 
   setTab(tab: 'resume' | 'coverLetter') {
     this.activeTab = tab;
+  }
+
+  onViewAll() {
+    if (this.activeTab === 'resume') {
+      this.cvService.openResumeTemplates();
+    } else {
+      this.router.navigate(['/cover-letter']);
+    }
   }
 }
