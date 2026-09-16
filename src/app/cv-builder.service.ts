@@ -453,7 +453,7 @@ Return only the finished cover letter.`;
             email: raw.personal?.email || raw.email || '',
             phone: raw.personal?.phone || raw.phone || '',
             location: raw.personal?.location || raw.location || '',
-            jobTitle: raw.experience?.[0]?.jobTitle || raw.jobTitle || '',
+            jobTitle: raw.personal?.jobTitle || raw.jobTitle || raw.experience?.[0]?.jobTitle || raw.experience?.[0]?.role || '',
             summary: raw.summary || '',
             skills: Array.isArray(raw.skills) ? raw.skills : [],
             experience: Array.isArray(raw.experience) && raw.experience.length > 0
