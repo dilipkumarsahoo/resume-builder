@@ -740,7 +740,7 @@
       <!-- Templates Grid -->
       <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-8">
         @for (template of filteredResumeTemplates; track template.id) {
-        <div (click)="selectResumeTemplateAndStart(template.id)"
+        <div (click)="openTemplatePreviewModal(template)"
           class="group bg-white rounded-3xl border border-slate-200/80 transition-all duration-300 overflow-hidden cursor-pointer flex flex-col shadow-xs hover:shadow-xl hover:-translate-y-1 relative hover:border-blue-600">
 
           <!-- Badge -->
@@ -768,7 +768,8 @@
             <div
               class="absolute inset-0 bg-slate-900/40 opacity-0 group-hover:opacity-100 transition-opacity duration-200 flex items-center justify-center backdrop-blur-xs">
               <button
-                class="px-6 py-3 bg-[#1b4df0] text-white rounded-xl font-bold text-sm shadow-xl transform group-hover:scale-105 transition-all">
+                (click)="openTemplatePreviewModal(template); $event.stopPropagation()"
+                class="px-6 py-3 bg-[#1b4df0] text-white rounded-xl font-bold text-sm shadow-xl transform group-hover:scale-105 transition-all cursor-pointer">
                 Use Template
               </button>
             </div>
@@ -1927,6 +1928,83 @@
           Save Changes
         </button>
       </div>
+    </div>
+  </div>
+  }
+
+  <!-- ========================================================================= -->
+  <!-- RESUME TEMPLATE PREVIEW MODAL (FLOWCV STYLE) -->
+  <!-- ========================================================================= -->
+  @if (showTemplatePreviewModal() && selectedPreviewTemplate(); as previewTemplate) {
+  <div (click)="closeTemplatePreviewModal()"
+    class="fixed inset-0 z-50 bg-slate-950/60 backdrop-blur-xs flex items-center justify-center p-3 sm:p-5 md:p-8 animate-modal-enter">
+
+    <!-- Modal Content Card -->
+    <div (click)="$event.stopPropagation()"
+      class="bg-white w-full max-w-5xl rounded-3xl shadow-2xl border border-slate-100 overflow-hidden relative flex flex-col md:flex-row max-h-[92vh]">
+
+      <!-- Close Button (Top Right) -->
+      <button (click)="closeTemplatePreviewModal()"
+        class="absolute top-4 right-4 z-30 w-8 h-8 rounded-lg border border-slate-200/90 bg-white hover:bg-slate-100 text-slate-400 hover:text-slate-700 flex items-center justify-center transition-all cursor-pointer shadow-2xs"
+        aria-label="Close modal">
+        <span class="material-icons text-lg leading-none">close</span>
+      </button>
+
+      <!-- Left Column: Visual Resume Preview Canvas -->
+      <div
+        class="w-full md:w-[55%] lg:w-[56%] bg-[#f7f8fa] p-6 sm:p-8 md:p-10 flex items-center justify-center overflow-y-auto max-h-[50vh] md:max-h-[92vh] border-b md:border-b-0 md:border-r border-slate-100">
+        <div
+          class="w-[300px] sm:w-[360px] md:w-[410px] lg:w-[440px] aspect-[1/1.414] bg-white rounded-lg shadow-xl border border-slate-200/80 overflow-hidden relative select-none flex-shrink-0">
+          <div
+            class="absolute top-0 left-0 origin-top-left pointer-events-none w-[800px] h-[1131px] scale-[0.375] sm:scale-[0.45] md:scale-[0.5125] lg:scale-[0.55]">
+            <app-cv-preview [templateOverride]="previewTemplate.id" [isPreview]="true"></app-cv-preview>
+          </div>
+        </div>
+      </div>
+
+      <!-- Right Column: Template Info & Call To Action -->
+      <div class="w-full md:w-[45%] lg:w-[44%] p-8 sm:p-10 md:p-12 lg:p-14 flex flex-col justify-center bg-white overflow-y-auto">
+        <h2 class="text-2xl sm:text-3xl lg:text-[32px] font-black text-[#151124] tracking-wider uppercase leading-tight">
+          {{ previewTemplate.name }}
+        </h2>
+
+        <p class="text-slate-500 text-sm sm:text-base leading-relaxed mt-4">
+          Each template has been crafted with care to make designing your resume an absolute breeze for you.
+        </p>
+
+        <!-- Bullet Features List -->
+        <ul class="mt-8 space-y-3.5 text-slate-700 text-sm sm:text-[15px] font-medium">
+          <li class="flex items-center gap-3">
+            <span class="w-1.5 h-1.5 rounded-full bg-slate-900 shrink-0"></span>
+            <span>A4 / US-Letter Size</span>
+          </li>
+          <li class="flex items-center gap-3">
+            <span class="w-1.5 h-1.5 rounded-full bg-slate-900 shrink-0"></span>
+            <span>Editable Text</span>
+          </li>
+          <li class="flex items-center gap-3">
+            <span class="w-1.5 h-1.5 rounded-full bg-slate-900 shrink-0"></span>
+            <span>Fully customizable</span>
+          </li>
+          <li class="flex items-center gap-3">
+            <span class="w-1.5 h-1.5 rounded-full bg-slate-900 shrink-0"></span>
+            <span>Print ready format</span>
+          </li>
+          <li class="flex items-center gap-3">
+            <span class="w-1.5 h-1.5 rounded-full bg-slate-900 shrink-0"></span>
+            <span>Online resume with shareable link</span>
+          </li>
+        </ul>
+
+        <!-- Primary CTA Button -->
+        <div class="mt-9">
+          <button (click)="confirmUseTemplate()"
+            class="px-8 py-3.5 bg-[#161224] hover:bg-[#271f3d] text-white rounded-xl font-bold text-sm tracking-wide shadow-md hover:shadow-xl transition-all duration-200 transform hover:-translate-y-0.5 cursor-pointer">
+            Use this template
+          </button>
+        </div>
+      </div>
+
     </div>
   </div>
   }

@@ -1,4 +1,4 @@
-import { Component, inject, OnInit, signal, ChangeDetectorRef } from '@angular/core';
+import { Component, inject, OnInit, signal, ChangeDetectorRef, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { Router, RouterModule, ActivatedRoute } from '@angular/router';
@@ -109,6 +109,8 @@ export class DashboardComponent implements OnInit {
   // --- RESUME TEMPLATES GALLERY STATE ---
   selectedResumeCategory = 'All Templates';
   selectedResumeTemplate: TemplateType = 'modern';
+  showTemplatePreviewModal = signal<boolean>(false);
+  selectedPreviewTemplate = signal<ResumeTemplateItem | null>(null);
   resumeCategories = [
     'All Templates',
     'Minimal',
@@ -550,6 +552,38 @@ export class DashboardComponent implements OnInit {
 
   filterResumeCategory(cat: string) {
     this.selectedResumeCategory = cat;
+  }
+
+  openTemplatePreviewModal(template: ResumeTemplateItem) {
+    this.selectedPreviewTemplate.set(template);
+    this.showTemplatePreviewModal.set(true);
+    if (typeof document !== 'undefined') {
+      document.body.style.overflow = 'hidden';
+    }
+  }
+
+  closeTemplatePreviewModal() {
+    this.showTemplatePreviewModal.set(false);
+    this.selectedPreviewTemplate.set(null);
+    if (typeof document !== 'undefined') {
+      document.body.style.overflow = 'auto';
+    }
+  }
+
+  confirmUseTemplate() {
+    const tmpl = this.selectedPreviewTemplate();
+    if (tmpl) {
+      const templateId = tmpl.id;
+      this.closeTemplatePreviewModal();
+      this.selectResumeTemplateAndStart(templateId);
+    }
+  }
+
+  @HostListener('document:keydown.escape')
+  onEscapeKeyDown() {
+    if (this.showTemplatePreviewModal()) {
+      this.closeTemplatePreviewModal();
+    }
   }
 
   selectResumeTemplateAndStart(templateId: TemplateType) {
