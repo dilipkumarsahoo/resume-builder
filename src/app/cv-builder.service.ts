@@ -142,50 +142,21 @@ export class CvBuilderService {
   private history: CustomizationSettings[] = [];
   private historyIndex = -1;
 
-  defaultData: CVData = {
-    fullName: 'Alex Johnson',
-    jobTitle: 'Senior Frontend Developer',
-    summary: 'Passionate and detail-oriented frontend developer with 5+ years of experience building responsive, accessible, and performant web applications. Expert in Angular, React, and modern CSS frameworks.',
-    email: 'alex.johnson@example.com',
-    phone: '+1 (555) 123-4567',
-    location: 'San Francisco, CA',
-    skills: ['JavaScript', 'TypeScript', 'Angular', 'React', 'Tailwind CSS', 'HTML/CSS', 'Git'],
-    experience: [
-      {
-        id: '1',
-        company: 'Tech Innovators Inc.',
-        role: 'Senior Frontend Developer',
-        startDate: 'Jan 2021',
-        endDate: 'Present',
-        description: 'Lead the frontend development team in building a scalable SaaS platform. Improved performance by 40% and implemented a comprehensive design system.'
-      },
-      {
-        id: '2',
-        company: 'Web Solutions LLC',
-        role: 'Frontend Developer',
-        startDate: 'Mar 2018',
-        endDate: 'Dec 2020',
-        description: 'Developed and maintained multiple client websites using React and Redux. Collaborated closely with designers to ensure pixel-perfect implementations.'
-      }
-    ],
-    education: [
-      {
-        id: '1',
-        institution: 'University of California, Berkeley',
-        degree: 'B.S. Computer Science',
-        year: '2014 - 2018'
-      }
-    ],
-    projects: [
-      {
-        id: '1',
-        name: 'E-commerce Dashboard',
-        description: 'A comprehensive dashboard for e-commerce sellers to track sales, inventory, and customer analytics.'
-      }
-    ]
+  emptyData: CVData = {
+    fullName: '',
+    jobTitle: '',
+    summary: '',
+    email: '',
+    phone: '',
+    location: '',
+    skills: [],
+    experience: [],
+    education: [],
+    projects: []
   };
 
-  cvData = signal<CVData>(this.defaultData);
+  defaultData: CVData = { ...this.emptyData };
+  cvData = signal<CVData>({ ...this.emptyData });
   private ai = new GoogleGenAI({ apiKey: GEMINI_API_KEY });
 
   constructor() {
@@ -512,6 +483,14 @@ Return only the finished cover letter.`;
     }
   }
 
+  resetToEmpty() {
+    this.cvData.set({ ...this.emptyData });
+    if (typeof window !== 'undefined') {
+      localStorage.removeItem('cv_builder_data');
+      localStorage.removeItem('cv_has_imported_data');
+    }
+  }
+
   private loadFromLocalStorage() {
     if (typeof window === 'undefined') return;
     try {
@@ -519,20 +498,33 @@ Return only the finished cover letter.`;
       if (saved) {
         const parsed = JSON.parse(saved);
         if (parsed && typeof parsed === 'object') {
-          // If fullName contains pagination artifacts, reset it to clean default
+          // If the saved data was the default mock data (Alex Johnson or Camila Rivera), discard it
+          const isMockData =
+            (parsed.fullName === 'Alex Johnson' && parsed.email === 'alex.johnson@example.com') ||
+            (parsed.fullName === 'Camila Rivera' && parsed.email === 'camila.rivera@email.com');
+          if (isMockData) {
+            this.cvData.set({ ...this.emptyData });
+            localStorage.removeItem('cv_builder_data');
+            return;
+          }
+
+          // If fullName contains pagination artifacts, reset it
           if (
             !parsed.fullName ||
             /^[-–—\s*#_]*\d+\s*(?:of|\/)\s*\d+[-–—\s*#_]*$/i.test(parsed.fullName) ||
             /^[-–—=_]{2,}$/.test(parsed.fullName) ||
             parsed.fullName.trim() === '-- 1 of 2 --'
           ) {
-            parsed.fullName = this.defaultData.fullName;
+            parsed.fullName = '';
           }
-          this.cvData.set({ ...this.defaultData, ...parsed });
+          this.cvData.set({ ...this.emptyData, ...parsed });
+          return;
         }
       }
+      this.cvData.set({ ...this.emptyData });
     } catch (e) {
       console.error('Failed to load from local storage', e);
+      this.cvData.set({ ...this.emptyData });
     }
   }
 }

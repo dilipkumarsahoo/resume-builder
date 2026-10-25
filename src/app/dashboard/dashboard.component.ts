@@ -111,6 +111,8 @@ export class DashboardComponent implements OnInit {
   selectedResumeTemplate: TemplateType = 'modern';
   showTemplatePreviewModal = signal<boolean>(false);
   selectedPreviewTemplate = signal<ResumeTemplateItem | null>(null);
+  templateModalStep = signal<'preview' | 'ask-import'>('preview');
+  isModalDragging = signal<boolean>(false);
   resumeCategories = [
     'All Templates',
     'Minimal',
@@ -556,6 +558,7 @@ export class DashboardComponent implements OnInit {
 
   openTemplatePreviewModal(template: ResumeTemplateItem) {
     this.selectedPreviewTemplate.set(template);
+    this.templateModalStep.set('preview');
     this.showTemplatePreviewModal.set(true);
     if (typeof document !== 'undefined') {
       document.body.style.overflow = 'hidden';
@@ -565,9 +568,59 @@ export class DashboardComponent implements OnInit {
   closeTemplatePreviewModal() {
     this.showTemplatePreviewModal.set(false);
     this.selectedPreviewTemplate.set(null);
+    this.templateModalStep.set('preview');
+    this.isModalDragging.set(false);
+    this.cvService.parseError.set(null);
     if (typeof document !== 'undefined') {
       document.body.style.overflow = 'auto';
     }
+  }
+
+  onUseThisTemplateClick() {
+    this.templateModalStep.set('ask-import');
+  }
+
+  onModalFileSelected(event: Event, templateId: TemplateType) {
+    const input = event.target as HTMLInputElement;
+    if (input.files && input.files.length > 0) {
+      this.handleModalFileUpload(input.files[0], templateId);
+    }
+  }
+
+  onModalDragOver(event: DragEvent) {
+    event.preventDefault();
+    event.stopPropagation();
+    this.isModalDragging.set(true);
+  }
+
+  onModalDragLeave(event: DragEvent) {
+    event.preventDefault();
+    event.stopPropagation();
+    this.isModalDragging.set(false);
+  }
+
+  onModalDrop(event: DragEvent, templateId: TemplateType) {
+    event.preventDefault();
+    event.stopPropagation();
+    this.isModalDragging.set(false);
+    if (this.cvService.isParsing()) return;
+
+    if (event.dataTransfer && event.dataTransfer.files && event.dataTransfer.files.length > 0) {
+      this.handleModalFileUpload(event.dataTransfer.files[0], templateId);
+    }
+  }
+
+  handleModalFileUpload(file: File, templateId: TemplateType) {
+    this.cvService.uploadAndParseResume(file, () => {
+      this.closeTemplatePreviewModal();
+      this.selectResumeTemplateAndStart(templateId);
+    });
+  }
+
+  startBlankWithTemplate(templateId: TemplateType) {
+    this.cvService.resetToEmpty();
+    this.closeTemplatePreviewModal();
+    this.selectResumeTemplateAndStart(templateId);
   }
 
   confirmUseTemplate() {
@@ -592,6 +645,7 @@ export class DashboardComponent implements OnInit {
   }
 
   startBlankResume() {
+    this.cvService.resetToEmpty();
     this.cvService.openModal('modern');
   }
 

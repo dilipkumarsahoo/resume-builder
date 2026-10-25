@@ -41,6 +41,10 @@ export class CvBuilderModalComponent {
     this.cvService.selectedTemplate.set(t);
   }
 
+  openImportModal() {
+    this.cvService.openImportResume();
+  }
+
   close() {
     this.router.navigate(['/cover-letter'], { queryParams: { tab: 'resume' } });
   }

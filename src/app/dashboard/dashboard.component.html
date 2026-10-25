@@ -1964,45 +1964,138 @@
 
       <!-- Right Column: Template Info & Call To Action -->
       <div class="w-full md:w-[45%] lg:w-[44%] p-8 sm:p-10 md:p-12 lg:p-14 flex flex-col justify-center bg-white overflow-y-auto">
-        <h2 class="text-2xl sm:text-3xl lg:text-[32px] font-black text-[#151124] tracking-wider uppercase leading-tight">
-          {{ previewTemplate.name }}
-        </h2>
 
-        <p class="text-slate-500 text-sm sm:text-base leading-relaxed mt-4">
-          Each template has been crafted with care to make designing your resume an absolute breeze for you.
-        </p>
+        <!-- STEP 1: Template Details View -->
+        @if (templateModalStep() === 'preview') {
+        <div class="animate-fade-in">
+          <h2 class="text-2xl sm:text-3xl lg:text-[32px] font-black text-[#151124] tracking-wider uppercase leading-tight">
+            {{ previewTemplate.name }}
+          </h2>
 
-        <!-- Bullet Features List -->
-        <ul class="mt-8 space-y-3.5 text-slate-700 text-sm sm:text-[15px] font-medium">
-          <li class="flex items-center gap-3">
-            <span class="w-1.5 h-1.5 rounded-full bg-slate-900 shrink-0"></span>
-            <span>A4 / US-Letter Size</span>
-          </li>
-          <li class="flex items-center gap-3">
-            <span class="w-1.5 h-1.5 rounded-full bg-slate-900 shrink-0"></span>
-            <span>Editable Text</span>
-          </li>
-          <li class="flex items-center gap-3">
-            <span class="w-1.5 h-1.5 rounded-full bg-slate-900 shrink-0"></span>
-            <span>Fully customizable</span>
-          </li>
-          <li class="flex items-center gap-3">
-            <span class="w-1.5 h-1.5 rounded-full bg-slate-900 shrink-0"></span>
-            <span>Print ready format</span>
-          </li>
-          <li class="flex items-center gap-3">
-            <span class="w-1.5 h-1.5 rounded-full bg-slate-900 shrink-0"></span>
-            <span>Online resume with shareable link</span>
-          </li>
-        </ul>
+          <p class="text-slate-500 text-sm sm:text-base leading-relaxed mt-4">
+            Each template has been crafted with care to make designing your resume an absolute breeze for you.
+          </p>
 
-        <!-- Primary CTA Button -->
-        <div class="mt-9">
-          <button (click)="confirmUseTemplate()"
-            class="px-8 py-3.5 bg-[#161224] hover:bg-[#271f3d] text-white rounded-xl font-bold text-sm tracking-wide shadow-md hover:shadow-xl transition-all duration-200 transform hover:-translate-y-0.5 cursor-pointer">
-            Use this template
-          </button>
+          <!-- Bullet Features List -->
+          <ul class="mt-8 space-y-3.5 text-slate-700 text-sm sm:text-[15px] font-medium">
+            <li class="flex items-center gap-3">
+              <span class="w-1.5 h-1.5 rounded-full bg-slate-900 shrink-0"></span>
+              <span>A4 / US-Letter Size</span>
+            </li>
+            <li class="flex items-center gap-3">
+              <span class="w-1.5 h-1.5 rounded-full bg-slate-900 shrink-0"></span>
+              <span>Editable Text</span>
+            </li>
+            <li class="flex items-center gap-3">
+              <span class="w-1.5 h-1.5 rounded-full bg-slate-900 shrink-0"></span>
+              <span>Fully customizable</span>
+            </li>
+            <li class="flex items-center gap-3">
+              <span class="w-1.5 h-1.5 rounded-full bg-slate-900 shrink-0"></span>
+              <span>Print ready format</span>
+            </li>
+            <li class="flex items-center gap-3">
+              <span class="w-1.5 h-1.5 rounded-full bg-slate-900 shrink-0"></span>
+              <span>Online resume with shareable link</span>
+            </li>
+          </ul>
+
+          <!-- Primary CTA Button -->
+          <div class="mt-9">
+            <button (click)="onUseThisTemplateClick()"
+              class="px-8 py-3.5 bg-[#161224] hover:bg-[#271f3d] text-white rounded-xl font-bold text-sm tracking-wide shadow-md hover:shadow-xl transition-all duration-200 transform hover:-translate-y-0.5 cursor-pointer">
+              Use this template
+            </button>
+          </div>
         </div>
+        }
+
+        <!-- STEP 2: Ask "Have an existing resume? Upload a PDF or Word file to autofill all sections instantly." -->
+        @if (templateModalStep() === 'ask-import') {
+        <div class="space-y-6 animate-fade-in">
+
+          <button (click)="templateModalStep.set('preview')"
+            class="inline-flex items-center gap-1.5 text-xs font-bold text-slate-400 hover:text-slate-800 transition-colors cursor-pointer group">
+            <span class="material-icons text-sm transform group-hover:-translate-x-0.5 transition-transform">arrow_back</span>
+            <span>Back</span>
+          </button>
+
+          <div>
+            <h2 class="text-2xl sm:text-3xl font-extrabold text-[#151124] tracking-tight">
+              Have an existing resume?
+            </h2>
+            <p class="text-slate-500 text-sm sm:text-base leading-relaxed mt-2">
+              Upload a PDF or Word file to autofill all sections instantly.
+            </p>
+          </div>
+
+          <!-- Upload Dropzone Box -->
+          <div
+            (dragover)="onModalDragOver($event)"
+            (dragleave)="onModalDragLeave($event)"
+            (drop)="onModalDrop($event, previewTemplate.id)"
+            (click)="!cvService.isParsing() && modalResumeFile.click()"
+            [class.border-emerald-500]="isModalDragging() || cvService.isParsing()"
+            [class.bg-emerald-500/5]="isModalDragging()"
+            class="border-2 border-dashed border-slate-200 hover:border-emerald-500/60 rounded-2xl p-6 sm:p-7 text-center cursor-pointer transition-all duration-200 bg-slate-50/60 hover:bg-slate-50 group relative">
+
+            <input #modalResumeFile type="file" (change)="onModalFileSelected($event, previewTemplate.id)" accept=".pdf,.doc,.docx" [disabled]="cvService.isParsing()" class="hidden">
+
+            @if (cvService.isParsing()) {
+              <div class="flex flex-col items-center justify-center py-2 space-y-2.5">
+                <div class="w-9 h-9 border-3 border-emerald-500 border-t-transparent rounded-full animate-spin"></div>
+                <p class="text-sm font-bold text-slate-900 animate-pulse">
+                  Analyzing & importing resume...
+                </p>
+                <p class="text-xs text-slate-500">
+                  Extracting your data and applying to {{ previewTemplate.name }}.
+                </p>
+              </div>
+            } @else {
+              <div class="flex flex-col items-center justify-center space-y-2 group-hover:scale-[1.01] transition-transform">
+                <div class="w-12 h-12 rounded-2xl bg-emerald-50 text-emerald-600 flex items-center justify-center mb-1 group-hover:bg-emerald-500 group-hover:text-white transition-colors">
+                  <span class="material-icons text-2xl">cloud_upload</span>
+                </div>
+                <p class="text-sm font-bold text-slate-800">
+                  Click to browse or drop your resume here
+                </p>
+                <p class="text-xs text-slate-400">
+                  Supports PDF, DOC, DOCX up to 5MB
+                </p>
+              </div>
+            }
+          </div>
+
+          <!-- Error Notification -->
+          @if (cvService.parseError()) {
+            <div class="p-3.5 bg-rose-50 border border-rose-200 rounded-xl text-rose-700 text-xs flex items-start gap-2">
+              <span class="material-icons text-base mt-0.5">error_outline</span>
+              <div class="flex-1">
+                <p class="font-bold">Failed to import</p>
+                <p class="opacity-90 mt-0.5">{{ cvService.parseError() }}</p>
+              </div>
+              <button (click)="cvService.parseError.set(null)" class="text-rose-400 hover:text-rose-700">
+                <span class="material-icons text-sm">close</span>
+              </button>
+            </div>
+          }
+
+          <!-- Divider -->
+          <div class="relative text-center my-2">
+            <div class="absolute inset-0 flex items-center"><div class="w-full border-t border-slate-200"></div></div>
+            <span class="relative bg-white px-3 text-[11px] uppercase tracking-wider font-bold text-slate-400">or</span>
+          </div>
+
+          <!-- Start Blank Option -->
+          <button (click)="startBlankWithTemplate(previewTemplate.id)" [disabled]="cvService.isParsing()"
+            class="w-full py-3.5 px-5 rounded-xl border-2 border-slate-200 hover:border-slate-900 text-slate-800 hover:text-slate-950 font-bold text-xs sm:text-sm transition-all flex items-center justify-center gap-2 cursor-pointer bg-white hover:bg-slate-50 shadow-2xs disabled:opacity-50">
+            <span class="material-icons text-base text-slate-500">edit_note</span>
+            <span>No, start with empty template</span>
+          </button>
+
+        </div>
+        }
+
       </div>
 
     </div>
