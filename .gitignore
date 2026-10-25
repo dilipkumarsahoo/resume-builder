@@ -5,6 +5,7 @@
 !.env.example
 
 # Compiled output
+dist/
 /dist
 /tmp
 /out-tsc
@@ -33,6 +34,7 @@ yarn-error.log
 .history/*
 
 # Miscellaneous
+.angular/
 /.angular/cache
 .sass-cache/
 /connect.lock
