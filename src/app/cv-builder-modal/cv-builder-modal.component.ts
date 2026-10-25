@@ -31,7 +31,7 @@ export class CvBuilderModalComponent {
 
   setActiveTab(tab: 'overview' | 'content' | 'customize' | 'ai-tools') {
     if (tab === 'overview') {
-      this.router.navigate(['/cover-letter'], { queryParams: { tab: 'resume' } });
+      this.router.navigate(['/dashboard'], { queryParams: { tab: 'resume' } });
       return;
     }
     this.activeTab.set(tab);
@@ -46,7 +46,7 @@ export class CvBuilderModalComponent {
   }
 
   close() {
-    this.router.navigate(['/cover-letter'], { queryParams: { tab: 'resume' } });
+    this.router.navigate(['/dashboard'], { queryParams: { tab: 'resume' } });
   }
 
   logout() {
