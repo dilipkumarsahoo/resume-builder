@@ -2,6 +2,7 @@ import { Injectable, inject } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { AuthService } from './auth.service';
+import { environment } from '../../environments/environment';
 
 export interface TrackedJob {
   id?: number;
@@ -27,7 +28,7 @@ export interface TrackedJob {
 export class JobService {
   private http = inject(HttpClient);
   private authService = inject(AuthService);
-  private apiUrl = 'http://localhost:3000/api/jobs';
+  private apiUrl = `${environment.apiUrl}/jobs`;
 
   private getAuthHeaders(): HttpHeaders {
     const token = this.authService.getToken();

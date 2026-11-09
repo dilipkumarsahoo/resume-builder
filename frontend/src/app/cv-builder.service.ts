@@ -1,7 +1,8 @@
 import { Injectable, signal, inject } from '@angular/core';
 import { Router } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
-import { GoogleGenAI } from '@google/genai';
+import { firstValueFrom } from 'rxjs';
+import { environment } from '../environments/environment';
 
 export interface Experience {
   id: string;
@@ -157,7 +158,6 @@ export class CvBuilderService {
 
   defaultData: CVData = { ...this.emptyData };
   cvData = signal<CVData>({ ...this.emptyData });
-  private ai = new GoogleGenAI({ apiKey: GEMINI_API_KEY });
 
   constructor() {
     this.loadFromLocalStorage();
@@ -278,19 +278,19 @@ export class CvBuilderService {
 
   async improveSummary() {
     const currentSummary = this.cvData().summary;
-    const jobTitle = this.cvData().jobTitle;
     if (!currentSummary || currentSummary.trim().length < 10) return;
 
     this.isImprovingSummary.set(true);
     try {
-      const prompt = `You are an expert resume writer. Improve the following professional summary for a ${jobTitle || 'professional'}. Make it impactful, concise, and ATS-friendly. Return ONLY the improved summary text, no quotes or extra formatting.\n\nOriginal: ${currentSummary}`;
-      const response = await this.ai.models.generateContent({
-        model: "gemini-3-flash-preview",
-        contents: prompt,
-      });
+      const res = await firstValueFrom(
+        this.http.post<{ success: boolean; data: { improvedSummary: string } }>(
+          `${environment.apiUrl}/ai/improve-summary`,
+          { summary: currentSummary }
+        )
+      );
 
-      if (response.text) {
-        this.updateData({ summary: response.text.trim() });
+      if (res && res.data && res.data.improvedSummary) {
+        this.updateData({ summary: res.data.improvedSummary.trim() });
       }
     } catch (error) {
       console.error('Failed to improve summary:', error);
@@ -301,81 +301,20 @@ export class CvBuilderService {
 
   async generateCoverLetter(jobPosition: string, companyName: string, additionalNotes?: string): Promise<string> {
     const data = this.cvData();
-    const candidateName = data.fullName || 'Candidate';
-    const email = data.email || '';
-    const phone = data.phone || '';
-    const location = data.location || '';
-    const skillsList = data.skills ? data.skills.join(', ') : '';
-    
-    let experienceText = '';
-    if (data.experience && data.experience.length > 0) {
-      experienceText = data.experience.map(exp => 
-        `- Role: ${exp.role} at ${exp.company} (${exp.startDate} - ${exp.endDate}): ${exp.description}`
-      ).join('\n');
-    }
-
-    let educationText = '';
-    if (data.education && data.education.length > 0) {
-      educationText = data.education.map(edu => 
-        `- Degree: ${edu.degree} from ${edu.institution} (${edu.year})`
-      ).join('\n');
-    }
-
-    let projectsText = '';
-    if (data.projects && data.projects.length > 0) {
-      projectsText = data.projects.map(proj => 
-        `- Project: ${proj.name}: ${proj.description}`
-      ).join('\n');
-    }
-
-    const prompt = `You are an expert career coach, recruiter, and professional resume writer.
-Generate a personalized, professional cover letter based on the candidate's resume information and the target job.
-
-Requirements:
-- Write a compelling, human-sounding cover letter.
-- Length: 300–450 words.
-- Keep a professional yet conversational tone.
-- Do NOT sound AI-generated.
-- Avoid clichés like "I am writing to express my interest..."
-- Start with an engaging opening.
-- Explain why the candidate is a strong fit.
-- Highlight the most relevant experience and measurable achievements from their resume.
-- Mention skills that match the job.
-- End with a confident, polite closing and call to action.
-- Use standard business letter formatting.
-- Never invent experience, certifications, companies, or achievements.
-- If some information is missing, gracefully omit it instead of making assumptions.
-- Optimize naturally for ATS without keyword stuffing.
-- Return ONLY the finished cover letter text (do not include markdown block markers like \`\`\` or extra conversational text).
-
-Inputs:
-Candidate Information:
-Name: ${candidateName}
-Email: ${email}
-Phone: ${phone}
-Location: ${location}
-Skills: ${skillsList}
-Experience:
-${experienceText}
-Education:
-${educationText}
-Projects:
-${projectsText}
-
-Job Position: ${jobPosition}
-Company Name: ${companyName}
-${additionalNotes ? `Additional Notes/Job Description: ${additionalNotes}` : ''}
-
-Output:
-Return only the finished cover letter.`;
-
     try {
-      const response = await this.ai.models.generateContent({
-        model: "gemini-3-flash-preview",
-        contents: prompt,
-      });
+      const res = await firstValueFrom(
+        this.http.post<{ success: boolean; data: { coverLetter: string } }>(
+          `${environment.apiUrl}/ai/cover-letter`,
+          {
+            jobPosition,
+            companyName,
+            additionalNotes,
+            resumeData: data
+          }
+        )
+      );
 
-      return response.text ? response.text.trim() : '';
+      return res?.data?.coverLetter?.trim() || '';
     } catch (error) {
       console.error('Failed to generate cover letter:', error);
       throw error;
@@ -413,7 +352,7 @@ Return only the finished cover letter.`;
     const formData = new FormData();
     formData.append('resume', file);
 
-    this.http.post<any>('http://localhost:3000/api/resume/parse', formData).subscribe({
+    this.http.post<any>(`${environment.apiUrl}/resume/parse`, formData).subscribe({
       next: (res) => {
         clearTimeout(extractionTimer);
         if (res && res.data) {
@@ -472,6 +411,15 @@ Return only the finished cover letter.`;
         this.parsingStatus.set('idle');
       }
     });
+  }
+
+  saveToCloud(title?: string, template?: string) {
+    const payload = {
+      title: title || (this.cvData().fullName ? `${this.cvData().fullName}'s Resume` : 'My Resume'),
+      template: template || this.selectedTemplate() || 'modern',
+      content: this.cvData()
+    };
+    return this.http.post<{ status: string; message: string; data: any }>(`${environment.apiUrl}/resume`, payload);
   }
 
   private saveToLocalStorage(data: CVData) {

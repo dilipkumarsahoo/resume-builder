@@ -3,6 +3,7 @@ import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
 import { RouterLink } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-contact',
@@ -13,7 +14,7 @@ import { HttpClient } from '@angular/common/http';
 })
 export class ContactComponent {
   private http = inject(HttpClient);
-  private apiUrl = 'http://localhost:3000/api/contact';
+  private apiUrl = `${environment.apiUrl}/contact`;
 
   name = signal('');
   email = signal('');

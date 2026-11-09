@@ -5,6 +5,7 @@ import { Router, RouterModule, ActivatedRoute } from '@angular/router';
 import { CvBuilderService, TemplateType } from '../cv-builder.service';
 import { AuthService } from '../services/auth.service';
 import { JobService, TrackedJob } from '../services/job.service';
+import { ResumeService } from '../services/resume.service';
 import { CvPreviewComponent } from '../cv-preview/cv-preview.component';
 import { jsPDF } from 'jspdf';
 
@@ -61,6 +62,7 @@ export class DashboardComponent implements OnInit {
   public cvService = inject(CvBuilderService);
   public authService = inject(AuthService);
   public jobService = inject(JobService);
+  public resumeService = inject(ResumeService);
   private router = inject(Router);
   private route = inject(ActivatedRoute);
   private cdr = inject(ChangeDetectorRef);
@@ -458,6 +460,7 @@ export class DashboardComponent implements OnInit {
       }
 
       this.loadJobs();
+      this.loadCloudResumes();
       this.loadResumeData();
       this.loadDraft();
 
@@ -686,6 +689,32 @@ export class DashboardComponent implements OnInit {
       this.email = resume.email || this.userEmail;
       this.phone = resume.phone || '';
       this.location = resume.location || '';
+    }
+  }
+
+  loadCloudResumes() {
+    if (this.authService.isLoggedIn()) {
+      this.resumeService.getResumes().subscribe({
+        next: (res) => {
+          if (res && res.data && res.data.length > 0) {
+            this.resumes = res.data.map(item => ({
+              id: `doc-${item.id}`,
+              title: item.title || 'Untitled Resume',
+              type: 'resume' as const,
+              template: item.template || 'modern',
+              lastUpdated: `Updated ${new Date(item.updatedAt).toLocaleDateString()}`,
+              bgColor: 'bg-[#f8fafc]',
+              accentColor: '#1b4df0',
+              authorName: item.content?.fullName || this.userName || 'My Resume',
+              role: item.content?.jobTitle || 'Resume',
+              previewType: 'monica' as const
+            }));
+          }
+        },
+        error: (err) => {
+          console.warn('Could not fetch cloud resumes:', err);
+        }
+      });
     }
   }
 

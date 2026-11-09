@@ -5,6 +5,7 @@ import { Router, RouterModule } from '@angular/router';
 import { HttpClient } from '@angular/common/http';
 import { CvBuilderService } from '../cv-builder.service';
 import { AuthService } from '../services/auth.service';
+import { environment } from '../../environments/environment';
 
 export interface FAQItem {
   question: string;
@@ -127,7 +128,7 @@ export class PricingComponent implements OnInit {
 
         // If orderId is present, verify with backend PhonePe Order Status API
         if (orderId) {
-          this.http.get<any>(`http://localhost:3000/api/payment/phonepe/order-status/${orderId}`).subscribe({
+          this.http.get<any>(`${environment.apiUrl}/payment/phonepe/order-status/${orderId}`).subscribe({
             next: (res) => {
               this.isProUser = true;
               this.paymentSuccess = true;
@@ -267,7 +268,7 @@ export class PricingComponent implements OnInit {
     };
 
     // Real API call to PhonePe Payment Gateway Backend Route
-    this.http.post<any>('http://localhost:3000/api/payment/phonepe/pay', payload).subscribe({
+    this.http.post<any>(`${environment.apiUrl}/payment/phonepe/pay`, payload).subscribe({
       next: (res) => {
         this.isProcessingPayment = false;
         if (res && res.redirectUrl) {

@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders, HttpParams } from '@angular/common/http';
 import { Observable, tap } from 'rxjs';
 import { Router } from '@angular/router';
 import { AuthService } from './auth.service';
+import { environment } from '../../environments/environment';
 
 export interface AdminStats {
   totalUsers: number;
@@ -67,7 +68,7 @@ export class AdminService {
   private http = inject(HttpClient);
   private router = inject(Router);
   private authService = inject(AuthService);
-  private apiUrl = 'http://localhost:3000/api/admin';
+  private apiUrl = `${environment.apiUrl}/admin`;
 
   currentAdmin = signal<any>(null);
   activeTab = signal<'overview' | 'users' | 'payments' | 'contacts' | 'settings'>('overview');

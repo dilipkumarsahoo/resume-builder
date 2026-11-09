@@ -1,0 +1,24 @@
+# Backend is maintained in its own separate git repository
+backend/
+
+# Dependencies
+node_modules/
+
+# Environment files
+.env*
+!.env.example
+
+# Build and cache
+dist/
+.angular/
+tmp/
+out-tsc/
+.sass-cache/
+
+# OS and Editor files
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
+*.log
+
