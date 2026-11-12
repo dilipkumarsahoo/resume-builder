@@ -1,5 +1,5 @@
 <div
-  class="min-h-screen bg-[#f8fafc] flex font-sans text-slate-800 antialiased selection:bg-blue-100 selection:text-blue-900"
+  class="min-h-screen bg-[#f8fafc] flex font-sans text-slate-800 antialiased selection:bg-blue-100 selection:text-blue-900 relative overflow-x-hidden w-full"
   (click)="closeDocMenu()">
 
   <!-- Toast Notification -->
@@ -21,8 +21,8 @@
   <!-- SINGLE UNIFIED LEFT SIDEBAR -->
   <!-- ========================================================================= -->
   <aside
-    class="fixed lg:static top-0 bottom-0 left-0 z-40 w-64 bg-white border-r border-slate-200/80 flex flex-col justify-between py-6 px-5 transition-transform duration-300 ease-in-out h-screen sticky"
-    [ngClass]="mobileSidebarOpen() ? 'translate-x-0 shadow-2xl' : '-translate-x-full lg:translate-x-0'">
+    class="fixed inset-y-0 left-0 z-50 w-64 bg-white border-r border-slate-200/80 flex flex-col justify-between py-6 px-5 transition-transform duration-300 ease-in-out h-screen shrink-0 lg:static lg:z-auto lg:h-screen"
+    [ngClass]="mobileSidebarOpen() ? 'translate-x-0 shadow-2xl pointer-events-auto' : '-translate-x-full lg:translate-x-0 max-lg:pointer-events-none'">
 
     <!-- Top Section: Brand & Nav Links -->
     <div class="space-y-7">
